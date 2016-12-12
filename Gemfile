@@ -49,3 +49,5 @@ group :staging, :production do
   gem 'newrelic_rpm'
 end
 
+gem 'bootstrap-sass', '~> 3.2.0'
+gem 'autoprefixer-rails'

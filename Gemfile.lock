@@ -41,6 +41,10 @@ GEM
     ansi (1.5.0)
     arel (7.1.1)
     ast (2.3.0)
+    autoprefixer-rails (6.5.3.1)
+      execjs
+    bootstrap-sass (3.2.0.2)
+      sass (~> 3.2)
     builder (3.2.2)
     byebug (9.0.5)
     coffee-rails (4.2.1)
@@ -178,6 +182,8 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  autoprefixer-rails
+  bootstrap-sass (~> 3.2.0)
   byebug
   coffee-rails
   factory_girl_rails
@@ -202,4 +208,4 @@ RUBY VERSION
    ruby 2.3.1p112
 
 BUNDLED WITH
-   1.12.5
+   1.13.6
