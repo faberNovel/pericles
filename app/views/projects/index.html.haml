@@ -1,0 +1,7 @@
+- content_for :page_title do
+	%h1 Projects
+
+.list-group
+- @projects.each do |project|
+	%a{:class => "list-group-item", :href => "#"}
+		= project.title

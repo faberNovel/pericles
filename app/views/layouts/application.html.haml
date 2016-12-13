@@ -7,5 +7,10 @@
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = csrf_meta_tags
   %body
-    = render 'shared/navigation' 
-    = yield
+    = render 'shared/navigation'
+    .container#main-container
+      .row
+        .col-xs-3
+          = yield :page_title
+        .col-xs-6
+          = yield
