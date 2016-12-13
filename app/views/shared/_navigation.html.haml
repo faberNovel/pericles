@@ -1,4 +1,26 @@
-%nav{:class => "navbar navbar-default", :role => "navigation"}
-	.container
-		.navbar-header
-			%a{:class => "navbar-brand", :href =>"/"} Pericles
+/ %nav{:class => "navbar navbar-dark bg-inverse", :role => "navigation"}
+/ 	%div{:class => "nav navbar-nav"}
+/ 		%a{:class => "nav-item navbar-brand", :href =>"/"} Pericles
+/ 		%a{:class => "nav-item nav-link", :href =>"/projects/"} Home
+/ 		%a{:class => "nav-item nav-link", :href =>"/projects/new"} New Project 
+
+%nav.navbar.navbar-default
+  .container-fluid
+    / Brand and toggle get grouped for better mobile display
+    .navbar-header
+      %button.navbar-toggle.collapsed{"aria-expanded" => "false", "data-target" => "#bs-example-navbar-collapse-1", "data-toggle" => "collapse", :type => "button"}
+        %span.sr-only Toggle navigation
+        %span.icon-bar
+        %span.icon-bar
+        %span.icon-bar
+      %a.navbar-brand{:href => "/"} Pericles
+    / Collect the nav links, forms, and other content for toggling
+    #bs-example-navbar-collapse-1.collapse.navbar-collapse
+      %ul.nav.navbar-nav
+        %li.active
+          %a{:href => "/projects/"}
+            Home
+            %span.sr-only (current)
+        %li
+          %a{:href => "/projects/new"} New Project
+
