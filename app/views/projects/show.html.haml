@@ -1,13 +1,6 @@
 #wrapper
   / Sidebar
-  #sidebar-wrapper
-    %ul.sidebar-nav
-      %li.sidebar-brand
-        = link_to "#{@project.title}", project_path(@project)
-      %li
-        = link_to 'Description', "?tag=desc"
-      %li
-        %a{:href => "#"} JSON Schema
+  = render 'sidebar'
   / Page Content
   #page-content-wrapper
     .container-fluid

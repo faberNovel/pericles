@@ -1,6 +1,6 @@
 class ProjectsController < ApplicationController
 
-	before_action :setup_project, only: [:show]
+	before_action :setup_project, except: [:index, :new, :create]
 	layout "show_project", only: [:show]
 
   def index
@@ -18,6 +18,9 @@ class ProjectsController < ApplicationController
     @project = Project.new
   end
 
+	def edit
+	end
+
   def create
     @project = Project.new(project_params)
 
@@ -28,6 +31,14 @@ class ProjectsController < ApplicationController
     end
 
   end
+
+	def update
+		if @project.update(project_params)
+			redirect_to @project
+		else
+			render 'edit'
+		end
+	end
 
   private
 

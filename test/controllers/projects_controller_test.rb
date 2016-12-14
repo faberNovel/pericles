@@ -22,6 +22,11 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
 		assert_response :success
 	end
 
+	test "should get edit" do
+		get edit_project_path(@project)
+		assert_response :success
+	end
+
 	test "should create project" do
 		assert_difference('Project.count') do
       post projects_url, params: { project: { description: 'My description', title: 'My Project' }}
@@ -34,6 +39,20 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
       post projects_url, params: { project: { description: 'My description', title: nil }}
 		end
     assert_response :success
+	end
+
+	test "should update project" do
+		put project_path(@project), params: { project: { description: 'New Description', title: 'My awesome project' }}
+		assert_redirected_to project_path(@project)
+		@project.reload
+		assert_equal 'New Description', @project.description
+	end
+
+	test "should not update project" do
+		put project_path(@project), params: { project: { description: "That's it !", title: nil }}
+		assert_response :success
+		@project.reload
+		assert_equal "My awesome project", @project.title
 	end
 
 end
