@@ -1,6 +1,19 @@
-- content_for :page_title do
-	%h1
-		= @project.title
-
-%p
-	= @project.description
+#wrapper
+  / Sidebar
+  #sidebar-wrapper
+    %ul.sidebar-nav
+      %li.sidebar-brand
+        = link_to "#{@project.title}", project_path(@project)
+      %li
+        = link_to 'Description', "?tag=desc"
+      %li
+        %a{:href => "#"} JSON Schema
+  / Page Content
+  #page-content-wrapper
+    .container-fluid
+      .row
+        .col-lg-12
+          %h1
+            = @section_title
+          %p
+            = @content

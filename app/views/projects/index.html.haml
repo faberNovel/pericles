@@ -3,5 +3,5 @@
 
 .list-group
 - @projects.each do |project|
-	%a{:class => "list-group-item", :href => "#"}
+	%a{:class => "list-group-item", :href => project_url(project)}
 		= project.title
