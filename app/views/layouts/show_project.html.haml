@@ -8,4 +8,10 @@
     = csrf_meta_tags
   %body
     = render 'shared/navigation'
-    = yield
+    #wrapper
+      = render 'shared/sidebar'
+      #page-content-wrapper
+        .container-fluid
+          .row
+            .col-xs-12
+              = yield
