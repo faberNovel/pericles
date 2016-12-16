@@ -53,3 +53,5 @@ gem 'bootstrap-sass', '~> 3.3.6'
 gem 'autoprefixer-rails'
 
 gem "haml-rails", "~> 0.9"
+
+gem 'rails-controller-testing'

@@ -1,0 +1,19 @@
+= form_for([@project, @json_schema]) do |f|
+  - if @json_schema.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(@json_schema.errors.count, "error")
+        prohibited this json_schema from being saved:
+      %ul
+        - @json_schema.errors.full_messages.each do |msg|
+          %li= msg
+  %p
+    = f.label :name
+    %br/
+    = f.text_field :name
+  %p
+    = f.label :schema
+    %br/
+    = f.text_area :schema
+  %p
+    = f.submit
