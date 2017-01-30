@@ -2,6 +2,12 @@ require 'test_helper'
 
 class JsonSchemasControllerTest < ActionDispatch::IntegrationTest
 
+  test "should get index" do
+    project = create(:project)
+    get project_json_schemas_path(project)
+    assert_response :success
+  end
+
   test "should get new" do
     project = create(:project)
     get new_project_json_schema_path(project)

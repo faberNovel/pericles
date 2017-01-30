@@ -1,0 +1,4 @@
+.list-group
+  - @json_schemas.each do |json_schema|
+    %a{class: "list-group-item", href: project_json_schema_path(@project, json_schema)}
+      = json_schema.name

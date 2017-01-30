@@ -2,6 +2,10 @@ class JsonSchemasController < ApplicationController
   layout 'show_project'
   before_action :setup_project
 
+  def index
+    @json_schemas = @project.json_schemas
+  end
+
   def show
     @json_schema = @project.json_schemas.find(params[:id])
   end

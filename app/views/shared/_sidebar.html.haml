@@ -3,10 +3,10 @@
     %li.sidebar-brand
       = link_to "#{@project.title}", project_path(@project)
     %li
-      = link_to 'Description', project_path(@project, :tag => "desc")
+      = link_to 'Description', project_path(@project, tag: "desc")
     %li
       = link_to 'Edit Project', edit_project_path(@project)
     %li
       = link_to 'Add a JSON Schema', new_project_json_schema_path(@project)
     %li
-      %a{:href => "#"} JSON Schema
+      = link_to 'Show all JSON Schemas', project_json_schemas_path(@project)
