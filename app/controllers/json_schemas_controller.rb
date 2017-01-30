@@ -1,6 +1,10 @@
 class JsonSchemasController < ApplicationController
   layout 'show_project'
-  before_action :setup_project, only: [:new, :create]
+  before_action :setup_project
+
+  def show
+    @json_schema = @project.json_schemas.find(params[:id])
+  end
 
   def new
     @json_schema = @project.json_schemas.build
@@ -9,8 +13,7 @@ class JsonSchemasController < ApplicationController
   def create
     @json_schema = @project.json_schemas.build(json_schema_params)
     if @json_schema.save
-      #FIXME when show is done
-      # redirect_to @json_schema
+      redirect_to project_json_schema_path(@project, @json_schema)
     else
       render 'new'
     end
@@ -19,7 +22,7 @@ class JsonSchemasController < ApplicationController
   private
 
   def setup_project
-    @project = Project.find(params[:project_id])
+    @project = Project.includes(:json_schemas).find(params[:project_id])
   end
 
   def json_schema_params

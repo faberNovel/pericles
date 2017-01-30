@@ -8,14 +8,20 @@ class JsonSchemasControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "should show json_schema" do
+    json_schema = create(:json_schema)
+    get project_json_schema_path(json_schema.project, json_schema)
+    assert_response :success
+  end
+
   test "should create json_schema" do
     json_schema = build(:json_schema)
     assert_difference('JsonSchema.count') do
       post project_json_schemas_path(json_schema.project), params: { json_schema: json_schema.attributes }
     end
-    assert_not_nil assigns(:json_schema), "should create json_schema"
-    #FIX ME when show is done
-    #assert_redirected_to json_schema_url(JsonSchema.last)
+    json_schema = assigns(:json_schema)
+    assert_not_nil json_schema, "should create json_schema"
+    assert_redirected_to project_json_schema_path(json_schema.project, json_schema)
   end
 
   test "should not create json_schema without a schema" do
