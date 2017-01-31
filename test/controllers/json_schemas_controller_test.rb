@@ -20,6 +20,12 @@ class JsonSchemasControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "should get edit" do
+    json_schema = create(:json_schema)
+    get edit_project_json_schema_path(json_schema.project, json_schema)
+    assert_response :success
+  end
+
   test "should create json_schema" do
     json_schema = build(:json_schema)
     assert_difference('JsonSchema.count') do
@@ -37,6 +43,23 @@ class JsonSchemasControllerTest < ActionDispatch::IntegrationTest
       post project_json_schemas_path(json_schema.project), params: { json_schema: json_schema.attributes }
     end
     assert_response :success
+  end
+
+  test "should update json_schema" do
+    json_schema = create(:json_schema)
+    put project_json_schema_path(json_schema.project, json_schema), params: { json_schema: { schema: '{ "type": "boolean" }' } }
+    assert_redirected_to project_json_schema_path(json_schema.project, json_schema)
+    json_schema.reload
+    assert_equal '{ "type": "boolean" }', json_schema.schema
+  end
+
+  test "should not update json_schema" do
+    json_schema = create(:json_schema)
+    schema = json_schema.schema
+    put project_json_schema_path(json_schema.project, json_schema), params: { json_schema: { schema: '' } }
+    assert_response :success
+    json_schema.reload
+    assert_equal schema, json_schema.schema
   end
 
   test "should delete json_schema" do
