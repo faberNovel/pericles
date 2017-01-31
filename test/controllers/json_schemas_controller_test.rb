@@ -38,4 +38,13 @@ class JsonSchemasControllerTest < ActionDispatch::IntegrationTest
     end
     assert_response :success
   end
+
+  test "should delete json_schema" do
+    json_schema = create(:json_schema)
+    project = json_schema.project
+    assert_difference 'JsonSchema.count', -1 do
+      delete project_json_schema_path(project, json_schema)
+    end
+    assert_redirected_to project_json_schemas_path(project)
+  end
 end

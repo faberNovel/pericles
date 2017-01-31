@@ -1,13 +1,13 @@
 class JsonSchemasController < ApplicationController
   layout 'show_project'
-  before_action :setup_project
+  before_action :setup_project, only: [:index, :new, :create]
+  before_action :setup_project_and_json_schema, only: [:show, :destroy]
 
   def index
     @json_schemas = @project.json_schemas
   end
 
   def show
-    @json_schema = @project.json_schemas.find(params[:id])
   end
 
   def new
@@ -23,10 +23,21 @@ class JsonSchemasController < ApplicationController
     end
   end
 
+  def destroy
+    @json_schema.destroy
+
+    redirect_to project_json_schemas_path(@project)
+  end
+
   private
 
   def setup_project
     @project = Project.includes(:json_schemas).find(params[:project_id])
+  end
+
+  def setup_project_and_json_schema
+    setup_project
+    @json_schema = @project.json_schemas.find(params[:id])
   end
 
   def json_schema_params

@@ -1,4 +1,11 @@
 %h1
   = "JSON Schema: " + @json_schema.name
+
+%ul.nav.nav-tabs
+  %li.active{role: "presentation"}
+    = link_to 'Show', project_json_schema_path(@project, @json_schema)
+  %li{role: "presentation"}
+    = link_to 'Delete', project_json_schema_path(@project, @json_schema), method: :delete, data: { confirm: 'Are you sure?' }
+
 %pre
   = @json_schema.schema
