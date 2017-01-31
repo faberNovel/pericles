@@ -1,7 +1,7 @@
 - content_for :page_title do
-	%h1 Projects
+  %h1 Projects
 
 .list-group
-- @projects.each do |project|
-	%a{:class => "list-group-item", :href => project_url(project)}
-		= project.title
+  - @projects.each do |project|
+    %a{class: "list-group-item", href: project_path(project)}
+      = project.title
