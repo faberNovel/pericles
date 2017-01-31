@@ -13,7 +13,7 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should show project" do
-    get project_url(@project)
+    get project_path(@project)
     assert_response :success
   end
 
@@ -29,14 +29,14 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create project" do
     assert_difference('Project.count') do
-      post projects_url, params: { project: { description: 'My description', title: 'My Project' }}
+      post projects_path, params: { project: { description: 'My description', title: 'My Project' }}
     end
-    assert_redirected_to project_url(Project.last)
+    assert_redirected_to project_path(Project.last)
   end
 
   test "should not create project" do
     assert_no_difference('Project.count') do
-      post projects_url, params: { project: { description: 'My description', title: nil }}
+      post projects_path, params: { project: { description: 'My description', title: nil }}
     end
     assert_response :success
   end
@@ -54,6 +54,13 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     @project.reload
     assert_equal project_title, @project.title
+  end
+
+  test "should delete project" do
+    assert_difference 'Project.count', -1 do
+      delete project_path(@project)
+    end
+    assert_redirected_to projects_path
   end
 
 end
