@@ -9,7 +9,6 @@ gem 'uglifier'
 gem 'coffee-rails'
 gem 'jquery-rails'
 gem 'turbolinks'
-gem 'sdoc', '~> 0.4.0', group: :doc
 
 # Recommended for admin interface
 # gem 'activeadmin', github: 'activeadmin' # There is no Rails 4 version just yet
@@ -55,3 +54,6 @@ gem 'autoprefixer-rails'
 gem "haml-rails", "~> 0.9"
 
 gem 'rails-controller-testing'
+
+gem 'json-schema', '~> 2.8'
+gem 'json', '~> 2.0.2'
