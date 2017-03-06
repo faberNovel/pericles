@@ -7,6 +7,15 @@ class JsonSchemaTest < ActiveSupport::TestCase
 
   test "shouldn't exist without a schema" do
     assert_not build(:json_schema, schema: nil).valid?
+    assert_not build(:json_schema, schema: "").valid?
+  end
+
+  test "schema must be a valid JSON text" do
+    assert_not build(:json_schema, schema: "{ invalid }").valid?
+  end
+
+  test "schema must conform to the JSON Schema spec" do
+    assert_not build(:json_schema, schema: '{ "type": "invalid" }').valid?
   end
 
   test "shouldn't exist without a project" do
