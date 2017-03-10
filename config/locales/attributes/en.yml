@@ -1,0 +1,8 @@
+en:
+  activerecord:
+    errors:
+      models:
+        attribute:
+          attributes:
+            base:
+              type_cannot_be_primitive_type_and_resource: "The chosen type for the attribute cannot be both a primitive type and a resource"

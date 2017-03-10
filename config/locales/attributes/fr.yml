@@ -1,0 +1,8 @@
+fr:
+  activerecord:
+    errors:
+      models:
+        attribute:
+          attributes:
+            base:
+              type_cannot_be_primitive_type_and_resource: "Le type choisi pour l'attribut ne peut pas être à la fois un type primitif et une ressource"
