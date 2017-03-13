@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170310132514) do
+ActiveRecord::Schema.define(version: 20170313102138) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -53,8 +53,22 @@ ActiveRecord::Schema.define(version: 20170310132514) do
     t.index ["project_id"], name: "index_resources_on_project_id", using: :btree
   end
 
+  create_table "routes", force: :cascade do |t|
+    t.string   "name"
+    t.text     "description"
+    t.integer  "http_method"
+    t.string   "url"
+    t.json     "body_schema"
+    t.json     "response_schema"
+    t.integer  "resource_id"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.index ["resource_id"], name: "index_routes_on_resource_id", using: :btree
+  end
+
   add_foreign_key "attributes", "resources"
   add_foreign_key "attributes", "resources", column: "parent_resource_id"
   add_foreign_key "json_schemas", "projects"
   add_foreign_key "resources", "projects"
+  add_foreign_key "routes", "resources"
 end
