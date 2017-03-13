@@ -1,0 +1,6 @@
+%h1 List of Resources
+
+.list-group
+  - @resources.each do |resource|
+    %a{class: "list-group-item", href: project_resource_path(@project, resource)}
+      = resource.name

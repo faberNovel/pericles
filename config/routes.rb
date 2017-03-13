@@ -2,6 +2,7 @@ Rails.application.routes.draw do
 
   resources :projects do
     resources :json_schemas
+    resources :resources
   end
   root "projects#index"
 

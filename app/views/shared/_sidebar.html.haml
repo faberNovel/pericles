@@ -7,6 +7,8 @@
     %li
       = link_to 'Edit Project', edit_project_path(@project)
     %li
+      = link_to 'Show all Resources', project_resources_path(@project)
+    %li
       = link_to 'Add a JSON Schema', new_project_json_schema_path(@project)
     %li
       = link_to 'Show all JSON Schemas', project_json_schemas_path(@project)
