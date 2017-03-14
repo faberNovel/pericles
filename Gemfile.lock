@@ -105,6 +105,7 @@ GEM
       builder
       minitest (>= 5.0)
       ruby-progressbar
+    nested_form (0.3.2)
     newrelic_rpm (3.16.0.318)
     nio4r (1.2.1)
     nokogiri (1.6.8)
@@ -214,6 +215,7 @@ DEPENDENCIES
   json (~> 2.0.2)
   json-schema (~> 2.8)
   minitest-reporters
+  nested_form
   newrelic_rpm
   passenger
   pg
