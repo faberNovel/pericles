@@ -1,0 +1,68 @@
+= nested_form_for([@project, @resource]) do |f|
+  - if @resource.errors.any?
+    #error_explanation
+      %h2
+        = "#{pluralize(@resource.errors.count, "error")} prohibited this resource from being saved:"
+      %ul
+        - @resource.errors.full_messages.each do |msg|
+          %li= msg
+
+  %p
+    = f.label :name
+    %br/
+    = f.text_field :name
+
+  %p
+    = f.label :description
+    %br/
+    = f.text_area :description
+
+  %h3 Attributes
+
+  = f.link_to_add "Add an Attribute", :resource_attributes
+
+  = f.fields_for :resource_attributes do |attribute_fields|
+    = attribute_fields.label :name
+    = attribute_fields.text_field :name
+    = attribute_fields.label :description
+    = attribute_fields.text_area :description
+    = attribute_fields.label :primitive_type
+    = attribute_fields.select :primitive_type, Attribute.primitive_types.keys.to_a, include_blank: true
+    = attribute_fields.label :resource_id, "Resource type"
+    = attribute_fields.select :resource_id, @selectable_resources.collect { |r| [ r.name, r.id ] }, include_blank: true
+    = attribute_fields.label :is_array, "Array?"
+    = attribute_fields.check_box :is_array
+    = attribute_fields.label :example
+    = attribute_fields.text_area :example
+
+    - if attribute_fields.object.persisted?
+      = attribute_fields.check_box :_destroy
+      = attribute_fields.label :_destroy, "Destroy?"
+    = attribute_fields.link_to_remove "Remove"
+    %br/
+
+  %h3 Routes
+
+  = f.link_to_add "Add a Route", :routes
+
+  = f.fields_for :routes do |route_fields|
+    = route_fields.label :name
+    = route_fields.text_field :name
+    = route_fields.label :description
+    = route_fields.text_area :description
+    = route_fields.label :http_method
+    = route_fields.select :http_method, Route.http_methods.keys.to_a
+    = route_fields.label :url
+    = route_fields.text_field :url
+
+    - if route_fields.object.persisted?
+      = route_fields.check_box :_destroy
+      = route_fields.label :_destroy, "Destroy?"
+    = route_fields.link_to_remove "Remove"
+    %br/
+
+  %p
+    = f.submit
+
+
+
