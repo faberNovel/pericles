@@ -2,7 +2,9 @@ Rails.application.routes.draw do
 
   resources :projects do
     resources :json_schemas
-    resources :resources
+    resources :resources do
+      resources :routes, only: [:show]
+    end
   end
   root "projects#index"
 

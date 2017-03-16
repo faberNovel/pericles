@@ -1,7 +1,6 @@
 class ProjectsController < ApplicationController
-
+  layout 'full_width_column', only: [:show, :edit]
   before_action :setup_project, except: [:index, :new, :create]
-  layout "show_project", only: [:show, :edit]
 
   def index
     @projects = Project.all

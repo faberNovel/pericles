@@ -1,0 +1,24 @@
+.row
+  .col-xs-12
+    .page-header
+      %h1
+        !="#{@resource.name} <small> #{@route.name} </small>"
+    %p= @route.description
+    %pre
+      %code= "#{@route.http_method} #{@route.url}"
+
+
+.row
+  .col-xs-6
+    %h2 Body JSON Schema
+    %pre.pre-scrollable
+      %code
+        =format_json_schema(@route.body_schema)
+  .col-xs-6
+    %h2 Response JSON Schema
+    %pre.pre-scrollable
+      %code
+        =format_json_schema(@route.response_schema)
+
+
+= link_to 'Back', project_resource_path(@project, @resource)

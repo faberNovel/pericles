@@ -1,5 +1,5 @@
 class JsonSchemasController < ApplicationController
-  layout 'show_project'
+  layout 'full_width_column'
   before_action :setup_project, only: [:index, :new, :create]
   before_action :setup_project_and_json_schema, except: [:index, :new, :create]
 

@@ -12,6 +12,4 @@
       = render 'shared/sidebar'
       #page-content-wrapper
         .container-fluid
-          .row
-            .col-xs-12
-              = yield
+          = content_for?(:full_width_column_content) ? yield(:full_width_column_content) : yield
