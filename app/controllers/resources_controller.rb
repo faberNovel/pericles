@@ -1,9 +1,13 @@
 class ResourcesController < ApplicationController
   layout 'show_project'
   before_action :setup_project, only: [:index, :new, :create]
+  before_action :setup_project_and_resource, only: [:show]
 
   def index
     @resources = @project.resources
+  end
+
+  def show
   end
 
   def new
@@ -14,9 +18,7 @@ class ResourcesController < ApplicationController
   def create
     @resource = @project.resources.build(resource_params)
     if @resource.save
-      #FIXME
-      #redirect_to project_resource_path(@project, @resource)
-      redirect_to project_resources_path(@project)
+      redirect_to project_resource_path(@project, @resource)
     else
       setup_selectable_resources(@project, @resource)
       render 'new'
@@ -26,7 +28,12 @@ class ResourcesController < ApplicationController
   private
 
   def setup_project
-    @project = Project.includes(:resources).find(params[:project_id])
+    @project = Project.find(params[:project_id])
+  end
+
+  def setup_project_and_resource
+    setup_project
+    @resource = @project.resources.includes(:resource_attributes, :routes).find(params[:id])
   end
 
   def setup_selectable_resources(project, resource)

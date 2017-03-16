@@ -8,6 +8,12 @@ class ResourcesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "should show resource" do
+    resource = create(:resource_with_attributes)
+    get project_resource_path(resource.project, resource)
+    assert_response :success
+  end
+
   test "should get new" do
     project = create(:project)
     get new_project_resource_path(project)
@@ -22,8 +28,7 @@ class ResourcesControllerTest < ActionDispatch::IntegrationTest
     end
     resource = assigns[:resource]
     assert_not_nil resource, "should create resource"
-    #FIXME
-    #assert_redirected_to project_resource_path(resource.project, resource)
+    assert_redirected_to project_resource_path(resource.project, resource)
   end
 
   test "should not create resource without a name" do

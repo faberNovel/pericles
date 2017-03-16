@@ -1,0 +1,42 @@
+.page-header
+  %h1
+    = @resource.name
+
+%p
+  = @resource.description
+
+%h3 Attributes
+
+%table{class: "table table-striped"}
+  %thead
+    %tr
+      %th Name
+      %th Description
+      %th Type
+      %th Example
+  %tbody
+    - @resource.resource_attributes.each do |attribute|
+      %tr
+        %th{scope: "row"}= attribute.name
+        %td= attribute.description
+        %td= format_type(attribute.primitive_type, attribute.resource_id, attribute.is_array)
+        %td= attribute.example
+
+%h3 Routes
+
+%table{class: "table table-striped"}
+  %thead
+    %tr
+      %th Name
+      %th Description
+      %th HTTP Method
+      %th URL
+      %th Details
+  %tbody
+    - @resource.routes.each do |route|
+      %tr
+        %th{scope: "row"}= route.name
+        %td= route.description
+        %td= route.http_method
+        %td= route.url
+        %td= link_to "Show", project_resource_route_path(@project, @resource, route)
