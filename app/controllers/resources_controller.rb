@@ -1,7 +1,7 @@
 class ResourcesController < ApplicationController
   layout 'full_width_column'
   before_action :setup_project, only: [:index, :new, :create]
-  before_action :setup_project_and_resource, only: [:show]
+  before_action :setup_project_and_resource, only: [:show, :destroy]
 
   def index
     @resources = @project.resources
@@ -25,6 +25,16 @@ class ResourcesController < ApplicationController
     end
   end
 
+  def destroy
+    begin
+      @resource.destroy
+      redirect_to project_resources_path(@project)
+    rescue ActiveRecord::InvalidForeignKey
+      flash.now[:error] = t('activerecord.errors.models.resource.attributes.base.destroy_failed_foreign_key')
+      render 'show', status: :conflict
+    end
+  end
+
   private
 
   def setup_project
@@ -33,7 +43,7 @@ class ResourcesController < ApplicationController
 
   def setup_project_and_resource
     setup_project
-    @resource = @project.resources.includes(:resource_attributes, :routes).find(params[:id])
+    @resource = @project.resources.find(params[:id])
   end
 
   def setup_selectable_resources(project, resource)

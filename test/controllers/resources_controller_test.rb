@@ -39,4 +39,23 @@ class ResourcesControllerTest < ActionDispatch::IntegrationTest
     end
     assert_response :success
   end
+
+  test "should delete resource" do
+    resource = create(:resource)
+    project = resource.project
+    assert_difference 'Resource.count', -1 do
+      delete project_resource_path(project, resource)
+    end
+    assert_redirected_to project_resources_path(project)
+  end
+
+  test "should not delete resource (foreign key constraint)" do
+    resource = create(:resource)
+    project = resource.project
+    create(:attribute_with_resource, resource: resource)
+    assert_no_difference('Resource.count') do
+      delete project_resource_path(project, resource)
+    end
+    assert_response :conflict
+  end
 end

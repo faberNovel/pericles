@@ -1,3 +1,7 @@
+- if flash[:error]
+  %div{class: "alert alert-danger"}
+    =flash[:error]
+
 .page-header
   %h1
     = @resource.name
@@ -40,3 +44,5 @@
         %td= route.http_method
         %td= route.url
         %td= link_to "Show", project_resource_route_path(@project, @resource, route)
+
+= link_to "Delete", project_resource_path(@project, @resource), method: :delete, data: { confirm: 'Are you sure ?' }
