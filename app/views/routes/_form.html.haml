@@ -1,0 +1,35 @@
+= form_for([@project, @resource, @route]) do |f|
+  - if @route.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(@route.errors.count, "error")
+        prohibited this route from being saved:
+      %ul
+        - @route.errors.full_messages.each do |msg|
+          %li= msg
+  %p
+    = f.label :name
+    %br/
+    = f.text_field :name
+  %p
+    = f.label :description
+    %br/
+    = f.text_area :description
+  %p
+    = f.label :http_method
+    %br/
+    = f.select :http_method, Route.http_methods.keys.to_a
+  %p
+    = f.label :url
+    %br/
+    = f.text_field :url
+  %p
+    = f.label :body_schema
+    %br/
+    = f.text_area :body_schema, size: "60x20"
+  %p
+    = f.label :response_schema
+    %br/
+    = f.text_area :response_schema, size: "60x20"
+  %p
+    = f.submit

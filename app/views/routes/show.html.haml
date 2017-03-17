@@ -20,5 +20,6 @@
       %code
         =format_json_schema(@route.response_schema)
 
-
+= link_to 'Edit', edit_project_resource_route_path(@project, @resource, @route)
+\|
 = link_to 'Back', project_resource_path(@project, @resource)

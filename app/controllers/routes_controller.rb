@@ -1,8 +1,12 @@
 class RoutesController < ApplicationController
-  layout 'generic'
   before_action :setup_project_resource_and_route
 
   def show
+    render layout: 'generic'
+  end
+
+  def edit
+    render layout: 'full_width_column'
   end
 
   def setup_project_resource_and_route
