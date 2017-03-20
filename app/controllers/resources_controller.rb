@@ -29,6 +29,15 @@ class ResourcesController < ApplicationController
     end
   end
 
+  def update
+    if @resource.update(resource_params)
+      redirect_to project_resource_path(@project, @resource)
+    else
+      setup_selectable_resources(@project, @resource)
+      render 'edit', status: :unprocessable_entity
+    end
+  end
+
   def destroy
     begin
       @resource.destroy
@@ -57,7 +66,7 @@ class ResourcesController < ApplicationController
 
   def resource_params
     params.require(:resource).permit(:name, :description,
-      resource_attributes_attributes: [:id, :name, :description, :primitive_type, :resource_id, :is_array, :example, :_destroy],
-      routes_attributes: [:id, :name, :description, :http_method, :url, :_destroy])
+      resource_attributes_attributes: [:id, :name, :description, :primitive_type, :resource_id, :is_array, :example],
+      routes_attributes: [:id, :name, :description, :http_method, :url])
   end
 end

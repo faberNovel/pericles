@@ -47,6 +47,23 @@ class ResourcesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "should update resource" do
+    resource = create(:resource)
+    put project_resource_path(resource.project, resource), params: { resource: { name: "New name" } }
+    assert_redirected_to project_resource_path(resource.project, resource)
+    resource.reload
+    assert_equal "New name", resource.name
+  end
+
+  test "should not update resource" do
+    resource = create(:resource)
+    name = resource.name
+    put project_resource_path(resource.project, resource), params: { resource: { name: "" } }
+    assert_response :unprocessable_entity
+    resource.reload
+    assert_equal name, resource.name
+  end
+
   test "should delete resource" do
     resource = create(:resource)
     project = resource.project
