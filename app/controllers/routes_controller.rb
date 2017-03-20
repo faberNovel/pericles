@@ -1,6 +1,6 @@
 class RoutesController < ApplicationController
-  before_action :setup_project_and_resource, only: [:new]
-  before_action :setup_project_resource_and_route, except: [:new]
+  before_action :setup_project_and_resource, only: [:new, :create]
+  before_action :setup_project_resource_and_route, except: [:new, :create]
 
   def show
     render layout: 'generic'
@@ -13,6 +13,15 @@ class RoutesController < ApplicationController
 
   def edit
     render layout: 'full_width_column'
+  end
+
+  def create
+    @route = @resource.routes.build(route_params)
+    if @route.save
+      redirect_to project_resource_route_path(@project, @resource, @route)
+    else
+      render 'new', layout: 'full_width_column', status: :unprocessable_entity
+    end
   end
 
   def update

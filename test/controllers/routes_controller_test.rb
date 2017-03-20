@@ -19,6 +19,29 @@ class RoutesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "should create route" do
+    route = build(:route)
+    project = route.resource.project
+    resource = route.resource
+    assert_difference('Route.count') do
+      post project_resource_routes_path(project, resource), params: { route: route.attributes }
+    end
+    route = assigns(:route)
+    assert_not_nil route, "should create route"
+    assert_redirected_to project_resource_route_path(project, resource, route)
+  end
+
+  test "should not create route without a name" do
+    route = build(:route)
+    project = route.resource.project
+    resource = route.resource
+    route.name = ''
+    assert_no_difference('Route.count') do
+      post project_resource_routes_path(project, resource), params: { route: route.attributes }
+    end
+    assert_response :unprocessable_entity
+  end
+
   test "should update route" do
     route = create(:route)
     project = route.resource.project
