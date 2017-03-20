@@ -7,6 +7,12 @@ class RoutesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "should get new" do
+    resource = create(:resource)
+    get new_project_resource_route_path(resource.project, resource)
+    assert_response :success
+  end
+
   test "should get edit" do
     route = create(:route)
     get edit_project_resource_route_path(route.resource.project, route.resource, route)
