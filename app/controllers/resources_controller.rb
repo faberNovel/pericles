@@ -1,7 +1,7 @@
 class ResourcesController < ApplicationController
   layout 'full_width_column'
   before_action :setup_project, only: [:index, :new, :create]
-  before_action :setup_project_and_resource, only: [:show, :destroy]
+  before_action :setup_project_and_resource, except: [:index, :new, :create]
 
   def index
     @resources = @project.resources
@@ -12,6 +12,10 @@ class ResourcesController < ApplicationController
 
   def new
     @resource = @project.resources.build
+    setup_selectable_resources(@project, @resource)
+  end
+
+  def edit
     setup_selectable_resources(@project, @resource)
   end
 
@@ -47,8 +51,8 @@ class ResourcesController < ApplicationController
   end
 
   def setup_selectable_resources(project, resource)
-    @selectable_resources = project.resources
-    @selectable_resources.delete(resource)
+    @selectable_resources = project.resources.to_a
+    @selectable_resources = @selectable_resources - [resource]
   end
 
   def resource_params

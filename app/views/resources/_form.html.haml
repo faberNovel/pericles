@@ -35,31 +35,26 @@
     = attribute_fields.label :example
     = attribute_fields.text_area :example
 
-    - if attribute_fields.object.persisted?
-      = attribute_fields.check_box :_destroy
-      = attribute_fields.label :_destroy, "Destroy?"
     = attribute_fields.link_to_remove "Remove"
     %br/
 
-  %h3 Routes
+  - unless @resource.persisted?
+    %h3 Routes
 
-  = f.link_to_add "Add a Route", :routes
+    = f.link_to_add "Add a Route", :routes
 
-  = f.fields_for :routes do |route_fields|
-    = route_fields.label :name
-    = route_fields.text_field :name
-    = route_fields.label :description
-    = route_fields.text_area :description
-    = route_fields.label :http_method
-    = route_fields.select :http_method, Route.http_methods.keys.to_a
-    = route_fields.label :url
-    = route_fields.text_field :url
+    = f.fields_for :routes do |route_fields|
+      = route_fields.label :name
+      = route_fields.text_field :name
+      = route_fields.label :description
+      = route_fields.text_area :description
+      = route_fields.label :http_method
+      = route_fields.select :http_method, Route.http_methods.keys.to_a
+      = route_fields.label :url
+      = route_fields.text_field :url
 
-    - if route_fields.object.persisted?
-      = route_fields.check_box :_destroy
-      = route_fields.label :_destroy, "Destroy?"
-    = route_fields.link_to_remove "Remove"
-    %br/
+      = route_fields.link_to_remove "Remove"
+      %br/
 
   %p
     = f.submit
