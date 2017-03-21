@@ -38,7 +38,7 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
     assert_no_difference('Project.count') do
       post projects_path, params: { project: { description: 'My description', title: nil }}
     end
-    assert_response :success
+    assert_response :unprocessable_entity
   end
 
   test "should update project" do
