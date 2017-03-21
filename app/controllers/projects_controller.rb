@@ -35,7 +35,7 @@ class ProjectsController < ApplicationController
     if @project.update(project_params)
       redirect_to @project
     else
-      render 'edit'
+      render 'edit', status: :unprocessable_entity
     end
   end
 

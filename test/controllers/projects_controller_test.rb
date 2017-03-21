@@ -51,7 +51,7 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
   test "should not update project" do
     project_title = @project.title
     put project_path(@project), params: { project: { description: "That's it !", title: "" }}
-    assert_response :success
+    assert_response :unprocessable_entity
     @project.reload
     assert_equal project_title, @project.title
   end
