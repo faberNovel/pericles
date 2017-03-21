@@ -4,6 +4,7 @@ Rails.application.routes.draw do
     resources :json_schemas
     resources :resources do
       resources :routes, except: [:index]
+      resources :attributes, only: [:destroy]
     end
   end
   root "projects#index"
