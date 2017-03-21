@@ -44,7 +44,7 @@ class ResourcesControllerTest < ActionDispatch::IntegrationTest
     assert_no_difference('Resource.count') do
       post project_resources_path(resource.project), params: { resource: resource.attributes }
     end
-    assert_response :success
+    assert_response :unprocessable_entity
   end
 
   test "should update resource" do

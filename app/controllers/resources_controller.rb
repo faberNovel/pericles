@@ -25,7 +25,7 @@ class ResourcesController < ApplicationController
       redirect_to project_resource_path(@project, @resource)
     else
       setup_selectable_resources(@project, @resource)
-      render 'new'
+      render 'new', status: :unprocessable_entity
     end
   end
 
