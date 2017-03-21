@@ -62,4 +62,14 @@ class RoutesControllerTest < ActionDispatch::IntegrationTest
     route.reload
     assert_equal name, route.name
   end
+
+  test "should delete route" do
+    route = create(:route)
+    project = route.resource.project
+    resource = route.resource
+    assert_difference 'Route.count', -1 do
+      delete project_resource_route_path(project, resource, route)
+    end
+    assert_redirected_to project_resource_path(project, resource)
+  end
 end

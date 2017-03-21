@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   resources :projects do
     resources :json_schemas
     resources :resources do
-      resources :routes, except: [:index, :destroy]
+      resources :routes, except: [:index]
     end
   end
   root "projects#index"

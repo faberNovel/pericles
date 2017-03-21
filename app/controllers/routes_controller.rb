@@ -32,6 +32,12 @@ class RoutesController < ApplicationController
     end
   end
 
+  def destroy
+    @route.destroy
+
+    redirect_to project_resource_path(@project, @resource)
+  end
+
   def setup_project_and_resource
     @project = Project.find(params[:project_id])
     @resource = @project.resources.find(params[:resource_id])
