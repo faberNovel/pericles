@@ -20,6 +20,29 @@
       %code
         =format_json_schema(@route.response_schema)
 
+- unless @route.body_schema.blank? && @route.response_schema.blank?
+  .row
+    .col-xs-12
+      %h2 Validate a JSON instance
+
+      #json_validation_result
+
+      %p
+        Against:
+      %p
+        - unless @route.body_schema.blank?
+          = radio_button_tag(:json_schema, @route.body_schema, false, id: 'json_schema_body')
+          = label_tag(:json_schema_body, "Body JSON Schema")
+          %br/
+        - unless @route.response_schema.blank?
+          = radio_button_tag(:json_schema, @route.response_schema, false, id: 'json_schema_response')
+          = label_tag(:json_schema_response, "Response JSON Schema")
+      %p
+        = text_area_tag(:json_instance, @default_json_instance, size: "60x20")
+      %p
+        = submit_tag("Validate", id: 'validate_json_instance')
+
+
 = link_to 'Edit', edit_project_resource_route_path(@project, @resource, @route)
 \|
 = link_to "Delete", project_resource_route_path(@project, @resource, @route), method: :delete, data: { confirm: 'Are you sure ?' }

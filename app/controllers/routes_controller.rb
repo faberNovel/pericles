@@ -3,6 +3,7 @@ class RoutesController < ApplicationController
   before_action :setup_project_resource_and_route, except: [:new, :create]
 
   def show
+    @default_json_instance = "{}"
     render layout: 'generic'
   end
 
