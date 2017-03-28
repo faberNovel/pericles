@@ -10,7 +10,6 @@
     = render 'shared/navigation'
     .container#main-container
       .row
-        .col-xs-3
+        .col-xs-12
           = yield :page_title
-        .col-xs-6
-          = yield
+      = yield
