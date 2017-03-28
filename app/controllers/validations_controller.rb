@@ -1,6 +1,9 @@
 require "json-schema"
 
 class ValidationsController < ApplicationController
+  def new
+    @default_json_instance = "{}"
+  end
 
   def create
     permitted_validation_params = validation_params

@@ -7,9 +7,9 @@ Rails.application.routes.draw do
       resources :attributes, only: [:destroy]
     end
   end
-  resources :validations, only: [:create]
-  match "/not_found", to: "errors#not_found", via: :all
+  resources :validations, only: [:create, :new]
   root "projects#index"
+  match "/not_found", to: "errors#not_found", via: :all
   match '*path', to: "errors#not_found", via: :all
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

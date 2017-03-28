@@ -1,6 +1,11 @@
 require 'test_helper'
 
 class ValidationsControllerTest < ActionDispatch::IntegrationTest
+  test "should get new" do
+    get new_validation_path
+    assert_response :success
+  end
+
   test "should return bad_request status code if validation key is missing" do
     assert_no_difference('Validation.count') do
       post validations_path, params: {}
