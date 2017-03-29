@@ -60,3 +60,5 @@ gem 'json', '~> 2.0.2'
 
 gem "nested_form"
 gem 'rails-erd', '~> 1.5'
+
+gem 'active_model_serializers', '~> 0.10.0'

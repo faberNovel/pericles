@@ -24,6 +24,11 @@ GEM
       erubis (~> 2.7.0)
       rails-dom-testing (~> 2.0)
       rails-html-sanitizer (~> 1.0, >= 1.0.2)
+    active_model_serializers (0.10.5)
+      actionpack (>= 4.1, < 6)
+      activemodel (>= 4.1, < 6)
+      case_transform (>= 0.2)
+      jsonapi-renderer (>= 0.1.1.beta1, < 0.2)
     activejob (5.0.0)
       activesupport (= 5.0.0)
       globalid (>= 0.3.6)
@@ -50,6 +55,8 @@ GEM
       sass (>= 3.3.4)
     builder (3.2.2)
     byebug (9.0.5)
+    case_transform (0.2)
+      activesupport
     choice (0.2.0)
     coffee-rails (4.2.1)
       coffee-script (>= 2.2.0)
@@ -91,6 +98,7 @@ GEM
     json (2.0.3)
     json-schema (2.8.0)
       addressable (>= 2.4)
+    jsonapi-renderer (0.1.2)
     loofah (2.0.3)
       nokogiri (>= 1.5.9)
     mail (2.6.4)
@@ -211,6 +219,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  active_model_serializers (~> 0.10.0)
   autoprefixer-rails
   bootstrap-sass (~> 3.3.6)
   byebug
