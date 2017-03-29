@@ -1,0 +1,2 @@
+class JsonInstanceError < JsonError
+end
