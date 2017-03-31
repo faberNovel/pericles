@@ -10,5 +10,6 @@ Rails.application.config.assets.version = '1.0'
 # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
 # Rails.application.config.assets.precompile += %w( search.js )
 Rails.application.config.assets.precompile += %w( validate_instance.js )
+Rails.application.config.assets.precompile += %w( generate_instance.js )
 Rails.application.config.assets.precompile += %w( routes/show.js )
 Rails.application.config.assets.precompile += %w( validations/new.js )

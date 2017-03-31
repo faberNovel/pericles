@@ -1,5 +1,6 @@
 - content_for :page_scripts do
   = javascript_include_tag("validate_instance")
+  = javascript_include_tag("generate_instance")
   = javascript_include_tag("routes/show")
 
 .row
@@ -26,7 +27,7 @@
 
 - unless @route.body_schema.blank? && @route.response_schema.blank?
   .row
-    .col-xs-12
+    .col-xs-6
       %h2 Validate a JSON instance
 
       #json_validation_result
@@ -35,16 +36,35 @@
         Against:
       %p
         - unless @route.body_schema.blank?
-          = radio_button_tag(:json_schema, @route.body_schema, false, id: 'json_schema_body')
-          = label_tag(:json_schema_body, "Body JSON Schema")
+          = radio_button_tag(:validation_json_schema, @route.body_schema, false, id: 'validation_json_schema_body')
+          = label_tag(:validation_json_schema_body, "Body JSON Schema")
           %br/
         - unless @route.response_schema.blank?
-          = radio_button_tag(:json_schema, @route.response_schema, false, id: 'json_schema_response')
-          = label_tag(:json_schema_response, "Response JSON Schema")
+          = radio_button_tag(:validation_json_schema, @route.response_schema, false, id: 'validation_json_schema_response')
+          = label_tag(:validation_json_schema_response, "Response JSON Schema")
       %p
         = text_area_tag(:json_instance, @default_json_instance, size: "60x20")
       %p
         = submit_tag("Validate", id: 'validate_json_instance')
+
+    .col-xs-6
+      %h2 Generate a JSON instance
+
+      %p
+        Of:
+      %p
+        - unless @route.body_schema.blank?
+          = radio_button_tag(:generation_json_schema, @route.body_schema, false, id: 'generation_json_schema_body')
+          = label_tag(:generation_json_schema_body, "Body JSON Schema")
+          %br/
+        - unless @route.response_schema.blank?
+          = radio_button_tag(:generation_json_schema, @route.response_schema, false, id: 'generation_json_schema_response')
+          = label_tag(:generation_json_schema_response, "Response JSON Schema")
+
+      %p
+        = submit_tag("Generate", id: 'generate_json_instance')
+
+      #json_generation_result
 
 
 = link_to 'Edit', edit_project_resource_route_path(@project, @resource, @route)
