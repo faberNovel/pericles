@@ -42,7 +42,17 @@ function handle_success() {
   $('#json_validation_result').text("The input JSON schema validates the input JSON instance (JSON Schema Draft 4).");
 }
 
-function validate_json_instance(json_schema, json_instance) {
+function display_validation_result(result) {
+  var status = result.validation.status;
+  var errors = result.validation.json_errors;
+  if (status == "success") {
+    handle_success();
+  } else {
+    handle_error(status, errors);
+  }
+}
+
+function validate_json_instance(json_schema, json_instance, callback) {
   var data = {
     validation: {
       json_schema: json_schema,
@@ -56,15 +66,7 @@ function validate_json_instance(json_schema, json_instance) {
       contentType: "application/json",
       dataType: "json"
     })
-    .done(function(data) {
-      var status = data.validation.status;
-      var errors = data.validation.json_errors;
-      if (status == "success") {
-        handle_success();
-      } else {
-        handle_error(status, errors);
-      }
-    })
+    .done(callback)
     .fail(function(data) {
       console.log(data);
     });
