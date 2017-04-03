@@ -1,6 +1,13 @@
 require 'test_helper'
 
 class ValidationsControllerTest < ActionDispatch::IntegrationTest
+  test "should get index" do
+    create(:validation)
+    get validations_path
+    assert_not_nil assigns[:validations]
+    assert_response :success
+  end
+
   test "should get new" do
     get new_validation_path
     assert_response :success

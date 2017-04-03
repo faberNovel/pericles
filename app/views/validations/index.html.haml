@@ -1,0 +1,34 @@
+- content_for :page_title do
+  %h1 Validations history
+
+- @validations.each do |validation|
+  .row
+    .col-xs-12
+      %h2= "Validation ##{validation.id}"
+      - if validation.status == :success
+        %h4{class: "text-success"}
+          Success
+      - else
+        %h4{class: "text-danger"}
+          Failure
+      %p
+        = validation_string_for_status(validation.status.to_s)
+      - json_errors = validation.json_instance_errors.to_a
+      - json_errors += validation.json_schema_errors.to_a
+      - if json_errors.any?
+        %p
+          %ul
+            - json_errors.each do |json_error|
+              %li= json_error.description
+
+  .row
+    .col-xs-6
+      %h4 JSON Schema
+      %pre.pre-scrollable
+        %code
+          = format_json_text(validation.json_schema)
+    .col-xs-6
+      %h4 JSON instance
+      %pre.pre-scrollable
+        %code
+          = format_json_text(validation.json_instance)

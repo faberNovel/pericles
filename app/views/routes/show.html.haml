@@ -46,6 +46,8 @@
         = text_area_tag(:json_instance, @default_json_instance, size: "60x20")
       %p
         = submit_tag("Validate", id: 'validate_json_instance')
+      %p
+        = link_to 'See Validations History', validations_path
 
     .col-xs-6
       %h2 Generate a JSON instance
