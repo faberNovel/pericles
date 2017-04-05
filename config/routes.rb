@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
 
   resources :projects do
-    resources :json_schemas
     resources :resources do
       resources :routes, except: [:index]
       resources :attributes, only: [:destroy]
