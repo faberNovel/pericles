@@ -15,17 +15,12 @@
 
 .row
   .col-xs-6
-    %h2 Body JSON Schema
-    %pre.pre-scrollable
-      %code
-        =format_json_schema(@route.body_schema)
-  .col-xs-6
     %h2 Response JSON Schema
     %pre.pre-scrollable
       %code
         =format_json_schema(@route.response_schema)
 
-- unless @route.body_schema.blank? && @route.response_schema.blank?
+- unless @route.response_schema.blank?
   .row
     .col-xs-6
       %h2 Validate a JSON instance
@@ -35,10 +30,6 @@
       %p
         Against:
       %p
-        - unless @route.body_schema.blank?
-          = radio_button_tag(:validation_json_schema, @route.body_schema, false, id: 'validation_json_schema_body')
-          = label_tag(:validation_json_schema_body, "Body JSON Schema")
-          %br/
         - unless @route.response_schema.blank?
           = radio_button_tag(:validation_json_schema, @route.response_schema, false, id: 'validation_json_schema_response')
           = label_tag(:validation_json_schema_response, "Response JSON Schema")
@@ -55,10 +46,6 @@
       %p
         Of:
       %p
-        - unless @route.body_schema.blank?
-          = radio_button_tag(:generation_json_schema, @route.body_schema, false, id: 'generation_json_schema_body')
-          = label_tag(:generation_json_schema_body, "Body JSON Schema")
-          %br/
         - unless @route.response_schema.blank?
           = radio_button_tag(:generation_json_schema, @route.response_schema, false, id: 'generation_json_schema_response')
           = label_tag(:generation_json_schema_response, "Response JSON Schema")

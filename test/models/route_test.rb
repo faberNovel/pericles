@@ -20,13 +20,11 @@ class RouteTest < ActiveSupport::TestCase
 
   test "json_schemas must be a valid JSON text" do
     assert_not build(:route, request_body_schema: "{ invalid }").valid?
-    assert_not build(:route, body_schema: "{ invalid }").valid?
     assert_not build(:route, response_schema: "{ invalid }").valid?
   end
 
   test "json_schemas must conform to the JSON Schema spec" do
     assert_not build(:route, request_body_schema: '{ "type": "invalid" }').valid?
-    assert_not build(:route, body_schema: '{ "type": "invalid" }').valid?
     assert_not build(:route, response_schema: '{ "type": "invalid" }').valid?
   end
 
@@ -40,6 +38,6 @@ class RouteTest < ActiveSupport::TestCase
   end
 
   test "Route should be valid with all attributes set correctly" do
-    assert build(:route, name: "New route", description: "New test route", http_method: :POST, url: "/tests", body_schema: "", response_schema: "").valid?
+    assert build(:route, name: "New route", description: "New test route", http_method: :POST, url: "/tests", response_schema: "").valid?
   end
 end

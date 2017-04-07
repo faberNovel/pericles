@@ -9,7 +9,6 @@ class Route < ApplicationRecord
   validates :http_method, presence: true
   validates :url, presence: true
   validates :request_body_schema, json_schema: true, allow_blank: true
-  validates :body_schema, json_schema: true, allow_blank: true
   validates :response_schema, json_schema: true, allow_blank: true
   validates :resource, presence: true, uniqueness: { scope: [:http_method, :url]}
 end

@@ -50,6 +50,6 @@ class RoutesController < ApplicationController
   end
 
   def route_params
-    params.require(:route).permit(:name, :description, :http_method, :url, :body_schema, :response_schema)
+    params.require(:route).permit(:name, :description, :http_method, :url, :response_schema)
   end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170407175225) do
+ActiveRecord::Schema.define(version: 20170407182241) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -92,7 +92,6 @@ ActiveRecord::Schema.define(version: 20170407175225) do
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
     t.json     "request_body_schema"
-    t.json     "body_schema"
     t.index ["resource_id"], name: "index_routes_on_resource_id", using: :btree
   end
 
