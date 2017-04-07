@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170407165817) do
+ActiveRecord::Schema.define(version: 20170407172714) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,6 +26,16 @@ ActiveRecord::Schema.define(version: 20170407165817) do
     t.datetime "created_at",                         null: false
     t.datetime "updated_at",                         null: false
     t.index ["resource_id"], name: "index_attributes_on_resource_id", using: :btree
+  end
+
+  create_table "headers", force: :cascade do |t|
+    t.string   "name"
+    t.text     "description"
+    t.string   "http_message_type"
+    t.integer  "http_message_id"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+    t.index ["http_message_type", "http_message_id"], name: "index_headers_on_http_message_type_and_http_message_id", using: :btree
   end
 
   create_table "json_errors", force: :cascade do |t|

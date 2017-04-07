@@ -1,6 +1,7 @@
 class Route < ApplicationRecord
   enum http_method: [:GET, :POST, :PUT, :PATCH, :DELETE]
 
+  has_many :request_headers, as: :http_message, class_name: 'Header', dependent: :destroy
   belongs_to :resource, inverse_of: :routes
 
   validates :name, presence: true, uniqueness: { scope: :resource }
