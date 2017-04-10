@@ -7,6 +7,3 @@ fr:
             request_body_schema:
               schema_must_be_valid_json: "Le JSON Schema entré n'est pas un JSON text valide (RFC 7159)"
               schema_must_respect_json_schema_spec: "Le JSON Schema entré n'est pas conforme au JSON Schema Draft 4. Erreur: %{error}"
-            response_schema:
-              schema_must_be_valid_json: "Le JSON Schema entré (response) n'est pas un JSON text valide (RFC 7159)"
-              schema_must_respect_json_schema_spec: "Le JSON Schema entré (response) n'est pas conforme au JSON Schema Draft 4. Erreur: %{error}"

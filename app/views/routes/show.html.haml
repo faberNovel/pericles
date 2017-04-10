@@ -51,48 +51,6 @@
         %code
           =format_json_schema(@route.request_body_schema)
 
-.row
-  .col-xs-6
-    %h2 Response JSON Schema
-    %pre.pre-scrollable
-      %code
-        =format_json_schema(@route.response_schema)
-
-- unless @route.response_schema.blank?
-  .row
-    .col-xs-6
-      %h2 Validate a JSON instance
-
-      #json_validation_result
-
-      %p
-        Against:
-      %p
-        - unless @route.response_schema.blank?
-          = radio_button_tag(:validation_json_schema, @route.response_schema, false, id: 'validation_json_schema_response')
-          = label_tag(:validation_json_schema_response, "Response JSON Schema")
-      %p
-        = text_area_tag(:json_instance, @default_json_instance, size: "60x20")
-      %p
-        = submit_tag("Validate", id: 'validate_json_instance')
-      %p
-        = link_to 'See Validations History', validations_path
-
-    .col-xs-6
-      %h2 Generate a JSON instance
-
-      %p
-        Of:
-      %p
-        - unless @route.response_schema.blank?
-          = radio_button_tag(:generation_json_schema, @route.response_schema, false, id: 'generation_json_schema_response')
-          = label_tag(:generation_json_schema_response, "Response JSON Schema")
-
-      %p
-        = submit_tag("Generate", id: 'generate_json_instance')
-
-      #json_generation_result
-
 
 = link_to 'Edit', edit_project_resource_route_path(@project, @resource, @route)
 \|

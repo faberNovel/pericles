@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170407182241) do
+ActiveRecord::Schema.define(version: 20170410163241) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -87,7 +87,6 @@ ActiveRecord::Schema.define(version: 20170407182241) do
     t.text     "description"
     t.integer  "http_method"
     t.string   "url"
-    t.json     "response_schema"
     t.integer  "resource_id"
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
