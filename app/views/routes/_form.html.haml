@@ -43,6 +43,19 @@
     = query_parameter_fields.link_to_remove "Remove"
     %br/
 
+  %h4 Headers
+
+  = f.link_to_add "Add a Header", :request_headers
+
+  = f.fields_for :request_headers do |header_fields|
+    = header_fields.label :name
+    = header_fields.text_field :name
+    = header_fields.label :description
+    = header_fields.text_area :description
+
+    = header_fields.link_to_remove "Remove"
+    %br/
+
   %p
     = f.label :request_body_schema, "Body JSON Schema"
     %br/

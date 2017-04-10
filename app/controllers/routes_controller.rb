@@ -53,6 +53,7 @@ class RoutesController < ApplicationController
 
   def route_params
     params.require(:route).permit(:name, :description, :http_method, :url, :request_body_schema, :response_schema,
-      request_query_parameters_attributes: [:id, :name, :description, :primitive_type, :is_optional, :_destroy])
+      request_query_parameters_attributes: [:id, :name, :description, :primitive_type, :is_optional, :_destroy],
+      request_headers_attributes: [:id, :name, :description, :_destroy])
   end
 end

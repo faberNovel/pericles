@@ -6,6 +6,7 @@ class Route < ApplicationRecord
 
   belongs_to :resource, inverse_of: :routes
 
+  accepts_nested_attributes_for :request_headers, allow_destroy: true, reject_if: :all_blank
   accepts_nested_attributes_for :request_query_parameters, allow_destroy: true, reject_if: :all_blank
 
   validates :name, presence: true, uniqueness: { scope: :resource }

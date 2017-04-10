@@ -32,6 +32,19 @@
               %td= query_parameter.primitive_type
               %td= query_parameter.is_optional ? t('optional') : t('required')
 
+    - unless @route.request_headers.blank?
+      %h4 Headers
+      %table{class: "table table-striped"}
+        %thead
+          %tr
+            %th Name
+            %th Description
+        %tbody
+          - @route.request_headers.each do |header|
+            %tr
+              %th{scope: "row"}= header.name
+              %td= header.description
+
     - unless @route.request_body_schema.blank?
       %h4 Body JSON Schema
       %pre.pre-scrollable
