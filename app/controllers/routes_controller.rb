@@ -39,6 +39,8 @@ class RoutesController < ApplicationController
     redirect_to project_resource_path(@project, @resource)
   end
 
+  private
+
   def setup_project_and_resource
     @project = Project.find(params[:project_id])
     @resource = @project.resources.find(params[:resource_id])
@@ -50,6 +52,7 @@ class RoutesController < ApplicationController
   end
 
   def route_params
-    params.require(:route).permit(:name, :description, :http_method, :url, :response_schema)
+    params.require(:route).permit(:name, :description, :http_method, :url, :request_body_schema, :response_schema,
+      request_query_parameters_attributes: [:id, :name, :description, :primitive_type, :is_optional, :_destroy])
   end
 end

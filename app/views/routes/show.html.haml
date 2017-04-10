@@ -12,6 +12,31 @@
     %pre
       %code= "#{@route.http_method} #{@route.url}"
 
+.row
+  .col-xs-12
+    %h2 Request
+    - unless @route.request_query_parameters.blank?
+      %h4 Query Parameters
+      %table{class: "table table-striped"}
+        %thead
+          %tr
+            %th Name
+            %th Description
+            %th Type
+            %th
+        %tbody
+          - @route.request_query_parameters.each do |query_parameter|
+            %tr
+              %th{scope: "row"}= query_parameter.name
+              %td= query_parameter.description
+              %td= query_parameter.primitive_type
+              %td= query_parameter.is_optional ? t('optional') : t('required')
+
+    - unless @route.request_body_schema.blank?
+      %h4 Body JSON Schema
+      %pre.pre-scrollable
+        %code
+          =format_json_schema(@route.request_body_schema)
 
 .row
   .col-xs-6

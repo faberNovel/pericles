@@ -1,4 +1,4 @@
-= form_for([@project, @resource, @route]) do |f|
+= nested_form_for([@project, @resource, @route]) do |f|
   - if @route.errors.any?
     #error_explanation
       %h2
@@ -23,6 +23,33 @@
     = f.label :url
     %br/
     = f.text_field :url
+
+  %h3 Request
+
+  %h4 Query Parameters
+
+  = f.link_to_add "Add a Query Parameter", :request_query_parameters
+
+  = f.fields_for :request_query_parameters do |query_parameter_fields|
+    = query_parameter_fields.label :name
+    = query_parameter_fields.text_field :name
+    = query_parameter_fields.label :description
+    = query_parameter_fields.text_area :description
+    = query_parameter_fields.label :primitive_type, "Type"
+    = query_parameter_fields.select :primitive_type, QueryParameter.primitive_types.keys.to_a, include_blank: true
+    = query_parameter_fields.label :is_optional, "Optional?"
+    = query_parameter_fields.check_box :is_optional
+
+    = query_parameter_fields.link_to_remove "Remove"
+    %br/
+
+  %p
+    = f.label :request_body_schema, "Body JSON Schema"
+    %br/
+    = f.text_area :request_body_schema, size: "60x20"
+
+  %h3 Responses
+
   %p
     = f.label :response_schema
     %br/
