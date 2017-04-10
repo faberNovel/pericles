@@ -3,6 +3,7 @@ class Route < ApplicationRecord
 
   has_many :request_headers, as: :http_message, class_name: 'Header', dependent: :destroy
   has_many :request_query_parameters, inverse_of: :route, class_name: 'QueryParameter', dependent: :destroy
+  has_many :responses, inverse_of: :route, dependent: :destroy
 
   belongs_to :resource, inverse_of: :routes
 

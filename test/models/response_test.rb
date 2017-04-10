@@ -12,4 +12,8 @@ class ResponseTest < ActiveSupport::TestCase
   test "body_schema must conform to the JSON Schema spec" do
     assert_not build(:response, body_schema: '{ "type": "invalid" }').valid?
   end
+
+  test "shouldn't exist without a route" do
+    assert_not build(:response, route: nil).valid?
+  end
 end

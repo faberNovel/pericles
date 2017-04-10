@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170410163241) do
+ActiveRecord::Schema.define(version: 20170410163242) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -80,6 +80,8 @@ ActiveRecord::Schema.define(version: 20170410163241) do
     t.json     "body_schema"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.integer  "route_id"
+    t.index ["route_id"], name: "index_responses_on_route_id", using: :btree
   end
 
   create_table "routes", force: :cascade do |t|
@@ -106,5 +108,6 @@ ActiveRecord::Schema.define(version: 20170410163241) do
   add_foreign_key "json_errors", "validations"
   add_foreign_key "query_parameters", "routes"
   add_foreign_key "resources", "projects"
+  add_foreign_key "responses", "routes"
   add_foreign_key "routes", "resources"
 end
