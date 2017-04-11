@@ -63,5 +63,38 @@
 
   %h3 Responses
 
+  = f.link_to_add "Add a Response", :responses
+
+  = f.fields_for :responses do |response_fields|
+
+    %h4 Response
+
+    = response_fields.label :status_code
+    = response_fields.text_field :status_code
+    = response_fields.label :description
+    = response_fields.text_area :description
+
+    %h5 Headers
+
+    = response_fields.link_to_add "Add a Header", :headers
+
+    = response_fields.fields_for :headers do |response_header_fields|
+      = response_header_fields.label :name
+      = response_header_fields.text_field :name
+      = response_header_fields.label :description
+      = response_header_fields.text_area :description
+
+      = response_header_fields.link_to_remove "Remove"
+      %br/
+
+    %br/
+    = response_fields.label :body_schema, "Body JSON Schema"
+    %br/
+    = response_fields.text_area :body_schema, size: "60x20"
+    %br/
+
+    = response_fields.link_to_remove "Remove"
+    %br/
+
   %p
     = f.submit

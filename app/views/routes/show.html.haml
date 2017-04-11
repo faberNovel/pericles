@@ -51,6 +51,37 @@
         %code
           =format_json_schema(@route.request_body_schema)
 
+.row
+  .col-xs-12
+    %h2 Responses
+
+- @route.responses.each do |response|
+  .row
+    .col-xs-6
+      %h4 Status Code
+      %p= response.status_code
+      - unless response.description.blank?
+        %h4 Description
+        %p= response.description
+      - unless response.headers.blank?
+        %h4 Headers
+        %table{class: "table table-striped"}
+          %thead
+            %tr
+              %th Name
+              %th Description
+          %tbody
+            - response.headers.each do |response_header|
+              %tr
+                %th{scope: "row"}= response_header.name
+                %td= response_header.description
+
+    .col-xs-6
+      %h4 Body JSON Schema
+      %pre.pre-scrollable
+        %code
+          =format_json_schema(response.body_schema)
+
 
 = link_to 'Edit', edit_project_resource_route_path(@project, @resource, @route)
 \|
