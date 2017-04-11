@@ -15,6 +15,9 @@
 .row
   .col-xs-12
     %h2 Request
+
+.row
+  .col-xs-6
     - unless @route.request_query_parameters.blank?
       %h4 Query Parameters
       %table{class: "table table-striped"}
@@ -45,11 +48,11 @@
               %th{scope: "row"}= header.name
               %td= header.description
 
-    - unless @route.request_body_schema.blank?
-      %h4 Body JSON Schema
-      %pre.pre-scrollable
-        %code
-          =format_json_schema(@route.request_body_schema)
+  .col-xs-6
+    %h4 Body JSON Schema
+    %pre.pre-scrollable
+      %code
+        =format_json_schema(@route.request_body_schema)
 
 .row
   .col-xs-12
