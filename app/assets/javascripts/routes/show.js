@@ -16,7 +16,7 @@ $(document).ready(function() {
       generate_json_instance(json_schema, display_generated_instance);
     } else {
       setClass('#json_generation_result', "alert alert-warning");
-      $('#json_generation_result').text("Please select which schema (body or response) you wish to generate an instance of.");
+      $('#json_generation_result').text("Please select which schema you wish to generate an instance of.");
     }
   });
 });

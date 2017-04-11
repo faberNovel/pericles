@@ -113,6 +113,28 @@
       %p
         = link_to 'See Validations History', validations_path
 
+    .col-xs-6
+      %h2 Generate a JSON instance
+
+      %p
+        Of:
+
+      %p
+        - unless @route.request_body_schema.blank?
+          = radio_button_tag(:generation_json_schema, @route.request_body_schema, false, id: 'generation_request_body_schema')
+          = label_tag(:generation_request_body_schema, "Request Body JSON Schema")
+          %br/
+        - @route.responses.each do |response|
+          - unless response.body_schema.blank?
+            - radio_button_id = "generation_response_#{response.id}_body_schema"
+            = radio_button_tag(:generation_json_schema, response.body_schema, false, id: radio_button_id)
+            = label_tag(radio_button_id.to_sym, "Response Body JSON Schema (Status Code: #{response.status_code})")
+
+      %p
+        = submit_tag("Generate", id: 'generate_json_instance')
+
+      #json_generation_result
+
 
 = link_to 'Edit', edit_project_resource_route_path(@project, @resource, @route)
 \|
