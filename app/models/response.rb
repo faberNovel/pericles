@@ -1,5 +1,5 @@
 class Response < ApplicationRecord
-  belongs_to :route, inverse_of: :responses
+  belongs_to :route
 
   has_many :headers, inverse_of: :http_message, as: :http_message, dependent: :destroy
 
