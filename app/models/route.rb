@@ -1,7 +1,7 @@
 class Route < ApplicationRecord
   enum http_method: [:GET, :POST, :PUT, :PATCH, :DELETE]
 
-  has_many :request_headers, as: :http_message, class_name: 'Header', dependent: :destroy
+  has_many :request_headers, inverse_of: :http_message, as: :http_message, class_name: 'Header', dependent: :destroy
   has_many :request_query_parameters, inverse_of: :route, class_name: 'QueryParameter', dependent: :destroy
   has_many :responses, inverse_of: :route, dependent: :destroy
 
