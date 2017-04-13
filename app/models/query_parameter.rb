@@ -3,7 +3,7 @@ class QueryParameter < ApplicationRecord
 
   belongs_to :route
 
-  validates :name, presence: true, uniqueness: { scope: :route, case_sensitive: false }
+  validates :name, presence: true
   validates :primitive_type, presence: true
   validates :route, presence: true
 end

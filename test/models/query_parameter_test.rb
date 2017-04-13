@@ -5,14 +5,6 @@ class QueryParameterTest < ActiveSupport::TestCase
     assert_not build(:query_parameter, name: nil).valid?
   end
 
-  test "Two query_parameters within the same route shouldn't have the same name" do
-    query_parameter = create(:query_parameter)
-    name = query_parameter.name
-    route = query_parameter.route
-    assert_not build(:query_parameter, name: name, route: route).valid?
-    assert_not build(:query_parameter, name: name.upcase, route: route).valid?
-  end
-
   test "shouldn't exist without a primitive_type" do
     assert_not build(:query_parameter, primitive_type: nil).valid?
   end
