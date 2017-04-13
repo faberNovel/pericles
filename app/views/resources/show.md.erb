@@ -1,0 +1,12 @@
+# <%= @resource.name %>
+
+<%= @resource.description %>
+
+## The <%= @resource.name %> object
+
+Attributes | Type | Description | Example
+---------- | ---- | ----------- | -------
+<% @resource.resource_attributes.each do |attribute| %>
+  <% attribute_type = format_type(attribute.primitive_type, attribute.resource_id, attribute.is_array) %>
+  <%= "#{attribute.name} | #{attribute_type} | #{attribute.description} | #{attribute.example}" %>
+<% end %>
