@@ -24,3 +24,10 @@ Name | Description | Type | Optional ?
 ---- | ----------- | ---- | ----------
 <%= render route.request_query_parameters %>
 
+### Responses
+
+<% route.responses.each do |response| %>
+<%= render partial: "responses/response_body_schema", locals: {response: response} %>
+<% end %>
+
+<%= render route.responses %>
