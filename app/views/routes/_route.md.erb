@@ -1,0 +1,14 @@
+## <%= route.name %>
+
+<%= route.description %>
+
+> Request Body JSON Schema
+
+```json
+<%= raw format_json_schema(route.request_body_schema) %>
+```
+
+### Request
+
+`<%= "#{route.http_method} #{route.url}" %>`
+

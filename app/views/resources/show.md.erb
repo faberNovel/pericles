@@ -10,3 +10,5 @@ Attributes | Type | Description | Example
   <% attribute_type = format_type(attribute.primitive_type, attribute.resource_id, attribute.is_array) %>
   <%= "#{attribute.name} | #{attribute_type} | #{attribute.description} | #{attribute.example}" %>
 <% end %>
+
+<%= render @resource.routes %>
