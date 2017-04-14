@@ -33,7 +33,7 @@
               %th{scope: "row"}= query_parameter.name
               %td= query_parameter.description
               %td= query_parameter.primitive_type
-              %td= query_parameter.is_optional ? t('optional') : t('required')
+              %td= query_param_is_optional_to_string(query_parameter)
 
     - unless @route.request_headers.blank?
       %h4 Headers

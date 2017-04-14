@@ -11,4 +11,8 @@ module RoutesHelper
     end
     return false
   end
+
+  def query_param_is_optional_to_string(query_param)
+    query_param.is_optional ? t('optional') : t('required')
+  end
 end
