@@ -11,4 +11,6 @@
     %li
       = link_to 'Show all Resources', project_resources_path(@project)
     %li
+      = link_to 'Download as Markdown', project_path(@project, format: :zip)
+    %li
       = link_to 'Delete Project', project_path(@project), method: :delete, data: { confirm: 'Are you sure?' }

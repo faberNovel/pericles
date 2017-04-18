@@ -1,3 +1,5 @@
+require 'zip'
+
 class ProjectsController < ApplicationController
   layout 'full_width_column', only: [:show, :edit]
   before_action :setup_project, except: [:index, :new, :create]
@@ -7,10 +9,24 @@ class ProjectsController < ApplicationController
   end
 
   def show
-    select_hash = {"desc" => ["Description", @project.description]}
-    tag = params[:tag]
-    @section_title = select_hash[tag][0] if select_hash[tag]
-    @content = select_hash[tag][1] if select_hash[tag]
+    respond_to do |format|
+      format.html do
+        select_hash = {"desc" => ["Description", @project.description]}
+        tag = params[:tag]
+        @section_title = select_hash[tag][0] if select_hash[tag]
+        @content = select_hash[tag][1] if select_hash[tag]
+      end
+      format.zip do
+        compressed_filestream = Zip::OutputStream.write_buffer do |zos|
+          @project.resources.each do |resource|
+            zos.put_next_entry "includes/_#{resource.name.downcase}.md"
+            zos.print ResourcesController.render :show, assigns: { resource: resource }, formats: :md
+          end
+        end
+        compressed_filestream.rewind
+        send_data compressed_filestream.read, filename: "#{@project.title}.zip"
+      end
+    end
   end
 
   def new

@@ -15,6 +15,13 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
   test "should show project" do
     get project_path(@project)
     assert_response :success
+
+    get project_path(@project), headers: { 'Accept' => 'application/zip' }
+    assert_response :success
+
+    @project.resources << create(:resource, project: @project)
+    get project_path(@project), headers: { 'Accept' => 'application/zip' }
+    assert_response :success
   end
 
   test "should get new" do
