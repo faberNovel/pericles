@@ -3,8 +3,6 @@
     %li.sidebar-brand
       = link_to "#{@project.title}", project_path(@project)
     %li
-      = link_to 'Description', project_path(@project, tag: "desc")
-    %li
       = link_to 'Edit Project', edit_project_path(@project)
     %li
       = link_to 'Add a new Resource', new_project_resource_path(@project)

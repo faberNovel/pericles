@@ -10,12 +10,7 @@ class ProjectsController < ApplicationController
 
   def show
     respond_to do |format|
-      format.html do
-        select_hash = {"desc" => ["Description", @project.description]}
-        tag = params[:tag]
-        @section_title = select_hash[tag][0] if select_hash[tag]
-        @content = select_hash[tag][1] if select_hash[tag]
-      end
+      format.html
       format.zip do
         compressed_filestream = Zip::OutputStream.write_buffer do |zos|
           @project.resources.each do |resource|
