@@ -1,0 +1,20 @@
+---
+title: <%= @project.title %> API Reference
+
+language_tabs:
+  - json
+
+toc_footers:
+  - <a href='http://github.com/tripit/slate'>Documentation Powered by Slate</a>
+
+includes:
+<% @resources.each do |resource| %>
+  - <%= resource.name.downcase %>
+<% end %>
+
+search: true
+---
+
+# Introduction
+
+Welcome to the <%= @project.title %> API documentation!

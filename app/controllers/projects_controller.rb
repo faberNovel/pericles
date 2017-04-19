@@ -22,9 +22,11 @@ class ProjectsController < ApplicationController
             zos.put_next_entry "includes/_#{resource.name.downcase}.md"
             zos.print ResourcesController.render :show, assigns: { resource: resource }, formats: :md
           end
+          zos.put_next_entry "index.md"
+          zos.print ResourcesController.render :index, assigns: { project: @project, resources: @project.resources }, formats: :md
         end
         compressed_filestream.rewind
-        send_data compressed_filestream.read, filename: "#{@project.title}.zip"
+        send_data compressed_filestream.read, filename: "#{@project.title.downcase}.zip"
       end
     end
   end
