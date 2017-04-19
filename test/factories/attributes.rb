@@ -6,7 +6,6 @@ FactoryGirl.define do
 
   factory :attribute do
     name { generate(:attribute_name) }
-    description "New attribute"
     association :parent_resource, factory: :resource
     primitive_type :integer
 

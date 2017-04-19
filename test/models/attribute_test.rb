@@ -5,10 +5,6 @@ class AttributeTest < ActiveSupport::TestCase
     assert_not build(:attribute, name: nil).valid?
   end
 
-  test "shouldn't exist without a description" do
-    assert_not build(:attribute, description: nil).valid?
-  end
-
   test "shouldn't exist without a parent_resource" do
     assert_not build(:attribute, parent_resource: nil).valid?
   end
