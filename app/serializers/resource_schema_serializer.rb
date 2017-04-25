@@ -4,6 +4,7 @@ class ResourceSchemaSerializer < ActiveModel::Serializer
   def initialize(object, options = {})
     @resource = object.resource
     @all_resources = [@resource.id]
+    @is_collection = object.is_restful_collection?
     super
   end
 
@@ -12,7 +13,14 @@ class ResourceSchemaSerializer < ActiveModel::Serializer
     resource_hash[:type] = 'object'
     resource_hash[:properties] = properties_from_resource(@resource)
     properties_hash = {}
-    properties_hash[@resource.name.downcase] = resource_hash
+    if @is_collection
+      array_of_attribute_hash = {}
+      array_of_attribute_hash[:type] = 'array'
+      array_of_attribute_hash[:items] = resource_hash
+      properties_hash[@resource.name.downcase.pluralize] = array_of_attribute_hash
+    else
+      properties_hash[@resource.name.downcase] = resource_hash
+    end
     return properties_hash
   end
 

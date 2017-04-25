@@ -125,4 +125,31 @@ class RoutesControllerTest < ActionDispatch::IntegrationTest
     assert_equal json_schema.deep_stringify_keys!, JSON.parse(response.body), "json schema is not correct"
   end
 
+  test 'should get json schema associated to resource on collection route' do
+    resource = create(:resource, name: 'Movie', description: 'A movie')
+    create(:attribute, parent_resource: resource, name: 'main_title', description: 'title of the film', primitive_type: :string)
+    json_schema = {
+      type: 'object',
+      title: 'Movie',
+      description: 'A movie',
+      properties: {
+        movies: {
+          type: 'array',
+          items: {
+            type: 'object',
+            properties: {
+              main_title: {
+                type: 'string',
+                description: 'title of the film'
+              }
+            }
+          }
+        }
+      }
+    }
+    route = create(:route, resource: resource, url: '/movies', http_method: :GET)
+    get project_resource_route_path(route.resource.project, route.resource, route, format: :json_schema)
+    assert_equal json_schema.deep_stringify_keys!, JSON.parse(response.body), "json schema is not correct"
+  end
+
 end

@@ -16,4 +16,9 @@ class Route < ApplicationRecord
   validates :url, presence: true
   validates :request_body_schema, json_schema: true, allow_blank: true
   validates :resource, presence: true, uniqueness: { scope: [:http_method, :url]}
+
+  def is_restful_collection?
+    #TODO: Emilie Paillous (25/04/2017) : should be directly in the database model route
+    return self.GET? && url.ends_with?(resource.name.downcase.pluralize)
+  end
 end
