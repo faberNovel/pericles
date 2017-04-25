@@ -72,4 +72,57 @@ class RoutesControllerTest < ActionDispatch::IntegrationTest
     end
     assert_redirected_to project_resource_path(project, resource)
   end
+
+  test 'should get json schema associated to resource' do
+    resource = create(:resource, name: 'Movie', description: 'A movie')
+    create(:attribute, parent_resource: resource, name: 'main_title', description: 'title of the film', primitive_type: :string)
+    json_schema = {
+      type: 'object',
+      title: 'Movie',
+      description: 'A movie',
+      properties: {
+        movie: {
+          type: 'object',
+          properties: {
+            main_title: {
+              type: 'string',
+              description: 'title of the film'
+            }
+          }
+        }
+      }
+    }
+    route = create(:route, resource: resource)
+    get project_resource_route_path(route.resource.project, route.resource, route, format: :json_schema)
+    assert_equal json_schema.deep_stringify_keys!, JSON.parse(response.body), "json schema is not correct"
+  end
+
+
+  test 'should get json schema associated to resource with reference to other resource' do
+    resource = create(:resource, name: 'User', description: 'A user')
+    create(:attribute, parent_resource: resource, name: 'name', description: 'name of the user', primitive_type: :string)
+    create(:attribute, parent_resource: resource, name: 'manager', description: 'manager of the user', resource: resource, primitive_type: nil)
+    json_schema = {
+      type: 'object',
+      title: 'User',
+      description: 'A user',
+      properties: {
+        user: {
+          type: 'object',
+          properties: {
+            name: { type: 'string', description: 'name of the user'},
+            manager: {
+              type: 'object',
+              description: 'manager of the user',
+              title: 'User'
+            }
+          }
+        }
+      }
+    }
+    route = create(:route, resource: resource)
+    get project_resource_route_path(route.resource.project, route.resource, route, format: :json_schema)
+    assert_equal json_schema.deep_stringify_keys!, JSON.parse(response.body), "json schema is not correct"
+  end
+
 end

@@ -3,8 +3,16 @@ class RoutesController < ApplicationController
   before_action :setup_project_resource_and_route, except: [:new, :create]
 
   def show
-    @default_json_instance = "{}"
-    render layout: 'generic'
+    respond_to do |format|
+      format.html do
+        @default_json_instance = "{}"
+        render layout: 'generic'
+      end
+      format.json_schema do
+        @route = Route.find(params[:id])
+        render json: @route, serializer: ResourceSchemaSerializer, adapter: :attributes
+      end
+    end
   end
 
   def new

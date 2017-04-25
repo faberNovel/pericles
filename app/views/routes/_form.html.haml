@@ -1,3 +1,6 @@
+- content_for :page_scripts do
+  = javascript_include_tag("routes/edit")
+
 = nested_form_for([@project, @resource, @route]) do |f|
   - if @route.errors.any?
     #error_explanation
@@ -87,10 +90,13 @@
       = response_header_fields.link_to_remove "Remove"
       %br/
 
+    %h5 JSON Schema
+    = button_tag("Generate Schema from Resource", type: 'button', id: 'generate_json_schema_from_resource')
+
     %br/
     = response_fields.label :body_schema, "Body JSON Schema"
     %br/
-    = response_fields.text_area :body_schema, size: "60x20"
+    = response_fields.text_area :body_schema, size: "60x20", id: 'json_schema_from_resource_text_area'
     %br/
 
     = response_fields.link_to_remove "Remove"
