@@ -46,20 +46,30 @@
   - unless @resource.persisted?
     %h3 Routes
 
-    = f.link_to_add "Add a Route", :routes
+    %table{class: "table table-striped", id: "table_routes"}
+      %thead
+        %tr
+          %th Name
+          %th Description
+          %th HTTP method
+          %th URI
+          %th
+      %tbody
+        = f.fields_for :routes, wrapper: false do |route_fields|
+          %tr.fields
+            %td
+              = route_fields.text_field :name, hide_label: true
+            %td
+              = route_fields.text_area :description, hide_label: true
+            %td
+              = route_fields.select :http_method, Route.http_methods.keys.to_a, hide_label: true
+            %td
+              = route_fields.text_field :url, hide_label: true
+            %td
+              = route_fields.link_to_remove "Remove"
 
-    = f.fields_for :routes do |route_fields|
-      = route_fields.label :name
-      = route_fields.text_field :name
-      = route_fields.label :description
-      = route_fields.text_area :description
-      = route_fields.label :http_method
-      = route_fields.select :http_method, Route.http_methods.keys.to_a
-      = route_fields.label :url
-      = route_fields.text_field :url
-
-      = route_fields.link_to_remove "Remove"
-      %br/
+    %p
+      = f.link_to_add "Add a Route", :routes, data: { target: "#table_routes" }
 
   %p
     = f.submit
