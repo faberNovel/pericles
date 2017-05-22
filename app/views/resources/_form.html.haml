@@ -1,4 +1,4 @@
-= nested_form_for([@project, @resource]) do |f|
+= bootstrap_nested_form_for([@project, @resource]) do |f|
   - if @resource.errors.any?
     #error_explanation
       %h2
@@ -7,36 +7,41 @@
         - @resource.errors.full_messages.each do |msg|
           %li= msg
 
-  %p
-    = f.label :name
-    %br/
-    = f.text_field :name
+  = f.text_field :name
 
-  %p
-    = f.label :description
-    %br/
-    = f.text_area :description
+  = f.text_area :description
 
   %h3 Attributes
 
-  = f.link_to_add "Add an Attribute", :resource_attributes
-
-  = f.fields_for :resource_attributes do |attribute_fields|
-    = attribute_fields.label :name
-    = attribute_fields.text_field :name
-    = attribute_fields.label :description
-    = attribute_fields.text_area :description
-    = attribute_fields.label :primitive_type
-    = attribute_fields.select :primitive_type, Attribute.primitive_types.keys.to_a, include_blank: true
-    = attribute_fields.label :resource_id, "Resource type"
-    = attribute_fields.select :resource_id, @selectable_resources.collect { |r| [ r.name, r.id ] }, include_blank: true
-    = attribute_fields.label :is_array, "Array?"
-    = attribute_fields.check_box :is_array
-    = attribute_fields.label :example
-    = attribute_fields.text_area :example
-
-    = attribute_fields.link_to_remove "Remove"
-    %br/
+  %table{class: "table table-striped", id: "table_attributes"}
+    %thead
+      %tr
+        %th Name
+        %th Description
+        %th Primitive type
+        %th Resource type
+        %th Array ?
+        %th Example
+        %th
+    %tbody
+      = f.fields_for :resource_attributes, wrapper: false do |attribute_fields|
+        %tr.fields
+          %td
+            = attribute_fields.text_field :name, hide_label: true
+          %td
+            = attribute_fields.text_area :description, hide_label: true
+          %td
+            = attribute_fields.select :primitive_type, Attribute.primitive_types.keys.to_a, include_blank: true, hide_label: true
+          %td
+            = attribute_fields.select :resource_id, @selectable_resources.collect { |r| [ r.name, r.id ] }, include_blank: true, hide_label: true
+          %td
+            = attribute_fields.check_box :is_array, hide_label: true
+          %td
+            = attribute_fields.text_area :example, hide_label: true
+          %td
+            = attribute_fields.link_to_remove "Remove"
+  %p
+    = f.link_to_add "Add an Attribute", :resource_attributes, data: { target: "#table_attributes" }
 
   - unless @resource.persisted?
     %h3 Routes
