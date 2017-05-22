@@ -1,5 +1,5 @@
 class Attribute < ApplicationRecord
-  enum primitive_type: [:integer, :string, :boolean, :null]
+  enum primitive_type: [:integer, :number, :string, :boolean, :null]
 
   belongs_to :resource
   belongs_to :parent_resource, inverse_of: :resource_attributes, class_name: 'Resource', foreign_key: 'parent_resource_id'
