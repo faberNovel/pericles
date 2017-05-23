@@ -17,11 +17,11 @@ class RoutesController < ApplicationController
 
   def new
     @route = @resource.routes.build
-    render layout: 'full_width_column'
+    render layout: 'generic'
   end
 
   def edit
-    render layout: 'full_width_column'
+    render layout: 'generic'
   end
 
   def create
