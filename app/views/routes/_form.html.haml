@@ -1,7 +1,7 @@
 - content_for :page_scripts do
   = javascript_include_tag("routes/edit")
 
-= nested_form_for([@project, @resource, @route]) do |f|
+= bootstrap_nested_form_for([@project, @resource, @route]) do |f|
   - if @route.errors.any?
     #error_explanation
       %h2
@@ -10,97 +10,107 @@
       %ul
         - @route.errors.full_messages.each do |msg|
           %li= msg
-  %p
-    = f.label :name
-    %br/
-    = f.text_field :name
-  %p
-    = f.label :description
-    %br/
-    = f.text_area :description
-  %p
-    = f.label :http_method
-    %br/
-    = f.select :http_method, Route.http_methods.keys.to_a
-  %p
-    = f.label :url
-    %br/
-    = f.text_field :url
+
+  = f.text_field :name
+
+  = f.text_area :description
+
+  = f.select :http_method, Route.http_methods.keys.to_a
+
+  = f.text_field :url
 
   %h3 Request
 
   %h4 Query Parameters
 
-  = f.link_to_add "Add a Query Parameter", :request_query_parameters
+  %table{class: "table table-striped", id: "table_request_query_parameters"}
+    %thead
+      %tr
+        %th Name
+        %th Description
+        %th Type
+        %th Optional ?
+        %th
+    %tbody
+      = f.fields_for :request_query_parameters, wrapper: false do |query_parameter_fields|
+        %tr.fields
+          %td
+            = query_parameter_fields.text_field :name, hide_label: true
+          %td
+            = query_parameter_fields.text_area :description, hide_label: true
+          %td
+            = query_parameter_fields.select :primitive_type, QueryParameter.primitive_types.keys.to_a, include_blank: true, hide_label: true
+          %td
+            = query_parameter_fields.check_box :is_optional, hide_label: true
+          %td
+            = query_parameter_fields.link_to_remove "Remove"
 
-  = f.fields_for :request_query_parameters do |query_parameter_fields|
-    = query_parameter_fields.label :name
-    = query_parameter_fields.text_field :name
-    = query_parameter_fields.label :description
-    = query_parameter_fields.text_area :description
-    = query_parameter_fields.label :primitive_type, "Type"
-    = query_parameter_fields.select :primitive_type, QueryParameter.primitive_types.keys.to_a, include_blank: true
-    = query_parameter_fields.label :is_optional, "Optional?"
-    = query_parameter_fields.check_box :is_optional
-
-    = query_parameter_fields.link_to_remove "Remove"
-    %br/
+  %p
+    = f.link_to_add "Add a Query Parameter", :request_query_parameters, data: { target: "#table_request_query_parameters" }
 
   %h4 Headers
 
-  = f.link_to_add "Add a Header", :request_headers
-
-  = f.fields_for :request_headers do |header_fields|
-    = header_fields.label :name
-    = header_fields.text_field :name
-    = header_fields.label :description
-    = header_fields.text_area :description
-
-    = header_fields.link_to_remove "Remove"
-    %br/
+  %table{class: "table table-striped", id: "table_request_headers"}
+    %thead
+      %tr
+        %th Name
+        %th Description
+        %th
+    %tbody
+      = f.fields_for :request_headers, wrapper: false do |header_fields|
+        %tr.fields
+          %td
+            = header_fields.text_field :name, hide_label: true
+          %td
+            = header_fields.text_area :description, hide_label: true
+          %td
+            = header_fields.link_to_remove "Remove"
 
   %p
-    = f.label :request_body_schema, "Body JSON Schema"
-    %br/
-    = f.text_area :request_body_schema, size: "60x20"
+    = f.link_to_add "Add a Header", :request_headers, data: { target: "#table_request_headers" }
+
+  = f.text_area :request_body_schema, size: "60x20", label: 'Body JSON schema'
 
   %h3 Responses
 
-  = f.link_to_add "Add a Response", :responses
+  #route_responses
 
-  = f.fields_for :responses do |response_fields|
+    = f.fields_for :responses do |response_fields|
 
-    %h4 Response
+      %h4 Response
 
-    = response_fields.label :status_code
-    = response_fields.text_field :status_code
-    = response_fields.label :description
-    = response_fields.text_area :description
+      = response_fields.text_field :status_code
+      = response_fields.text_area :description
 
-    %h5 Headers
+      %h5 Headers
 
-    = response_fields.link_to_add "Add a Header", :headers
+      %table{class: "table table-striped"}
+        %thead
+          %tr
+            %th Name
+            %th Description
+            %th
+        %tbody
+          = response_fields.fields_for :headers, wrapper: false do |response_header_fields|
+            %tr.fields
+              %td
+                = response_header_fields.text_field :name, hide_label: true
+              %td
+                = response_header_fields.text_area :description, hide_label: true
+              %td
+                = response_header_fields.link_to_remove "Remove"
 
-    = response_fields.fields_for :headers do |response_header_fields|
-      = response_header_fields.label :name
-      = response_header_fields.text_field :name
-      = response_header_fields.label :description
-      = response_header_fields.text_area :description
+      %p
+        = response_fields.link_to_add "Add a Header", :headers
 
-      = response_header_fields.link_to_remove "Remove"
-      %br/
+      %h5 JSON Schema
+      = button_tag("Generate Schema from Resource", type: 'button', id: 'generate_json_schema_from_resource')
 
-    %h5 JSON Schema
-    = button_tag("Generate Schema from Resource", type: 'button', id: 'generate_json_schema_from_resource')
+      = response_fields.text_area :body_schema, size: "60x20", label: 'Body JSON schema', id: 'json_schema_from_resource_text_area'
 
-    %br/
-    = response_fields.label :body_schema, "Body JSON Schema"
-    %br/
-    = response_fields.text_area :body_schema, size: "60x20", id: 'json_schema_from_resource_text_area'
-    %br/
+      = response_fields.link_to_remove "Remove"
 
-    = response_fields.link_to_remove "Remove"
-    %br/
+    = f.link_to_add "Add a Response", :responses
 
   %p
     = f.submit

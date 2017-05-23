@@ -18,8 +18,22 @@ $(document).ready(function() {
         $('#json_schema_from_resource_text_area').text(JSON.stringify(result_json, null, 2));
       });
   });
+
+  $("#route_responses").children(".fields").each(set_id_response_headers_table);
+
+  $(this).on('nested:fieldAdded:responses', function(event) {
+    var field = event.field;
+    set_id_response_headers_table(0, field);
+  });
+
 });
 
+function set_id_response_headers_table(index, element) {
+  var response_number = $(element).find(".form-group:first label").attr("for").match(/\d+/)[0];
+  var response_table_headers_id = "table_response_" + response_number + "_headers";
+  $(element).find("table").attr("id", response_table_headers_id);
+  $(element).find("a.add_nested_fields").attr("data-target", "#" + response_table_headers_id);
+}
 
 function deep_merge(first_object, last_object) {
   var result = first_object;
