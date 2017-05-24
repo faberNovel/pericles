@@ -21,6 +21,7 @@
         %th Primitive type
         %th Resource type
         %th Array ?
+        %th Enum
         %th Example
         %th
     %tbody
@@ -36,6 +37,8 @@
             = attribute_fields.select :resource_id, @selectable_resources.collect { |r| [ r.name, r.id ] }, include_blank: true, hide_label: true
           %td
             = attribute_fields.check_box :is_array, hide_label: true
+          %td
+            = attribute_fields.text_field :enum, hide_label: true
           %td
             = attribute_fields.text_area :example, hide_label: true
           %td

@@ -17,6 +17,7 @@
       %th Name
       %th Description
       %th Type
+      %th Enum
       %th Example
       %th
   %tbody
@@ -25,6 +26,7 @@
         %th{scope: "row"}= attribute.name
         %td= attribute.description
         %td= format_type(attribute.primitive_type, attribute.resource_id, attribute.is_array)
+        %td= attribute.enum
         %td= attribute.example
         %td= link_to 'Delete', project_resource_attribute_path(@project, @resource, attribute), method: :delete, data: { confirm: 'Are you sure ?' }
 

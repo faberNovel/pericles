@@ -23,7 +23,11 @@ class AttributeTest < ActiveSupport::TestCase
     assert_not build(:attribute_with_resource, primitive_type: :integer).valid?
   end
 
+  test "An attribute cannot have an enum if it has a resource type" do
+    assert_not build(:attribute_with_resource, enum: "not, valid").valid?
+  end
+
   test "Attribute should be valid with all fields set correctly" do
-    assert build(:attribute, name: "New Attribute", description: "New test attribute", example: '"Hello"', is_array: true, primitive_type: :string).valid?
+    assert build(:attribute, name: "New Attribute", description: "New test attribute", example: '"Hello"', is_array: true, primitive_type: :string, enum: "valid").valid?
   end
 end
