@@ -27,6 +27,10 @@ class AttributeTest < ActiveSupport::TestCase
     assert_not build(:attribute_with_resource, enum: "not, valid").valid?
   end
 
+  test "An attribute cannot have an enum if it is a boolean" do
+    assert_not build(:attribute, primitive_type: :boolean, enum: "not, valid").valid?
+  end
+
   test "Attribute should be valid with all fields set correctly" do
     assert build(:attribute, name: "New Attribute", description: "New test attribute", example: '"Hello"', is_array: true, primitive_type: :string, enum: "valid").valid?
   end

@@ -75,7 +75,7 @@ class RoutesControllerTest < ActionDispatch::IntegrationTest
 
   test 'should get json schema associated to resource' do
     resource = create(:resource, name: 'Movie', description: 'A movie')
-    create(:attribute, parent_resource: resource, name: 'main_title', description: 'title of the film', primitive_type: :string)
+    create(:attribute, parent_resource: resource, name: 'main_title', description: 'title of the film', primitive_type: :string, enum: "The Godfather, Finding Nemo")
     json_schema = {
       type: 'object',
       title: 'Movie',
@@ -86,7 +86,8 @@ class RoutesControllerTest < ActionDispatch::IntegrationTest
           properties: {
             main_title: {
               type: 'string',
-              description: 'title of the film'
+              description: 'title of the film',
+              enum: ["The Godfather", "Finding Nemo"]
             }
           }
         }

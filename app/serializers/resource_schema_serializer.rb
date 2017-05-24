@@ -77,6 +77,10 @@ class ResourceSchemaSerializer < ActiveModel::Serializer
     attribute_hash = {}
     attribute_hash[:type] = attribute.primitive_type
     attribute_hash[:description] = attribute.description
+    unless attribute.enum.blank?
+      attribute_hash[:enum] = attribute.enum.split(", ")
+      attribute_hash[:enum] = cast_enum_elements(attribute_hash[:enum], attribute_hash[:type]).uniq
+    end
     return attribute_hash
   end
 
@@ -90,6 +94,19 @@ class ResourceSchemaSerializer < ActiveModel::Serializer
     attribute_hash[:title] = attribute.resource.name
     attribute_hash[:description] = attribute.description
     return attribute_hash
+  end
+
+  def cast_enum_elements(enum, attribute_primitive_type)
+    case attribute_primitive_type
+    when "integer"
+      enum.collect(&:to_i)
+    when "number"
+      enum.collect(&:to_f)
+    when "null"
+      [nil]
+    else
+      enum
+    end
   end
 
 end
