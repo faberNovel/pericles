@@ -1,2 +1,2 @@
-<% query_param_is_optional = query_param_is_optional_to_string(query_parameter) %>
+<% query_param_is_optional = query_parameter.is_optional ? t('optional') : t('required') %>
 <%= "#{query_parameter.name} | #{query_parameter.description} | #{query_parameter.primitive_type} | #{query_param_is_optional}" %>
