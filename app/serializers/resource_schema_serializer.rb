@@ -54,8 +54,8 @@ class ResourceSchemaSerializer < ActiveModel::Serializer
       if cycle_detected(attribute)
         attribute_hash = set_main_fields_from_attribute(attribute)
       else
-        attribute_hash = hash_from_resource_attribute(attribute)
         @all_resources << attribute.resource.id
+        attribute_hash = hash_from_resource_attribute(attribute)
       end
     else
       attribute_hash = hash_from_primitive_attribute(attribute)
