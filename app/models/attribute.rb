@@ -10,6 +10,7 @@ class Attribute < ApplicationRecord
   validates :resource, presence: true, if: "primitive_type.nil?"
   validate :type_cannot_be_primitive_type_and_resource
   validates :enum, absence: true, unless: :is_enumerable?
+  validates :pattern, absence: true, unless: "self.string?"
 
   private
 

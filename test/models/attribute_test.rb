@@ -31,7 +31,12 @@ class AttributeTest < ActiveSupport::TestCase
     assert_not build(:attribute, primitive_type: :boolean, enum: "not, valid").valid?
   end
 
+  test "An attribute cannot have a pattern if it is not a string" do
+    assert_not build(:attribute_with_resource, pattern: "[a]").valid?
+    assert_not build(:attribute, primitive_type: :boolean, pattern: "[a]").valid?
+  end
+
   test "Attribute should be valid with all fields set correctly" do
-    assert build(:attribute, name: "New Attribute", description: "New test attribute", example: '"Hello"', is_array: true, primitive_type: :string, enum: "valid").valid?
+    assert build(:attribute, name: "New Attribute", description: "New test attribute", example: '"Hello"', is_array: true, primitive_type: :string, enum: "valid", pattern: "Hello").valid?
   end
 end

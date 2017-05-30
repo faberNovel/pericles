@@ -22,6 +22,7 @@
         %th Resource type
         %th Array ?
         %th Enum
+        %th Pattern
         %th Example
         %th Required ?
         %th
@@ -40,6 +41,8 @@
             = attribute_fields.check_box :is_array, hide_label: true
           %td
             = attribute_fields.text_field :enum, hide_label: true
+          %td
+            = attribute_fields.text_field :pattern, hide_label: true
           %td
             = attribute_fields.text_area :example, hide_label: true
           %td
