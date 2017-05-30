@@ -82,6 +82,9 @@ class ResourceSchemaSerializer < ActiveModel::Serializer
     attribute_hash = {}
     attribute_hash[:type] = attribute.primitive_type
     attribute_hash[:description] = attribute.description
+    unless attribute.pattern.blank?
+      attribute_hash[:pattern] = attribute.pattern
+    end
     unless attribute.enum.blank?
       attribute_hash[:enum] = attribute.enum.split(", ")
       attribute_hash[:enum] = cast_enum_elements(attribute_hash[:enum], attribute_hash[:type]).uniq
