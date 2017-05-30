@@ -1,3 +1,3 @@
 <% attribute_type = format_type(attribute.primitive_type, attribute.resource_id, attribute.is_array) %>
 <% attribute_is_required = attribute.is_required ? t('required') : t('optional') %>
-<%= "#{attribute.name} | #{attribute_type} | #{attribute.description} | #{attribute.enum} | #{attribute.example} | #{attribute_is_required}" %>
+<%= "#{attribute.name} | #{attribute_type} | #{attribute.description} | #{attribute.enum} | #{attribute.pattern} | #{attribute.example} | #{attribute_is_required}" %>
