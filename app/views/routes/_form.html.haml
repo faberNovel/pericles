@@ -111,9 +111,9 @@
 
         .col-xs-6
           %h5 JSON Schema
-          = button_tag("Generate Schema from Resource", type: 'button', id: 'generate_json_schema_from_resource')
+          = button_tag("Generate Schema from Resource", type: 'button', onclick: "generate_schema_from_resource(this)")
 
-          = response_fields.text_area :body_schema, size: "60x20", label: 'Body JSON schema', id: 'json_schema_from_resource_text_area'
+          = response_fields.text_area :body_schema, size: "60x20", label: 'Body JSON schema'
 
       = response_fields.link_to_remove "Remove"
 
