@@ -68,3 +68,4 @@ gem 'rubyzip'
 
 gem 'ransack', github: 'activerecord-hackery/ransack'
 
+gem 'jquery-ui-rails'
