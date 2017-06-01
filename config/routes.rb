@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     end
   end
   resources :validations, only: [:create, :new, :index]
+  resources :headers, only: [:index]
   root "projects#index"
   match "/not_found", to: "errors#not_found", via: :all
   match '*path', to: "errors#not_found", via: :all
