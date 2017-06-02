@@ -1,3 +1,14 @@
+GIT
+  remote: git://github.com/activerecord-hackery/ransack.git
+  revision: 437a578bb42d05fb188632f2c61032f21f5672ed
+  specs:
+    ransack (1.8.2)
+      actionpack (>= 3.0)
+      activerecord (>= 3.0)
+      activesupport (>= 3.0)
+      i18n
+      polyamorous (~> 1.3)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -128,6 +139,8 @@ GEM
       rake (>= 0.8.1)
     pg (0.18.4)
     pkg-config (1.1.7)
+    polyamorous (1.3.1)
+      activerecord (>= 3.0)
     powerpack (0.1.1)
     public_suffix (2.0.5)
     rack (2.0.1)
@@ -242,6 +255,7 @@ DEPENDENCIES
   rails (~> 5.0.0)
   rails-controller-testing
   rails-erd (~> 1.5)
+  ransack!
   rubocop
   rubyzip
   sass-rails
