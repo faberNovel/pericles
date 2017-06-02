@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170530095333) do
+ActiveRecord::Schema.define(version: 20170602145951) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -68,6 +68,15 @@ ActiveRecord::Schema.define(version: 20170530095333) do
     t.index ["route_id"], name: "index_query_parameters_on_route_id", using: :btree
   end
 
+  create_table "resource_representations", force: :cascade do |t|
+    t.string   "name"
+    t.text     "description"
+    t.integer  "resource_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["resource_id"], name: "index_resource_representations_on_resource_id", using: :btree
+  end
+
   create_table "resources", force: :cascade do |t|
     t.string   "name"
     t.text     "description"
@@ -110,6 +119,7 @@ ActiveRecord::Schema.define(version: 20170530095333) do
   add_foreign_key "attributes", "resources", column: "parent_resource_id"
   add_foreign_key "json_errors", "validations"
   add_foreign_key "query_parameters", "routes"
+  add_foreign_key "resource_representations", "resources"
   add_foreign_key "resources", "projects"
   add_foreign_key "responses", "routes"
   add_foreign_key "routes", "resources"
