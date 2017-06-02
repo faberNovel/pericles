@@ -110,8 +110,9 @@
           = response_fields.link_to_add "Add a Header", :headers
 
         .col-xs-6
-          %h5 JSON Schema
-          = button_tag("Generate Schema from Resource", type: 'button', onclick: "generate_schema_from_resource(this)")
+          - if @route.persisted?
+            %h5 JSON Schema
+            = button_tag("Generate Schema from Resource", type: 'button', onclick: "generate_schema_from_resource(this)")
 
           = response_fields.text_area :body_schema, size: "60x20", label: 'Body JSON schema'
 
