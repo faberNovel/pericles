@@ -4,8 +4,8 @@ class AttributesResourceRepresentation < ApplicationRecord
 
   validates :resource_representation, presence: true
   validates :resource_attribute, presence: true, uniqueness: { scope: [:resource_representation] }
-  #TODO (Charles-Elie SIMON - 05/06/17) Add validations on pattern attributes
   validates :custom_enum, absence: true, unless: :attribute_is_enumerable?
+  validates :custom_pattern, absence: true, unless: "resource_attribute.string?"
 
   private
 
