@@ -75,7 +75,7 @@ class RoutesControllerTest < ActionDispatch::IntegrationTest
 
   test 'should get json schema associated to resource' do
     resource = create(:resource, name: 'Movie', description: 'A movie')
-    create(:attribute, parent_resource: resource, name: 'main_title', description: 'title of the film', primitive_type: :string, enum: "The Godfather, Finding Nemo", pattern: "The Godfather", is_required: false)
+    create(:attribute, parent_resource: resource, name: 'main_title', description: 'title of the film', primitive_type: :string, enum: "The Godfather, Finding Nemo", pattern: "The Godfather")
     json_schema = {
       type: 'object',
       title: 'Movie',
@@ -98,33 +98,6 @@ class RoutesControllerTest < ActionDispatch::IntegrationTest
     get project_resource_route_path(route.resource.project, route.resource, route, format: :json_schema)
     assert_equal json_schema.deep_stringify_keys!, JSON.parse(response.body), "json schema is not correct"
   end
-
-  test 'should get json schema associated to resource with required attribute' do
-    resource = create(:resource, name: 'Movie', description: 'A movie')
-    create(:attribute, parent_resource: resource, name: 'main_title', description: 'title of the film', primitive_type: :string, enum: "The Godfather, Finding Nemo", is_required: true)
-    json_schema = {
-      type: 'object',
-      title: 'Movie',
-      description: 'A movie',
-      properties: {
-        movie: {
-          type: 'object',
-          properties: {
-            main_title: {
-              type: 'string',
-              description: 'title of the film',
-              enum: ["The Godfather", "Finding Nemo"]
-            }
-          },
-          required: ["main_title"]
-        }
-      }
-    }
-    route = create(:route, resource: resource)
-    get project_resource_route_path(route.resource.project, route.resource, route, format: :json_schema)
-    assert_equal json_schema.deep_stringify_keys!, JSON.parse(response.body), "json schema is not correct"
-  end
-
 
   test 'should get json schema associated to resource with reference to other resource' do
     resource = create(:resource, name: 'User', description: 'A user')
