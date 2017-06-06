@@ -6,6 +6,7 @@ Rails.application.routes.draw do
       resources :attributes, only: [:destroy]
     end
   end
+  resources :resource_representations, only: [:show]
   resources :validations, only: [:create, :new, :index]
   resources :headers, only: [:index]
   root "projects#index"

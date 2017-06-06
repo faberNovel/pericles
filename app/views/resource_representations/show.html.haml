@@ -1,0 +1,29 @@
+.page-header
+  %h1
+    !="#{@resource.name} <small> #{@representation.name} </small>"
+
+%div{class: "panel panel-default"}
+  .panel-heading
+    = @representation.name
+  .panel-body
+    %p
+      = @representation.description
+  %table.table
+    %thead
+      %tr
+        %th Name
+        %th Type
+        %th Enum
+        %th Pattern
+        %th Required ?
+    %tbody
+      - @representation.attributes_resource_representations.each do |attr_resource_rep|
+        - attribute = attr_resource_rep.resource_attribute
+        %tr
+          %th{scope: "row"}= attribute.name
+          %td= format_type(attribute.primitive_type, attribute.resource_id, attribute.is_array)
+          %td= attr_resource_rep.custom_enum
+          %td= attr_resource_rep.custom_pattern
+          %td= attr_resource_rep.is_required ? t('required') : t('optional')
+
+= link_to 'Back', project_resource_path(@project, @resource)

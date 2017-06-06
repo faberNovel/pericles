@@ -32,6 +32,13 @@
         %td= attribute.example
         %td= link_to 'Delete', project_resource_attribute_path(@project, @resource, attribute), method: :delete, data: { confirm: 'Are you sure ?' }
 
+%h3 Representations
+
+.list-group
+  - @resource.resource_representations.each do |resource_rep|
+    %a{class: "list-group-item", href: resource_representation_path(resource_rep)}
+      = resource_rep.name
+
 %h3 Routes
 
 = link_to 'Add new route', new_project_resource_route_path(@project, @resource)
