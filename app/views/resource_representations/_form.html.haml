@@ -1,0 +1,49 @@
+= bootstrap_form_for([@resource, @representation]) do |f|
+  - if @representation.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(@representation.errors.count, "error")
+        prohibited this resource_representation from being saved:
+      %ul
+        - @representation.errors.full_messages.each do |msg|
+          %li= msg
+
+  .row
+    .col-xs-6
+      = f.text_field :name
+
+      = f.text_area :description
+
+  .row
+    .col-xs-10
+      %h3 Attributes
+      %table{class: "table table-striped"}
+        %thead
+          %tr
+            %th
+            %th Name
+            %th Enum
+            %th Pattern
+            %th Required ?
+            %th
+        %tbody
+          = f.fields_for :attributes_resource_representations do |fields|
+            - attributes_resource_representation = fields.object
+            - attr_name = attributes_resource_representation.resource_attribute.name
+            %tr
+              %td
+                = fields.check_box :_destroy,
+                { label: "Selected", checked: !attributes_resource_representation.new_record? }, "0", "1"
+              %td
+                = attr_name
+              %td
+                = fields.text_field :custom_enum, hide_label: true
+              %td
+                = fields.text_field :custom_pattern, hide_label: true
+              %td
+                = fields.check_box :is_required
+              %td
+                = fields.hidden_field :attribute_id
+
+  %p
+    = f.submit

@@ -34,6 +34,9 @@
 
 %h3 Representations
 
+%p
+  = link_to 'Add new representation', new_resource_resource_representation_path(@resource)
+
 .list-group
   - @resource.resource_representations.each do |resource_rep|
     %a{class: "list-group-item", href: resource_representation_path(resource_rep)}
