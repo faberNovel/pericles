@@ -26,4 +26,6 @@
           %td= attr_resource_rep.custom_pattern
           %td= attr_resource_rep.is_required ? t('required') : t('optional')
 
+= link_to 'Edit', edit_resource_representation_path(@representation)
+\|
 = link_to 'Back', project_resource_path(@project, @resource)

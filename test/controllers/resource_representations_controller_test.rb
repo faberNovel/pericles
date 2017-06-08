@@ -13,6 +13,12 @@ class ResourceRepresentationsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "should get edit" do
+    representation = create(:resource_representation_with_attributes_resource_reps)
+    get edit_resource_representation_path(representation)
+    assert_response :success
+  end
+
   test "should create resource_representation" do
     resource_representation = build(:resource_representation)
     resource = resource_representation.resource
