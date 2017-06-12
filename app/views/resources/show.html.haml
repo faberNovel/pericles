@@ -20,7 +20,6 @@
       %th Enum
       %th Pattern
       %th Example
-      %th
   %tbody
     - @resource.resource_attributes.each do |attribute|
       %tr
@@ -30,7 +29,6 @@
         %td= attribute.enum
         %td= attribute.pattern
         %td= attribute.example
-        %td= link_to 'Delete', project_resource_attribute_path(@project, @resource, attribute), method: :delete, data: { confirm: 'Are you sure ?' }
 
 %h3 Representations
 

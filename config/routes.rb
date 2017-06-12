@@ -3,7 +3,6 @@ Rails.application.routes.draw do
   resources :projects do
     resources :resources do
       resources :routes, except: [:index]
-      resources :attributes, only: [:destroy]
     end
   end
   resources :resources, only: [] do
