@@ -138,6 +138,6 @@
 
 = link_to 'Edit', edit_project_resource_route_path(@project, @resource, @route)
 \|
-= link_to "Delete", project_resource_route_path(@project, @resource, @route), method: :delete, data: { confirm: 'Are you sure ?' }
+= link_to "Delete", resource_route_path(@resource, @route), method: :delete, data: { confirm: 'Are you sure ?' }
 \|
 = link_to 'Back', project_resource_path(@project, @resource)

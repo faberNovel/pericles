@@ -68,7 +68,7 @@ class RoutesControllerTest < ActionDispatch::IntegrationTest
     project = route.resource.project
     resource = route.resource
     assert_difference 'Route.count', -1 do
-      delete project_resource_route_path(project, resource, route)
+      delete resource_route_path(resource, route)
     end
     assert_redirected_to project_resource_path(project, resource)
   end
