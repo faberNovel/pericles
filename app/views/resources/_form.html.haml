@@ -24,7 +24,6 @@
         %th Enum
         %th Pattern
         %th Example
-        %th Required ?
         %th
     %tbody
       = f.fields_for :resource_attributes, wrapper: false do |attribute_fields|
@@ -45,8 +44,6 @@
             = attribute_fields.text_field :pattern, hide_label: true
           %td
             = attribute_fields.text_area :example, hide_label: true
-          %td
-            = attribute_fields.check_box :is_required, hide_label: true
           %td
             = attribute_fields.link_to_remove "Remove"
   %p

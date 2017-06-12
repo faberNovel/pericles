@@ -20,7 +20,6 @@
       %th Enum
       %th Pattern
       %th Example
-      %th Required ?
       %th
   %tbody
     - @resource.resource_attributes.each do |attribute|
@@ -31,8 +30,17 @@
         %td= attribute.enum
         %td= attribute.pattern
         %td= attribute.example
-        %td= attribute.is_required ? t('required') : t('optional')
         %td= link_to 'Delete', project_resource_attribute_path(@project, @resource, attribute), method: :delete, data: { confirm: 'Are you sure ?' }
+
+%h3 Representations
+
+%p
+  = link_to 'Add new representation', new_resource_resource_representation_path(@resource)
+
+.list-group
+  - @resource.resource_representations.each do |resource_rep|
+    %a{class: "list-group-item", href: resource_representation_path(resource_rep)}
+      = resource_rep.name
 
 %h3 Routes
 

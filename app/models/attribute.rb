@@ -4,6 +4,9 @@ class Attribute < ApplicationRecord
   belongs_to :resource
   belongs_to :parent_resource, inverse_of: :resource_attributes, class_name: 'Resource', foreign_key: 'parent_resource_id'
 
+  has_many :attributes_resource_representations, inverse_of: :resource_attribute, dependent: :destroy
+  has_many :resource_representations, through: :attributes_resource_representations
+
   validates :name, presence: true, uniqueness: { scope: [:parent_resource], case_sensitive: false }
   validates :parent_resource, presence: true
   validates :primitive_type, presence: true, if: "resource.nil?"

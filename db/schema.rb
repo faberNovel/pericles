@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170530095333) do
+ActiveRecord::Schema.define(version: 20170606095435) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,9 +26,20 @@ ActiveRecord::Schema.define(version: 20170530095333) do
     t.datetime "created_at",                         null: false
     t.datetime "updated_at",                         null: false
     t.string   "enum"
-    t.boolean  "is_required",        default: false, null: false
     t.string   "pattern"
     t.index ["resource_id"], name: "index_attributes_on_resource_id", using: :btree
+  end
+
+  create_table "attributes_resource_representations", force: :cascade do |t|
+    t.boolean  "is_required",                default: false, null: false
+    t.string   "custom_enum"
+    t.string   "custom_pattern"
+    t.integer  "resource_representation_id"
+    t.integer  "attribute_id"
+    t.datetime "created_at",                                 null: false
+    t.datetime "updated_at",                                 null: false
+    t.index ["attribute_id"], name: "index_attributes_resource_representations_on_attribute_id", using: :btree
+    t.index ["resource_representation_id"], name: "index_arr_on_resource_representation_id", using: :btree
   end
 
   create_table "headers", force: :cascade do |t|
@@ -66,6 +77,15 @@ ActiveRecord::Schema.define(version: 20170530095333) do
     t.datetime "created_at",                    null: false
     t.datetime "updated_at",                    null: false
     t.index ["route_id"], name: "index_query_parameters_on_route_id", using: :btree
+  end
+
+  create_table "resource_representations", force: :cascade do |t|
+    t.string   "name"
+    t.text     "description"
+    t.integer  "resource_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["resource_id"], name: "index_resource_representations_on_resource_id", using: :btree
   end
 
   create_table "resources", force: :cascade do |t|
@@ -108,8 +128,11 @@ ActiveRecord::Schema.define(version: 20170530095333) do
 
   add_foreign_key "attributes", "resources"
   add_foreign_key "attributes", "resources", column: "parent_resource_id"
+  add_foreign_key "attributes_resource_representations", "attributes"
+  add_foreign_key "attributes_resource_representations", "resource_representations"
   add_foreign_key "json_errors", "validations"
   add_foreign_key "query_parameters", "routes"
+  add_foreign_key "resource_representations", "resources"
   add_foreign_key "resources", "projects"
   add_foreign_key "responses", "routes"
   add_foreign_key "routes", "resources"

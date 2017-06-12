@@ -11,9 +11,7 @@ class ResourceSchemaSerializer < ActiveModel::Serializer
   def properties
     resource_hash = {}
     resource_hash[:type] = 'object'
-    required_properties = []
-    resource_hash[:properties] = properties_from_resource(@resource, required_properties)
-    resource_hash[:required] = required_properties.uniq unless required_properties.empty?
+    resource_hash[:properties] = properties_from_resource(@resource)
     properties_hash = {}
     if @is_collection
       array_of_attribute_hash = {}
@@ -39,11 +37,10 @@ class ResourceSchemaSerializer < ActiveModel::Serializer
   end
 
   private
-  def properties_from_resource(resource, required_properties)
+  def properties_from_resource(resource)
     properties = {}
     resource.resource_attributes.each do |attribute|
       properties[attribute.name] = hash_from_attribute(attribute)
-      required_properties.concat([attribute.name]) if attribute.is_required
     end
     return properties
   end
@@ -72,9 +69,7 @@ class ResourceSchemaSerializer < ActiveModel::Serializer
 
   def hash_from_resource_attribute(attribute)
     attribute_hash = set_main_fields_from_attribute(attribute)
-    required_properties = []
-    attribute_hash[:properties] = properties_from_resource(attribute.resource, required_properties)
-    attribute_hash[:required] = required_properties.uniq unless required_properties.empty?
+    attribute_hash[:properties] = properties_from_resource(attribute.resource)
     return attribute_hash
   end
 
