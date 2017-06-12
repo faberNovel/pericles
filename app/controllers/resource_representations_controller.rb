@@ -27,6 +27,15 @@ class ResourceRepresentationsController < ApplicationController
     end
   end
 
+  def update
+    if @representation.update(resource_rep_params)
+      redirect_to resource_representation_path(@representation)
+    else
+      build_missing_attributes_resource_representations(@representation)
+      render 'edit', layout: 'generic', status: :unprocessable_entity
+    end
+  end
+
   private
 
   def setup_resource_representation_and_parent_records
