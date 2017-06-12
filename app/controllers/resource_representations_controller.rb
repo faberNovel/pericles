@@ -36,6 +36,12 @@ class ResourceRepresentationsController < ApplicationController
     end
   end
 
+  def destroy
+    @representation.destroy
+
+    redirect_to project_resource_path(@project, @resource)
+  end
+
   private
 
   def setup_resource_representation_and_parent_records

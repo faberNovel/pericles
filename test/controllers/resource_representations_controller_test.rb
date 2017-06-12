@@ -73,6 +73,16 @@ class ResourceRepresentationsControllerTest < ActionDispatch::IntegrationTest
     assert_equal name, resource_representation.name
   end
 
+  test "should delete resource_representation" do
+    resource_representation = create(:resource_representation)
+    project = resource_representation.resource.project
+    resource = resource_representation.resource
+    assert_difference 'ResourceRepresentation.count', -1 do
+      delete resource_representation_path(resource_representation)
+    end
+    assert_redirected_to project_resource_path(project, resource)
+  end
+
   private
 
   def create_representation_hash_with_associations_to_attributes(resource_representation)

@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   resources :resources, only: [] do
     resources :resource_representations, only: [:new, :create]
   end
-  resources :resource_representations, only: [:show, :edit, :update]
+  resources :resource_representations, only: [:show, :edit, :update, :destroy]
   resources :validations, only: [:create, :new, :index]
   resources :headers, only: [:index]
   root "projects#index"

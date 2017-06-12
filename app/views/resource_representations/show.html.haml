@@ -28,4 +28,6 @@
 
 = link_to 'Edit', edit_resource_representation_path(@representation)
 \|
+= link_to "Delete", resource_representation_path(@representation), method: :delete, data: { confirm: 'Are you sure ?' }
+\|
 = link_to 'Back', project_resource_path(@project, @resource)
