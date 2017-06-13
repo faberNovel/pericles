@@ -1,7 +1,6 @@
 class RoutesController < ApplicationController
-  before_action :setup_project_and_resource, only: [:new, :create]
-  before_action :setup_project_resource_and_route, except: [:new, :create, :show, :edit, :destroy]
-  before_action :setup_route_and_parent_records, only: [:show, :edit, :destroy]
+  before_action :setup_project_and_resource, except: [:index]
+  before_action :setup_route, except: [:index, :new, :create]
 
   def show
     respond_to do |format|
@@ -50,19 +49,12 @@ class RoutesController < ApplicationController
   private
 
   def setup_project_and_resource
-    @project = Project.find(params[:project_id])
-    @resource = @project.resources.find(params[:resource_id])
-  end
-
-  def setup_project_resource_and_route
-    setup_project_and_resource
-    @route = @resource.routes.find(params[:id])
-  end
-
-  def setup_route_and_parent_records
-    @route = Route.find(params[:id])
     @resource = Resource.find(params[:resource_id])
     @project = @resource.project
+  end
+
+  def setup_route
+    @route = Route.find(params[:id])
   end
 
   def route_params

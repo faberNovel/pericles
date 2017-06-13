@@ -9,7 +9,7 @@ class RoutesControllerTest < ActionDispatch::IntegrationTest
 
   test "should get new" do
     resource = create(:resource)
-    get new_project_resource_route_path(resource.project, resource)
+    get new_resource_route_path(resource)
     assert_response :success
   end
 
@@ -21,10 +21,9 @@ class RoutesControllerTest < ActionDispatch::IntegrationTest
 
   test "should create route" do
     route = build(:route)
-    project = route.resource.project
     resource = route.resource
     assert_difference('Route.count') do
-      post project_resource_routes_path(project, resource), params: { route: route.attributes }
+      post resource_routes_path(resource), params: { route: route.attributes }
     end
     route = assigns(:route)
     assert_not_nil route, "should create route"
@@ -33,20 +32,18 @@ class RoutesControllerTest < ActionDispatch::IntegrationTest
 
   test "should not create route without a name" do
     route = build(:route)
-    project = route.resource.project
     resource = route.resource
     route.name = ''
     assert_no_difference('Route.count') do
-      post project_resource_routes_path(project, resource), params: { route: route.attributes }
+      post resource_routes_path(resource), params: { route: route.attributes }
     end
     assert_response :unprocessable_entity
   end
 
   test "should update route" do
     route = create(:route)
-    project = route.resource.project
     resource = route.resource
-    put project_resource_route_path(project, resource, route), params: { route: { name: 'List users' } }
+    put resource_route_path(resource, route), params: { route: { name: 'List users' } }
     assert_redirected_to resource_route_path(resource, route)
     route.reload
     assert_equal 'List users', route.name
@@ -54,10 +51,9 @@ class RoutesControllerTest < ActionDispatch::IntegrationTest
 
   test "should not update route" do
     route = create(:route)
-    project = route.resource.project
     resource = route.resource
     name = route.name
-    put project_resource_route_path(project, resource, route), params: { route: { name: '' } }
+    put resource_route_path(resource, route), params: { route: { name: '' } }
     assert_response :unprocessable_entity
     route.reload
     assert_equal name, route.name
