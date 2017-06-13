@@ -136,7 +136,7 @@
       #json_generation_result
 
 
-= link_to 'Edit', edit_project_resource_route_path(@project, @resource, @route)
+= link_to 'Edit', edit_resource_route_path(@resource, @route)
 \|
 = link_to "Delete", resource_route_path(@resource, @route), method: :delete, data: { confirm: 'Are you sure ?' }
 \|

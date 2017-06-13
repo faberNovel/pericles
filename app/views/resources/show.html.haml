@@ -59,7 +59,7 @@
         %td= route.description
         %td= route.http_method
         %td= route.url
-        %td= link_to "Show", project_resource_route_path(@project, @resource, route)
+        %td= link_to "Show", resource_route_path(@resource, route)
 
 = link_to 'Edit', edit_project_resource_path(@project, @resource)
 \|

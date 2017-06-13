@@ -1,7 +1,7 @@
 class RoutesController < ApplicationController
   before_action :setup_project_and_resource, only: [:new, :create]
-  before_action :setup_project_resource_and_route, except: [:new, :create, :destroy]
-  before_action :setup_route_and_parent_records, only: [:destroy]
+  before_action :setup_project_resource_and_route, except: [:new, :create, :show, :edit, :destroy]
+  before_action :setup_route_and_parent_records, only: [:show, :edit, :destroy]
 
   def show
     respond_to do |format|
@@ -10,7 +10,6 @@ class RoutesController < ApplicationController
         render layout: 'generic'
       end
       format.json_schema do
-        @route = Route.find(params[:id])
         render json: @route, serializer: ResourceSchemaSerializer, adapter: :attributes
       end
     end
@@ -28,7 +27,7 @@ class RoutesController < ApplicationController
   def create
     @route = @resource.routes.build(route_params)
     if @route.save
-      redirect_to project_resource_route_path(@project, @resource, @route)
+      redirect_to resource_route_path(@resource, @route)
     else
       render 'new', layout: 'full_width_column', status: :unprocessable_entity
     end
@@ -36,7 +35,7 @@ class RoutesController < ApplicationController
 
   def update
     if @route.update(route_params)
-      redirect_to project_resource_route_path(@project, @resource, @route)
+      redirect_to resource_route_path(@resource, @route)
     else
       render 'edit', layout: 'full_width_column', status: :unprocessable_entity
     end

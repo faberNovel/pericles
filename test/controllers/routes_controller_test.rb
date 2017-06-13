@@ -3,7 +3,7 @@ require 'test_helper'
 class RoutesControllerTest < ActionDispatch::IntegrationTest
   test "should show route" do
     route = create(:route, request_body_schema: "{}")
-    get project_resource_route_path(route.resource.project, route.resource, route)
+    get resource_route_path(route.resource, route)
     assert_response :success
   end
 
@@ -15,7 +15,7 @@ class RoutesControllerTest < ActionDispatch::IntegrationTest
 
   test "should get edit" do
     route = create(:route)
-    get edit_project_resource_route_path(route.resource.project, route.resource, route)
+    get edit_resource_route_path(route.resource, route)
     assert_response :success
   end
 
@@ -28,7 +28,7 @@ class RoutesControllerTest < ActionDispatch::IntegrationTest
     end
     route = assigns(:route)
     assert_not_nil route, "should create route"
-    assert_redirected_to project_resource_route_path(project, resource, route)
+    assert_redirected_to resource_route_path(resource, route)
   end
 
   test "should not create route without a name" do
@@ -47,7 +47,7 @@ class RoutesControllerTest < ActionDispatch::IntegrationTest
     project = route.resource.project
     resource = route.resource
     put project_resource_route_path(project, resource, route), params: { route: { name: 'List users' } }
-    assert_redirected_to project_resource_route_path(project, resource, route)
+    assert_redirected_to resource_route_path(resource, route)
     route.reload
     assert_equal 'List users', route.name
   end
@@ -95,7 +95,7 @@ class RoutesControllerTest < ActionDispatch::IntegrationTest
       }
     }
     route = create(:route, resource: resource)
-    get project_resource_route_path(route.resource.project, route.resource, route, format: :json_schema)
+    get resource_route_path(route.resource, route, format: :json_schema)
     assert_equal json_schema.deep_stringify_keys!, JSON.parse(response.body), "json schema is not correct"
   end
 
@@ -122,7 +122,7 @@ class RoutesControllerTest < ActionDispatch::IntegrationTest
       }
     }
     route = create(:route, resource: resource)
-    get project_resource_route_path(route.resource.project, route.resource, route, format: :json_schema)
+    get resource_route_path(route.resource, route, format: :json_schema)
     assert_equal json_schema.deep_stringify_keys!, JSON.parse(response.body), "json schema is not correct"
   end
 
@@ -149,7 +149,7 @@ class RoutesControllerTest < ActionDispatch::IntegrationTest
       }
     }
     route = create(:route, resource: resource, url: '/movies', http_method: :GET)
-    get project_resource_route_path(route.resource.project, route.resource, route, format: :json_schema)
+    get resource_route_path(route.resource, route, format: :json_schema)
     assert_equal json_schema.deep_stringify_keys!, JSON.parse(response.body), "json schema is not correct"
   end
 
