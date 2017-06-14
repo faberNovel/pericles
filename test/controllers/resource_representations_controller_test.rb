@@ -56,8 +56,8 @@ class ResourceRepresentationsControllerTest < ActionDispatch::IntegrationTest
 
   test "should update resource_representation" do
     resource_representation = create(:resource_representation)
-    put resource_representation_path(resource_representation), params: { resource_representation:
-      { name: 'Modified resource representation' } }
+    put resource_resource_representation_path(resource_representation.resource, resource_representation),
+      params: { resource_representation: { name: 'Modified resource representation' } }
     assert_redirected_to resource_representation_path(resource_representation)
     resource_representation.reload
     assert_equal 'Modified resource representation', resource_representation.name
@@ -67,7 +67,7 @@ class ResourceRepresentationsControllerTest < ActionDispatch::IntegrationTest
     resource = create(:resource_with_attributes)
     resource_representation = create(:resource_representation, resource: resource)
     name = resource_representation.name
-    put resource_representation_path(resource_representation), params: { resource_representation: { name: '' } }
+    put resource_resource_representation_path(resource_representation.resource, resource_representation), params: { resource_representation: { name: '' } }
     assert_response :unprocessable_entity
     resource_representation.reload
     assert_equal name, resource_representation.name

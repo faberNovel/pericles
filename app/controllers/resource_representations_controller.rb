@@ -1,7 +1,7 @@
 class ResourceRepresentationsController < ApplicationController
-  before_action :setup_resource_representation_and_parent_records, except: [:new, :create, :edit, :destroy]
-  before_action :setup_project_and_resource, only: [:new, :create, :edit, :destroy]
-  before_action :setup_resource_representation, only: [:edit, :destroy]
+  before_action :setup_resource_representation_and_parent_records, only: [:show]
+  before_action :setup_project_and_resource, except: [:index, :show]
+  before_action :setup_resource_representation, except: [:index, :show, :new, :create]
 
   def show
     render layout: 'full_width_column'

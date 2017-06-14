@@ -2,6 +2,6 @@
   %h1
     !="#{@resource.name} <small> Edit Representation: #{@representation.name} </small>"
 
-= render partial: 'form', locals: { form_params: @representation }
+= render 'form'
 
 = link_to 'Back', resource_representation_path(@representation)
