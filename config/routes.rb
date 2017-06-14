@@ -4,10 +4,10 @@ Rails.application.routes.draw do
     resources :resources
   end
   resources :resources, only: [] do
-    resources :resource_representations, only: [:new, :edit, :create]
+    resources :resource_representations, only: [:new, :edit, :create, :destroy]
     resources :routes, except: [:index]
   end
-  resources :resource_representations, only: [:show, :update, :destroy]
+  resources :resource_representations, only: [:show, :update]
   resources :validations, only: [:create, :new, :index]
   resources :headers, only: [:index]
   root "projects#index"

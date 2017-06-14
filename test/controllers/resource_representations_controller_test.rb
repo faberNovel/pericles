@@ -78,7 +78,7 @@ class ResourceRepresentationsControllerTest < ActionDispatch::IntegrationTest
     project = resource_representation.resource.project
     resource = resource_representation.resource
     assert_difference 'ResourceRepresentation.count', -1 do
-      delete resource_representation_path(resource_representation)
+      delete resource_resource_representation_path(resource, resource_representation)
     end
     assert_redirected_to project_resource_path(project, resource)
   end
