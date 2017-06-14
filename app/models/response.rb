@@ -1,5 +1,6 @@
 class Response < ApplicationRecord
   belongs_to :route
+  belongs_to :resource_representation, inverse_of: :responses
 
   has_many :headers, inverse_of: :http_message, as: :http_message, dependent: :destroy
 
