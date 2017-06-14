@@ -3,7 +3,7 @@ require 'test_helper'
 class ResourceRepresentationsControllerTest < ActionDispatch::IntegrationTest
   test "should show resource_representation" do
     representation = create(:resource_representation)
-    get resource_representation_path(representation)
+    get resource_resource_representation_path(representation.resource, representation)
     assert_response :success
   end
 
@@ -15,7 +15,7 @@ class ResourceRepresentationsControllerTest < ActionDispatch::IntegrationTest
 
   test "should get edit" do
     representation = create(:resource_representation_with_attributes_resource_reps)
-    get edit_resource_representation_path(representation)
+    get edit_resource_resource_representation_path(representation.resource, representation)
     assert_response :success
   end
 
@@ -28,7 +28,7 @@ class ResourceRepresentationsControllerTest < ActionDispatch::IntegrationTest
     end
     representation = assigns(:representation)
     assert_not_nil representation, "should create resource_representation"
-    assert_redirected_to resource_representation_path(representation)
+    assert_redirected_to resource_resource_representation_path(resource, representation)
   end
 
   test "should create resource_representation with attributes_resource_representations" do
@@ -40,7 +40,7 @@ class ResourceRepresentationsControllerTest < ActionDispatch::IntegrationTest
     end
     representation = assigns(:representation)
     assert_not_nil representation, "should create resource_representation"
-    assert_redirected_to resource_representation_path(representation)
+    assert_redirected_to resource_resource_representation_path(resource, representation)
   end
 
   test "should not create resource_representation without a name" do
@@ -56,9 +56,10 @@ class ResourceRepresentationsControllerTest < ActionDispatch::IntegrationTest
 
   test "should update resource_representation" do
     resource_representation = create(:resource_representation)
-    put resource_representation_path(resource_representation), params: { resource_representation:
-      { name: 'Modified resource representation' } }
-    assert_redirected_to resource_representation_path(resource_representation)
+    resource = resource_representation.resource
+    put resource_resource_representation_path(resource, resource_representation),
+      params: { resource_representation: { name: 'Modified resource representation' } }
+    assert_redirected_to resource_resource_representation_path(resource, resource_representation)
     resource_representation.reload
     assert_equal 'Modified resource representation', resource_representation.name
   end
@@ -67,7 +68,7 @@ class ResourceRepresentationsControllerTest < ActionDispatch::IntegrationTest
     resource = create(:resource_with_attributes)
     resource_representation = create(:resource_representation, resource: resource)
     name = resource_representation.name
-    put resource_representation_path(resource_representation), params: { resource_representation: { name: '' } }
+    put resource_resource_representation_path(resource_representation.resource, resource_representation), params: { resource_representation: { name: '' } }
     assert_response :unprocessable_entity
     resource_representation.reload
     assert_equal name, resource_representation.name
@@ -78,7 +79,7 @@ class ResourceRepresentationsControllerTest < ActionDispatch::IntegrationTest
     project = resource_representation.resource.project
     resource = resource_representation.resource
     assert_difference 'ResourceRepresentation.count', -1 do
-      delete resource_representation_path(resource_representation)
+      delete resource_resource_representation_path(resource, resource_representation)
     end
     assert_redirected_to project_resource_path(project, resource)
   end

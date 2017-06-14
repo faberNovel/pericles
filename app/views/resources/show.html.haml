@@ -20,7 +20,6 @@
       %th Enum
       %th Pattern
       %th Example
-      %th
   %tbody
     - @resource.resource_attributes.each do |attribute|
       %tr
@@ -30,7 +29,6 @@
         %td= attribute.enum
         %td= attribute.pattern
         %td= attribute.example
-        %td= link_to 'Delete', project_resource_attribute_path(@project, @resource, attribute), method: :delete, data: { confirm: 'Are you sure ?' }
 
 %h3 Representations
 
@@ -39,12 +37,12 @@
 
 .list-group
   - @resource.resource_representations.each do |resource_rep|
-    %a{class: "list-group-item", href: resource_representation_path(resource_rep)}
+    %a{class: "list-group-item", href: resource_resource_representation_path(@resource, resource_rep)}
       = resource_rep.name
 
 %h3 Routes
 
-= link_to 'Add new route', new_project_resource_route_path(@project, @resource)
+= link_to 'Add new route', new_resource_route_path(@resource)
 
 %table{class: "table table-striped"}
   %thead
@@ -61,7 +59,7 @@
         %td= route.description
         %td= route.http_method
         %td= route.url
-        %td= link_to "Show", project_resource_route_path(@project, @resource, route)
+        %td= link_to "Show", resource_route_path(@resource, route)
 
 = link_to 'Edit', edit_project_resource_path(@project, @resource)
 \|

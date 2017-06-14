@@ -3,61 +3,57 @@ require 'test_helper'
 class RoutesControllerTest < ActionDispatch::IntegrationTest
   test "should show route" do
     route = create(:route, request_body_schema: "{}")
-    get project_resource_route_path(route.resource.project, route.resource, route)
+    get resource_route_path(route.resource, route)
     assert_response :success
   end
 
   test "should get new" do
     resource = create(:resource)
-    get new_project_resource_route_path(resource.project, resource)
+    get new_resource_route_path(resource)
     assert_response :success
   end
 
   test "should get edit" do
     route = create(:route)
-    get edit_project_resource_route_path(route.resource.project, route.resource, route)
+    get edit_resource_route_path(route.resource, route)
     assert_response :success
   end
 
   test "should create route" do
     route = build(:route)
-    project = route.resource.project
     resource = route.resource
     assert_difference('Route.count') do
-      post project_resource_routes_path(project, resource), params: { route: route.attributes }
+      post resource_routes_path(resource), params: { route: route.attributes }
     end
     route = assigns(:route)
     assert_not_nil route, "should create route"
-    assert_redirected_to project_resource_route_path(project, resource, route)
+    assert_redirected_to resource_route_path(resource, route)
   end
 
   test "should not create route without a name" do
     route = build(:route)
-    project = route.resource.project
     resource = route.resource
     route.name = ''
     assert_no_difference('Route.count') do
-      post project_resource_routes_path(project, resource), params: { route: route.attributes }
+      post resource_routes_path(resource), params: { route: route.attributes }
     end
     assert_response :unprocessable_entity
   end
 
   test "should update route" do
     route = create(:route)
-    project = route.resource.project
     resource = route.resource
-    put project_resource_route_path(project, resource, route), params: { route: { name: 'List users' } }
-    assert_redirected_to project_resource_route_path(project, resource, route)
+    put resource_route_path(resource, route), params: { route: { name: 'List users' } }
+    assert_redirected_to resource_route_path(resource, route)
     route.reload
     assert_equal 'List users', route.name
   end
 
   test "should not update route" do
     route = create(:route)
-    project = route.resource.project
     resource = route.resource
     name = route.name
-    put project_resource_route_path(project, resource, route), params: { route: { name: '' } }
+    put resource_route_path(resource, route), params: { route: { name: '' } }
     assert_response :unprocessable_entity
     route.reload
     assert_equal name, route.name
@@ -68,7 +64,7 @@ class RoutesControllerTest < ActionDispatch::IntegrationTest
     project = route.resource.project
     resource = route.resource
     assert_difference 'Route.count', -1 do
-      delete project_resource_route_path(project, resource, route)
+      delete resource_route_path(resource, route)
     end
     assert_redirected_to project_resource_path(project, resource)
   end
@@ -95,7 +91,7 @@ class RoutesControllerTest < ActionDispatch::IntegrationTest
       }
     }
     route = create(:route, resource: resource)
-    get project_resource_route_path(route.resource.project, route.resource, route, format: :json_schema)
+    get resource_route_path(route.resource, route, format: :json_schema)
     assert_equal json_schema.deep_stringify_keys!, JSON.parse(response.body), "json schema is not correct"
   end
 
@@ -122,7 +118,7 @@ class RoutesControllerTest < ActionDispatch::IntegrationTest
       }
     }
     route = create(:route, resource: resource)
-    get project_resource_route_path(route.resource.project, route.resource, route, format: :json_schema)
+    get resource_route_path(route.resource, route, format: :json_schema)
     assert_equal json_schema.deep_stringify_keys!, JSON.parse(response.body), "json schema is not correct"
   end
 
@@ -149,7 +145,7 @@ class RoutesControllerTest < ActionDispatch::IntegrationTest
       }
     }
     route = create(:route, resource: resource, url: '/movies', http_method: :GET)
-    get project_resource_route_path(route.resource.project, route.resource, route, format: :json_schema)
+    get resource_route_path(route.resource, route, format: :json_schema)
     assert_equal json_schema.deep_stringify_keys!, JSON.parse(response.body), "json schema is not correct"
   end
 

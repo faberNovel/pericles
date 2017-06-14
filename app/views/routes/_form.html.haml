@@ -1,7 +1,7 @@
 - content_for :page_scripts do
   = javascript_include_tag("routes/edit")
 
-= bootstrap_nested_form_for([@project, @resource, @route]) do |f|
+= bootstrap_nested_form_for([@resource, @route]) do |f|
   - if @route.errors.any?
     #error_explanation
       %h2
