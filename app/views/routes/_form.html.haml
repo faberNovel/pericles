@@ -88,6 +88,8 @@
         .col-xs-6
           = response_fields.text_field :status_code
           = response_fields.text_area :description
+          = response_fields.select :resource_representation_id,
+            @resource.resource_representations.collect { |r| [ r.name, r.id ] }, include_blank: true
 
           %h5 Headers
 

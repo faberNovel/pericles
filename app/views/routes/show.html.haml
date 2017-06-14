@@ -66,6 +66,9 @@
       - unless response.description.blank?
         %h4 Description
         %p= response.description
+      - unless response.resource_representation.blank?
+        %h4 Resource Representation
+        %p= response.resource_representation.name
       - unless response.headers.blank?
         %h4 Headers
         %table{class: "table table-striped"}
