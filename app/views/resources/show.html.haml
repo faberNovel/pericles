@@ -37,7 +37,7 @@
 
 .list-group
   - @resource.resource_representations.each do |resource_rep|
-    %a{class: "list-group-item", href: resource_representation_path(resource_rep)}
+    %a{class: "list-group-item", href: resource_resource_representation_path(@resource, resource_rep)}
       = resource_rep.name
 
 %h3 Routes

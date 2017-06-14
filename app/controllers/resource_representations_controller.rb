@@ -1,7 +1,6 @@
 class ResourceRepresentationsController < ApplicationController
-  before_action :setup_resource_representation_and_parent_records, only: [:show]
-  before_action :setup_project_and_resource, except: [:index, :show]
-  before_action :setup_resource_representation, except: [:index, :show, :new, :create]
+  before_action :setup_project_and_resource, except: [:index]
+  before_action :setup_resource_representation, except: [:index, :new, :create]
 
   def show
     render layout: 'full_width_column'
@@ -21,7 +20,7 @@ class ResourceRepresentationsController < ApplicationController
   def create
     @representation = @resource.resource_representations.build(resource_rep_params)
     if @representation.save
-      redirect_to resource_representation_path(@representation)
+      redirect_to resource_resource_representation_path(@resource, @representation)
     else
       build_missing_attributes_resource_representations(@representation)
       render 'new', layout: 'generic', status: :unprocessable_entity
@@ -30,7 +29,7 @@ class ResourceRepresentationsController < ApplicationController
 
   def update
     if @representation.update(resource_rep_params)
-      redirect_to resource_representation_path(@representation)
+      redirect_to resource_resource_representation_path(@resource, @representation)
     else
       build_missing_attributes_resource_representations(@representation)
       render 'edit', layout: 'generic', status: :unprocessable_entity
@@ -44,12 +43,6 @@ class ResourceRepresentationsController < ApplicationController
   end
 
   private
-
-  def setup_resource_representation_and_parent_records
-    @representation = ResourceRepresentation.find(params[:id])
-    @resource = @representation.resource
-    @project = @resource.project
-  end
 
   def setup_project_and_resource
     @resource = Resource.find(params[:resource_id])
