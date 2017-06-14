@@ -26,7 +26,7 @@
           %td= attr_resource_rep.custom_pattern
           %td= attr_resource_rep.is_required ? t('required') : t('optional')
 
-= link_to 'Edit', edit_resource_representation_path(@representation)
+= link_to 'Edit', edit_resource_resource_representation_path(@resource, @representation)
 \|
 = link_to "Delete", resource_representation_path(@representation), method: :delete, data: { confirm: 'Are you sure ?' }
 \|

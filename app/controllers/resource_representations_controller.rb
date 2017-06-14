@@ -1,6 +1,7 @@
 class ResourceRepresentationsController < ApplicationController
-  before_action :setup_resource_representation_and_parent_records, except: [:new, :create]
-  before_action :setup_project_and_resource, only: [:new, :create]
+  before_action :setup_resource_representation_and_parent_records, except: [:new, :create, :edit]
+  before_action :setup_project_and_resource, only: [:new, :create, :edit]
+  before_action :setup_resource_representation, only: [:edit]
 
   def show
     render layout: 'full_width_column'
@@ -53,6 +54,10 @@ class ResourceRepresentationsController < ApplicationController
   def setup_project_and_resource
     @resource = Resource.find(params[:resource_id])
     @project = @resource.project
+  end
+
+  def setup_resource_representation
+    @representation = ResourceRepresentation.find(params[:id])
   end
 
   def build_missing_attributes_resource_representations(resource_representation)

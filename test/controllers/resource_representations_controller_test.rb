@@ -15,7 +15,7 @@ class ResourceRepresentationsControllerTest < ActionDispatch::IntegrationTest
 
   test "should get edit" do
     representation = create(:resource_representation_with_attributes_resource_reps)
-    get edit_resource_representation_path(representation)
+    get edit_resource_resource_representation_path(representation.resource, representation)
     assert_response :success
   end
 
