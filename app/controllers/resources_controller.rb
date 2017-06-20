@@ -4,7 +4,7 @@ class ResourcesController < ApplicationController
   before_action :setup_project_and_resource, except: [:index, :new, :create]
 
   def index
-    @resources = @project.resources
+    @resources = @project.resources.sort_by { |resource| resource.name.downcase }
   end
 
   def show

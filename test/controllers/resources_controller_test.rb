@@ -2,10 +2,14 @@ require 'test_helper'
 
 class ResourcesControllerTest < ActionDispatch::IntegrationTest
 
-  test "should get index" do
+  test "should get index with resources sorted in alphabetical order" do
     project = create(:project)
+    second_resource = create(:resource, name: "Second", project: project)
+    first_resource = create(:resource, name: "First", project: project)
     get project_resources_path(project)
     assert_response :success
+    assert assigns[:resources]
+    assert_equal [first_resource, second_resource], assigns[:resources]
   end
 
   test "should show resource" do
