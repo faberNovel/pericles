@@ -25,7 +25,6 @@ class ResourcesControllerTest < ActionDispatch::IntegrationTest
     resource = create(:resource)
     get edit_project_resource_path(resource.project, resource)
     assert_response :success
-    assert_not assigns[:selectable_resources].include?(assigns[:resource])
   end
 
   test "should create resource" do

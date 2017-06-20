@@ -16,7 +16,7 @@ class ResourcesController < ApplicationController
   end
 
   def edit
-    setup_selectable_resources(@project, @resource)
+    @selectable_resources = @project.resources.to_a
   end
 
   def create
@@ -33,7 +33,7 @@ class ResourcesController < ApplicationController
     if @resource.update(resource_params)
       redirect_to project_resource_path(@project, @resource)
     else
-      setup_selectable_resources(@project, @resource)
+      @selectable_resources = @project.resources.to_a
       render 'edit', status: :unprocessable_entity
     end
   end
