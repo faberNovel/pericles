@@ -1,4 +1,6 @@
 class Resource < ApplicationRecord
+  after_create :create_default_resource_representation
+
   belongs_to :project, inverse_of: :resources
 
   has_many :resource_attributes, inverse_of: :parent_resource, class_name: 'Attribute', foreign_key: 'parent_resource_id', dependent: :destroy
@@ -10,4 +12,14 @@ class Resource < ApplicationRecord
 
   validates :name, presence: true, uniqueness: { scope: :project, case_sensitive: false }
   validates :project, presence: true
+
+  private
+
+  def create_default_resource_representation
+    resource_representation = self.resource_representations.create(name: "default_representation",
+      description: "Automatically generated")
+    self.resource_attributes.each do |attribute|
+      resource_representation.attributes_resource_representations.create(resource_attribute: attribute, is_required: true)
+    end
+  end
 end
