@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170614152319) do
+ActiveRecord::Schema.define(version: 20170621161227) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,14 +31,16 @@ ActiveRecord::Schema.define(version: 20170614152319) do
   end
 
   create_table "attributes_resource_representations", force: :cascade do |t|
-    t.boolean  "is_required",                default: false, null: false
+    t.boolean  "is_required",                       default: false, null: false
     t.string   "custom_enum"
     t.string   "custom_pattern"
-    t.integer  "resource_representation_id"
+    t.integer  "parent_resource_representation_id"
     t.integer  "attribute_id"
-    t.datetime "created_at",                                 null: false
-    t.datetime "updated_at",                                 null: false
+    t.datetime "created_at",                                        null: false
+    t.datetime "updated_at",                                        null: false
+    t.integer  "resource_representation_id"
     t.index ["attribute_id"], name: "index_attributes_resource_representations_on_attribute_id", using: :btree
+    t.index ["parent_resource_representation_id"], name: "index_arr_on_parent_resource_representation_id", using: :btree
     t.index ["resource_representation_id"], name: "index_arr_on_resource_representation_id", using: :btree
   end
 
@@ -132,6 +134,7 @@ ActiveRecord::Schema.define(version: 20170614152319) do
   add_foreign_key "attributes", "resources", column: "parent_resource_id"
   add_foreign_key "attributes_resource_representations", "attributes"
   add_foreign_key "attributes_resource_representations", "resource_representations"
+  add_foreign_key "attributes_resource_representations", "resource_representations", column: "parent_resource_representation_id"
   add_foreign_key "json_errors", "validations"
   add_foreign_key "query_parameters", "routes"
   add_foreign_key "resource_representations", "resources"

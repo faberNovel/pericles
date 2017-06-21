@@ -1,7 +1,8 @@
 class ResourceRepresentation < ApplicationRecord
   belongs_to :resource, inverse_of: :resource_representations
 
-  has_many :attributes_resource_representations, inverse_of: :resource_representation, dependent: :destroy
+  has_many :attributes_resource_representations, inverse_of: :parent_resource_representation,
+   foreign_key: "parent_resource_representation_id", dependent: :destroy
   has_many :resource_attributes, through: :attributes_resource_representations
   has_many :responses, inverse_of: :resource_representation
 
