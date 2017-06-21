@@ -3,6 +3,7 @@ class ResourceRepresentation < ApplicationRecord
 
   has_many :attributes_resource_representations, inverse_of: :resource_representation, dependent: :destroy
   has_many :resource_attributes, through: :attributes_resource_representations
+  has_many :responses, inverse_of: :resource_representation
 
   accepts_nested_attributes_for :attributes_resource_representations, allow_destroy: true
 

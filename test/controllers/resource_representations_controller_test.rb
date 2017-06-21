@@ -84,6 +84,17 @@ class ResourceRepresentationsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to project_resource_path(project, resource)
   end
 
+  test "should not delete resource_representation (foreign key constraint)" do
+    resource_representation = create(:resource_representation)
+    resource = resource_representation.resource
+    route = create(:route, resource: resource)
+    create(:response, route: route, resource_representation: resource_representation)
+    assert_no_difference('ResourceRepresentation.count') do
+      delete resource_resource_representation_path(resource, resource_representation)
+    end
+    assert_response :conflict
+  end
+
   private
 
   def create_representation_hash_with_associations_to_attributes(resource_representation)

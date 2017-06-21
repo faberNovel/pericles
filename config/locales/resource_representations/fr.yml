@@ -1,0 +1,9 @@
+fr:
+  activerecord:
+    errors:
+      models:
+        resource_representation:
+          attributes:
+            base:
+              destroy_failed_foreign_key: "Impossible de supprimer cette resource_representation car elle toujours référencée
+              dans des réponses."

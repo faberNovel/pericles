@@ -1,3 +1,7 @@
+- if flash[:error]
+  %div{class: "alert alert-danger"}
+    =flash[:error]
+
 .page-header
   %h1
     !="#{@resource.name} <small> #{@representation.name} </small>"

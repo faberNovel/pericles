@@ -51,14 +51,16 @@
       %th Description
       %th HTTP Method
       %th URL
+      %th Resource representations
       %th Details
   %tbody
-    - @resource.routes.each do |route|
+    - @resource.routes.includes(:resource_representations).each do |route|
       %tr
         %th{scope: "row"}= route.name
         %td= route.description
         %td= route.http_method
         %td= route.url
+        %td= route.resource_representations.uniq.map(&:name).join(", ")
         %td= link_to "Show", resource_route_path(@resource, route)
 
 = link_to 'Edit', edit_project_resource_path(@project, @resource)
