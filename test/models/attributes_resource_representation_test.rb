@@ -26,4 +26,12 @@ class AttributesResourceRepresentationTest < ActiveSupport::TestCase
     assert_not build(:attributes_resource_representation, resource_attribute: attribute_with_resource, custom_pattern: "[a]").valid?
     assert_not build(:attributes_resource_representation, resource_attribute: boolean_attribute, custom_pattern: "[a]").valid?
   end
+
+  test "An attributes_resource_representation with an attribute that has a resource type must have an associated
+   resource_representation to represent the resource referenced by the attribute" do
+    resource_representation = create(:resource_representation)
+    attribute_with_resource = create(:attribute_with_resource, parent_resource: resource_representation.resource)
+    assert_not build(:attributes_resource_representation, resource_attribute: attribute_with_resource,
+      parent_resource_representation: resource_representation).valid?
+  end
 end

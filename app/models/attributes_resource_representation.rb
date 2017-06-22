@@ -9,6 +9,7 @@ class AttributesResourceRepresentation < ApplicationRecord
   validates :resource_attribute, presence: true, uniqueness: { scope: [:parent_resource_representation] }
   validates :custom_enum, absence: true, unless: :attribute_is_enumerable?
   validates :custom_pattern, absence: true, unless: "resource_attribute.string?"
+  validates :resource_representation, presence: true, if: "resource_attribute.resource"
 
   private
 
