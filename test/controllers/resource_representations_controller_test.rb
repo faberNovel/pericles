@@ -95,6 +95,106 @@ class ResourceRepresentationsControllerTest < ActionDispatch::IntegrationTest
     assert_response :conflict
   end
 
+  test 'should get json schema associated to resource_representation' do
+    resource = create(:resource, name: 'Movie', description: 'A movie')
+    attribute = create(:attribute, parent_resource: resource, name: 'main_title', description: 'title of the film',
+     primitive_type: :string, enum: "The Godfather, Finding Nemo", pattern: "The Godfather")
+    resource_representation = create(:resource_representation, resource: resource)
+    create(:attributes_resource_representation, parent_resource_representation: resource_representation,
+     resource_attribute: attribute, is_required: true, custom_pattern: "The Godfather II")
+    json_schema = {
+      type: 'object',
+      title: "Movie - #{resource_representation.name}",
+      description: 'A movie',
+      properties: {
+        movie: {
+          type: 'object',
+          properties: {
+            main_title: {
+              type: 'string',
+              description: 'title of the film',
+              enum: ["The Godfather", "Finding Nemo"],
+              pattern: "The Godfather II"
+            }
+          },
+          required: ["main_title"]
+        }
+      }
+    }
+    get resource_resource_representation_path(resource, resource_representation, format: :json_schema)
+    assert_equal json_schema.deep_stringify_keys!, JSON.parse(response.body), "json schema is not correct"
+  end
+
+  test 'should get json schema associated to resource_representation with reference to other resource_representation in
+    attributes_resource_representation' do
+    resource = create(:resource, name: 'User', description: 'A user')
+    name_attribute = create(:attribute, parent_resource: resource, name: 'name', description: 'name of the user',
+     primitive_type: :string)
+    manager_attribute = create(:attribute, parent_resource: resource, name: 'manager', description: 'manager of the user',
+     resource: resource, primitive_type: nil)
+    resource_representation_user = create(:resource_representation, resource: resource, name: 'user')
+    resource_representation_manager = create(:resource_representation, resource: resource, name: 'manager')
+    create(:attributes_resource_representation, parent_resource_representation: resource_representation_user,
+     resource_attribute: name_attribute)
+    create(:attributes_resource_representation, parent_resource_representation: resource_representation_user,
+     resource_attribute: manager_attribute, resource_representation: resource_representation_manager)
+    create(:attributes_resource_representation, parent_resource_representation: resource_representation_manager,
+     resource_attribute: name_attribute)
+    json_schema = {
+      type: 'object',
+      title: "User - user",
+      description: 'A user',
+      properties: {
+        user: {
+          type: 'object',
+          properties: {
+            name: { type: 'string', description: 'name of the user'},
+            manager: {
+              type: 'object',
+              description: 'manager of the user',
+              title: 'User',
+              properties: {
+                name: { type: 'string', description: 'name of the user'}
+              }
+            }
+          }
+        }
+      }
+    }
+    get resource_resource_representation_path(resource, resource_representation_user, format: :json_schema)
+    assert_equal json_schema.deep_stringify_keys!, JSON.parse(response.body), "json schema is not correct"
+  end
+
+  test 'should get json schema associated to resource_representation that is a collection' do
+    resource = create(:resource, name: 'Movie', description: 'A movie')
+    attribute = create(:attribute, parent_resource: resource, name: 'main_title', description: 'title of the film',
+     primitive_type: :string)
+    resource_representation = create(:resource_representation, resource: resource, is_collection: true)
+    create(:attributes_resource_representation, parent_resource_representation: resource_representation,
+     resource_attribute: attribute)
+    json_schema = {
+      type: 'object',
+      title: "Movie - #{resource_representation.name}",
+      description: 'A movie',
+      properties: {
+        movies: {
+          type: 'array',
+          items: {
+            type: 'object',
+            properties: {
+              main_title: {
+                type: 'string',
+                description: 'title of the film'
+              }
+            }
+          }
+        }
+      }
+    }
+    get resource_resource_representation_path(resource, resource_representation, format: :json_schema)
+    assert_equal json_schema.deep_stringify_keys!, JSON.parse(response.body), "json schema is not correct"
+  end
+
   private
 
   def create_representation_hash_with_associations_to_attributes(resource_representation)

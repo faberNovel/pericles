@@ -3,7 +3,14 @@ class ResourceRepresentationsController < ApplicationController
   before_action :setup_resource_representation, except: [:index, :new, :create]
 
   def show
-    render layout: 'full_width_column'
+    respond_to do |format|
+      format.html do
+        render layout: 'full_width_column'
+      end
+      format.json_schema do
+        render json: @representation, serializer: ResourceRepresentationSchemaSerializer, adapter: :attributes
+      end
+    end
   end
 
   def new

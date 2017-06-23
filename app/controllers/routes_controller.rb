@@ -3,15 +3,8 @@ class RoutesController < ApplicationController
   before_action :setup_route, except: [:index, :new, :create]
 
   def show
-    respond_to do |format|
-      format.html do
-        @default_json_instance = "{}"
-        render layout: 'generic'
-      end
-      format.json_schema do
-        render json: @route, serializer: ResourceSchemaSerializer, adapter: :attributes
-      end
-    end
+    @default_json_instance = "{}"
+    render layout: 'generic'
   end
 
   def new
