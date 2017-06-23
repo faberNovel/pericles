@@ -69,7 +69,7 @@ class ResourceRepresentationsController < ApplicationController
   end
 
   def resource_rep_params
-    params.require(:resource_representation).permit(:name, :description,
+    params.require(:resource_representation).permit(:name, :description, :is_collection,
       attributes_resource_representations_attributes: [:id, :custom_enum,
         :custom_pattern, :resource_representation_id, :is_required, :attribute_id, :_destroy])
   end
