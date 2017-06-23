@@ -5,5 +5,5 @@ fr:
         resource_representation:
           attributes:
             base:
-              destroy_failed_foreign_key: "Impossible de supprimer cette resource_representation car elle toujours référencée
-              dans des réponses."
+              destroy_failed_foreign_key: "Impossible de supprimer cette représentation de ressource car elle toujours référencée
+              dans des réponses ou dans des représentations de ressource."

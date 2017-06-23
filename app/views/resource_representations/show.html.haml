@@ -19,15 +19,18 @@
         %th Type
         %th Enum
         %th Pattern
+        %th Resource Representation
         %th Required ?
     %tbody
       - @representation.attributes_resource_representations.each do |attr_resource_rep|
         - attribute = attr_resource_rep.resource_attribute
+        - resource_representation = attr_resource_rep.resource_representation
         %tr
           %th{scope: "row"}= attribute.name
           %td= format_type(attribute.primitive_type, attribute.resource_id, attribute.is_array)
           %td= attr_resource_rep.custom_enum
           %td= attr_resource_rep.custom_pattern
+          %td= resource_representation.name if resource_representation
           %td= attr_resource_rep.is_required ? t('required') : t('optional')
 
 = link_to 'Edit', edit_resource_resource_representation_path(@resource, @representation)
