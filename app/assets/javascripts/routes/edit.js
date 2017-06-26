@@ -33,25 +33,29 @@ function set_id_response_headers_table(element, response_number) {
   $(element).find("a.add_nested_fields").attr("data-target", "#" + response_table_headers_id);
 }
 
-function generate_schema_from_resource(clicked_button) {
-  var url = window.location.pathname.replace('/edit', '.json_schema');
-  var body_json_schema = $(clicked_button).siblings(".form-group").children("textarea");
-  $.ajax({
-      type: "GET",
-      url: url,
-      dataType: 'json'
-    })
-    .done(function(data) {
-      var result_json = {};
-      var original_data = body_json_schema.text();
-      if (original_data) {
-        original_json = JSON.parse(original_data);
-        result_json = deep_merge(original_json, data);
-      } else {
-        result_json = data;
-      }
-      body_json_schema.text(JSON.stringify(result_json, null, 2));
-    });
+function generate_schema_from_resource_representation(clicked_button) {
+  var select_element = $(clicked_button).parent().siblings(".col-xs-6").find("select");
+  var resource_representation_id = select_element.val();
+  if (resource_representation_id) {
+    var url = window.location.pathname.replace(/routes\/\d+\/edit|routes\/new/, 'resource_representations/' + resource_representation_id + '.json_schema');
+    var body_json_schema = $(clicked_button).siblings(".form-group").children("textarea");
+    $.ajax({
+        type: "GET",
+        url: url,
+        dataType: 'json'
+      })
+      .done(function(data) {
+        var result_json = {};
+        var original_data = body_json_schema.val();
+        if (original_data) {
+          original_json = JSON.parse(original_data);
+          result_json = deep_merge(original_json, data);
+        } else {
+          result_json = data;
+        }
+        body_json_schema.val(JSON.stringify(result_json, null, 2));
+      });
+  }
 }
 
 function set_autocomplete(index, element) {
