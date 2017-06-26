@@ -10,4 +10,14 @@ class ResourceRepresentation < ApplicationRecord
 
   validates :name, presence: true, uniqueness: { scope: [:resource], case_sensitive: false }
   validates :resource, presence: true
+
+  def find_parent_resource_representations
+    parent_resource_representations = []
+    referencing_associations = AttributesResourceRepresentation.where(resource_representation_id: self.id)
+    referencing_associations.each { |association| parent_resource_representations << association.parent_resource_representation }
+    parent_resource_representations.uniq.each do |resource_representation|
+      parent_resource_representations.concat(resource_representation.find_parent_resource_representations)
+    end
+    parent_resource_representations.uniq
+  end
 end
