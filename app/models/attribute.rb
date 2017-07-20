@@ -13,8 +13,11 @@ class Attribute < ApplicationRecord
   validates :resource, presence: true, if: "primitive_type.nil?"
   validate :type_cannot_be_primitive_type_and_resource
   validates :enum, absence: true, unless: :is_enumerable?
-  validates :pattern, absence: true, unless: "self.string?"
-
+  validates :pattern, absence: true, unless: :string?
+  validates :min_length, absence: true, unless: :string?
+  validates :max_length, absence: true, unless: :string?
+  validates :minimum, absence: true, unless: "self.integer? && enum.blank?"
+  validates :maximum, absence: true, unless: "self.integer? && enum.blank?"
   private
 
   def is_enumerable?
