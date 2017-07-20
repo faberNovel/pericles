@@ -19,6 +19,10 @@
       %th Type
       %th Enum
       %th Pattern
+      %th Minimum
+      %th Maximum
+      %th Minimum length
+      %th Maximum length
       %th Example
   %tbody
     - @resource.resource_attributes.each do |attribute|
@@ -28,6 +32,10 @@
         %td= format_type(attribute.primitive_type, attribute.resource_id, attribute.is_array)
         %td= attribute.enum
         %td= attribute.pattern
+        %td= attribute.minimum
+        %td= attribute.maximum
+        %td= attribute.min_length
+        %td= attribute.max_length
         %td= attribute.example
 
 %h3 Representations

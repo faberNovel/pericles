@@ -67,7 +67,7 @@ class ResourcesController < ApplicationController
   def resource_params
     params.require(:resource).permit(:name, :description,
       resource_attributes_attributes: [:id, :name, :description, :primitive_type, :resource_id, :is_array, :enum, :example,
-        :pattern, :_destroy],
+        :pattern, :min_length, :max_length, :minimum, :maximum, :_destroy],
       routes_attributes: [:id, :name, :description, :http_method, :url, :_destroy])
   end
 end
