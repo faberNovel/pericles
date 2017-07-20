@@ -48,11 +48,12 @@
               %th{scope: "row"}= header.name
               %td= header.description
 
-  .col-xs-6
-    %h4 Body JSON Schema
-    %pre.pre-scrollable
-      %code
-        =format_json_schema(@route.request_body_schema)
+    - unless @route.request_body_schema.blank?
+      .col-xs-6
+        %h4 Body JSON Schema
+        %pre.pre-scrollable
+          %code
+            =format_json_schema(@route.request_body_schema)
 
 .row
   .col-xs-12
@@ -81,12 +82,13 @@
               %tr
                 %th{scope: "row"}= response_header.name
                 %td= response_header.description
+    - unless response.body_schema.blank?
+      .col-xs-6
+        %h4 Body JSON Schema
+        %pre.pre-scrollable
+          %code
+            =format_json_schema(response.body_schema)
 
-    .col-xs-6
-      %h4 Body JSON Schema
-      %pre.pre-scrollable
-        %code
-          =format_json_schema(response.body_schema)
 
 - if route_includes_json_schema(@route)
   .row
