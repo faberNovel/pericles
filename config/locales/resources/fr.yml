@@ -6,3 +6,6 @@ fr:
           attributes:
             base:
               destroy_failed_foreign_key: "Impossible de supprimer cette ressource car elle est le type d'un ou plusieurs attributs dans d'autres ressources."
+  resources:
+    show:
+      no_route_placeholder: "Il n'y a pas de route associée à cette ressource"

@@ -44,24 +44,28 @@
 
 = link_to 'Add new route', new_resource_route_path(@resource)
 
-%table{class: "table table-striped"}
-  %thead
-    %tr
-      %th Name
-      %th Description
-      %th HTTP Method
-      %th URL
-      %th Resource representations
-      %th Details
-  %tbody
-    - @resource.routes.includes(:resource_representations).each do |route|
+- if @resource.routes.any?
+  %table{class: "table table-striped"}
+    %thead
       %tr
-        %th{scope: "row"}= route.name
-        %td= route.description
-        %td= route.http_method
-        %td= route.url
-        %td= route.resource_representations.uniq.map(&:name).join(", ")
-        %td= link_to "Show", resource_route_path(@resource, route)
+        %th Name
+        %th Description
+        %th HTTP Method
+        %th URL
+        %th Resource representations
+        %th Details
+    %tbody
+      - @resource.routes.includes(:resource_representations).each do |route|
+        %tr
+          %th{scope: "row"}= route.name
+          %td= route.description
+          %td= route.http_method
+          %td= route.url
+          %td= route.resource_representations.uniq.map(&:name).join(", ")
+          %td= link_to "Show", resource_route_path(@resource, route)
+- else
+  %p
+    %i= t('.no_route_placeholder')
 
 = link_to 'Edit', edit_project_resource_path(@project, @resource)
 \|
