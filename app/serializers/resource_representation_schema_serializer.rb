@@ -94,6 +94,11 @@ class ResourceRepresentationSchemaSerializer < ActiveModel::Serializer
       attribute_hash[:enum] = enum.split(", ")
       attribute_hash[:enum] = cast_enum_elements(attribute_hash[:enum], attribute_hash[:type]).uniq
     end
+    [:min_length, :max_length, :minimum, :maximum].each do |attribute_name|
+      unless attribute.send(attribute_name).blank?
+        attribute_hash[attribute_name.to_s.camelize(:lower)] = attribute.send(attribute_name)
+      end
+    end
     return attribute_hash
   end
 
