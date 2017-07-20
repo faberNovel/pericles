@@ -60,7 +60,7 @@
     %h2 Responses
 
 - @route.responses.each do |response|
-  .row
+  .row{:style => "border-bottom: solid 1px #eee"}
     .col-xs-6
       %h4 Status Code
       %p= response.status_code
