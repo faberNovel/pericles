@@ -7,6 +7,7 @@ class Route < ApplicationRecord
   has_many :resource_representations, through: :responses
 
   belongs_to :resource, inverse_of: :routes
+  belongs_to :request_resource_representation, class_name: "ResourceRepresentation"
 
   accepts_nested_attributes_for :request_headers, allow_destroy: true, reject_if: :all_blank
   accepts_nested_attributes_for :request_query_parameters, allow_destroy: true, reject_if: :all_blank

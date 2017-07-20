@@ -47,6 +47,9 @@
             %tr
               %th{scope: "row"}= header.name
               %td= header.description
+    - unless @route.request_resource_representation.blank?
+      %h4 Resource Representation
+      %p= @route.request_resource_representation.name
 
     - unless @route.request_body_schema.blank?
       .col-xs-6
