@@ -169,7 +169,7 @@ class ResourceRepresentationsControllerTest < ActionDispatch::IntegrationTest
     resource = create(:resource, name: 'Movie', description: 'A movie')
     attribute = create(:attribute, parent_resource: resource, name: 'main_title', description: 'title of the film',
      primitive_type: :string)
-    resource_representation = create(:resource_representation, resource: resource, is_collection: true)
+    resource_representation = create(:resource_representation, resource: resource)
     create(:attributes_resource_representation, parent_resource_representation: resource_representation,
      resource_attribute: attribute)
     json_schema = {
@@ -191,7 +191,7 @@ class ResourceRepresentationsControllerTest < ActionDispatch::IntegrationTest
         }
       }
     }
-    get resource_resource_representation_path(resource, resource_representation, format: :json_schema)
+    get resource_resource_representation_path(resource, resource_representation, format: :json_schema, params: {is_collection: 'true'})
     assert_equal json_schema.deep_stringify_keys!, JSON.parse(response.body), "json schema is not correct"
   end
 

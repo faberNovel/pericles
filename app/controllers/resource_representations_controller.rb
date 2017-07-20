@@ -8,7 +8,8 @@ class ResourceRepresentationsController < ApplicationController
         render layout: 'full_width_column'
       end
       format.json_schema do
-        render json: @representation, serializer: ResourceRepresentationSchemaSerializer, adapter: :attributes
+        render json: @representation, serializer: ResourceRepresentationSchemaSerializer, adapter: :attributes,
+        is_collection: ActiveModel::Type::Boolean.new.cast(params[:is_collection])
       end
     end
   end
@@ -76,7 +77,7 @@ class ResourceRepresentationsController < ApplicationController
   end
 
   def resource_rep_params
-    params.require(:resource_representation).permit(:name, :description, :is_collection,
+    params.require(:resource_representation).permit(:name, :description,
       attributes_resource_representations_attributes: [:id, :custom_enum,
         :custom_pattern, :resource_representation_id, :is_required, :attribute_id, :_destroy])
   end

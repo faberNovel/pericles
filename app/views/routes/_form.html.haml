@@ -119,6 +119,7 @@
           = button_tag("Generate Schema from Resource Representation", type: 'button',
             onclick: "generate_schema_from_resource_representation(this)")
 
+          = response_fields.check_box :is_collection
           = response_fields.text_area :body_schema, size: "60x20", label: 'Body JSON schema'
 
       = response_fields.link_to_remove "Remove"

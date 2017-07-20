@@ -38,10 +38,11 @@ function generate_schema_from_resource_representation(clicked_button) {
   var resource_representation_id = select_element.val();
   if (resource_representation_id) {
     var url = window.location.pathname.replace(/routes\/\d+\/edit|routes\/new/, 'resource_representations/' + resource_representation_id + '.json_schema');
+    var params = '?is_collection=' + $(clicked_button).siblings('.checkbox').find('input[type=checkbox]')[0].checked;
     var body_json_schema = $(clicked_button).siblings(".form-group").children("textarea");
     $.ajax({
         type: "GET",
-        url: url,
+        url: url + params,
         dataType: 'json'
       })
       .done(function(data) {

@@ -73,6 +73,7 @@
       - unless response.resource_representation.blank?
         %h4 Resource Representation
         %p= response.resource_representation.name
+        %p= "Is collection ? #{response.is_collection}"
       - unless response.headers.blank?
         %h4 Headers
         %table{class: "table table-striped"}

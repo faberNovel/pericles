@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170720101800) do
+ActiveRecord::Schema.define(version: 20170720131956) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -85,9 +85,8 @@ ActiveRecord::Schema.define(version: 20170720101800) do
     t.string   "name"
     t.text     "description"
     t.integer  "resource_id"
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
-    t.boolean  "is_collection", default: false, null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
     t.index ["resource_id"], name: "index_resource_representations_on_resource_id", using: :btree
   end
 
@@ -104,10 +103,11 @@ ActiveRecord::Schema.define(version: 20170720101800) do
     t.integer  "status_code"
     t.text     "description"
     t.json     "body_schema"
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
+    t.datetime "created_at",                                 null: false
+    t.datetime "updated_at",                                 null: false
     t.integer  "route_id"
     t.integer  "resource_representation_id"
+    t.boolean  "is_collection",              default: false, null: false
     t.index ["resource_representation_id"], name: "index_responses_on_resource_representation_id", using: :btree
     t.index ["route_id"], name: "index_responses_on_route_id", using: :btree
   end

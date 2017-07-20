@@ -6,6 +6,7 @@ class ResourceRepresentationSchemaSerializer < ActiveModel::Serializer
     @resource = object.resource
     @all_resource_representations = [@resource_representation.id]
     @required_properties = []
+    @is_collection = options[:is_collection]
     super
   end
 
@@ -15,7 +16,7 @@ class ResourceRepresentationSchemaSerializer < ActiveModel::Serializer
     resource_hash[:properties] = properties_from_resource_representation(@resource_representation, @required_properties)
     resource_hash[:required] = @required_properties.uniq unless @required_properties.empty?
     properties_hash = {}
-    if @resource_representation.is_collection
+    if @is_collection
       array_of_attribute_hash = {}
       array_of_attribute_hash[:type] = 'array'
       array_of_attribute_hash[:items] = resource_hash
