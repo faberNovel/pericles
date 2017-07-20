@@ -23,6 +23,7 @@
       %th Maximum
       %th Minimum length
       %th Maximum length
+      %th Nullable
       %th Example
   %tbody
     - @resource.resource_attributes.each do |attribute|
@@ -36,6 +37,7 @@
         %td= attribute.maximum
         %td= attribute.min_length
         %td= attribute.max_length
+        %td= attribute.nullable
         %td= attribute.example
 
 %h3 Representations

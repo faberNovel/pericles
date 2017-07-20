@@ -65,7 +65,11 @@ class ResourceRepresentationSchemaSerializer < ActiveModel::Serializer
     end
     if attribute.is_array
       array_of_attribute_hash = {}
-      array_of_attribute_hash[:type] = 'array'
+      if attribute.nullable
+        attribute_hash[:oneOf] = [ {type: 'array' }, {type: 'null'} ]
+      else
+        attribute_hash[:type] = 'array'
+      end
       array_of_attribute_hash[:items] = attribute_hash
       return array_of_attribute_hash
     else
@@ -84,20 +88,26 @@ class ResourceRepresentationSchemaSerializer < ActiveModel::Serializer
   def hash_from_primitive_attributes_resource_representation(association)
     attribute = association.resource_attribute
     attribute_hash = {}
-    attribute_hash[:type] = attribute.primitive_type
+    type_hash = {}
     attribute_hash[:description] = attribute.description
+    type_hash[:type] = attribute.primitive_type
     unless attribute.pattern.blank? && association.custom_pattern.blank?
-      attribute_hash[:pattern] = association.custom_pattern.blank? ? attribute.pattern : association.custom_pattern
+      type_hash[:pattern] = association.custom_pattern.blank? ? attribute.pattern : association.custom_pattern
     end
     unless attribute.enum.blank? && association.custom_enum.blank?
       enum = association.custom_enum.blank? ? attribute.enum : association.custom_enum
-      attribute_hash[:enum] = enum.split(", ")
-      attribute_hash[:enum] = cast_enum_elements(attribute_hash[:enum], attribute_hash[:type]).uniq
+      type_hash[:enum] = enum.split(", ")
+      type_hash[:enum] = cast_enum_elements(type_hash[:enum], type_hash[:type]).uniq
     end
     [:min_length, :max_length, :minimum, :maximum].each do |attribute_name|
       unless attribute.send(attribute_name).blank?
-        attribute_hash[attribute_name.to_s.camelize(:lower)] = attribute.send(attribute_name)
+        type_hash[attribute_name.to_s.camelize(:lower)] = attribute.send(attribute_name)
       end
+    end
+    if attribute.nullable
+      attribute_hash[:oneOf] = [type_hash, {type: 'null'} ]
+    else
+      attribute_hash.merge!(type_hash)
     end
     return attribute_hash
   end
@@ -108,7 +118,11 @@ class ResourceRepresentationSchemaSerializer < ActiveModel::Serializer
 
   def set_main_fields_from_attribute(attribute)
     attribute_hash = {}
-    attribute_hash[:type] = 'object'
+    if attribute.nullable
+      attribute_hash[:oneOf] = [ {type: 'object'}, {type: 'null'} ]
+    else
+      attribute_hash[:type] = 'object'
+    end
     attribute_hash[:title] = attribute.resource.name
     attribute_hash[:description] = attribute.description
     return attribute_hash
