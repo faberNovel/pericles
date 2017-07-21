@@ -14,6 +14,7 @@ gem  'execjs'
 gem 'devise', '~> 4.3'
 gem 'omniauth-google-oauth2', '~> 0.5.2'
 gem "audited", "~> 4.5"
+gem 'rest-client'
 
 # Recommended for admin interface
 # gem 'activeadmin', github: 'activeadmin' # There is no Rails 4 version just yet
