@@ -112,6 +112,10 @@ GEM
     json (2.0.3)
     json-schema (2.8.0)
       addressable (>= 2.4)
+    json_schema (0.16.1)
+    json_schema-faker (0.4.0)
+      json_schema (>= 0.12.4)
+      pxeger
     jsonapi-renderer (0.1.2)
     loofah (2.0.3)
       nokogiri (>= 1.5.9)
@@ -145,6 +149,7 @@ GEM
       activerecord (>= 3.0)
     powerpack (0.1.1)
     public_suffix (2.0.5)
+    pxeger (0.1.0)
     rack (2.0.1)
     rack-mini-profiler (0.10.1)
       rack (>= 1.2.0)
@@ -242,6 +247,7 @@ DEPENDENCIES
   bootstrap_form
   byebug
   coffee-rails
+  execjs
   factory_girl_rails
   flamegraph
   haml-rails (~> 0.9)
@@ -249,6 +255,7 @@ DEPENDENCIES
   jquery-ui-rails
   json (~> 2.0.2)
   json-schema (~> 2.8)
+  json_schema-faker
   minitest-reporters
   nested_form
   newrelic_rpm
@@ -272,4 +279,4 @@ RUBY VERSION
    ruby 2.3.1p112
 
 BUNDLED WITH
-   1.13.6
+   1.14.6

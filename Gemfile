@@ -9,6 +9,8 @@ gem 'uglifier'
 gem 'coffee-rails'
 gem 'jquery-rails'
 gem 'turbolinks'
+gem 'json_schema-faker'
+gem  'execjs'
 
 # Recommended for admin interface
 # gem 'activeadmin', github: 'activeadmin' # There is no Rails 4 version just yet
