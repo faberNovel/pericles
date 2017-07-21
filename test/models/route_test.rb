@@ -44,4 +44,13 @@ class RouteTest < ActiveSupport::TestCase
     route = create(:route, resource: resource, url: '/movies', http_method: :GET)
     assert route.is_restful_collection?, 'route should be a restful collection'
   end
+
+  test "routes of project" do
+    route = create(:route)
+    create(:route, resource: route.resource)
+    other_resource = create(:resource)
+    other_route = create(:route, resource: other_resource)
+    assert_equal Route.of_project(other_resource.project).count, 1, "should have only one route for project"
+    assert_equal Route.of_project(other_resource.project).first, other_route, "should be the correct route"
+  end
 end
