@@ -119,7 +119,8 @@ class ResourceRepresentationsControllerTest < ActionDispatch::IntegrationTest
           },
           required: ["main_title"]
         }
-      }
+      },
+      required: ['movie']
     }
     get resource_resource_representation_path(resource, resource_representation, format: :json_schema)
     assert_equal json_schema.deep_stringify_keys!, JSON.parse(response.body), "json schema is not correct"
@@ -159,7 +160,8 @@ class ResourceRepresentationsControllerTest < ActionDispatch::IntegrationTest
             }
           }
         }
-      }
+      },
+      required: ['user']
     }
     get resource_resource_representation_path(resource, resource_representation_user, format: :json_schema)
     assert_equal json_schema.deep_stringify_keys!, JSON.parse(response.body), "json schema is not correct"
@@ -189,7 +191,8 @@ class ResourceRepresentationsControllerTest < ActionDispatch::IntegrationTest
             }
           }
         }
-      }
+      },
+      required: ['movies']
     }
     get resource_resource_representation_path(resource, resource_representation, format: :json_schema, params: {is_collection: 'true'})
     assert_equal json_schema.deep_stringify_keys!, JSON.parse(response.body), "json schema is not correct"

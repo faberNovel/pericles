@@ -1,5 +1,5 @@
 class ResourceRepresentationSchemaSerializer < ActiveModel::Serializer
-  attributes :title, :type, :properties, :description
+  attributes :title, :type, :properties, :description, :required
 
   def initialize(object, options = {})
     @resource_representation = object
@@ -25,6 +25,10 @@ class ResourceRepresentationSchemaSerializer < ActiveModel::Serializer
       properties_hash[@resource.name.downcase] = resource_hash
     end
     return properties_hash
+  end
+
+  def required
+    @is_collection ? [@resource.name.downcase.pluralize] : [@resource.name.downcase]
   end
 
   def description
