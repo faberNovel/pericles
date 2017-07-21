@@ -106,6 +106,7 @@ ActiveRecord::Schema.define(version: 20171009090238) do
     t.text     "description"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.string   "server_url"
   end
 
   create_table "query_parameters", force: :cascade do |t|
