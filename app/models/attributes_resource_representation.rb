@@ -5,6 +5,8 @@ class AttributesResourceRepresentation < ApplicationRecord
    foreign_key: "attribute_id"
   belongs_to :resource_representation
 
+  scope :ordered_by_attribute_name, -> { joins(:resource_attribute).order('attributes.name') }
+
   validates :parent_resource_representation, presence: true
   validates :resource_attribute, presence: true, uniqueness: { scope: [:parent_resource_representation] }
   validates :custom_enum, absence: true, unless: :attribute_is_enumerable?

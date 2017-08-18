@@ -67,12 +67,15 @@ class ResourceRepresentationsController < ApplicationController
   end
 
   def build_missing_attributes_resource_representations(resource_representation)
-    @resource.resource_attributes.each do |attribute|
-      if resource_representation.attributes_resource_representations
-        .select { |attributes_resource_representation | attributes_resource_representation.attribute_id == attribute.id }
-        .empty?
-        resource_representation.attributes_resource_representations.build(resource_attribute: attribute)
+    @attributes_resource_representations_ordered_by_attribute_name = []
+    @resource.resource_attributes.sorted_by_name.each do |attribute|
+      attributes_resource_representation = resource_representation.attributes_resource_representations.detect {
+       |arr| arr.attribute_id == attribute.id }
+      unless attributes_resource_representation
+        attributes_resource_representation = resource_representation.attributes_resource_representations
+        .build(resource_attribute: attribute)
       end
+      @attributes_resource_representations_ordered_by_attribute_name << attributes_resource_representation
     end
   end
 

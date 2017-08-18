@@ -29,7 +29,7 @@
             %th Required ?
             %th
         %tbody
-          = f.fields_for :attributes_resource_representations do |fields|
+          = f.fields_for :attributes_resource_representations, @attributes_resource_representations_ordered_by_attribute_name do |fields|
             - attributes_resource_representation = fields.object
             - attribute = attributes_resource_representation.resource_attribute
             - type_resource = attribute.resource

@@ -22,7 +22,7 @@
         %th Resource Representation
         %th Required ?
     %tbody
-      - @representation.attributes_resource_representations.each do |attr_resource_rep|
+      - @representation.attributes_resource_representations.ordered_by_attribute_name.each do |attr_resource_rep|
         - attribute = attr_resource_rep.resource_attribute
         - resource_representation = attr_resource_rep.resource_representation
         %tr
