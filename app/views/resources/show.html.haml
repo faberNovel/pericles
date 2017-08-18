@@ -26,7 +26,7 @@
       %th Nullable
       %th Example
   %tbody
-    - @resource.resource_attributes.each do |attribute|
+    - @resource.resource_attributes.sorted_by_name.each do |attribute|
       %tr
         %th{scope: "row"}= attribute.name
         %td= attribute.description

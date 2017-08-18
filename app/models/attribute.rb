@@ -18,6 +18,9 @@ class Attribute < ApplicationRecord
   validates :max_length, absence: true, unless: :string?
   validates :minimum, absence: true, unless: "self.integer? && enum.blank?"
   validates :maximum, absence: true, unless: "self.integer? && enum.blank?"
+
+  scope :sorted_by_name, -> { order(:name) }
+
   private
 
   def is_enumerable?

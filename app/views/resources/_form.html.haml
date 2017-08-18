@@ -31,7 +31,7 @@
         %th Example
         %th
     %tbody
-      = f.fields_for :resource_attributes, wrapper: false do |attribute_fields|
+      = f.fields_for :resource_attributes, @resource.resource_attributes.sorted_by_name, wrapper: false do |attribute_fields|
         %tr.fields
           %td
             = attribute_fields.text_field :name, hide_label: true
