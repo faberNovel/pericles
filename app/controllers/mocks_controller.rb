@@ -1,4 +1,5 @@
 class MocksController < ApplicationController
+  skip_before_action :authenticate_user!
 
   def compute_mock
     routes = Project.find(params[:project_id]).build_route_set
