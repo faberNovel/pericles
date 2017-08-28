@@ -1,6 +1,12 @@
 class RoutesController < ApplicationController
+  before_action :setup_project, only: [:index]
   before_action :setup_project_and_resource, except: [:index]
   before_action :setup_route, except: [:index, :new, :create]
+
+  def index
+    @routes = Route.of_project(@project).includes(:resource, :resource_representations).order('lower(resources.name)')
+    render layout: 'full_width_column'
+  end
 
   def show
     @default_json_instance = "{}"
@@ -40,6 +46,10 @@ class RoutesController < ApplicationController
   end
 
   private
+
+  def setup_project
+    @project = Project.find(params[:project_id])
+  end
 
   def setup_project_and_resource
     @resource = Resource.find(params[:resource_id])

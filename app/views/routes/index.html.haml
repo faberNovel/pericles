@@ -1,0 +1,26 @@
+%h1 Routes
+
+- if @routes.any?
+  %table{class: "table table-striped"}
+    %thead
+      %tr
+        %th Resource
+        %th Name
+        %th Description
+        %th HTTP Method
+        %th URL
+        %th Resource representations
+        %th Details
+    %tbody
+      - @routes.each do |route|
+        %tr
+          %td= route.resource.name
+          %th{scope: "row"}= route.name
+          %td= route.description
+          %td= route.http_method
+          %td= route.url
+          %td= route.resource_representations.uniq.map(&:name).join(", ")
+          %td= link_to "Show", resource_route_path(route.resource, route)
+- else
+  %p
+    %i= t('.no_route_placeholder')

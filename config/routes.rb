@@ -2,6 +2,7 @@ Rails.application.routes.draw do
 
   resources :projects do
     resources :resources
+    resources :routes, only: [:index]
     match 'mocks/*path', to: "mocks#compute_mock", via: :all
   end
   resources :resources, only: [] do

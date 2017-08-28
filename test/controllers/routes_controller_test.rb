@@ -1,6 +1,12 @@
 require 'test_helper'
 
 class RoutesControllerTest < ActionDispatch::IntegrationTest
+  test "should show index" do
+    project = create(:project)
+    get project_routes_path(project)
+    assert_response :success
+  end
+
   test "should show route" do
     route = create(:route, request_body_schema: "{}")
     get resource_route_path(route.resource, route)
