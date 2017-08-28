@@ -77,7 +77,9 @@ class ResourceRepresentationSchemaSerializer < ActiveModel::Serializer
 
     hash_for_non_nullable_attribute = array_of_attribute_hash ? array_of_attribute_hash : attribute_hash
 
-    return attribute.nullable ? { oneOf: [ hash_for_non_nullable_attribute, { type: 'null' } ] } : hash_for_non_nullable_attribute
+    is_nullable = association.custom_nullable.nil? ? attribute.nullable : association.custom_nullable
+
+    return is_nullable ? { oneOf: [hash_for_non_nullable_attribute, { type: 'null' }] } : hash_for_non_nullable_attribute
   end
 
   def hash_from_attributes_resource_representation_with_child_resource_representation(association)
