@@ -23,6 +23,7 @@
             %th
             %th Name
             %th Type
+            %th Nullable ?
             %th Enum
             %th Pattern
             %th Resource Representation
@@ -41,6 +42,8 @@
                 = attribute.name
               %td
                 = format_type(attribute.primitive_type, attribute.resource_id, attribute.is_array)
+              %td
+                = fields.select :custom_nullable, [true, false], include_blank: true, hide_label: true
               %td
                 = fields.text_field :custom_enum, hide_label: true
               %td
