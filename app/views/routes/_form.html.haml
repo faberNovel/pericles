@@ -72,12 +72,18 @@
 
       = f.link_to_add "Add a Header", :request_headers, data: { target: "#table_request_headers" }
 
+  .row
+    .col-xs-6
+
       %h4 Resource Representations
 
       = f.select :request_resource_representation_id, @resource.resource_representations.pluck(:name, :id), include_blank: true
 
-  .row
-    .col-xs-6
+      %h5 JSON Schema
+      = button_tag("Generate Schema from Resource Representation", type: 'button',
+        onclick: "generate_schema_from_resource_representation(this)")
+
+      = f.check_box :is_collection
       = f.text_area :request_body_schema, size: "60x20", label: 'Body JSON schema'
 
   %h3 Responses
@@ -92,7 +98,6 @@
         .col-xs-6
           = response_fields.text_field :status_code
           = response_fields.text_area :description
-          = response_fields.select :resource_representation_id, @resource.resource_representations.pluck(:name, :id), include_blank: true
 
           %h5 Headers
 
@@ -115,6 +120,9 @@
           = response_fields.link_to_add "Add a Header", :headers
 
         .col-xs-6
+
+          = response_fields.select :resource_representation_id, @resource.resource_representations.pluck(:name, :id), include_blank: true
+
           %h5 JSON Schema
           = button_tag("Generate Schema from Resource Representation", type: 'button',
             onclick: "generate_schema_from_resource_representation(this)")

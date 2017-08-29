@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170828152358) do
+ActiveRecord::Schema.define(version: 20170830082826) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -124,10 +124,11 @@ ActiveRecord::Schema.define(version: 20170828152358) do
     t.integer  "http_method"
     t.string   "url"
     t.integer  "resource_id"
-    t.datetime "created_at",                         null: false
-    t.datetime "updated_at",                         null: false
+    t.datetime "created_at",                                         null: false
+    t.datetime "updated_at",                                         null: false
     t.json     "request_body_schema"
     t.integer  "request_resource_representation_id"
+    t.boolean  "is_collection",                      default: false, null: false
     t.index ["request_resource_representation_id"], name: "index_routes_on_request_resource_representation_id", using: :btree
     t.index ["resource_id"], name: "index_routes_on_resource_id", using: :btree
   end

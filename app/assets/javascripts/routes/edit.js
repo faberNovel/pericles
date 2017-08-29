@@ -34,7 +34,7 @@ function set_id_response_headers_table(element, response_number) {
 }
 
 function generate_schema_from_resource_representation(clicked_button) {
-  var select_element = $(clicked_button).parent().siblings(".col-xs-6").find("select");
+  var select_element = $(clicked_button).siblings(".form-group").find("select");
   var resource_representation_id = select_element.val();
   if (resource_representation_id) {
     var url = window.location.pathname.replace(/routes\/\d+\/edit|routes\/new/, 'resource_representations/' + resource_representation_id + '.json_schema');

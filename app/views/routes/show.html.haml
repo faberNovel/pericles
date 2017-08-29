@@ -50,13 +50,14 @@
     - unless @route.request_resource_representation.blank?
       %h4 Resource Representation
       %p= @route.request_resource_representation.name
+      %p= "Is collection ? #{@route.is_collection}"
 
-    - unless @route.request_body_schema.blank?
-      .col-xs-6
-        %h4 Body JSON Schema
-        %pre.pre-scrollable
-          %code
-            =format_json_schema(@route.request_body_schema)
+  - unless @route.request_body_schema.blank?
+    .col-xs-6
+      %h4 Body JSON Schema
+      %pre.pre-scrollable
+        %code
+          =format_json_schema(@route.request_body_schema)
 
 .row
   .col-xs-12
