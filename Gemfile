@@ -11,6 +11,7 @@ gem 'jquery-rails'
 gem 'turbolinks'
 gem 'json_schema-faker'
 gem  'execjs'
+gem 'devise', '~> 4.3'
 
 # Recommended for admin interface
 # gem 'activeadmin', github: 'activeadmin' # There is no Rails 4 version just yet
