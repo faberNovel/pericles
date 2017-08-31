@@ -1,6 +1,6 @@
 require 'zip'
 
-class ProjectsController < ApplicationController
+class ProjectsController < AuthenticatedController
   layout 'full_width_column', only: [:show, :edit]
   before_action :setup_project, except: [:index, :new, :create]
 

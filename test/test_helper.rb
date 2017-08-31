@@ -12,3 +12,7 @@ class ActiveSupport::TestCase
   ActiveRecord::Migration.check_pending!
   include FactoryGirl::Syntax::Methods
 end
+
+class ActionDispatch::IntegrationTest
+  include Devise::Test::IntegrationHelpers
+end

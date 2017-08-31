@@ -1,4 +1,4 @@
-class ResourceRepresentationsController < ApplicationController
+class ResourceRepresentationsController < AuthenticatedController
   before_action :setup_project_and_resource, except: [:index]
   before_action :setup_resource_representation, except: [:index, :new, :create]
 

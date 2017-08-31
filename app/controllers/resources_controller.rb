@@ -1,4 +1,4 @@
-class ResourcesController < ApplicationController
+class ResourcesController < AuthenticatedController
   layout 'full_width_column'
   before_action :setup_project, only: [:index, :new, :create]
   before_action :setup_project_and_resource, except: [:index, :new, :create]

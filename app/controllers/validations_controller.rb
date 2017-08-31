@@ -1,6 +1,6 @@
 require "json-schema"
 
-class ValidationsController < ApplicationController
+class ValidationsController < AuthenticatedController
   def index
     @validations = Validation.includes(:json_instance_errors, :json_schema_errors).order("created_at desc").limit(10)
   end
