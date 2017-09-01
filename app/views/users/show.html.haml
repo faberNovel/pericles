@@ -1,5 +1,11 @@
 - content_for :page_title do
-  %h1= current_user.name
+  -# br tag required otherwise navbar is over page content (cf media tag and margin-top) (Charles-Elie SIMON, 01/09/2017)
+  %br
+  .media
+    .media-left
+      %img.media-object.img-rounded{ src: "#{current_user.avatar_url}", height: "42", width: "42" }
+    .media-body
+      %h1.media-heading= current_user.name
 
 .row
   .col-xs-12

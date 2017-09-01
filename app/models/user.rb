@@ -8,6 +8,7 @@ class User < ApplicationRecord
       user.first_name = data['first_name']
       user.last_name = data['last_name']
       user.password = Devise.friendly_token[0,20]
+      user.avatar_url = data['image']
     end
   end
 
