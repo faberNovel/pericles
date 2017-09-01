@@ -22,5 +22,7 @@
       - if user_signed_in?
         %ul.nav.navbar-nav.navbar-right
           %li
+            = link_to t('my_account'), user_path(current_user)
+          %li
             = link_to "Log out", destroy_user_session_path, method: :delete
 

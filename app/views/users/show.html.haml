@@ -1,0 +1,8 @@
+- content_for :page_title do
+  %h1 My Account
+
+.row
+  .col-xs-12
+    %dl
+      %dt Email
+      %dd= current_user.email
