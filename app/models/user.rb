@@ -1,6 +1,8 @@
 class User < ApplicationRecord
   devise :database_authenticatable, :omniauthable, :trackable, :validatable, omniauth_providers: [:google_oauth2]
 
+  validates :email, presence: true
+
   def self.from_omniauth(access_token)
     data = access_token.info
 
