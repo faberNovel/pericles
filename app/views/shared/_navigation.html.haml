@@ -19,4 +19,10 @@
           %a{:href => "/projects/new"} New Project
         %li
           = link_to 'Validate', new_validation_path
-
+      - if user_signed_in?
+        %ul.nav.navbar-nav.navbar-right
+          %li
+            %a{href: "#{user_path(current_user)}"}
+              %img.img-rounded{ src: "#{current_user.avatar_url}", height: "30", width: "30" }
+          %li
+            = link_to "Log out", destroy_user_session_path, method: :delete

@@ -6,9 +6,13 @@ class MocksControllerTest < ActionDispatch::IntegrationTest
     @resource = create(:resource, project: @project)
     @route = create(:route, resource: @resource, url: "/mock_route")
     @main_response = create(:response, route: @route, resource_representation: @resource.resource_representations.first)
+    # mocks_controller is not authenticated, but resources_representations_controller is
+    @user = create(:user)
+    sign_in @user
 
     get resource_resource_representation_path(@resource, @main_response.resource_representation, format: :json_schema)
     @main_response.update_attribute(:body_schema, @response.body)
+    sign_out :user
   end
 
   test "response of the mocks should match json schema of route" do

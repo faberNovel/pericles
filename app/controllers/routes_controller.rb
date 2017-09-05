@@ -1,4 +1,4 @@
-class RoutesController < ApplicationController
+class RoutesController < AuthenticatedController
   before_action :setup_project, only: [:index]
   before_action :setup_project_and_resource, except: [:index]
   before_action :setup_route, except: [:index, :new, :create]

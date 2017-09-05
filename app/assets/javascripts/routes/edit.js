@@ -69,7 +69,8 @@ function set_autocomplete(index, element) {
           return header.name;
         });
         response(field_name_array);
-      });
+      },
+      "json");
     },
     messages: {
       noResults: '',

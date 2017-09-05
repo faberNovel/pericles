@@ -1,0 +1,4 @@
+en:
+  users:
+    sign_in:
+      check_domain: Unauthorized domain. Please check the domain of the selected email address.

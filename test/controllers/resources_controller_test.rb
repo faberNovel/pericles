@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class ResourcesControllerTest < ActionDispatch::IntegrationTest
+class ResourcesControllerTest < ControllerWithAuthenticationTest
 
   test "should get index with resources sorted in alphabetical order" do
     project = create(:project)
@@ -12,10 +12,24 @@ class ResourcesControllerTest < ActionDispatch::IntegrationTest
     assert_equal [first_resource, second_resource], assigns[:resources]
   end
 
+  test "should not get index (not authenticated)" do
+    sign_out :user
+    project = create(:project)
+    get project_resources_path(project)
+    assert_redirected_to new_user_session_path
+  end
+
   test "should show resource" do
     resource = create(:resource_with_attributes)
     get project_resource_path(resource.project, resource)
     assert_response :success
+  end
+
+  test "should not show resource (not authenticated)" do
+    sign_out :user
+    resource = create(:resource_with_attributes)
+    get project_resource_path(resource.project, resource)
+    assert_redirected_to new_user_session_path
   end
 
   test "should get new" do
@@ -25,10 +39,24 @@ class ResourcesControllerTest < ActionDispatch::IntegrationTest
     assert_not assigns[:selectable_resources].include?(assigns[:resource])
   end
 
+  test "should not get new (not authenticated)" do
+    sign_out :user
+    project = create(:project)
+    get new_project_resource_path(project)
+    assert_redirected_to new_user_session_path
+  end
+
   test "should get edit" do
     resource = create(:resource)
     get edit_project_resource_path(resource.project, resource)
     assert_response :success
+  end
+
+  test "should not get edit (not authenticated)" do
+    sign_out :user
+    resource = create(:resource)
+    get edit_project_resource_path(resource.project, resource)
+    assert_redirected_to new_user_session_path
   end
 
   test "should create resource" do
@@ -50,6 +78,15 @@ class ResourcesControllerTest < ActionDispatch::IntegrationTest
     assert_response :unprocessable_entity
   end
 
+  test "should not create resource (not authenticated)" do
+    sign_out :user
+    resource = build(:resource)
+    assert_no_difference('Resource.count') do
+      post project_resources_path(resource.project), params: { resource: resource.attributes }
+    end
+    assert_redirected_to new_user_session_path
+  end
+
   test "should update resource" do
     resource = create(:resource)
     put project_resource_path(resource.project, resource), params: { resource: { name: "New name" } }
@@ -65,6 +102,16 @@ class ResourcesControllerTest < ActionDispatch::IntegrationTest
     assert_response :unprocessable_entity
     resource.reload
     assert_equal name, resource.name
+  end
+
+  test "should not update resource (not authenticated)" do
+    sign_out :user
+    resource = create(:resource)
+    resource_original_name = resource.name
+    put project_resource_path(resource.project, resource), params: { resource: { name: "New name" } }
+    resource.reload
+    assert_equal resource_original_name, resource.name
+    assert_redirected_to new_user_session_path
   end
 
   test "should delete resource" do
@@ -84,5 +131,15 @@ class ResourcesControllerTest < ActionDispatch::IntegrationTest
       delete project_resource_path(project, resource)
     end
     assert_response :conflict
+  end
+
+  test "should not delete resource (not authenticated)" do
+    sign_out :user
+    resource = create(:resource)
+    project = resource.project
+    assert_no_difference 'Resource.count' do
+      delete project_resource_path(project, resource)
+    end
+    assert_redirected_to new_user_session_path
   end
 end

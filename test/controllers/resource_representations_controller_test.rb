@@ -1,10 +1,18 @@
 require 'test_helper'
 
-class ResourceRepresentationsControllerTest < ActionDispatch::IntegrationTest
+class ResourceRepresentationsControllerTest < ControllerWithAuthenticationTest
+
   test "should show resource_representation" do
     representation = create(:resource_representation)
     get resource_resource_representation_path(representation.resource, representation)
     assert_response :success
+  end
+
+  test "should not show resource_representation (not authenticated)" do
+    sign_out :user
+    representation = create(:resource_representation)
+    get resource_resource_representation_path(representation.resource, representation)
+    assert_redirected_to new_user_session_path
   end
 
   test "should get new" do
@@ -13,10 +21,24 @@ class ResourceRepresentationsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "should not get new (not authenticated)" do
+    sign_out :user
+    resource = create(:resource)
+    get new_resource_resource_representation_path(resource)
+    assert_redirected_to new_user_session_path
+  end
+
   test "should get edit" do
     representation = create(:resource_representation_with_attributes_resource_reps)
     get edit_resource_resource_representation_path(representation.resource, representation)
     assert_response :success
+  end
+
+  test "should not get edit (not authenticated)" do
+    sign_out :user
+    representation = create(:resource_representation_with_attributes_resource_reps)
+    get edit_resource_resource_representation_path(representation.resource, representation)
+    assert_redirected_to new_user_session_path
   end
 
   test "should create resource_representation" do
@@ -54,6 +76,17 @@ class ResourceRepresentationsControllerTest < ActionDispatch::IntegrationTest
     assert_response :unprocessable_entity
   end
 
+  test "should not create resource_representation (not authenticated)" do
+    sign_out :user
+    resource_representation = build(:resource_representation)
+    resource = resource_representation.resource
+    assert_no_difference('ResourceRepresentation.count') do
+      post resource_resource_representations_path(resource),
+      params: { resource_representation: resource_representation.attributes }
+    end
+    assert_redirected_to new_user_session_path
+  end
+
   test "should update resource_representation" do
     resource_representation = create(:resource_representation)
     resource = resource_representation.resource
@@ -72,6 +105,18 @@ class ResourceRepresentationsControllerTest < ActionDispatch::IntegrationTest
     assert_response :unprocessable_entity
     resource_representation.reload
     assert_equal name, resource_representation.name
+  end
+
+  test "should not update resource_representation (not authenticated)" do
+    sign_out :user
+    resource_representation = create(:resource_representation)
+    resource = resource_representation.resource
+    resource_rep_original_name = resource_representation.name
+    put resource_resource_representation_path(resource, resource_representation),
+      params: { resource_representation: { name: 'Modified resource representation' } }
+    resource_representation.reload
+    assert_equal resource_rep_original_name, resource_representation.name
+    assert_redirected_to new_user_session_path
   end
 
   test "should delete resource_representation" do
@@ -93,6 +138,16 @@ class ResourceRepresentationsControllerTest < ActionDispatch::IntegrationTest
       delete resource_resource_representation_path(resource, resource_representation)
     end
     assert_response :conflict
+  end
+
+  test "should not delete resource_representation (not authenticated)" do
+    sign_out :user
+    resource_representation = create(:resource_representation)
+    resource = resource_representation.resource
+    assert_no_difference('ResourceRepresentation.count') do
+      delete resource_resource_representation_path(resource, resource_representation)
+    end
+    assert_redirected_to new_user_session_path
   end
 
   test 'should get json schema associated to resource_representation' do
@@ -196,6 +251,15 @@ class ResourceRepresentationsControllerTest < ActionDispatch::IntegrationTest
     }
     get resource_resource_representation_path(resource, resource_representation, format: :json_schema, params: {is_collection: 'true'})
     assert_equal json_schema.deep_stringify_keys!, JSON.parse(response.body), "json schema is not correct"
+  end
+
+  test "should not get json schema associated to resource_representation (not authenticated)" do
+    sign_out :user
+    resource = create(:resource)
+    resource_representation = create(:resource_representation, resource: resource)
+    get resource_resource_representation_path(resource, resource_representation, format: :json_schema)
+    assert_response :unauthorized
+    assert_equal 'You need to sign in or sign up before continuing.', response.body
   end
 
   private
