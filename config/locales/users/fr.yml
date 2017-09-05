@@ -1,0 +1,4 @@
+fr:
+  users:
+    sign_in:
+      check_domain: Domaine non autorisé. Veuillez vérifier le domaine de l'adresse email sélectionnée.

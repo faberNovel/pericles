@@ -7,5 +7,7 @@ FactoryGirl.define do
   factory :user do
     email { generate(:email) }
     password Devise.friendly_token[0,20]
+    first_name 'John'
+    last_name 'Smith'
   end
 end
