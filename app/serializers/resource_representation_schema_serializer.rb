@@ -86,6 +86,8 @@ class ResourceRepresentationSchemaSerializer < ActiveModel::Serializer
       attribute_hash = hash_from_primitive_attributes_resource_representation(association)
     end
 
+    add_faker_data_to_attribute_hash(attribute_hash, association)
+
     if attribute.is_array
       array_of_attribute_hash = {}
       array_of_attribute_hash[:type] = 'array'
@@ -153,4 +155,7 @@ class ResourceRepresentationSchemaSerializer < ActiveModel::Serializer
     end
   end
 
+  def add_faker_data_to_attribute_hash(attribute_hash, association)
+    attribute_hash[:faker] = association.faker unless association.faker.blank?
+  end
 end

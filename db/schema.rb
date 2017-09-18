@@ -45,6 +45,7 @@ ActiveRecord::Schema.define(version: 20170919124934) do
     t.datetime "updated_at",                                        null: false
     t.integer  "resource_representation_id"
     t.boolean  "custom_nullable"
+    t.string   "faker"
     t.index ["attribute_id"], name: "index_attributes_resource_representations_on_attribute_id", using: :btree
     t.index ["parent_resource_representation_id"], name: "index_arr_on_parent_resource_representation_id", using: :btree
     t.index ["resource_representation_id"], name: "index_arr_on_resource_representation_id", using: :btree
