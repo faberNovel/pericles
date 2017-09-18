@@ -22,6 +22,8 @@ class Attribute < ApplicationRecord
 
   scope :sorted_by_name, -> { order(:name) }
 
+  audited associated_with: :parent_resource
+
   private
 
   def is_enumerable?

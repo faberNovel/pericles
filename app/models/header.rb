@@ -3,4 +3,6 @@ class Header < ApplicationRecord
 
   validates :name, presence: true
   validates :http_message, presence: true
+
+  audited associated_with: :http_message
 end
