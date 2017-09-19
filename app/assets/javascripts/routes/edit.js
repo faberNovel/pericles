@@ -14,7 +14,6 @@ $(document).ready(function() {
     var input_element = event.field.find(".form-group:first input").get(0);
     set_autocomplete(0, input_element);
   });
-
 });
 
 function get_response_number(response_element) {

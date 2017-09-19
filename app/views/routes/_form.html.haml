@@ -89,6 +89,7 @@
   %h3 Responses
 
   #route_responses
+    = f.hidden_field :default_root_key, id: 'default-root-key', value: @resource.name.downcase
 
     = f.fields_for :responses do |response_fields|
 
@@ -137,3 +138,9 @@
 
   %p
     = f.submit
+
+:javascript
+  $("form").on("nested:fieldAdded", function(event) {
+    var field = event.field.find('.root-key');
+    return field.val($('#default-root-key').val());
+  });
