@@ -35,7 +35,7 @@
           %td= attr_resource_rep.custom_pattern
           %td= resource_representation.name if resource_representation
           %td= attr_resource_rep.is_required ? t('required') : t('optional')
-          %td= attr_resource_rep.faker&.name
+          %td= attr_resource_rep.custom_faker&.name
 
 = link_to 'Edit', edit_resource_resource_representation_path(@resource, @representation)
 \|

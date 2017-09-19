@@ -157,8 +157,8 @@ class ResourceRepresentationSchemaSerializer < ActiveModel::Serializer
 
   def add_faker_data_to_attribute_hash(attribute_hash, association)
     attribute = association.resource_attribute
-    if association.faker_id?
-      attribute_hash[:faker] = association.faker.name
+    if association.custom_faker_id?
+      attribute_hash[:faker] = association.custom_faker.name
     elsif attribute.faker_id?
       attribute_hash[:faker] = attribute.faker.name
     end

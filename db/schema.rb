@@ -47,9 +47,8 @@ ActiveRecord::Schema.define(version: 20170919124934) do
     t.datetime "updated_at",                                        null: false
     t.integer  "resource_representation_id"
     t.boolean  "custom_nullable"
-    t.integer  "faker_id"
+    t.integer  "custom_faker_id"
     t.index ["attribute_id"], name: "index_attributes_resource_representations_on_attribute_id", using: :btree
-    t.index ["faker_id"], name: "index_attributes_resource_representations_on_faker_id", using: :btree
     t.index ["parent_resource_representation_id"], name: "index_arr_on_parent_resource_representation_id", using: :btree
     t.index ["resource_representation_id"], name: "index_arr_on_resource_representation_id", using: :btree
   end
@@ -171,7 +170,7 @@ ActiveRecord::Schema.define(version: 20170919124934) do
   add_foreign_key "attributes", "resources"
   add_foreign_key "attributes", "resources", column: "parent_resource_id"
   add_foreign_key "attributes_resource_representations", "attributes"
-  add_foreign_key "attributes_resource_representations", "fakers"
+  add_foreign_key "attributes_resource_representations", "fakers", column: "custom_faker_id"
   add_foreign_key "attributes_resource_representations", "resource_representations"
   add_foreign_key "attributes_resource_representations", "resource_representations", column: "parent_resource_representation_id"
   add_foreign_key "json_errors", "validations"
