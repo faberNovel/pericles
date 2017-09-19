@@ -22,6 +22,7 @@
         %th Pattern
         %th Resource Representation
         %th Required ?
+        %th Faker
     %tbody
       - @representation.attributes_resource_representations.ordered_by_attribute_name.each do |attr_resource_rep|
         - attribute = attr_resource_rep.resource_attribute
@@ -34,6 +35,7 @@
           %td= attr_resource_rep.custom_pattern
           %td= resource_representation.name if resource_representation
           %td= attr_resource_rep.is_required ? t('required') : t('optional')
+          %td= attr_resource_rep.faker&.name
 
 = link_to 'Edit', edit_resource_resource_representation_path(@resource, @representation)
 \|

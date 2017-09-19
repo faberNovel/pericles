@@ -56,8 +56,7 @@
               %td
                 = fields.check_box :is_required
               %td
-                // TODO Clément Villain 18/09/17: use select
-                = fields.text_field :faker
+                = fields.collection_select(:faker_id, Faker.all, :id, :name, include_blank: true)
               %td
                 = fields.hidden_field :attribute_id
 
