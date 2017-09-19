@@ -6,6 +6,7 @@ class CreateFakers < ActiveRecord::Migration[5.0]
       t.timestamps
     end
 
+    add_reference :attributes, :faker, foreign_key: true
     add_reference :attributes_resource_representations, :faker, foreign_key: true
     remove_column :attributes_resource_representations, :faker, :string
   end

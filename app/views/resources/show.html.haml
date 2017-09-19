@@ -25,6 +25,7 @@
       %th Maximum length
       %th Nullable
       %th Example
+      %th Faker
   %tbody
     - @resource.resource_attributes.sorted_by_name.each do |attribute|
       %tr
@@ -39,6 +40,7 @@
         %td= attribute.max_length
         %td= attribute.nullable
         %td= attribute.example
+        %td= attribute.faker&.name
 
 %h3 Representations
 

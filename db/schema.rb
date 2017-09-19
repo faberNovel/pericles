@@ -32,6 +32,8 @@ ActiveRecord::Schema.define(version: 20170919124934) do
     t.integer  "minimum"
     t.integer  "maximum"
     t.boolean  "nullable",           default: false, null: false
+    t.integer  "faker_id"
+    t.index ["faker_id"], name: "index_attributes_on_faker_id", using: :btree
     t.index ["resource_id"], name: "index_attributes_on_resource_id", using: :btree
   end
 
@@ -165,6 +167,7 @@ ActiveRecord::Schema.define(version: 20170919124934) do
     t.datetime "updated_at",    null: false
   end
 
+  add_foreign_key "attributes", "fakers"
   add_foreign_key "attributes", "resources"
   add_foreign_key "attributes", "resources", column: "parent_resource_id"
   add_foreign_key "attributes_resource_representations", "attributes"
