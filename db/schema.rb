@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170901134536) do
+ActiveRecord::Schema.define(version: 20170919124934) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -114,6 +114,7 @@ ActiveRecord::Schema.define(version: 20170901134536) do
     t.integer  "route_id"
     t.integer  "resource_representation_id"
     t.boolean  "is_collection",              default: false, null: false
+    t.string   "root_key"
     t.index ["resource_representation_id"], name: "index_responses_on_resource_representation_id", using: :btree
     t.index ["route_id"], name: "index_responses_on_route_id", using: :btree
   end

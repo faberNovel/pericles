@@ -8,8 +8,13 @@ class ResourceRepresentationsController < AuthenticatedController
         render layout: 'full_width_column'
       end
       format.json_schema do
-        render json: @representation, serializer: ResourceRepresentationSchemaSerializer, adapter: :attributes,
-        is_collection: ActiveModel::Type::Boolean.new.cast(params[:is_collection])
+        render(
+          json: @representation,
+          serializer: ResourceRepresentationSchemaSerializer,
+          adapter: :attributes,
+          is_collection: ActiveModel::Type::Boolean.new.cast(params[:is_collection]),
+          root_key: params[:root_key]
+        )
       end
     end
   end

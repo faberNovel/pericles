@@ -7,28 +7,24 @@ class ResourceRepresentationSchemaSerializer < ActiveModel::Serializer
     @all_resource_representations = [@resource_representation.id]
     @required_properties = []
     @is_collection = options[:is_collection]
+    @root_key = options[:root_key]
     super
   end
 
   def properties
-    resource_hash = {}
-    resource_hash[:type] = 'object'
-    resource_hash[:properties] = properties_from_resource_representation(@resource_representation, @required_properties)
-    resource_hash[:required] = @required_properties.uniq unless @required_properties.empty?
-    properties_hash = {}
-    if @is_collection
-      array_of_attribute_hash = {}
-      array_of_attribute_hash[:type] = 'array'
-      array_of_attribute_hash[:items] = resource_hash
-      properties_hash[@resource.name.downcase.pluralize] = array_of_attribute_hash
+    if @root_key.blank?
+      properties_from_resource_representation(@resource_representation, @required_properties)
     else
-      properties_hash[@resource.name.downcase] = resource_hash
+      root_key_properties
     end
-    return properties_hash
   end
 
   def required
-    @is_collection ? [@resource.name.downcase.pluralize] : [@resource.name.downcase]
+    if @root_key.blank?
+      required_properties
+    else
+      [@root_key]
+    end
   end
 
   def description
@@ -44,6 +40,27 @@ class ResourceRepresentationSchemaSerializer < ActiveModel::Serializer
   end
 
   private
+  def root_key_properties
+    resource_hash = {}
+    resource_hash[:type] = 'object'
+    resource_hash[:properties] = properties_from_resource_representation(@resource_representation, @required_properties)
+    resource_hash[:required] = required_properties if required_properties
+    properties_hash = {}
+    if @is_collection
+      array_of_attribute_hash = {}
+      array_of_attribute_hash[:type] = 'array'
+      array_of_attribute_hash[:items] = resource_hash
+      properties_hash[@root_key] = array_of_attribute_hash
+    else
+      properties_hash[@root_key] = resource_hash
+    end
+    properties_hash
+  end
+
+  def required_properties
+    @required_properties.uniq unless @required_properties.empty?
+  end
+
   def properties_from_resource_representation(resource_representation, required_properties)
     properties = {}
     resource_representation.attributes_resource_representations.each do |association|

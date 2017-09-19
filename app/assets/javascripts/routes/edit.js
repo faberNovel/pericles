@@ -39,6 +39,7 @@ function generate_schema_from_resource_representation(clicked_button) {
   if (resource_representation_id) {
     var url = window.location.pathname.replace(/routes\/\d+\/edit|routes\/new/, 'resource_representations/' + resource_representation_id + '.json_schema');
     var params = '?is_collection=' + $(clicked_button).siblings('.checkbox').find('input[type=checkbox]')[0].checked;
+    params += '&root_key=' + $(clicked_button).siblings('.form-group').children('input.root-key').val();
     var body_json_schema = $(clicked_button).siblings(".form-group").children("textarea");
     $.ajax({
         type: "GET",
