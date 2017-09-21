@@ -17,6 +17,12 @@ class SchemesController < AuthenticatedController
     end
   end
 
+  def destroy
+    @scheme = Scheme.find_by(id: params[:id])
+    @scheme&.destroy
+    redirect_to schemes_path
+  end
+
   private
   def scheme_params
     params.require(:scheme).permit(:name, :regexp)

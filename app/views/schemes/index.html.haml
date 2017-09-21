@@ -6,8 +6,10 @@
       %tr
         %th Name
         %th Regexp
+        %th
     %tbody
       - @schemes.each do |scheme|
         %tr
           %td= scheme.name
           %td= scheme.regexp
+          %td= link_to 'Delete', scheme_path(scheme), method: :delete, data: { confirm: 'Are you sure?' }
