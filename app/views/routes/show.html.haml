@@ -8,6 +8,7 @@
     .page-header
       %h1
         !="#{@resource.name} <small> #{@route.name} </small>"
+        = render partial: "shared/last_edit", locals: {last_audit: @route.last_audit}
     %p= @route.description
     %pre
       %code= "#{@route.http_method} #{@route.url}"

@@ -59,6 +59,8 @@ GEM
     ansi (1.5.0)
     arel (7.1.1)
     ast (2.3.0)
+    audited (4.5.0)
+      activerecord (>= 4.0, < 5.2)
     autoprefixer-rails (6.5.3.1)
       execjs
     bcrypt (3.1.11)
@@ -279,6 +281,7 @@ PLATFORMS
 
 DEPENDENCIES
   active_model_serializers (~> 0.10.0)
+  audited (~> 4.5)
   autoprefixer-rails
   bootstrap-sass (~> 3.3.6)
   bootstrap_form
@@ -318,4 +321,4 @@ RUBY VERSION
    ruby 2.3.1p112
 
 BUNDLED WITH
-   1.14.6
+   1.15.0

@@ -14,6 +14,8 @@ class AttributesResourceRepresentation < ApplicationRecord
   validates :custom_pattern, absence: true, unless: "resource_attribute.string?"
   validates :resource_representation, presence: true, if: "resource_attribute.resource"
 
+  audited associated_with: :parent_resource_representation
+
   private
 
   def attribute_is_enumerable?

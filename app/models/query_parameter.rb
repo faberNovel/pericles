@@ -6,4 +6,6 @@ class QueryParameter < ApplicationRecord
   validates :name, presence: true
   validates :primitive_type, presence: true
   validates :route, presence: true
+
+  audited associated_with: :route
 end

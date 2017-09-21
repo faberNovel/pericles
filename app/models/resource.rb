@@ -13,6 +13,9 @@ class Resource < ApplicationRecord
   validates :name, presence: true, uniqueness: { scope: :project, case_sensitive: false }
   validates :project, presence: true
 
+  audited
+  has_associated_audits
+
   private
 
   def create_default_resource_representation

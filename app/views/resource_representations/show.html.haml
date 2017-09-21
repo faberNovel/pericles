@@ -5,6 +5,7 @@
 .page-header
   %h1
     !="#{@resource.name} <small> #{@representation.name} </small>"
+    = render partial: "shared/last_edit", locals: {last_audit: @representation.last_audit}
 
 %div{class: "panel panel-default"}
   .panel-heading

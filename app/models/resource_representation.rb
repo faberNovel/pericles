@@ -11,6 +11,9 @@ class ResourceRepresentation < ApplicationRecord
   validates :name, presence: true, uniqueness: { scope: [:resource], case_sensitive: false }
   validates :resource, presence: true
 
+  audited
+  has_associated_audits
+
   def find_parent_resource_representations
     parent_resource_representations = []
     referencing_associations = AttributesResourceRepresentation.where(resource_representation_id: self.id)

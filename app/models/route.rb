@@ -21,6 +21,9 @@ class Route < ApplicationRecord
 
   scope :of_project, ->(project) { joins(:resource).where(resources: { project_id: project.id }) }
 
+  audited
+  has_associated_audits
+
   def is_restful_collection?
     #TODO: Emilie Paillous (25/04/2017) : should be directly in the database model route
     return self.GET? && url.ends_with?(resource.name.downcase.pluralize)
