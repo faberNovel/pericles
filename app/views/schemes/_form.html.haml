@@ -1,0 +1,16 @@
+= bootstrap_form_for @scheme do |f|
+  - if @scheme.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(@scheme.errors.count, "error")
+        prohibited this scheme from being saved:
+      %ul
+        - @scheme.errors.full_messages.each do |msg|
+          %li= msg
+
+  = f.text_field :name
+
+  = f.text_field :regexp
+
+  %p
+    = f.submit onclick: 'window.close()'

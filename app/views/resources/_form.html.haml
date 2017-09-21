@@ -95,6 +95,8 @@
     %p
       = f.link_to_add "Add a Route", :routes, data: { target: "#table_routes" }
 
+  = link_to 'Add scheme', new_scheme_path,  :target => '_blank'
+
   %p
     = f.submit
 

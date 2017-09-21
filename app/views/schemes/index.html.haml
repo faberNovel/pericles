@@ -1,0 +1,13 @@
+%h1 Schemes
+
+- if @schemes.any?
+  %table{class: "table table-striped"}
+    %thead
+      %tr
+        %th Name
+        %th Regexp
+    %tbody
+      - @schemes.each do |scheme|
+        %tr
+          %td= scheme.name
+          %td= scheme.regexp

@@ -54,12 +54,6 @@ ActiveRecord::Schema.define(version: 20170921083345) do
     t.index ["resource_representation_id"], name: "index_arr_on_resource_representation_id", using: :btree
   end
 
-  create_table "fakers", force: :cascade do |t|
-    t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "audits", force: :cascade do |t|
     t.integer  "auditable_id"
     t.string   "auditable_type"
@@ -80,6 +74,12 @@ ActiveRecord::Schema.define(version: 20170921083345) do
     t.index ["created_at"], name: "index_audits_on_created_at", using: :btree
     t.index ["request_uuid"], name: "index_audits_on_request_uuid", using: :btree
     t.index ["user_id", "user_type"], name: "user_index", using: :btree
+  end
+
+  create_table "fakers", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "headers", force: :cascade do |t|
