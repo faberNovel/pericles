@@ -29,6 +29,7 @@
         %th Minimum length
         %th Maximum length
         %th Example
+        %th Faker
         %th
     %tbody
       = f.fields_for :resource_attributes, @resource.resource_attributes.sorted_by_name, wrapper: false do |attribute_fields|
@@ -59,6 +60,8 @@
             = attribute_fields.number_field :max_length, hide_label: true, min: 0
           %td
             = attribute_fields.text_area :example, hide_label: true
+          %td
+            = attribute_fields.collection_select(:faker_id, Faker.all, :id, :name, include_blank: true)
           %td
             = attribute_fields.link_to_remove "Remove"
   %p

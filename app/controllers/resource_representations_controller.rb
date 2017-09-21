@@ -87,6 +87,6 @@ class ResourceRepresentationsController < AuthenticatedController
   def resource_rep_params
     params.require(:resource_representation).permit(:name, :description,
       attributes_resource_representations_attributes: [:id, :custom_nullable, :custom_enum,
-        :custom_pattern, :resource_representation_id, :is_required, :attribute_id, :_destroy])
+        :custom_pattern, :resource_representation_id, :is_required, :custom_faker_id, :attribute_id, :_destroy])
   end
 end
