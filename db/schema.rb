@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170919124934) do
+ActiveRecord::Schema.define(version: 20170921083345) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,8 +33,10 @@ ActiveRecord::Schema.define(version: 20170919124934) do
     t.integer  "maximum"
     t.boolean  "nullable",           default: false, null: false
     t.integer  "faker_id"
+    t.integer  "scheme_id"
     t.index ["faker_id"], name: "index_attributes_on_faker_id", using: :btree
     t.index ["resource_id"], name: "index_attributes_on_resource_id", using: :btree
+    t.index ["scheme_id"], name: "index_attributes_on_scheme_id", using: :btree
   end
 
   create_table "attributes_resource_representations", force: :cascade do |t|
@@ -165,6 +167,13 @@ ActiveRecord::Schema.define(version: 20170919124934) do
     t.index ["resource_id"], name: "index_routes_on_resource_id", using: :btree
   end
 
+  create_table "schemes", force: :cascade do |t|
+    t.string   "name"
+    t.string   "regexp"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.string   "email",              default: "", null: false
     t.string   "encrypted_password", default: "", null: false
@@ -191,6 +200,7 @@ ActiveRecord::Schema.define(version: 20170919124934) do
   add_foreign_key "attributes", "fakers"
   add_foreign_key "attributes", "resources"
   add_foreign_key "attributes", "resources", column: "parent_resource_id"
+  add_foreign_key "attributes", "schemes"
   add_foreign_key "attributes_resource_representations", "attributes"
   add_foreign_key "attributes_resource_representations", "fakers", column: "custom_faker_id"
   add_foreign_key "attributes_resource_representations", "resource_representations"
