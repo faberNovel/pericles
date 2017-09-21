@@ -26,7 +26,6 @@ ActiveRecord::Schema.define(version: 20170921083345) do
     t.datetime "created_at",                         null: false
     t.datetime "updated_at",                         null: false
     t.string   "enum"
-    t.string   "pattern"
     t.integer  "min_length"
     t.integer  "max_length"
     t.integer  "minimum"

@@ -22,7 +22,6 @@ class CreateSchemes < ActiveRecord::Migration[5.0]
         end
       end
     end
-    # TODO Clément Villain 21/09/17: remove pattern when attributes will use scheme
-    # remove_column :attributes, :pattern, :string
+    remove_column :attributes, :pattern, :string
   end
 end

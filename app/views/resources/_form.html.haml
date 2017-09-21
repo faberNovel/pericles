@@ -23,7 +23,7 @@
         %th Array ?
         %th Nullable ?
         %th Enum
-        %th Pattern
+        %th Scheme
         %th Minimum
         %th Maximum
         %th Minimum length
@@ -49,7 +49,7 @@
           %td
             = attribute_fields.text_field :enum, hide_label: true
           %td
-            = attribute_fields.text_field :pattern, hide_label: true
+            = attribute_fields.collection_select(:scheme_id, Scheme.all, :id, :name, include_blank: true, hide_label: true)
           %td
             = attribute_fields.number_field :minimum, hide_label: true
           %td
