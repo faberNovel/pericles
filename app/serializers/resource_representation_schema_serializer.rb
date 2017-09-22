@@ -168,13 +168,8 @@ class ResourceRepresentationSchemaSerializer < ActiveModel::Serializer
     end
 
     scheme = association.resource_attribute.scheme
-    return unless scheme
-
-    if scheme.regexp.blank?
-      attribute_hash[:format] = scheme.name
-    else
-      attribute_hash[:pattern] = scheme.regexp
-    end
+    attribute_hash[:format] = scheme.name if scheme&.format?
+    attribute_hash[:pattern] = scheme.regexp if scheme&.pattern?
   end
 
   def cycle_detected(resource_representation)

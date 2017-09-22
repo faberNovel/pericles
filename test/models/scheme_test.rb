@@ -11,4 +11,14 @@ class SchemeTest < ActiveSupport::TestCase
     assert s.destroy
     assert_not a.reload.scheme
   end
+
+  test "is pattern if regexp is set" do
+    s = create(:scheme, regexp: 'cool')
+    assert s.pattern?
+  end
+
+  test 'is format if regexp is not set' do
+    s = create(:scheme, regexp: nil)
+    assert s.format?
+  end
 end
