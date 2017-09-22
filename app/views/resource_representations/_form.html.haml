@@ -56,7 +56,7 @@
               %td
                 = fields.check_box :is_required
               %td
-                = fields.collection_select(:custom_faker_id, Faker.all, :id, :name, include_blank: true)
+                = fields.collection_select :custom_faker_id, Faker.all, :id, :name, include_blank: true, hide_label: true
               %td
                 = fields.hidden_field :attribute_id
 
