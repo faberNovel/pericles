@@ -8,7 +8,7 @@ class Response < ApplicationRecord
   accepts_nested_attributes_for :headers, allow_destroy: true, reject_if: :all_blank
 
   validates :status_code, presence: true
-  validates :body_schema, json_schema: true, allow_blank: true
+  validates :body_schema_backup, json_schema: true, allow_blank: true
   validates :route, presence: true
 
   audited associated_with: :route
@@ -40,7 +40,7 @@ class Response < ApplicationRecord
 
   def errors_for_body(http_response)
     JSON::Validator.fully_validate(
-      self.body_schema, http_response.body, json: true
+      json_schema, http_response.body, json: true
     ).map do |error_message|
       ValidationError.new(
         category: :body,
@@ -50,7 +50,14 @@ class Response < ApplicationRecord
   end
 
   def json_instance
-    schema = JSON.parse(body_schema)
-    GenerateJsonInstanceService.new(schema).execute
+    GenerateJsonInstanceService.new(json_schema).execute if json_schema
+  end
+
+  def json_schema
+    ResourceRepresentationSchemaSerializer.new(
+      resource_representation,
+      is_collection: is_collection,
+      root_key: root_key
+    ).as_json if resource_representation
   end
 end

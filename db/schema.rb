@@ -155,7 +155,7 @@ ActiveRecord::Schema.define(version: 20171030102800) do
   create_table "responses", force: :cascade do |t|
     t.integer  "status_code"
     t.text     "description"
-    t.json     "body_schema"
+    t.json     "body_schema_backup"
     t.datetime "created_at",                                 null: false
     t.datetime "updated_at",                                 null: false
     t.integer  "route_id"
