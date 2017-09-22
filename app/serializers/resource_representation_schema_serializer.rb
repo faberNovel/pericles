@@ -1,30 +1,45 @@
 class ResourceRepresentationSchemaSerializer < ActiveModel::Serializer
-  attributes :title, :type, :properties, :description, :required
+  attributes :title, :type
+  attribute :properties, if: :properties?
+  attribute :items, if: :items?
+  attribute :required, if: :required?
+  attribute :description, if: :description?
 
   def initialize(object, options = {})
     @resource_representation = object
     @resource = object.resource
     @all_resource_representations = [@resource_representation.id]
-    @required_properties = []
     @is_collection = options[:is_collection]
     @root_key = options[:root_key]
     super
   end
 
+  def properties?
+    !items?
+  end
+
   def properties
     if @root_key.blank?
-      properties_from_resource_representation(@resource_representation, @required_properties)
+      properties_from_resource_representation(@resource_representation)
     else
       root_key_properties
     end
   end
 
+  def required?
+    !@root_key.blank? || !@is_collection
+  end
+
   def required
-    if @root_key.blank?
-      required_properties
-    else
+    if @root_key.blank? && !@is_collection
+      required_from_resource_representation(@resource_representation)
+    elsif !@root_key.blank?
       [@root_key]
     end
+  end
+
+  def description?
+    !description.blank?
   end
 
   def description
@@ -32,7 +47,15 @@ class ResourceRepresentationSchemaSerializer < ActiveModel::Serializer
   end
 
   def type
-    'object'
+    items? ? 'array' : 'object'
+  end
+
+  def items?
+    @is_collection && @root_key.blank?
+  end
+
+  def items
+    build_resource_hash
   end
 
   def title
@@ -41,10 +64,7 @@ class ResourceRepresentationSchemaSerializer < ActiveModel::Serializer
 
   private
   def root_key_properties
-    resource_hash = {}
-    resource_hash[:type] = 'object'
-    resource_hash[:properties] = properties_from_resource_representation(@resource_representation, @required_properties)
-    resource_hash[:required] = required_properties if required_properties
+    resource_hash = build_resource_hash
     properties_hash = {}
     if @is_collection
       array_of_attribute_hash = {}
@@ -57,15 +77,29 @@ class ResourceRepresentationSchemaSerializer < ActiveModel::Serializer
     properties_hash
   end
 
-  def required_properties
-    @required_properties.uniq unless @required_properties.empty?
+  def build_resource_hash
+    resource_hash = {}
+    resource_hash[:type] = 'object'
+    resource_hash[:properties] = properties_from_resource_representation(@resource_representation)
+    add_required_if_not_empty(resource_hash, @resource_representation)
+    resource_hash
   end
 
-  def properties_from_resource_representation(resource_representation, required_properties)
+  def add_required_if_not_empty(resource_hash, resource_representation)
+    required = required_from_resource_representation(resource_representation)
+    resource_hash[:required] = required unless required.empty?
+  end
+
+  def required_from_resource_representation(resource_representation)
+    resource_representation.attributes_resource_representations.select(&:is_required).map do |attr_resource_rep|
+        attr_resource_rep.resource_attribute.name
+    end.uniq
+  end
+
+  def properties_from_resource_representation(resource_representation)
     properties = {}
     resource_representation.attributes_resource_representations.each do |association|
       properties[association.resource_attribute.name] = hash_from_attributes_resource_representation(association)
-      required_properties << association.resource_attribute.name if association.is_required
     end
     return properties
   end
@@ -103,16 +137,15 @@ class ResourceRepresentationSchemaSerializer < ActiveModel::Serializer
 
   def hash_from_attributes_resource_representation_with_child_resource_representation(association)
     attribute_hash = set_main_fields_from_attribute(association.resource_attribute)
-    required_properties = []
-    attribute_hash[:properties] = properties_from_resource_representation(association.resource_representation, required_properties)
-    attribute_hash[:required] = required_properties.uniq unless required_properties.empty?
+    attribute_hash[:properties] = properties_from_resource_representation(association.resource_representation)
+    add_required_if_not_empty(attribute_hash, association.resource_representation)
     return attribute_hash
   end
 
   def hash_from_primitive_attributes_resource_representation(association)
     attribute = association.resource_attribute
     attribute_hash = {}
-    attribute_hash[:description] = attribute.description
+    attribute_hash[:description] = attribute.description unless attribute.description.blank?
     attribute_hash[:type] = attribute.primitive_type
     unless attribute.pattern.blank? && association.custom_pattern.blank?
       attribute_hash[:pattern] = association.custom_pattern.blank? ? attribute.pattern : association.custom_pattern
@@ -138,7 +171,7 @@ class ResourceRepresentationSchemaSerializer < ActiveModel::Serializer
     attribute_hash = {}
     attribute_hash[:type] = 'object'
     attribute_hash[:title] = attribute.resource.name
-    attribute_hash[:description] = attribute.description
+    attribute_hash[:description] = attribute.description unless attribute.description.blank?
     return attribute_hash
   end
 
