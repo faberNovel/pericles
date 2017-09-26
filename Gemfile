@@ -43,6 +43,8 @@ group :test do
   gem 'minitest-reporters'
   gem 'factory_girl_rails'
   gem 'simplecov', :require => false
+  gem 'vcr'
+  gem 'webmock'
 end
 
 group :development do

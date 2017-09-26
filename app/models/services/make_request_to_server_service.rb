@@ -6,9 +6,9 @@ class MakeRequestToServerService
   end
 
   def execute
-    url = @server_url + @request.path
+    url = URI.join(@server_url, @request.params[:path]).to_s
     begin
-      RestClient.send(@request.method.downcase, url, {params: @request.params})
+      RestClient.send(@request.method.downcase, url)
     rescue RestClient::ExceptionWithResponse => e
       e.response
     end

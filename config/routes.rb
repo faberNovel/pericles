@@ -5,7 +5,7 @@ Rails.application.routes.draw do
     resources :resources
     resources :routes, only: [:index]
     match 'mocks/*path', to: "mocks#compute_mock", via: :all
-    match 'proxy/*path', to: "proxy#compute_request", via: :all
+    match 'proxy/*path', to: "proxy#compute_request", via: :all, format: false
   end
   resources :resources, only: [] do
     resources :resource_representations, except: [:index]

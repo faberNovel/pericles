@@ -7,6 +7,7 @@ FactoryGirl.define do
   factory :project do
     title { generate(:project_title) }
     description "That's it !"
+    server_url nil
   end
 
 end
