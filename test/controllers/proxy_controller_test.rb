@@ -16,4 +16,10 @@ class ProxyControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
+  test "should proxy post to example.com" do
+    project = create(:project, server_url: 'http://example.com/')
+    VCR.use_cassette('post_proxy_example', match_requests_on: [:method]) do
+      post "/projects/#{project.id}/proxy/index.html"
+    end
+  end
 end

@@ -1,0 +1,68 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: http://example.com/index.html
+    body:
+      encoding: UTF-8
+      string: body=%23%3CStringIO%3A0x007fddf7acf260%3E
+    headers:
+      Accept:
+      - "*/*"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - rest-client/2.0.2 (darwin14.5.0 x86_64) ruby/2.3.1p112
+      Content-Length:
+      - '41'
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Host:
+      - example.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Encoding:
+      - gzip
+      Accept-Ranges:
+      - bytes
+      Cache-Control:
+      - max-age=604800
+      Content-Type:
+      - text/html
+      Date:
+      - Tue, 26 Sep 2017 16:55:11 GMT
+      Etag:
+      - '"359670651+gzip"'
+      Expires:
+      - Tue, 03 Oct 2017 16:55:11 GMT
+      Last-Modified:
+      - Fri, 09 Aug 2013 23:54:35 GMT
+      Server:
+      - EOS (lax004/2812)
+      Vary:
+      - Accept-Encoding
+      Content-Length:
+      - '606'
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        H4sIAAAAAAAA/41UQa/TMAy+71eYcgFpXfeAB1PXViBA4gIc4MIxa9zVWpOU
+        JO02offfcdu9ruXtQCu1jh1//mzHSZ5Jk/tzjVB6VWWL5PGHQmYL4Cfx5CvM
+        Pp+EqiuET0YJ0kk0aBfDFoVeQF4K69CnQeOLcBNAlE2Mpfd1iL8batPgo9Ee
+        tQ+7sAHkwyoNPJ581IXfjlC3kLRQmAYt4bE21k/8jyR9mUpsKcewXyyBNHkS
+        VehyUWF6d4Vy/szJdAwugXPngsG2M/IMf3qxX4r8sLem0TLMTWVsDM+LNb+v
+        tuMWJeyedAzrq6oWUpLez3QFMw0Loag6xxB8r1HDD6FdsITgC1YtesoFfMMG
+        WTMqlvDBcgZLcLw1dGipuCL2wkP/ldROSPfpx/B2va5PT3neowLReHOD7v3M
+        4VbuxST+zliJNrRCUuNiuEO1nVAScUX6sOR/S448ygnBR7jXmzebzQSx60Uo
+        MTdWeDLMVRuNU9D3CiUJeKHEKbxk+a7L8uW0ZfMO/k8mD6M0L+SkmPOKzfp+
+        w/ZPadZz61jvsWRXEsM3ifojmnXyIomGeVwkXWo8nkzycpDLuyejyarBVmc/
+        S3Igez2whM6LXUWu5F54AzuExrFYGAtUVY3zXdVbBBwQHc8Pe+eN4gFzK/hl
+        Gs753DmBZ+Th4F3Q9dXrSL40jYfaEiPnhktBuu8n8Fq4A6feB63RKnKODask
+        qkfWCd8XFos06G6NOIqOx+OKhBYrY/fREM9Fl2hB9tVY5PCMp/oYqxWDiawH
+        TKK+Ukl0qVs0XG9/AQiVqov2BAAA
+    http_version:
+  recorded_at: Tue, 26 Sep 2017 16:55:11 GMT
+recorded_with: VCR 3.0.3

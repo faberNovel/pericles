@@ -10,7 +10,7 @@ class MakeRequestToServerService
     url = URI.join(url, '?' + @request.query_string).to_s unless @request.query_string.blank?
 
     begin
-      RestClient.send(@request.method.downcase, url)
+      RestClient.send(@request.method.downcase, url, body: '')
     rescue RestClient::ExceptionWithResponse => e
       e.response
     end
