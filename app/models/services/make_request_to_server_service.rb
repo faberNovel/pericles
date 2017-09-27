@@ -13,6 +13,24 @@ class MakeRequestToServerService
   end
 
   def headers
-    @request.headers.env.select{|k, _| k.in?(ActionDispatch::Http::Headers::CGI_VARIABLES) || k =~ /^HTTP_/}
+    filtered_headers = @request.headers.env.select{|k, v| !v.blank? && (k.in?(ActionDispatch::Http::Headers::CGI_VARIABLES) || k =~ /^HTTP_/) }
+
+    remove_http_prefix(filtered_headers)
+    transform_headers_case(filtered_headers)
+
+    filtered_headers
+  end
+
+  private
+  def remove_http_prefix(headers)
+    headers.clone.each_key do |key|
+      headers[key[5..-1]] = headers.delete(key) if key =~ /^HTTP_/
+    end
+  end
+
+  def transform_headers_case(headers)
+    headers.clone.each_key do |key|
+      headers[key.titleize.tr(" ", "-")] = headers.delete(key)
+    end
   end
 end

@@ -13,30 +13,22 @@ http_interactions:
       - www.example.com
       Server-Port:
       - '80'
-      Query-String:
-      - ''
       Path-Info:
       - "/projects/166/proxy/index.html"
       Https:
       - 'off'
-      Script-Name:
-      - ''
       Content-Length:
       - '20'
       Remote-Addr:
       - 127.0.0.1
-      Http-Host:
-      - www.example.com
       Content-Type:
       - application/json
-      Http-Accept:
+      Host:
+      - www.example.com
+      Accept:
       - application/json
-      Http-Cookie:
-      - ''
       Connection:
       - close
-      Host:
-      - example.com
       User-Agent:
       - http.rb/2.2.2
   response:
@@ -51,15 +43,15 @@ http_interactions:
       Content-Type:
       - text/html
       Date:
-      - Wed, 27 Sep 2017 07:58:42 GMT
+      - Wed, 27 Sep 2017 14:14:09 GMT
       Etag:
       - '"359670651"'
       Expires:
-      - Wed, 04 Oct 2017 07:58:42 GMT
+      - Wed, 04 Oct 2017 14:14:09 GMT
       Last-Modified:
       - Fri, 09 Aug 2013 23:54:35 GMT
       Server:
-      - EOS (lax004/2816)
+      - EOS (lax004/280C)
       Content-Length:
       - '1270'
       Connection:
@@ -84,5 +76,5 @@ http_interactions:
         or asking for permission.</p>\n    <p><a href=\"http://www.iana.org/domains/example\">More
         information...</a></p>\n</div>\n</body>\n</html>\n"
     http_version:
-  recorded_at: Wed, 27 Sep 2017 07:58:42 GMT
+  recorded_at: Wed, 27 Sep 2017 14:14:10 GMT
 recorded_with: VCR 3.0.3
