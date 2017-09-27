@@ -7,33 +7,27 @@ http_interactions:
       encoding: US-ASCII
       string: ''
     headers:
-      Accept:
-      - "*/*"
-      Accept-Encoding:
-      - gzip, deflate
-      User-Agent:
-      - rest-client/2.0.2 (darwin14.5.0 x86_64) ruby/2.3.1p112
+      Connection:
+      - close
       Host:
       - example.com
+      User-Agent:
+      - http.rb/2.2.2
   response:
     status:
       code: 200
       message: OK
     headers:
-      Content-Encoding:
-      - gzip
-      Accept-Ranges:
-      - bytes
       Cache-Control:
       - max-age=604800
       Content-Type:
       - text/html
       Date:
-      - Tue, 26 Sep 2017 16:41:46 GMT
+      - Wed, 27 Sep 2017 07:30:39 GMT
       Etag:
-      - '"359670651+gzip"'
+      - '"359670651+gzip+ident"'
       Expires:
-      - Tue, 03 Oct 2017 16:41:46 GMT
+      - Wed, 04 Oct 2017 07:30:39 GMT
       Last-Modified:
       - Fri, 09 Aug 2013 23:54:35 GMT
       Server:
@@ -43,24 +37,28 @@ http_interactions:
       X-Cache:
       - HIT
       Content-Length:
-      - '606'
+      - '1270'
+      Connection:
+      - close
     body:
       encoding: ASCII-8BIT
-      string: !binary |-
-        H4sIADuBBVIAA41UQa/TMAy+71eYcgFpXfeAB1PXViBA4gIc4MIxa9zVWpOU
-        JO02offfcdu9ruXtQCu1jh1//mzHSZ5Jk/tzjVB6VWWL5PGHQmYL4Cfx5CvM
-        Pp+EqiuET0YJ0kk0aBfDFoVeQF4K69CnQeOLcBNAlE2Mpfd1iL8batPgo9Ee
-        tQ+7sAHkwyoNPJ581IXfjlC3kLRQmAYt4bE21k/8jyR9mUpsKcewXyyBNHkS
-        VehyUWF6d4Vy/szJdAwugXPngsG2M/IMf3qxX4r8sLem0TLMTWVsDM+LNb+v
-        tuMWJeyedAzrq6oWUpLez3QFMw0Loag6xxB8r1HDD6FdsITgC1YtesoFfMMG
-        WTMqlvDBcgZLcLw1dGipuCL2wkP/ldROSPfpx/B2va5PT3neowLReHOD7v3M
-        4VbuxST+zliJNrRCUuNiuEO1nVAScUX6sOR/S448ygnBR7jXmzebzQSx60Uo
-        MTdWeDLMVRuNU9D3CiUJeKHEKbxk+a7L8uW0ZfMO/k8mD6M0L+SkmPOKzfp+
-        w/ZPadZz61jvsWRXEsM3ifojmnXyIomGeVwkXWo8nkzycpDLuyejyarBVmc/
-        S3Igez2whM6LXUWu5F54AzuExrFYGAtUVY3zXdVbBBwQHc8Pe+eN4gFzK/hl
-        Gs753DmBZ+Th4F3Q9dXrSL40jYfaEiPnhktBuu8n8Fq4A6feB63RKnKODask
-        qkfWCd8XFos06G6NOIqOx+OKhBYrY/fREM9Fl2hB9tVY5PCMp/oYqxWDiawH
-        TKK+Ukl0qVs0XG9/AQiVqov2BAAA
+      string: "<!doctype html>\n<html>\n<head>\n    <title>Example Domain</title>\n\n
+        \   <meta charset=\"utf-8\" />\n    <meta http-equiv=\"Content-type\" content=\"text/html;
+        charset=utf-8\" />\n    <meta name=\"viewport\" content=\"width=device-width,
+        initial-scale=1\" />\n    <style type=\"text/css\">\n    body {\n        background-color:
+        #f0f0f2;\n        margin: 0;\n        padding: 0;\n        font-family: \"Open
+        Sans\", \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n        \n    }\n
+        \   div {\n        width: 600px;\n        margin: 5em auto;\n        padding:
+        50px;\n        background-color: #fff;\n        border-radius: 1em;\n    }\n
+        \   a:link, a:visited {\n        color: #38488f;\n        text-decoration:
+        none;\n    }\n    @media (max-width: 700px) {\n        body {\n            background-color:
+        #fff;\n        }\n        div {\n            width: auto;\n            margin:
+        0 auto;\n            border-radius: 0;\n            padding: 1em;\n        }\n
+        \   }\n    </style>    \n</head>\n\n<body>\n<div>\n    <h1>Example Domain</h1>\n
+        \   <p>This domain is established to be used for illustrative examples in
+        documents. You may use this\n    domain in examples without prior coordination
+        or asking for permission.</p>\n    <p><a href=\"http://www.iana.org/domains/example\">More
+        information...</a></p>\n</div>\n</body>\n</html>\n"
     http_version:
-  recorded_at: Tue, 26 Sep 2017 16:41:46 GMT
+  recorded_at: Wed, 27 Sep 2017 07:30:39 GMT
 recorded_with: VCR 3.0.3
