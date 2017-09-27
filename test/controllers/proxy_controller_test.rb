@@ -29,4 +29,11 @@ class ProxyControllerTest < ActionDispatch::IntegrationTest
       post "/projects/#{project.id}/proxy/index.html", params: { root_key: 'value' }
     end
   end
+
+  test "should proxy post example.com with correct headers" do
+    project = create(:project, server_url: 'http://example.com/', id: 166)
+    VCR.use_cassette('post_proxy_example_headers', match_requests_on: [:headers]) do
+      post "/projects/#{project.id}/proxy/index.html", params: { root_key: 'value' }, as: :json
+    end
+  end
 end
