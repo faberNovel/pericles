@@ -4,7 +4,7 @@ class AttributesResourceRepresentation < ApplicationRecord
   belongs_to :resource_attribute, inverse_of: :attributes_resource_representations, class_name: "Attribute",
    foreign_key: "attribute_id"
   belongs_to :resource_representation
-  belongs_to :custom_faker, class_name: 'Faker', foreign_key: 'custom_faker_id'
+  belongs_to :custom_faker, class_name: 'AttributeFaker'
 
   scope :ordered_by_attribute_name, -> { joins(:resource_attribute).order('attributes.name') }
 

@@ -61,7 +61,7 @@
           %td
             = attribute_fields.text_area :example, hide_label: true
           %td
-            = attribute_fields.collection_select :faker_id, Faker.all, :id, :name, include_blank: true, hide_label: true
+            = attribute_fields.collection_select :faker_id, AttributeFaker.all, :id, :name, include_blank: true, hide_label: true
           %td
             = attribute_fields.link_to_remove "Remove"
   %p

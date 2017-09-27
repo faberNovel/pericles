@@ -10,10 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170921083345) do
+ActiveRecord::Schema.define(version: 20170927092704) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "attribute_fakers", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "attributes", force: :cascade do |t|
     t.string   "name"
@@ -74,12 +80,6 @@ ActiveRecord::Schema.define(version: 20170921083345) do
     t.index ["created_at"], name: "index_audits_on_created_at", using: :btree
     t.index ["request_uuid"], name: "index_audits_on_request_uuid", using: :btree
     t.index ["user_id", "user_type"], name: "user_index", using: :btree
-  end
-
-  create_table "fakers", force: :cascade do |t|
-    t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "headers", force: :cascade do |t|
@@ -196,12 +196,12 @@ ActiveRecord::Schema.define(version: 20170921083345) do
     t.datetime "updated_at",    null: false
   end
 
-  add_foreign_key "attributes", "fakers"
+  add_foreign_key "attributes", "attribute_fakers", column: "faker_id"
   add_foreign_key "attributes", "resources"
   add_foreign_key "attributes", "resources", column: "parent_resource_id"
   add_foreign_key "attributes", "schemes"
+  add_foreign_key "attributes_resource_representations", "attribute_fakers", column: "custom_faker_id"
   add_foreign_key "attributes_resource_representations", "attributes"
-  add_foreign_key "attributes_resource_representations", "fakers", column: "custom_faker_id"
   add_foreign_key "attributes_resource_representations", "resource_representations"
   add_foreign_key "attributes_resource_representations", "resource_representations", column: "parent_resource_representation_id"
   add_foreign_key "json_errors", "validations"

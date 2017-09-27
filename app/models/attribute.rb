@@ -5,7 +5,7 @@ class Attribute < ApplicationRecord
   belongs_to :scheme
 
   belongs_to :parent_resource, inverse_of: :resource_attributes, class_name: 'Resource', foreign_key: 'parent_resource_id'
-  belongs_to :faker
+  belongs_to :faker, class_name: 'AttributeFaker'
 
   has_many :attributes_resource_representations, inverse_of: :resource_attribute, dependent: :destroy
   has_many :resource_representations, through: :attributes_resource_representations
