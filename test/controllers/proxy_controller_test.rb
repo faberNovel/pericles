@@ -2,24 +2,31 @@ require 'test_helper'
 
 class ProxyControllerTest < ActionDispatch::IntegrationTest
 
-  test "should proxy to example.com" do
+  test "should proxy get example.com" do
     project = create(:project, server_url: 'http://example.com/')
-    VCR.use_cassette('proxy_example', match_requests_on: [:uri]) do
+    VCR.use_cassette('proxy_example', match_requests_on: [:method, :uri]) do
       get "/projects/#{project.id}/proxy/index.html"
     end
   end
 
-  test "should proxy to example.com with query string" do
+  test "should proxy get example.com with query string" do
     project = create(:project, server_url: 'http://example.com/')
     VCR.use_cassette('proxy_example_querystring', match_requests_on: [:uri]) do
       get "/projects/#{project.id}/proxy/index.html?arg1=value1"
     end
   end
 
-  test "should proxy post to example.com" do
+  test "should proxy post example.com" do
     project = create(:project, server_url: 'http://example.com/')
-    VCR.use_cassette('post_proxy_example', match_requests_on: [:method]) do
+    VCR.use_cassette('post_proxy_example', match_requests_on: [:method, :uri]) do
       post "/projects/#{project.id}/proxy/index.html"
+    end
+  end
+
+  test "should proxy post example.com with body" do
+    project = create(:project, server_url: 'http://example.com/')
+    VCR.use_cassette('post_proxy_example_body', match_requests_on: [:body]) do
+      post "/projects/#{project.id}/proxy/index.html", params: { root_key: 'value' }
     end
   end
 end
