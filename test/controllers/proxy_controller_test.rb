@@ -36,4 +36,14 @@ class ProxyControllerTest < ActionDispatch::IntegrationTest
       post "/projects/#{project.id}/proxy/index.html", params: { root_key: 'value' }, as: :json
     end
   end
+
+  test "should receive response" do
+    project = create(:project, server_url: 'http://example.com/')
+    VCR.use_cassette('proxy_example_response') do
+      get "/projects/#{project.id}/proxy/index.html"
+    end
+    assert_equal 418, response.status
+    assert_equal '<!doctype html><html>Hello !</html>', response.body
+    assert_equal '"359670651+gzip+ident"', response.headers['Etag']
+  end
 end
