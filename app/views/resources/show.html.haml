@@ -52,33 +52,35 @@
 
 %h3 Routes
 
-= link_to 'Add new route', new_resource_route_path(@resource)
+.flexcontainer.flexcontainer-justify-end
+  = link_to 'New Route', new_resource_route_path(@resource), class: "btn btn-default btn-lg"
 
-- if @resource.routes.any?
-  - @resource.routes.includes(:resource_representations).each do |route|
-    .panel.panel-default
-      .panel-body
-        .row
-          .col-xs-2.http-method-column
-            %span{ class: get_http_method_label_class(route) }= route.http_method
-          .col-xs-3
-            %dl
-              %dt URL
-              %dd= route.url
-          .col-xs-3
-            %dl
-              %dt Description
-              %dd= route.description
-          .col-xs-3
-            - unless route.resource_representations.empty?
+.margin-top-element
+  - if @resource.routes.any?
+    - @resource.routes.includes(:resource_representations).each do |route|
+      .panel.panel-default
+        .panel-body
+          .row
+            .col-xs-2.http-method-column
+              %span{ class: get_http_method_label_class(route) }= route.http_method
+            .col-xs-3
               %dl
-                %dt Resource representations
-                %dd= route.resource_representations.uniq.map(&:name).join(", ")
-          .col-xs-1
-            = link_to 'Show', resource_route_path(@resource, route), class: "btn btn-default btn-md"
-- else
-  %p
-    %i= t('.no_route_placeholder')
+                %dt URL
+                %dd= route.url
+            .col-xs-3
+              %dl
+                %dt Description
+                %dd= route.description
+            .col-xs-3
+              - unless route.resource_representations.empty?
+                %dl
+                  %dt Resource representations
+                  %dd= route.resource_representations.uniq.map(&:name).join(", ")
+            .col-xs-1
+              = link_to 'Show', resource_route_path(@resource, route), class: "btn btn-default btn-md"
+  - else
+    %p
+      %i= t('.no_route_placeholder')
 
 = link_to 'Edit', edit_project_resource_path(@project, @resource)
 \|
