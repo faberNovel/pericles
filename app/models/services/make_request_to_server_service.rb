@@ -2,6 +2,7 @@ class MakeRequestToServerService
 
   def initialize(server_url, request)
     @server_url = server_url
+    @server_url += '/' unless @server_url.ends_with? '/'
     @request = request
   end
 
@@ -18,6 +19,7 @@ class MakeRequestToServerService
     remove_http_prefix(filtered_headers)
     transform_headers_case(filtered_headers)
 
+    filtered_headers.delete('Host')
     filtered_headers
   end
 

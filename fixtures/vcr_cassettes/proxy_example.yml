@@ -4,9 +4,25 @@ http_interactions:
     method: get
     uri: http://example.com/index.html
     body:
-      encoding: US-ASCII
+      encoding: ASCII-8BIT
       string: ''
     headers:
+      Request-Method:
+      - GET
+      Server-Name:
+      - www.example.com
+      Server-Port:
+      - '80'
+      Path-Info:
+      - "/projects/690/proxy/index.html"
+      Https:
+      - 'off'
+      Content-Length:
+      - '0'
+      Remote-Addr:
+      - 127.0.0.1
+      Accept:
+      - text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5
       Connection:
       - close
       Host:
@@ -23,11 +39,11 @@ http_interactions:
       Content-Type:
       - text/html
       Date:
-      - Wed, 27 Sep 2017 07:30:39 GMT
+      - Fri, 29 Sep 2017 16:25:57 GMT
       Etag:
       - '"359670651+gzip+ident"'
       Expires:
-      - Wed, 04 Oct 2017 07:30:39 GMT
+      - Fri, 06 Oct 2017 16:25:57 GMT
       Last-Modified:
       - Fri, 09 Aug 2013 23:54:35 GMT
       Server:
@@ -60,5 +76,5 @@ http_interactions:
         or asking for permission.</p>\n    <p><a href=\"http://www.iana.org/domains/example\">More
         information...</a></p>\n</div>\n</body>\n</html>\n"
     http_version:
-  recorded_at: Wed, 27 Sep 2017 07:30:39 GMT
+  recorded_at: Fri, 29 Sep 2017 16:25:57 GMT
 recorded_with: VCR 3.0.3

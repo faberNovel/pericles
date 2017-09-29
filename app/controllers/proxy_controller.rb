@@ -13,5 +13,6 @@ class ProxyController < ApplicationController
     headers.each_pair do |key, value|
       response.set_header(key, value)
     end
+    response.set_header('Access-Control-Allow-Origin', '*')
   end
 end
