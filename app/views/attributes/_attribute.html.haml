@@ -1,0 +1,13 @@
+%tr
+  %th{scope: "row"}= attribute.name
+  %td= attribute.description
+  %td= format_type(attribute.primitive_type, attribute.resource_id, attribute.is_array)
+  %td= attribute.enum
+  %td= attribute.scheme&.name
+  %td= attribute.minimum
+  %td= attribute.maximum
+  %td= attribute.min_length
+  %td= attribute.max_length
+  %td= attribute.nullable
+  %td= attribute.example
+  %td= attribute.faker&.name
