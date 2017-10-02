@@ -9,6 +9,11 @@
       %h1
         !="#{@resource.name} <small> #{@route.name} </small>"
         = render partial: "shared/last_edit", locals: {last_audit: @route.last_audit}
+        .pull-right
+          .btn-group{ role: "group" }
+            = link_to 'Edit', edit_resource_route_path(@resource, @route), class: "btn btn-default"
+            = link_to "Delete", resource_route_path(@resource, @route), method: :delete, data: { confirm: 'Are you sure ?' },
+             class: "btn btn-default"
     %p= @route.description
     %pre
       %code= "#{@route.http_method} #{@route.url}"
@@ -121,8 +126,6 @@
         = text_area_tag(:json_instance, @default_json_instance, size: "60x20")
       %p
         = submit_tag("Validate", id: 'validate_json_instance')
-      %p
-        = link_to 'See Validations History', validations_path
 
     .col-xs-6
       %h2 Generate a JSON instance
@@ -146,9 +149,4 @@
 
       #json_generation_result
 
-
-= link_to 'Edit', edit_resource_route_path(@resource, @route)
-\|
-= link_to "Delete", resource_route_path(@resource, @route), method: :delete, data: { confirm: 'Are you sure ?' }
-\|
 = link_to 'Back', project_resource_path(@project, @resource)
