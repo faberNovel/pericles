@@ -14,14 +14,18 @@
   = render partial: "shared/last_edit", locals: {last_audit: @resource.last_audit}
 
 %div
-  / Nav tabs
-  %ul.nav.nav-tabs{ role: "tablist" }
+  / Global Nav tabs
+  %ul.nav.nav-tabs.nav-justified{ role: "tablist" }
     %li.active{ role: "presentation" }
-      %a{ "aria-controls" => "all", "data-toggle" => "tab", href: "#all", role: "tab" } All
-  / Tab panes
+      %a{ "aria-controls" => "all attributes", "data-toggle" => "tab", href: "#all-attributes", role: "tab" }
+        = "All Attributes"
+    %li{ role: "presentation" }
+      %a{ "aria-controls" => "resource representations", "data-toggle" => "tab", href: "#resource-reps", role: "tab" }
+        = "Resource Representations"
+  / Global Tab panes
   .tab-content
-    #all.tab-pane.active{ role: "tabpanel" }
-      %table{class: "table table-striped"}
+    #all-attributes.tab-pane.active{ role: "tabpanel" }
+      %table{ class: "table table-striped" }
         %thead
           %tr
             %th Name
@@ -40,15 +44,21 @@
           - @resource.resource_attributes.sorted_by_name.each do |attribute|
             = render attribute
 
-%h3 Representations
-
-%p
-  = link_to 'Add new representation', new_resource_resource_representation_path(@resource)
-
-.list-group
-  - @resource.resource_representations.each do |resource_rep|
-    %a{class: "list-group-item", href: resource_resource_representation_path(@resource, resource_rep)}
-      = resource_rep.name
+    #resource-reps.tab-pane{ role: "tabpanel" }
+      %div
+        / Nav tabs for Resource Representations
+        %ul.nav.nav-tabs{ role: "tablist" }
+          - @resource.resource_representations.each do |resource_rep|
+            %li{ role: "presentation" }
+              %a{ "aria-controls" => "#{resource_rep.name}", "data-toggle" => "tab", href: "#res-#{resource_rep.name}", role: "tab" }
+                = resource_rep.name
+          %li{ role: "presentation" }
+            = link_to '+', new_resource_resource_representation_path(@resource)
+        / Tab panes for Resource Representations
+        .tab-content
+          - @resource.resource_representations.each do |resource_rep|
+            .tab-pane{ role: "tabpanel", id: "res-#{resource_rep.name}" }
+              = render resource_rep
 
 %h3 Routes
 

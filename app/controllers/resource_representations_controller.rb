@@ -3,20 +3,13 @@ class ResourceRepresentationsController < AuthenticatedController
   before_action :setup_resource_representation, except: [:index, :new, :create]
 
   def show
-    respond_to do |format|
-      format.html do
-        render layout: 'full_width_column'
-      end
-      format.json_schema do
-        render(
-          json: @representation,
-          serializer: ResourceRepresentationSchemaSerializer,
-          adapter: :attributes,
-          is_collection: ActiveModel::Type::Boolean.new.cast(params[:is_collection]),
-          root_key: params[:root_key]
-        )
-      end
-    end
+    render(
+      json: @representation,
+      serializer: ResourceRepresentationSchemaSerializer,
+      adapter: :attributes,
+      is_collection: ActiveModel::Type::Boolean.new.cast(params[:is_collection]),
+      root_key: params[:root_key]
+    )
   end
 
   def new
@@ -33,7 +26,7 @@ class ResourceRepresentationsController < AuthenticatedController
   def create
     @representation = @resource.resource_representations.build(resource_rep_params)
     if @representation.save
-      redirect_to resource_resource_representation_path(@resource, @representation)
+      redirect_to project_resource_path(@project, @resource)
     else
       build_missing_attributes_resource_representations(@representation)
       render 'new', layout: 'generic', status: :unprocessable_entity
@@ -42,7 +35,7 @@ class ResourceRepresentationsController < AuthenticatedController
 
   def update
     if @representation.update(resource_rep_params)
-      redirect_to resource_resource_representation_path(@resource, @representation)
+      redirect_to project_resource_path(@project, @resource)
     else
       build_missing_attributes_resource_representations(@representation)
       render 'edit', layout: 'generic', status: :unprocessable_entity
@@ -56,7 +49,7 @@ class ResourceRepresentationsController < AuthenticatedController
       redirect_to project_resource_path(@project, @resource)
     rescue ActiveRecord::InvalidForeignKey
       flash.now[:error] = t('activerecord.errors.models.resource_representation.attributes.base.destroy_failed_foreign_key')
-      render 'show', layout: 'full_width_column', status: :conflict
+      render 'resources/show', layout: 'full_width_column', status: :conflict
     end
   end
 
