@@ -6,7 +6,9 @@
   %h1
     = @resource.name
     .pull-right
-      = link_to "Delete", project_resource_path(@project, @resource), method: :delete, data: { confirm: 'Are you sure ?' },
+      .btn-group{ role: "group" }
+        = link_to 'Edit', edit_project_resource_path(@project, @resource, section: "base"), class: "btn btn-default"
+        = link_to "Delete", project_resource_path(@project, @resource), method: :delete, data: { confirm: 'Are you sure ?' },
        class: "btn btn-default"
 
 %p
@@ -28,24 +30,28 @@
   / Global Tab panes
   .tab-content
     #all-attributes.tab-pane.active{ role: "tabpanel" }
-      %table{ class: "table table-striped" }
-        %thead
-          %tr
-            %th Name
-            %th Description
-            %th Type
-            %th Enum
-            %th Scheme
-            %th Minimum
-            %th Maximum
-            %th Minimum length
-            %th Maximum length
-            %th Nullable
-            %th Example
-            %th Faker
-        %tbody
-          - @resource.resource_attributes.sorted_by_name.each do |attribute|
-            = render attribute
+      .panel.panel-default
+        .panel-body
+          .flexcontainer.flexcontainer-justify-end
+            = link_to 'Edit', edit_project_resource_path(@project, @resource, section: "all_attributes"), class: "btn btn-default"
+        %table.table
+          %thead
+            %tr
+              %th Name
+              %th Description
+              %th Type
+              %th Enum
+              %th Scheme
+              %th Minimum
+              %th Maximum
+              %th Minimum length
+              %th Maximum length
+              %th Nullable
+              %th Example
+              %th Faker
+          %tbody
+            - @resource.resource_attributes.sorted_by_name.each do |attribute|
+              = render attribute
 
     #resource-reps.tab-pane{ role: "tabpanel" }
       %div
@@ -94,5 +100,3 @@
   - else
     %p
       %i= t('.no_route_placeholder')
-
-= link_to 'Edit', edit_project_resource_path(@project, @resource)
