@@ -5,6 +5,9 @@
 .page-header
   %h1
     = @resource.name
+    .pull-right
+      = link_to "Delete", project_resource_path(@project, @resource), method: :delete, data: { confirm: 'Are you sure ?' },
+       class: "btn btn-default"
 
 %p
   = @resource.description
@@ -93,5 +96,3 @@
       %i= t('.no_route_placeholder')
 
 = link_to 'Edit', edit_project_resource_path(@project, @resource)
-\|
-= link_to "Delete", project_resource_path(@project, @resource), method: :delete, data: { confirm: 'Are you sure ?' }
