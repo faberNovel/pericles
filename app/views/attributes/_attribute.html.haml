@@ -1,13 +1,61 @@
-%tr
-  %th{scope: "row"}= attribute.name
-  %td= attribute.description
-  %td= format_type(attribute.primitive_type, attribute.resource_id, attribute.is_array)
-  %td= attribute.enum
-  %td= attribute.scheme&.name
-  %td= attribute.minimum
-  %td= attribute.maximum
-  %td= attribute.min_length
-  %td= attribute.max_length
-  %td= attribute.nullable
-  %td= attribute.example
-  %td= attribute.faker&.name
+.panel.panel-default
+  .panel-body
+    .row
+      .col-xs-3
+        %dl
+          %dt Name
+          %dd= attribute.name
+      .col-xs-3
+        %dl
+          %dt Type
+          %dd= format_type(attribute.primitive_type, attribute.resource_id, attribute.is_array)
+      - unless attribute.enum.blank?
+        .col-xs-2
+          %dl
+            %dt Enum
+            %dd= attribute.enum
+      - unless attribute.scheme.blank?
+        .col-xs-2
+          %dl
+            %dt Scheme
+            %dd= attribute.scheme.name
+      - unless attribute.minimum.blank?
+        .col-xs-1
+          %dl
+            %dt Minimum
+            %dd= attribute.minimum
+      - unless attribute.maximum.blank?
+        .col-xs-1
+          %dl
+            %dt Maximum
+            %dd= attribute.maximum
+    .row
+      - unless attribute.description.blank?
+        .col-xs-3
+          %dl
+            %dt Description
+            %dd= attribute.description
+      .col-xs-2
+        %dl
+          %dt Nullable
+          %dd= attribute.nullable
+      - unless attribute.example.blank?
+        .col-xs-3
+          %dl
+            %dt Example
+            %dd= attribute.example
+      - if attribute.faker
+        .col-xs-2
+          %dl
+            %dt Faker
+            %dd= attribute.faker&.name
+      - unless attribute.min_length.blank?
+        .col-xs-1
+          %dl
+            %dt Minimum length
+            %dd= attribute.min_length
+      - unless attribute.max_length.blank?
+        .col-xs-1
+          %dl
+            %dt Maximum length
+            %dd= attribute.max_length

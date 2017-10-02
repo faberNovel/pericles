@@ -31,28 +31,12 @@
   .tab-content
     #all-attributes.tab-pane.active{ role: "tabpanel" }
       .panel.panel-default
-        .panel-body
+        .panel-heading
           .flexcontainer.flexcontainer-justify-end
             = link_to 'Edit', edit_project_resource_path(@project, @resource, section: "all_attributes"), class: "btn btn-default"
-        %table.table
-          %thead
-            %tr
-              %th Name
-              %th Description
-              %th Type
-              %th Enum
-              %th Scheme
-              %th Minimum
-              %th Maximum
-              %th Minimum length
-              %th Maximum length
-              %th Nullable
-              %th Example
-              %th Faker
-          %tbody
-            - @resource.resource_attributes.sorted_by_name.each do |attribute|
-              = render attribute
-
+        .panel-body
+          - @resource.resource_attributes.sorted_by_name.each do |attribute|
+            = render attribute
     #resource-reps.tab-pane{ role: "tabpanel" }
       %div
         / Nav tabs for Resource Representations
