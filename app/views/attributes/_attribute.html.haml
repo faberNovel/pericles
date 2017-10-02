@@ -4,11 +4,13 @@
       .col-xs-3
         %dl
           %dt Name
-          %dd= attribute.name
+          %dd
+            %strong= attribute.name
       .col-xs-3
         %dl
           %dt Type
-          %dd= format_type(attribute.primitive_type, attribute.resource_id, attribute.is_array)
+          %dd
+            %strong= format_type(attribute.primitive_type, attribute.resource_id, attribute.is_array)
       - unless attribute.enum.blank?
         .col-xs-2
           %dl
