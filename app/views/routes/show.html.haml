@@ -26,6 +26,9 @@
         %li.active{ role: "presentation" }
           %a{ "aria-controls" => "request headers", "data-toggle" => "tab", href: "#request-headers", role: "tab" }
             = "Headers"
+        %li{ role: "presentation" }
+          %a{ "aria-controls" => "query parameters", "data-toggle" => "tab", href: "#query-parameters", role: "tab" }
+            = "Query Parameters"
 
       / Tab panes
       .tab-content
@@ -38,26 +41,18 @@
               - else
                 %p
                   %i= t('.no_header_placeholder')
+        #query-parameters.tab-pane{ role: "tabpanel" }
+          .panel.panel-default
+            .panel-body
+              - if @route.request_query_parameters.any?
+                - @route.request_query_parameters.each do |query_parameter|
+                  = render query_parameter
+              - else
+                %p
+                  %i= t('.no_query_parameter_placeholder')
 
 .row
   .col-xs-6
-    - unless @route.request_query_parameters.blank?
-      %h4 Query Parameters
-      %table{class: "table table-striped"}
-        %thead
-          %tr
-            %th Name
-            %th Description
-            %th Type
-            %th
-        %tbody
-          - @route.request_query_parameters.each do |query_parameter|
-            %tr
-              %th{scope: "row"}= query_parameter.name
-              %td= simple_format(query_parameter.description)
-              %td= query_parameter.primitive_type
-              %td= query_parameter.is_optional ? t('optional') : t('required')
-
     - unless @route.request_resource_representation.blank?
       %h4 Resource Representation
       %p= @route.request_resource_representation.name

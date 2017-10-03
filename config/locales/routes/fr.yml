@@ -12,3 +12,4 @@ fr:
       no_route_placeholder: "Il n'y a pas de routes pour ce projet."
     show:
       no_header_placeholder: "Il n'y a pas de headers pour ce message HTTP."
+      no_query_parameter_placeholder: "Il n'y a pas de query parameters pour cette requête."
