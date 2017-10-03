@@ -29,6 +29,9 @@
         %li{ role: "presentation" }
           %a{ "aria-controls" => "query parameters", "data-toggle" => "tab", href: "#query-parameters", role: "tab" }
             = "Query Parameters"
+        %li{ role: "presentation" }
+          %a{ "aria-controls" => "request body", "data-toggle" => "tab", href: "#request-body", role: "tab" }
+            = "Body"
 
       / Tab panes
       .tab-content
@@ -50,6 +53,19 @@
               - else
                 %p
                   %i= t('.no_query_parameter_placeholder')
+        #request-body.tab-pane{ role: "tabpanel" }
+          .panel.panel-default
+            .panel-body
+              - unless @route.request_body_schema.blank?
+                .row
+                  .col-xs-6
+                    %h4 JSON Schema
+                    %pre.pre-scrollable
+                      %code
+                        =format_json_schema(@route.request_body_schema)
+              - else
+                %p
+                  %i= t('.no_body_placeholder')
 
 .row
   .col-xs-6
@@ -57,13 +73,6 @@
       %h4 Resource Representation
       %p= @route.request_resource_representation.name
       %p= "Is collection ? #{@route.is_collection}"
-
-  - unless @route.request_body_schema.blank?
-    .col-xs-6
-      %h4 Body JSON Schema
-      %pre.pre-scrollable
-        %code
-          =format_json_schema(@route.request_body_schema)
 
 .row
   .col-xs-12
