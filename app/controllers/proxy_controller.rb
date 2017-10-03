@@ -1,3 +1,5 @@
+FORBIDDEN_HEADERS = ['Transfer-Encoding'].freeze
+
 class ProxyController < ApplicationController
 
   def compute_request
@@ -11,7 +13,7 @@ class ProxyController < ApplicationController
 
   def set_headers(headers)
     headers.each_pair do |key, value|
-      response.set_header(key, value)
+      response.set_header(key, value) unless FORBIDDEN_HEADERS.include? key
     end
     response.set_header('Access-Control-Allow-Origin', '*')
   end

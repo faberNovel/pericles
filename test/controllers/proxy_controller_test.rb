@@ -46,4 +46,12 @@ class ProxyControllerTest < ActionDispatch::IntegrationTest
     assert_equal '<!doctype html><html>Hello !</html>', response.body
     assert_equal '"359670651+gzip+ident"', response.headers['Etag']
   end
+
+  test "should not proxy Transfer-Encoding" do
+    project = create(:project, server_url: 'http://example.com/')
+    VCR.use_cassette('proxy_example') do
+      get "/projects/#{project.id}/proxy/index.html"
+    end
+    assert_not response.headers['Transfer-Encoding']
+  end
 end
