@@ -20,6 +20,25 @@
   .col-xs-12
     %h2 Request
 
+    %div
+      / Nav tabs
+      %ul.nav.nav-tabs{ role: "tablist" }
+        %li.active{ role: "presentation" }
+          %a{ "aria-controls" => "request headers", "data-toggle" => "tab", href: "#request-headers", role: "tab" }
+            = "Headers"
+
+      / Tab panes
+      .tab-content
+        #request-headers.tab-pane.active{ role: "tabpanel" }
+          .panel.panel-default
+            .panel-body
+              - if @route.request_headers.any?
+                - @route.request_headers.each do |header|
+                  = render header
+              - else
+                %p
+                  %i= t('.no_header_placeholder')
+
 .row
   .col-xs-6
     - unless @route.request_query_parameters.blank?
@@ -39,18 +58,6 @@
               %td= query_parameter.primitive_type
               %td= query_parameter.is_optional ? t('optional') : t('required')
 
-    - unless @route.request_headers.blank?
-      %h4 Headers
-      %table{class: "table table-striped"}
-        %thead
-          %tr
-            %th Name
-            %th Description
-        %tbody
-          - @route.request_headers.each do |header|
-            %tr
-              %th{scope: "row"}= header.name
-              %td= header.description
     - unless @route.request_resource_representation.blank?
       %h4 Resource Representation
       %p= @route.request_resource_representation.name

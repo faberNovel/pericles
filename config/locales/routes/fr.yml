@@ -10,3 +10,5 @@ fr:
   routes:
     index:
       no_route_placeholder: "Il n'y a pas de routes pour ce projet."
+    show:
+      no_header_placeholder: "Il n'y a pas de headers pour ce message HTTP."
