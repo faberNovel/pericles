@@ -54,4 +54,43 @@ class ProxyControllerTest < ActionDispatch::IntegrationTest
     end
     assert_not response.headers['Transfer-Encoding']
   end
+
+  test "should validate correct response" do
+    project = create(:full_project)
+
+    VCR.use_cassette('correct_me') do
+      get "/projects/#{project.id}/proxy/me"
+    end
+    assert_not response.headers['X-Pericles-Report']
+  end
+
+
+  test "should not validate missing header" do
+    project = create(:full_project)
+
+    VCR.use_cassette('missing_header_me') do
+      get "/projects/#{project.id}/proxy/me"
+    end
+    assert response.headers['X-Pericles-Report']
+  end
+
+
+  test "should not validate wrong status" do
+    project = create(:full_project)
+
+    VCR.use_cassette('wrong_status_me') do
+      get "/projects/#{project.id}/proxy/me"
+    end
+    assert response.headers['X-Pericles-Report']
+  end
+
+
+  test "should not validate wrong body" do
+    project = create(:full_project)
+
+    VCR.use_cassette('wrong_body_me') do
+      get "/projects/#{project.id}/proxy/me"
+    end
+    assert response.headers['X-Pericles-Report']
+  end
 end
