@@ -61,26 +61,7 @@
 .margin-top-element
   - if @resource.routes.any?
     - @resource.routes.includes(:resource_representations).each do |route|
-      .panel.panel-default
-        .panel-body
-          .row
-            .col-xs-2.http-method-column
-              %span{ class: get_http_method_label_class(route) }= route.http_method
-            .col-xs-3
-              %dl
-                %dt URL
-                %dd= route.url
-            .col-xs-3
-              %dl
-                %dt Description
-                %dd= route.description
-            .col-xs-3
-              - unless route.resource_representations.empty?
-                %dl
-                  %dt Resource representations
-                  %dd= route.resource_representations.uniq.map(&:name).join(", ")
-            .col-xs-1
-              = link_to 'Show', resource_route_path(@resource, route), class: "btn btn-default btn-md"
+      = render partial: 'routes/route_summary', locals: { resource: @resource, route: route }
   - else
     %p
       %i= t('.no_route_placeholder')

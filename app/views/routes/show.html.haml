@@ -14,9 +14,7 @@
             = link_to 'Edit', edit_resource_route_path(@resource, @route), class: "btn btn-default"
             = link_to "Delete", resource_route_path(@resource, @route), method: :delete, data: { confirm: 'Are you sure ?' },
              class: "btn btn-default"
-    %p= @route.description
-    %pre
-      %code= "#{@route.http_method} #{@route.url}"
+    = render partial: 'routes/route_summary', locals: { route: @route }
 
 .row
   .col-xs-12
