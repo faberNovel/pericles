@@ -78,6 +78,22 @@
   .col-xs-12
     %h2 Responses
 
+    %div
+      / Nav tabs with status codes for all responses
+      %ul.nav.nav-pills{ role: "tablist" }
+        - @route.responses.each do |response|
+          %li{ role: "presentation" }
+            %a{ "aria-controls" => "response", "data-toggle" => "pill", href: "#resp-#{response.id}", role: "tab" }
+              = response.status_code
+
+      / Tab panes for all responses
+      .tab-content
+        - @route.responses.each do |response|
+          .tab-pane{ role: "tabpanel", id: "resp-#{response.id}" }
+            = render response
+
+
+
 - @route.responses.each do |response|
   .row{:style => "border-bottom: solid 1px #eee"}
     .col-xs-6
@@ -90,18 +106,6 @@
         %h4 Resource Representation
         %p= response.resource_representation.name
         %p= "Is collection ? #{response.is_collection}"
-      - unless response.headers.blank?
-        %h4 Headers
-        %table{class: "table table-striped"}
-          %thead
-            %tr
-              %th Name
-              %th Description
-          %tbody
-            - response.headers.each do |response_header|
-              %tr
-                %th{scope: "row"}= response_header.name
-                %td= response_header.description
     - unless response.body_schema.blank?
       .col-xs-6
         %h4 Body JSON Schema
