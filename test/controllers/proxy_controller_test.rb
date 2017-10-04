@@ -93,4 +93,24 @@ class ProxyControllerTest < ActionDispatch::IntegrationTest
     end
     assert response.headers['X-Pericles-Report']
   end
+
+  test "save report with error" do
+    project = create(:full_project)
+
+    assert_difference 'Report.where(is_valid: false).count' do
+      VCR.use_cassette('wrong_body_me') do
+        get "/projects/#{project.id}/proxy/me"
+      end
+    end
+  end
+
+  test "save report with no error" do
+    project = create(:full_project)
+
+    assert_difference 'Report.where(is_valid: true).count' do
+      VCR.use_cassette('correct_me') do
+        get "/projects/#{project.id}/proxy/me"
+      end
+    end
+  end
 end

@@ -6,7 +6,9 @@ class ProxyController < ApplicationController
     @project = Project.find(params[:project_id])
 
     proxy_response = MakeRequestToServerService.new(@project.server_url, request).execute
-    validate(proxy_response)
+    is_valid = validate(proxy_response)
+    report = create_report(proxy_response, is_valid)
+    add_validation_header(report)
 
     set_headers(proxy_response.headers.to_h)
     render body: proxy_response.body, status: proxy_response.status.code
@@ -25,16 +27,15 @@ class ProxyController < ApplicationController
     route = find_route(proxy_response)
     return unless route
 
-    is_valid = route.responses.any? do |response|
+    route.responses.any? do |response|
       validate_response_status(response, proxy_response) &&
       validate_response_headers(response, proxy_response) &&
       validate_response_body(response, proxy_response)
     end
-
-    response.set_header('X-Pericles-Report', 'ERROR') unless is_valid
   end
 
   def find_route(proxy_response)
+    # FIXME Clément Villain 4/09/17: route should be found using only request and no response
     path = proxy_response.uri.path
     # FIXME Clément Villain 3/09/17: fix r.url = /users/:id
     @project.routes.detect { |r| r.url == path && request.method == r.http_method }
@@ -50,5 +51,20 @@ class ProxyController < ApplicationController
 
   def validate_response_body(response, proxy_response)
     JSON::Validator.fully_validate(response.body_schema, proxy_response.body, json: true).empty?
+  end
+
+  def create_report(proxy_response, is_valid)
+    return unless find_route(proxy_response)
+    Report.create!(
+      route: find_route(proxy_response),
+      status_code: proxy_response.status.code,
+      headers: proxy_response.headers.to_h,
+      body: proxy_response.body,
+      is_valid: is_valid
+    )
+  end
+
+  def add_validation_header(report)
+    response.set_header('X-Pericles-Report', report.id) unless report.nil? || report.is_valid
   end
 end

@@ -120,6 +120,17 @@ ActiveRecord::Schema.define(version: 20171009090238) do
     t.index ["route_id"], name: "index_query_parameters_on_route_id", using: :btree
   end
 
+  create_table "reports", force: :cascade do |t|
+    t.boolean  "is_valid"
+    t.integer  "status_code"
+    t.string   "body"
+    t.json     "headers"
+    t.integer  "route_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["route_id"], name: "index_reports_on_route_id", using: :btree
+  end
+
   create_table "resource_representations", force: :cascade do |t|
     t.string   "name"
     t.text     "description"
@@ -208,6 +219,7 @@ ActiveRecord::Schema.define(version: 20171009090238) do
   add_foreign_key "attributes_resource_representations", "resource_representations", column: "parent_resource_representation_id"
   add_foreign_key "json_errors", "validations"
   add_foreign_key "query_parameters", "routes"
+  add_foreign_key "reports", "routes"
   add_foreign_key "resource_representations", "resources"
   add_foreign_key "resources", "projects"
   add_foreign_key "responses", "resource_representations"
