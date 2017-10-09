@@ -5,6 +5,10 @@
       %a{ "aria-controls" => "response headers", "data-toggle" => "tab", href: "#resp-#{response.id}-headers",
         role: "tab" }
         = "Headers"
+    %li{ role: "presentation" }
+      %a{ "aria-controls" => "response body", "data-toggle" => "tab", href: "#resp-#{response.id}-body",
+        role: "tab" }
+        = "Body"
   / Response Tab panes
   .tab-content
     .tab-pane.active{ role: "tabpanel", id: "resp-#{response.id}-headers" }
@@ -16,3 +20,16 @@
           - else
             %p
               %i= t('routes.show.no_header_placeholder')
+    .tab-pane{ role: "tabpanel", id: "resp-#{response.id}-body" }
+      .panel.panel-default
+        .panel-body
+          - unless response.body_schema.blank?
+            .row
+              .col-xs-6
+                %h4 JSON Schema
+                %pre.pre-scrollable
+                  %code
+                    =format_json_schema(response.body_schema)
+          - else
+            %p
+              %i= t('routes.show.no_body_placeholder')
