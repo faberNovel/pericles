@@ -99,22 +99,6 @@
           .tab-pane{ role: "tabpanel", id: "resp-#{response.id}" }
             = render response
 
-
-
-- @route.responses.each do |response|
-  .row{:style => "border-bottom: solid 1px #eee"}
-    .col-xs-6
-      %h4 Status Code
-      %p= response.status_code
-      - unless response.description.blank?
-        %h4 Description
-        %p= response.description
-      - unless response.resource_representation.blank?
-        %h4 Resource Representation
-        %p= response.resource_representation.name
-        %p= "Is collection ? #{response.is_collection}"
-
-
 - if route_includes_json_schema(@route)
   .row
     .col-xs-6

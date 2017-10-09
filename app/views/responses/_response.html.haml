@@ -1,3 +1,17 @@
+.row.margin-top-element
+  - unless response.description.blank?
+    .col-xs-6
+      %dl
+        %dt Description
+        %dd= response.description
+
+  - unless response.resource_representation.blank?
+    .col-xs-6
+      %dl
+        %dt Resource Representation
+        %dd= response.resource_representation.name
+        %dd= "Is collection ? #{response.is_collection}"
+
 %div
   / Response Nav tabs
   %ul.nav.nav-tabs{ role: "tablist" }
