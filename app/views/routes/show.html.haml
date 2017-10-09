@@ -20,6 +20,20 @@
   .col-xs-12
     %h2 Request
 
+    .row
+      - unless @route.request_description.blank?
+        .col-xs-6
+          %dl
+            %dt Description
+            %dd= @route.request_description
+
+      - unless @route.request_resource_representation.blank?
+        .col-xs-6
+          %dl
+            %dt Resource Representation
+            %dd= @route.request_resource_representation.name
+            %dd= "Is collection ? #{@route.is_collection}"
+
     %div
       / Nav tabs
       %ul.nav.nav-tabs{ role: "tablist" }
@@ -66,13 +80,6 @@
               - else
                 %p
                   %i= t('.no_body_placeholder')
-
-.row
-  .col-xs-6
-    - unless @route.request_resource_representation.blank?
-      %h4 Resource Representation
-      %p= @route.request_resource_representation.name
-      %p= "Is collection ? #{@route.is_collection}"
 
 .row
   .col-xs-12
