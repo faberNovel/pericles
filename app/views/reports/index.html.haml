@@ -6,10 +6,14 @@
       %tr
         %th Url
         %th Status
+        %th Date
+        %th
         %th
     %tbody
       - @reports.each do |report|
         %tr{:class => (report.is_valid ? 'valid' : 'invalid' )}
           %td= report.url
           %td= report.status_code
+          %td= report.created_at
+          %td= report.is_valid ? '☑' : '☐'
           %td= link_to 'Detail', project_report_path(@project, report)

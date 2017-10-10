@@ -1,6 +1,26 @@
 %h1 Report
 
+%h2 Url
 %div= @report.url
+
+%h2 Status
 %div= @report.status_code
+
+%h2 Body
 %div= @report.body
-%div= @report.headers
+
+%h2 Headers
+%table{class: "table table-striped"}
+  %thead
+    %tr
+      %th Key
+      %th Value
+  %tbody
+    - @report.headers.each_pair do |key, value|
+      %tr
+        %td= key
+        %td= value
+
+- unless @report.is_valid
+  %h2 Errors
+  /TODO Clément Villain 10/10/17
