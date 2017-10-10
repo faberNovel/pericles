@@ -24,7 +24,6 @@ class ProxyController < ApplicationController
   end
 
   def validate(proxy_response)
-    route = find_route(proxy_response)
     return unless route
 
     route.responses.any? do |response|
@@ -34,11 +33,19 @@ class ProxyController < ApplicationController
     end
   end
 
-  def find_route(proxy_response)
-    # FIXME Clément Villain 4/09/17: route should be found using only request and no response
-    path = proxy_response.uri.path
-    # FIXME Clément Villain 3/09/17: fix r.url = /users/:id
-    @project.routes.detect { |r| r.url == path && request.method == r.http_method }
+  def route
+    @route ||= find_route
+  end
+
+  def find_route
+    path = request.path[/proxy(\/.+)/, 1]
+    routes = @project.build_route_set
+    begin
+      main_route = routes.recognize_path(path, { method: request.method })
+    rescue ActionController::RoutingError
+      return nil
+    end
+    Route.find_by_id(main_route[:name])
   end
 
   def validate_response_headers(response, proxy_response)
@@ -54,9 +61,9 @@ class ProxyController < ApplicationController
   end
 
   def create_report(proxy_response, is_valid)
-    return unless find_route(proxy_response)
+    return unless route
     Report.create!(
-      route: find_route(proxy_response),
+      route: route,
       status_code: proxy_response.status.code,
       headers: proxy_response.headers.to_h,
       body: proxy_response.body,

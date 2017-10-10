@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: http://api.xyz/me
+    uri: http://api.xyz/users/1
     body:
       encoding: ASCII-8BIT
       string: ''

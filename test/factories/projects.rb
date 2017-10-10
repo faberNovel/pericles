@@ -14,7 +14,7 @@ FactoryGirl.define do
 
       after(:create) do |project, _|
         resource = create(:resource, project: project)
-        route = create(:route, url: '/me', http_method: 'GET', resource: resource)
+        route = create(:route, url: '/users/:id', http_method: 'GET', resource: resource)
         body_schema = '{
           "$schema": "http://json-schema.org/draft-04/schema#",
           "definitions": {},
