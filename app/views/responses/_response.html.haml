@@ -36,6 +36,10 @@
               %i= t('routes.show.no_header_placeholder')
     .tab-pane{ role: "tabpanel", id: "resp-#{response.id}-body" }
       .panel.panel-default
+        - unless response.body_schema.blank?
+          .panel-heading
+            .flexcontainer.flexcontainer-justify-end
+              = submit_tag("Validate JSON", class: "btn btn-default validate-json-instance", json_schema: response.body_schema)
         .panel-body
           - unless response.body_schema.blank?
             .row
@@ -44,6 +48,13 @@
                 %pre.pre-scrollable
                   %code
                     =format_json_schema(response.body_schema)
+
+              .col-xs-6
+                %div{ id: "resp-#{response.id}-json-validation-result" }
+                = text_area_tag(:response_json_instance, @default_json_instance,
+                 id: "resp-#{response.id}-generated-json-instance-or-to-validate", class: "generated-json-instance-or-to-validate",
+                 size: "70x15")
+
           - else
             %p
               %i= t('routes.show.no_body_placeholder')
