@@ -6,8 +6,10 @@
       %tr
         %th Url
         %th Status
+        %th
     %tbody
       - @reports.each do |report|
         %tr{:class => (report.is_valid ? 'valid' : 'invalid' )}
           %td= report.url
           %td= report.status_code
+          %td= link_to 'Detail', project_report_path(@project, report)
