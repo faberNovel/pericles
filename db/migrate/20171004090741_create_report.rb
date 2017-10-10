@@ -4,6 +4,7 @@ class CreateReport < ActiveRecord::Migration[5.0]
       t.boolean :is_valid
       t.integer :status_code
       t.string :body
+      t.string :url
       t.json :headers
       t.references :route, foreign_key: true
 

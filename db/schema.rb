@@ -124,6 +124,7 @@ ActiveRecord::Schema.define(version: 20171009090238) do
     t.boolean  "is_valid"
     t.integer  "status_code"
     t.string   "body"
+    t.string   "url"
     t.json     "headers"
     t.integer  "route_id"
     t.datetime "created_at",  null: false

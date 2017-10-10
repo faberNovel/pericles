@@ -37,8 +37,11 @@ class ProxyController < ApplicationController
     @route ||= find_route
   end
 
+  def path
+    request.path[/proxy(\/.+)/, 1]
+  end
+
   def find_route
-    path = request.path[/proxy(\/.+)/, 1]
     routes = @project.build_route_set
     begin
       main_route = routes.recognize_path(path, { method: request.method })
@@ -64,6 +67,7 @@ class ProxyController < ApplicationController
     return unless route
     Report.create!(
       route: route,
+      url: path,
       status_code: proxy_response.status.code,
       headers: proxy_response.headers.to_h,
       body: proxy_response.body,
