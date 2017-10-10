@@ -1,0 +1,13 @@
+%h1 Reports
+
+- if @reports.any?
+  %table{class: "table table-striped"}
+    %thead
+      %tr
+        %th Url
+        %th Status
+    %tbody
+      - @reports.each do |report|
+        %tr{:class => (report.is_valid ? 'valid' : 'invalid' )}
+          %td= report.url
+          %td= report.status_code
