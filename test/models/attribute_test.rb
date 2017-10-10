@@ -31,10 +31,15 @@ class AttributeTest < ActiveSupport::TestCase
     assert_not build(:attribute, primitive_type: :boolean, enum: "not, valid").valid?
   end
 
-  test "An attribute cannot have a pattern if it is not a string" do
-    assert_not build(:attribute_with_resource, pattern: "[a]").valid?
-    assert_not build(:attribute, primitive_type: :boolean, pattern: "[a]").valid?
+  test "An attribute cannot have a scheme if it is not a string" do
+    assert_not build(:attribute_with_resource, scheme: create(:scheme)).valid?
+    assert_not build(:attribute, primitive_type: :boolean, scheme: create(:scheme)).valid?
   end
+
+  test "An attribute can have a scheme if it is a string" do
+    assert build(:attribute, primitive_type: :string, scheme: create(:scheme)).valid?
+  end
+
   test "An attribute cannot have a max length if it is not a string" do
     assert_not build(:attribute_with_resource, max_length: 3).valid?
     assert_not build(:attribute, primitive_type: :boolean, max_length: 3).valid?
@@ -61,6 +66,14 @@ class AttributeTest < ActiveSupport::TestCase
   end
 
   test "Attribute should be valid with all fields set correctly" do
-    assert build(:attribute, name: "New Attribute", description: "New test attribute", example: '"Hello"', is_array: true, primitive_type: :string, enum: "valid", pattern: "Hello").valid?
+    assert build(:attribute,
+      name: "New Attribute",
+      description: "New test attribute",
+      example: '"Hello"',
+      is_array: true,
+      primitive_type: :string,
+      enum: "valid",
+      scheme: create(:scheme)
+    ).valid?
   end
 end

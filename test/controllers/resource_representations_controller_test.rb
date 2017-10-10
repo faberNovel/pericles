@@ -153,7 +153,7 @@ class ResourceRepresentationsControllerTest < ControllerWithAuthenticationTest
   test 'should get json schema associated to resource_representation' do
     resource = create(:resource, name: 'Movie', description: 'A movie')
     attribute = create(:attribute, parent_resource: resource, name: 'main_title', description: 'title of the film',
-     primitive_type: :string, enum: "The Godfather, Finding Nemo", pattern: "The Godfather")
+     primitive_type: :string, enum: "The Godfather, Finding Nemo", scheme: create(:scheme, regexp: "The Godfather"))
     resource_representation = create(:resource_representation, resource: resource)
     create(:attributes_resource_representation, parent_resource_representation: resource_representation,
      resource_attribute: attribute, is_required: true, custom_pattern: "The Godfather II")
@@ -215,7 +215,7 @@ class ResourceRepresentationsControllerTest < ControllerWithAuthenticationTest
   test 'should not get root key if not specified' do
     resource = create(:resource, name: 'Movie', description: 'A movie')
     attribute = create(:attribute, parent_resource: resource, name: 'main_title', description: 'title of the film',
-     primitive_type: :string, enum: "The Godfather, Finding Nemo", pattern: "The Godfather")
+     primitive_type: :string, enum: "The Godfather, Finding Nemo", scheme: create(:scheme, regexp: "The Godfather"))
     resource_representation = create(:resource_representation, resource: resource)
     create(:attributes_resource_representation, parent_resource_representation: resource_representation,
      resource_attribute: attribute, is_required: true, custom_pattern: "The Godfather II")

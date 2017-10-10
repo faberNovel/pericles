@@ -20,7 +20,7 @@
       %th Description
       %th Type
       %th Enum
-      %th Pattern
+      %th Scheme
       %th Minimum
       %th Maximum
       %th Minimum length
@@ -35,7 +35,7 @@
         %td= attribute.description
         %td= format_type(attribute.primitive_type, attribute.resource_id, attribute.is_array)
         %td= attribute.enum
-        %td= attribute.pattern
+        %td= attribute.scheme&.name
         %td= attribute.minimum
         %td= attribute.maximum
         %td= attribute.min_length

@@ -147,9 +147,7 @@ class ResourceRepresentationSchemaSerializer < ActiveModel::Serializer
     attribute_hash = {}
     attribute_hash[:description] = attribute.description unless attribute.description.blank?
     attribute_hash[:type] = attribute.primitive_type
-    unless attribute.pattern.blank? && association.custom_pattern.blank?
-      attribute_hash[:pattern] = association.custom_pattern.blank? ? attribute.pattern : association.custom_pattern
-    end
+    add_scheme_validation(attribute_hash, association)
     unless attribute.enum.blank? && association.custom_enum.blank?
       enum = association.custom_enum.blank? ? attribute.enum : association.custom_enum
       attribute_hash[:enum] = enum.split(", ")
@@ -161,6 +159,17 @@ class ResourceRepresentationSchemaSerializer < ActiveModel::Serializer
       end
     end
     return attribute_hash
+  end
+
+  def add_scheme_validation(attribute_hash, association)
+    unless association.custom_pattern.blank?
+      attribute_hash[:pattern] = association.custom_pattern
+      return
+    end
+
+    scheme = association.resource_attribute.scheme
+    attribute_hash[:format] = scheme.name if scheme&.format?
+    attribute_hash[:pattern] = scheme.regexp if scheme&.pattern?
   end
 
   def cycle_detected(resource_representation)
