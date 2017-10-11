@@ -3,7 +3,7 @@ class ReportsController < ApplicationController
 
   def index
     @project = project
-    @reports = @project.reports
+    @reports = @project.reports.order(created_at: :desc).page params[:page]
   end
 
   def show

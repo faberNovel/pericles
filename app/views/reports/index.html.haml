@@ -17,3 +17,5 @@
           %td= report.created_at
           %td= report.correct? ? '☑' : '☐'
           %td= link_to 'Detail', project_report_path(@project, report)
+
+  = paginate @reports
