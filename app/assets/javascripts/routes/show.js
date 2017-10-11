@@ -8,13 +8,10 @@ $(document).ready(function() {
     validate_json_instance(json_schema, json_instance, display_result_element);
   });
 
-  $("#generate_json_instance").on("click", function() {
-    var json_schema = $("input:radio[name=generation_json_schema]:checked").val();
-    if (json_schema) {
-      generate_json_instance(json_schema, display_generated_instance);
-    } else {
-      setClass('#json_generation_result', "alert alert-warning");
-      $('#json_generation_result').text("Please select which schema you wish to generate an instance of.");
-    }
+  $("input[class~='generate-json-instance']").on("click", function() {
+    var json_schema = $(this).attr("json_schema");
+    var display_result_element = $(this).parents(".panel-heading").
+    siblings(".panel-body").find("textarea[class~='generated-json-instance-or-to-validate']");
+    generate_json_instance(json_schema, display_result_element);
   });
 });
