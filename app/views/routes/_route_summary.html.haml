@@ -7,6 +7,9 @@
         %dl
           %dt URL
           %dd= route.url
+          -if url = local_assigns[:real_url]
+            %dd
+              %strong= url
       .col-xs-3
         %dl
           %dt Description

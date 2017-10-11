@@ -55,7 +55,7 @@
                 %h4 JSON Schema
                 %pre.pre-scrollable
                   %code
-                    =format_json_schema(response.body_schema)
+                    =format_json(response.body_schema)
 
               .col-xs-6
                 %div{ id: "resp-#{response.id}-json-validation-result" }

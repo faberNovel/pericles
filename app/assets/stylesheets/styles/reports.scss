@@ -1,3 +1,18 @@
 .invalid {
-    color: red;
+  color: red;
+}
+
+.status-code {
+  margin: 16px 0 16px 0;
+}
+
+.header-error {
+  color: red;
+}
+
+.body-errors {
+  color: red;
+  ul {
+    padding-left: 20px;
+  }
 }

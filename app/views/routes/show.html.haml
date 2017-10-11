@@ -94,7 +94,7 @@
                     %h4 JSON Schema
                     %pre.pre-scrollable
                       %code
-                        =format_json_schema(@route.request_body_schema)
+                        =format_json(@route.request_body_schema)
 
                   .col-xs-6
                     #request-json-validation-result

@@ -4,4 +4,10 @@ class ValidationError < ApplicationRecord
   enum category: [:header, :body, :status_code]
 
   validates :description, presence: true
+
+  def header_name
+    return unless header?
+
+    description.split.first
+  end
 end

@@ -1,26 +1,46 @@
 %h1 Report
 
-%h2 Url
-%div= @report.url
+= render partial: 'routes/route_summary', locals: { route: @report.route, real_url: @report.url }
 
-%h2 Status
-%div= @report.status_code
+%h4 Response
 
-%h2 Body
-%div= @report.body
+.status-code
+  %span.label.http-method-label{'class': @report.valid_status? ? 'label-success' : 'label-danger'}= @report.status_code
 
-%h2 Headers
-%table{class: "table table-striped"}
-  %thead
-    %tr
-      %th Key
-      %th Value
-  %tbody
-    - @report.headers.each_pair do |key, value|
-      %tr
-        %td= key
-        %td= value
+%div
+  / Response Nav tabs
+  %ul.nav.nav-tabs{ role: "tablist" }
+    %li.active{ role: "presentation" }
+      %a{ "aria-controls" => "response body", "data-toggle" => "tab", href: "#resp-body",
+        role: "tab" }
+        = "Body"
+    %li{ role: "presentation" }
+      %a{ "aria-controls" => "response headers", "data-toggle" => "tab", href: "#resp-headers",
+        role: "tab" }
+        = "Headers"
 
-- if @report.errors?
-  %h2 Errors
-  /TODO Clément Villain 10/10/17
+  / Response Tab panes
+  .tab-content
+    .tab-pane.active{ role: "tabpanel", id: "resp-body" }
+      .panel.panel-default
+        .panel-body
+          %pre.pre-scrollable
+            %code
+              =format_json(@report.body)
+          .body-errors
+            %ul
+              - @report.body_errors.each do |e|
+                %li= e.description
+    .tab-pane{ role: "tabpanel", id: "resp-headers" }
+      .panel.panel-default
+        .panel-body
+          %table{class: "table table-striped"}
+            %tbody
+            - @report.headers.each_pair do |key, value|
+              %tr
+                %td= key
+                %td= value
+            - @report.header_errors.each do |e|
+              %tr.header-error
+                %td= e.header_name
+                %td
