@@ -9,7 +9,9 @@ function generate_schema_from_resource_representation(clicked_button) {
     var resource_id = $(clicked_button).attr('resource_id');
     var url = get_resource_representation_url(resource_id, resource_representation_id);
     var params = '?is_collection=' + $(clicked_button).siblings('.checkbox').find('input[type=checkbox]')[0].checked;
-    params += '&root_key=' + $(clicked_button).siblings('.form-group').children('input.root-key').val();
+    var root_key = $(clicked_button).siblings('.form-group').children('input.root-key').val();
+    if (root_key)
+      params += '&root_key=' + root_key;
     var body_json_schema = $(clicked_button).siblings(".form-group").children("textarea");
     $.ajax({
         type: "GET",
