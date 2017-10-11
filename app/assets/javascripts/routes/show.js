@@ -1,13 +1,11 @@
 $(document).ready(function() {
-  $("#validate_json_instance").on("click", function() {
-    var json_schema = $("input:radio[name=validation_json_schema]:checked").val();
-    var json_instance = $("#json_instance").val();
-    if (json_schema) {
-      validate_json_instance(json_schema, json_instance, display_validation_result);
-    } else {
-      setClass('#json_validation_result', "alert alert-warning");
-      $('#json_validation_result').text("Please select against which schema you wish to validate the input JSON instance.");
-    }
+  $("input[class~='validate-json-instance']").on("click", function() {
+    var json_schema = $(this).attr("json_schema");
+    var json_instance = $(this).parents(".panel-heading").
+    siblings(".panel-body").find("textarea[class~='generated-json-instance-or-to-validate']").val();
+    var display_result_element = $(this).parents(".panel-heading").
+    siblings(".panel-body").find("div[id*='json-validation-result']");
+    validate_json_instance(json_schema, json_instance, display_result_element);
   });
 
   $("#generate_json_instance").on("click", function() {

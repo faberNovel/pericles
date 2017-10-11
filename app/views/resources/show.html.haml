@@ -5,6 +5,11 @@
 .page-header
   %h1
     = @resource.name
+    .pull-right
+      .btn-group{ role: "group" }
+        = link_to 'Edit', edit_project_resource_path(@project, @resource, section: "base"), class: "btn btn-default"
+        = link_to "Delete", project_resource_path(@project, @resource), method: :delete, data: { confirm: 'Are you sure ?' },
+       class: "btn btn-default"
 
 %p
   = @resource.description
@@ -13,74 +18,50 @@
   Attributes
   = render partial: "shared/last_edit", locals: {last_audit: @resource.last_audit}
 
-%table{class: "table table-striped"}
-  %thead
-    %tr
-      %th Name
-      %th Description
-      %th Type
-      %th Enum
-      %th Scheme
-      %th Minimum
-      %th Maximum
-      %th Minimum length
-      %th Maximum length
-      %th Nullable
-      %th Example
-      %th Faker
-  %tbody
-    - @resource.resource_attributes.sorted_by_name.each do |attribute|
-      %tr
-        %th{scope: "row"}= attribute.name
-        %td= attribute.description
-        %td= format_type(attribute.primitive_type, attribute.resource_id, attribute.is_array)
-        %td= attribute.enum
-        %td= attribute.scheme&.name
-        %td= attribute.minimum
-        %td= attribute.maximum
-        %td= attribute.min_length
-        %td= attribute.max_length
-        %td= attribute.nullable
-        %td= attribute.example
-        %td= attribute.faker&.name
-
-%h3 Representations
-
-%p
-  = link_to 'Add new representation', new_resource_resource_representation_path(@resource)
-
-.list-group
-  - @resource.resource_representations.each do |resource_rep|
-    %a{class: "list-group-item", href: resource_resource_representation_path(@resource, resource_rep)}
-      = resource_rep.name
+%div
+  / Global Nav tabs
+  %ul.nav.nav-tabs.nav-justified{ role: "tablist" }
+    %li.active{ role: "presentation" }
+      %a{ "aria-controls" => "all attributes", "data-toggle" => "tab", href: "#all-attributes", role: "tab" }
+        = "All Attributes"
+    %li{ role: "presentation" }
+      %a{ "aria-controls" => "resource representations", "data-toggle" => "tab", href: "#resource-reps", role: "tab" }
+        = "Resource Representations"
+  / Global Tab panes
+  .tab-content
+    #all-attributes.tab-pane.active{ role: "tabpanel" }
+      .panel.panel-default
+        .panel-heading
+          .flexcontainer.flexcontainer-justify-end
+            = link_to 'Edit', edit_project_resource_path(@project, @resource, section: "all_attributes"), class: "btn btn-default"
+        .panel-body
+          - @resource.resource_attributes.sorted_by_name.each do |attribute|
+            = render attribute
+    #resource-reps.tab-pane{ role: "tabpanel" }
+      %div
+        / Nav tabs for Resource Representations
+        %ul.nav.nav-tabs{ role: "tablist" }
+          - @resource.resource_representations.each do |resource_rep|
+            %li{ role: "presentation" }
+              %a{ "aria-controls" => "#{resource_rep.name}", "data-toggle" => "tab", href: "#res-#{resource_rep.name}", role: "tab" }
+                = resource_rep.name
+          %li{ role: "presentation" }
+            = link_to '+', new_resource_resource_representation_path(@resource)
+        / Tab panes for Resource Representations
+        .tab-content
+          - @resource.resource_representations.each do |resource_rep|
+            .tab-pane{ role: "tabpanel", id: "res-#{resource_rep.name}" }
+              = render resource_rep
 
 %h3 Routes
 
-= link_to 'Add new route', new_resource_route_path(@resource)
+.flexcontainer.flexcontainer-justify-end
+  = link_to 'New Route', new_resource_route_path(@resource), class: "btn btn-default btn-lg"
 
-- if @resource.routes.any?
-  %table{class: "table table-striped"}
-    %thead
-      %tr
-        %th Name
-        %th Description
-        %th HTTP Method
-        %th URL
-        %th Resource representations
-        %th Details
-    %tbody
-      - @resource.routes.includes(:resource_representations).each do |route|
-        %tr
-          %th{scope: "row"}= route.name
-          %td= route.description
-          %td= route.http_method
-          %td= route.url
-          %td= route.resource_representations.uniq.map(&:name).join(", ")
-          %td= link_to "Show", resource_route_path(@resource, route)
-- else
-  %p
-    %i= t('.no_route_placeholder')
-
-= link_to 'Edit', edit_project_resource_path(@project, @resource)
-\|
-= link_to "Delete", project_resource_path(@project, @resource), method: :delete, data: { confirm: 'Are you sure ?' }
+.margin-top-element
+  - if @resource.routes.any?
+    - @resource.routes.includes(:resource_representations).each do |route|
+      = render partial: 'routes/route_summary', locals: { resource: @resource, route: route }
+  - else
+    %p
+      %i= t('.no_route_placeholder')

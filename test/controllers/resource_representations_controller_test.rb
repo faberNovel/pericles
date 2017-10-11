@@ -1,20 +1,6 @@
 require 'test_helper'
 
 class ResourceRepresentationsControllerTest < ControllerWithAuthenticationTest
-
-  test "should show resource_representation" do
-    representation = create(:resource_representation)
-    get resource_resource_representation_path(representation.resource, representation)
-    assert_response :success
-  end
-
-  test "should not show resource_representation (not authenticated)" do
-    sign_out :user
-    representation = create(:resource_representation)
-    get resource_resource_representation_path(representation.resource, representation)
-    assert_redirected_to new_user_session_path
-  end
-
   test "should get new" do
     resource = create(:resource)
     get new_resource_resource_representation_path(resource)
@@ -50,7 +36,7 @@ class ResourceRepresentationsControllerTest < ControllerWithAuthenticationTest
     end
     representation = assigns(:representation)
     assert_not_nil representation, "should create resource_representation"
-    assert_redirected_to resource_resource_representation_path(resource, representation)
+    assert_redirected_to project_resource_path(resource.project, resource)
   end
 
   test "should create resource_representation with attributes_resource_representations" do
@@ -62,7 +48,7 @@ class ResourceRepresentationsControllerTest < ControllerWithAuthenticationTest
     end
     representation = assigns(:representation)
     assert_not_nil representation, "should create resource_representation"
-    assert_redirected_to resource_resource_representation_path(resource, representation)
+    assert_redirected_to project_resource_path(resource.project, resource)
   end
 
   test "should not create resource_representation without a name" do
@@ -92,7 +78,7 @@ class ResourceRepresentationsControllerTest < ControllerWithAuthenticationTest
     resource = resource_representation.resource
     put resource_resource_representation_path(resource, resource_representation),
       params: { resource_representation: { name: 'Modified resource representation' } }
-    assert_redirected_to resource_resource_representation_path(resource, resource_representation)
+    assert_redirected_to project_resource_path(resource.project, resource)
     resource_representation.reload
     assert_equal 'Modified resource representation', resource_representation.name
   end

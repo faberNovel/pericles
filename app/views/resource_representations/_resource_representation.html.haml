@@ -1,0 +1,59 @@
+.panel.panel-default
+  .panel-heading
+    %p
+      .flexcontainer.flexcontainer-justify-end
+        .btn-group{ role: "group" }
+          = link_to 'Edit', edit_resource_resource_representation_path(resource_representation.resource, resource_representation),
+         class: "btn btn-default btn-md"
+          = link_to "Delete", resource_resource_representation_path(resource_representation.resource, resource_representation),
+         method: :delete, data: { confirm: 'Are you sure ?' }, class: "btn btn-default btn-md"
+    %p
+      = resource_representation.description
+      = render partial: "shared/last_edit", locals: {last_audit: resource_representation.last_audit}
+  .panel-body
+    - resource_representation.attributes_resource_representations.ordered_by_attribute_name.each do |attr_resource_rep|
+      - attribute = attr_resource_rep.resource_attribute
+      - resource_representation_for_attr = attr_resource_rep.resource_representation
+      .panel.panel-default
+        .panel-body
+          .row
+            .col-xs-3
+              %dl
+                %dt Name
+                %dd
+                  %strong= attribute.name
+            .col-xs-3
+              %dl
+                %dt Type
+                %dd
+                  %strong= format_type(attribute.primitive_type, attribute.resource_id, attribute.is_array)
+            - unless attr_resource_rep.custom_enum.blank?
+              .col-xs-2
+                %dl
+                  %dt Enum
+                  %dd= attr_resource_rep.custom_enum
+            - unless attr_resource_rep.custom_pattern.blank?
+              .col-xs-2
+                %dl
+                  %dt Pattern
+                  %dd= attr_resource_rep.custom_pattern
+            - if resource_representation_for_attr
+              .col-xs-2
+                %dl
+                  %dt Resource Representation
+                  %dd= resource_representation_for_attr.name
+          .row
+            .col-xs-3
+              %dl
+                %dt Required ?
+                %dd= attr_resource_rep.is_required ? t('required') : t('optional')
+            - unless attr_resource_rep.custom_nullable.nil?
+              .col-xs-1
+                %dl
+                  %dt Nullable
+                  %dd= attr_resource_rep.custom_nullable
+            - if attr_resource_rep.custom_faker
+              .col-xs-2
+                %dl
+                  %dt Faker
+                  %dd= attr_resource_rep.custom_faker&.name

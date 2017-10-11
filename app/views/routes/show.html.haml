@@ -9,121 +9,109 @@
       %h1
         !="#{@resource.name} <small> #{@route.name} </small>"
         = render partial: "shared/last_edit", locals: {last_audit: @route.last_audit}
-    %p= @route.description
-    %pre
-      %code= "#{@route.http_method} #{@route.url}"
+        .pull-right
+          .btn-group{ role: "group" }
+            = link_to 'Edit', edit_resource_route_path(@resource, @route), class: "btn btn-default"
+            = link_to "Delete", resource_route_path(@resource, @route), method: :delete, data: { confirm: 'Are you sure ?' },
+             class: "btn btn-default"
+    = render partial: 'routes/route_summary', locals: { route: @route }
 
 .row
   .col-xs-12
     %h2 Request
 
-.row
-  .col-xs-6
-    - unless @route.request_query_parameters.blank?
-      %h4 Query Parameters
-      %table{class: "table table-striped"}
-        %thead
-          %tr
-            %th Name
-            %th Description
-            %th Type
-            %th
-        %tbody
-          - @route.request_query_parameters.each do |query_parameter|
-            %tr
-              %th{scope: "row"}= query_parameter.name
-              %td= simple_format(query_parameter.description)
-              %td= query_parameter.primitive_type
-              %td= query_parameter.is_optional ? t('optional') : t('required')
+    .row
+      - unless @route.request_description.blank?
+        .col-xs-6
+          %dl
+            %dt Description
+            %dd= @route.request_description
 
-    - unless @route.request_headers.blank?
-      %h4 Headers
-      %table{class: "table table-striped"}
-        %thead
-          %tr
-            %th Name
-            %th Description
-        %tbody
-          - @route.request_headers.each do |header|
-            %tr
-              %th{scope: "row"}= header.name
-              %td= header.description
-    - unless @route.request_resource_representation.blank?
-      %h4 Resource Representation
-      %p= @route.request_resource_representation.name
-      %p= "Is collection ? #{@route.is_collection}"
+      - unless @route.request_resource_representation.blank?
+        .col-xs-6
+          %dl
+            %dt Resource Representation
+            %dd= @route.request_resource_representation.name
+            %dd= "Is collection ? #{@route.is_collection}"
 
-  - unless @route.request_body_schema.blank?
-    .col-xs-6
-      %h4 Body JSON Schema
-      %pre.pre-scrollable
-        %code
-          =format_json_schema(@route.request_body_schema)
+    %div
+      / Nav tabs
+      %ul.nav.nav-tabs{ role: "tablist" }
+        %li.active{ role: "presentation" }
+          %a{ "aria-controls" => "request headers", "data-toggle" => "tab", href: "#request-headers", role: "tab" }
+            = "Headers"
+        %li{ role: "presentation" }
+          %a{ "aria-controls" => "query parameters", "data-toggle" => "tab", href: "#query-parameters", role: "tab" }
+            = "Query Parameters"
+        %li{ role: "presentation" }
+          %a{ "aria-controls" => "request body", "data-toggle" => "tab", href: "#request-body", role: "tab" }
+            = "Body"
+
+      / Tab panes
+      .tab-content
+        #request-headers.tab-pane.active{ role: "tabpanel" }
+          .panel.panel-default
+            .panel-body
+              - if @route.request_headers.any?
+                - @route.request_headers.each do |header|
+                  = render header
+              - else
+                %p
+                  %i= t('.no_header_placeholder')
+        #query-parameters.tab-pane{ role: "tabpanel" }
+          .panel.panel-default
+            .panel-body
+              - if @route.request_query_parameters.any?
+                - @route.request_query_parameters.each do |query_parameter|
+                  = render query_parameter
+              - else
+                %p
+                  %i= t('.no_query_parameter_placeholder')
+        #request-body.tab-pane{ role: "tabpanel" }
+          .panel.panel-default
+            - unless @route.request_body_schema.blank?
+              .panel-heading
+                .flexcontainer.flexcontainer-justify-end
+                  = submit_tag("Validate JSON", class: "btn btn-default validate-json-instance",
+                   json_schema: @route.request_body_schema)
+            .panel-body
+              - unless @route.request_body_schema.blank?
+                .row
+                  .col-xs-6
+                    %h4 JSON Schema
+                    %pre.pre-scrollable
+                      %code
+                        =format_json_schema(@route.request_body_schema)
+
+                  .col-xs-6
+                    #request-json-validation-result
+                    = text_area_tag(:request_json_instance, @default_json_instance, size: "70x15",
+                     class: "generated-json-instance-or-to-validate")
+
+              - else
+                %p
+                  %i= t('.no_body_placeholder')
 
 .row
   .col-xs-12
     %h2 Responses
 
-- @route.responses.each do |response|
-  .row{:style => "border-bottom: solid 1px #eee"}
-    .col-xs-6
-      %h4 Status Code
-      %p= response.status_code
-      - unless response.description.blank?
-        %h4 Description
-        %p= response.description
-      - unless response.resource_representation.blank?
-        %h4 Resource Representation
-        %p= response.resource_representation.name
-        %p= "Is collection ? #{response.is_collection}"
-      - unless response.headers.blank?
-        %h4 Headers
-        %table{class: "table table-striped"}
-          %thead
-            %tr
-              %th Name
-              %th Description
-          %tbody
-            - response.headers.each do |response_header|
-              %tr
-                %th{scope: "row"}= response_header.name
-                %td= response_header.description
-    - unless response.body_schema.blank?
-      .col-xs-6
-        %h4 Body JSON Schema
-        %pre.pre-scrollable
-          %code
-            =format_json_schema(response.body_schema)
+    %div
+      / Nav tabs with status codes for all responses
+      %ul.nav.nav-pills{ role: "tablist" }
+        - @route.responses.each do |response|
+          %li{ role: "presentation" }
+            %a{ "aria-controls" => "response", "data-toggle" => "pill", href: "#resp-#{response.id}", role: "tab" }
+              = response.status_code
 
+      / Tab panes for all responses
+      .tab-content
+        - @route.responses.each do |response|
+          .tab-pane{ role: "tabpanel", id: "resp-#{response.id}" }
+            = render response
 
 - if route_includes_json_schema(@route)
   .row
-    .col-xs-6
-      %h2 Validate a JSON instance
-
-      #json_validation_result
-
-      %p
-        Against:
-
-      %p
-        - unless @route.request_body_schema.blank?
-          = radio_button_tag(:validation_json_schema, @route.request_body_schema, false, id: "validation_request_body_schema")
-          = label_tag(:validation_request_body_schema, "Request Body JSON Schema")
-          %br/
-        - @route.responses.each do |response|
-          - unless response.body_schema.blank?
-            - radio_button_id = "validation_response_#{response.id}_body_schema"
-            = radio_button_tag(:validation_json_schema, response.body_schema, false, id: radio_button_id)
-            = label_tag(radio_button_id.to_sym, "Response Body JSON Schema (Status Code: #{response.status_code})")
-
-      %p
-        = text_area_tag(:json_instance, @default_json_instance, size: "60x20")
-      %p
-        = submit_tag("Validate", id: 'validate_json_instance')
-      %p
-        = link_to 'See Validations History', validations_path
-
     .col-xs-6
       %h2 Generate a JSON instance
 
@@ -146,9 +134,4 @@
 
       #json_generation_result
 
-
-= link_to 'Edit', edit_resource_route_path(@resource, @route)
-\|
-= link_to "Delete", resource_route_path(@resource, @route), method: :delete, data: { confirm: 'Are you sure ?' }
-\|
 = link_to 'Back', project_resource_path(@project, @resource)

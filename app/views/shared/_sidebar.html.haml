@@ -1,16 +1,10 @@
 #sidebar-wrapper
   %ul.sidebar-nav
     %li.sidebar-brand
-      = link_to "#{@project.title}", project_path(@project)
+      %h3= @project.title
     %li
-      = link_to 'Edit Project', edit_project_path(@project)
+      = link_to 'Project Description', project_path(@project)
     %li
-      = link_to 'Add a new Resource', new_project_resource_path(@project)
+      = link_to 'Resources', project_resources_path(@project)
     %li
-      = link_to 'Show all Resources', project_resources_path(@project)
-    %li
-      = link_to 'List project routes', project_routes_path(@project)
-    %li
-      = link_to 'Download as Markdown', project_path(@project, format: :zip)
-    %li
-      = link_to 'Delete Project', project_path(@project), method: :delete, data: { confirm: 'Are you sure?' }
+      = link_to 'Routes', project_routes_path(@project)

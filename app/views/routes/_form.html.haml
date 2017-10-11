@@ -25,6 +25,8 @@
   .row
     .col-xs-10
 
+      = f.text_area :request_description, label: 'Description'
+
       %h4 Query Parameters
 
       %table{class: "table table-striped", id: "table_request_query_parameters"}
