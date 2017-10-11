@@ -10,7 +10,7 @@ class MakeRequestToServerService
     url = URI.join(@server_url, @request.params[:path])
     url = URI.join(url.to_s, '?' + @request.query_string) unless @request.query_string.blank?
 
-    HTTP.send(@request.method.downcase, url, body: @request.body.read, headers: headers)
+    HTTP.use(:auto_inflate).send(@request.method.downcase, url, body: @request.body.read, headers: headers)
   end
 
   def headers

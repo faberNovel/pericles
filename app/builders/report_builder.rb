@@ -8,7 +8,7 @@ class ReportBuilder
   def build
     return unless route
 
-    report = Report.create!(
+    report = Report.create(
       route: route,
       url: path,
       response_status_code: @http_response.status.code,

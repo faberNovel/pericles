@@ -1,4 +1,4 @@
-FORBIDDEN_HEADERS = ['Transfer-Encoding'].freeze
+FORBIDDEN_HEADERS = ['Transfer-Encoding', 'Content-Encoding'].freeze
 
 class ProxyController < ApplicationController
 
