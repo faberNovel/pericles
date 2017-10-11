@@ -11,7 +11,7 @@
         = render partial: "shared/last_edit", locals: {last_audit: @route.last_audit}
         .pull-right
           .btn-group{ role: "group" }
-            = link_to 'Edit', edit_resource_route_path(@resource, @route), class: "btn btn-default"
+            = link_to 'Edit', edit_resource_route_path(@resource, @route, section: "base"), class: "btn btn-default"
             = link_to "Delete", resource_route_path(@resource, @route), method: :delete, data: { confirm: 'Are you sure ?' },
              class: "btn btn-default"
     = render partial: 'routes/route_summary', locals: { route: @route }
@@ -51,6 +51,10 @@
       .tab-content
         #request-headers.tab-pane.active{ role: "tabpanel" }
           .panel.panel-default
+            .panel-heading
+              .flexcontainer.flexcontainer-justify-end
+                = link_to 'Edit', edit_resource_route_path(@resource, @route, section: "request_headers"),
+                 class: "btn btn-default"
             .panel-body
               - if @route.request_headers.any?
                 - @route.request_headers.each do |header|
@@ -60,6 +64,10 @@
                   %i= t('.no_header_placeholder')
         #query-parameters.tab-pane{ role: "tabpanel" }
           .panel.panel-default
+            .panel-heading
+              .flexcontainer.flexcontainer-justify-end
+                = link_to 'Edit', edit_resource_route_path(@resource, @route, section: "query_parameters"),
+                 class: "btn btn-default"
             .panel-body
               - if @route.request_query_parameters.any?
                 - @route.request_query_parameters.each do |query_parameter|
@@ -69,14 +77,16 @@
                   %i= t('.no_query_parameter_placeholder')
         #request-body.tab-pane{ role: "tabpanel" }
           .panel.panel-default
-            - unless @route.request_body_schema.blank?
-              .panel-heading
-                .flexcontainer.flexcontainer-justify-end
-                  .btn-group{ role: "group" }
+            .panel-heading
+              .flexcontainer.flexcontainer-justify-end
+                .btn-group{ role: "group" }
+                  - unless @route.request_body_schema.blank?
                     = submit_tag("Validate JSON", class: "btn btn-default validate-json-instance",
-                     json_schema: @route.request_body_schema)
+                      json_schema: @route.request_body_schema)
                     = submit_tag("Generate JSON", class: "btn btn-default generate-json-instance",
-                     json_schema: @route.request_body_schema)
+                      json_schema: @route.request_body_schema)
+                  = link_to 'Edit', edit_resource_route_path(@resource, @route, section: "request_body"),
+                 class: "btn btn-default"
             .panel-body
               - unless @route.request_body_schema.blank?
                 .row

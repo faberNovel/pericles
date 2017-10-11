@@ -10,83 +10,88 @@
       %ul
         - @route.errors.full_messages.each do |msg|
           %li= msg
-  .row
-    .col-xs-6
-      = f.text_field :name
 
-      = f.text_area :description
+  - if params[:section] == "base" || @route.new_record?
+    .row
+      .col-xs-6
+        = f.text_field :name
 
-      = f.select :http_method, Route.http_methods.keys.to_a
+        = f.text_area :description
 
-      = f.text_field :url
+        = f.select :http_method, Route.http_methods.keys.to_a
+
+        = f.text_field :url
 
   %h3 Request
 
   .row
     .col-xs-10
+      - if params[:section] == "base" || @route.new_record?
+        = f.text_area :request_description, label: 'Description'
 
-      = f.text_area :request_description, label: 'Description'
+      - if params[:section] == "query_parameters" || @route.new_record?
+        %h4 Query Parameters
 
-      %h4 Query Parameters
+        %table{class: "table table-striped", id: "table_request_query_parameters"}
+          %thead
+            %tr
+              %th Name
+              %th Description
+              %th Type
+              %th Optional ?
+              %th
+          %tbody
+            = f.fields_for :request_query_parameters, wrapper: false do |query_parameter_fields|
+              %tr.fields
+                %td
+                  = query_parameter_fields.text_field :name, hide_label: true
+                %td
+                  = query_parameter_fields.text_area :description, hide_label: true
+                %td
+                  = query_parameter_fields.select :primitive_type, QueryParameter.primitive_types.keys.to_a, include_blank: true, hide_label: true
+                %td
+                  = query_parameter_fields.check_box :is_optional, hide_label: true
+                %td
+                  = query_parameter_fields.link_to_remove "Remove"
 
-      %table{class: "table table-striped", id: "table_request_query_parameters"}
-        %thead
-          %tr
-            %th Name
-            %th Description
-            %th Type
-            %th Optional ?
-            %th
-        %tbody
-          = f.fields_for :request_query_parameters, wrapper: false do |query_parameter_fields|
-            %tr.fields
-              %td
-                = query_parameter_fields.text_field :name, hide_label: true
-              %td
-                = query_parameter_fields.text_area :description, hide_label: true
-              %td
-                = query_parameter_fields.select :primitive_type, QueryParameter.primitive_types.keys.to_a, include_blank: true, hide_label: true
-              %td
-                = query_parameter_fields.check_box :is_optional, hide_label: true
-              %td
-                = query_parameter_fields.link_to_remove "Remove"
+        = f.link_to_add "Add a Query Parameter", :request_query_parameters, data: { target: "#table_request_query_parameters" }
 
-      = f.link_to_add "Add a Query Parameter", :request_query_parameters, data: { target: "#table_request_query_parameters" }
+      - if params[:section] == "request_headers" || @route.new_record?
+        %h4 Headers
 
-      %h4 Headers
-
-      %table{class: "table table-striped", id: "table_request_headers"}
-        %thead
-          %tr
-            %th Name
-            %th Description
-            %th
-        %tbody
-          = f.fields_for :request_headers, wrapper: false do |header_fields|
-            %tr.fields
-              %td
-                = header_fields.text_field :name, hide_label: true
-              %td
-                = header_fields.text_area :description, hide_label: true
-              %td
-                = header_fields.link_to_remove "Remove"
+        %table{class: "table table-striped", id: "table_request_headers"}
+          %thead
+            %tr
+              %th Name
+              %th Description
+              %th
+          %tbody
+            = f.fields_for :request_headers, wrapper: false do |header_fields|
+              %tr.fields
+                %td
+                  = header_fields.text_field :name, hide_label: true
+                %td
+                  = header_fields.text_area :description, hide_label: true
+                %td
+                  = header_fields.link_to_remove "Remove"
 
 
-      = f.link_to_add "Add a Header", :request_headers, data: { target: "#table_request_headers" }
+        = f.link_to_add "Add a Header", :request_headers, data: { target: "#table_request_headers" }
 
-  .row
-    .col-xs-6
+  - if params[:section] == "request_body" || @route.new_record?
+    .row
+      .col-xs-6
 
-      %h4 Resource Representations
+        %h4 Body
 
-      = f.select :request_resource_representation_id, @resource.resource_representations.pluck(:name, :id), include_blank: true
+        = f.select :request_resource_representation_id, @resource.resource_representations.pluck(:name, :id), include_blank: true
 
-      %h5 JSON Schema
-      = button_tag("Generate Schema from Resource Representation", type: 'button',
-        onclick: "generate_schema_from_resource_representation(this)")
+        %h5 JSON Schema
+        = button_tag("Generate Schema from Resource Representation", type: 'button',
+          onclick: "generate_schema_from_resource_representation(this)")
 
-      = f.check_box :is_collection
-      = f.text_area :request_body_schema, size: "60x20", label: 'Body JSON schema'
+        = f.check_box :is_collection
+        = f.text_area :request_body_schema, size: "60x20", label: 'Body JSON schema'
 
   %h3 Responses
 
