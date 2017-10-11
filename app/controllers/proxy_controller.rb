@@ -5,7 +5,8 @@ class ProxyController < ApplicationController
   def compute_request
     @project = Project.find(params[:project_id])
 
-    proxy_response = MakeRequestToServerService.new(@project.server_url, request).execute
+    @request_service = MakeRequestToServerService.new(@project.server_url, request)
+    proxy_response = @request_service.execute
     report = create_report(proxy_response)
     add_validation_header(report)
 
@@ -46,9 +47,11 @@ class ProxyController < ApplicationController
     report = Report.create!(
       route: route,
       url: path,
-      status_code: proxy_response.status.code,
-      headers: proxy_response.headers.to_h,
-      body: proxy_response.body,
+      response_status_code: proxy_response.status.code,
+      response_headers: proxy_response.headers.to_h,
+      response_body: proxy_response.body,
+      request_body: request.body.read,
+      request_headers: @request_service.headers.to_h
     )
     create_errors(proxy_response, report)
 

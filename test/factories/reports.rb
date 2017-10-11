@@ -6,10 +6,14 @@ FactoryGirl.define do
 
   factory :report do
     url { generate(:url_sequence) }
-    status_code 200
-    body '{"user": {"id": 1}}'
-    headers {{
+    response_status_code 200
+    response_body '{"user": {"id": 1}}'
+    response_headers {{
       'Content-Length' => 19
+    }}
+    request_body '{}'
+    request_headers {{
+      'Accept-Encoding' => 'gzip'
     }}
     route
   end

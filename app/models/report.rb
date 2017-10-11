@@ -5,7 +5,7 @@ class Report < ApplicationRecord
 
   default_scope { includes(:validation_errors) }
 
-  validates :status_code, :body, :headers, presence: true
+  validates :response_status_code, :response_headers, :request_headers, presence: true
 
   def correct?
     self.validation_errors.empty?

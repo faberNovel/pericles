@@ -121,13 +121,16 @@ ActiveRecord::Schema.define(version: 20171009090238) do
   end
 
   create_table "reports", force: :cascade do |t|
-    t.integer  "status_code"
-    t.string   "body"
+    t.integer  "response_status_code"
+    t.string   "response_body"
+    t.json     "response_headers"
+    t.string   "request_body"
+    t.json     "request_headers"
+    t.string   "request_method"
     t.string   "url"
-    t.json     "headers"
     t.integer  "route_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
     t.index ["route_id"], name: "index_reports_on_route_id", using: :btree
   end
 

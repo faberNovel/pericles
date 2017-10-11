@@ -2,10 +2,40 @@
 
 = render partial: 'routes/route_summary', locals: { route: @report.route, real_url: @report.url }
 
+%h4 Request
+/ Response Nav tabs
+%ul.nav.nav-tabs{ role: "tablist" }
+  %li.active{ role: "presentation" }
+    %a{ "aria-controls" => "request body", "data-toggle" => "tab", href: "#req-body",
+      role: "tab" }
+      = "Body"
+  %li{ role: "presentation" }
+    %a{ "aria-controls" => "request headers", "data-toggle" => "tab", href: "#req-headers",
+      role: "tab" }
+      = "Headers"
+
+/ Response Tab panes
+.tab-content
+  .tab-pane.active{ role: "tabpanel", id: "req-body" }
+    .panel.panel-default
+      .panel-body
+        %pre.pre-scrollable
+          %code
+            =format_json(@report.request_body)
+  .tab-pane{ role: "tabpanel", id: "req-headers" }
+    .panel.panel-default
+      .panel-body
+        %table{class: "table table-striped"}
+          %tbody
+          - @report.request_headers.each_pair do |key, value|
+            %tr
+              %td= key
+              %td= value
+
 %h4 Response
 
 .status-code
-  %span.label.http-method-label{'class': @report.valid_status? ? 'label-success' : 'label-danger'}= @report.status_code
+  %span.label.http-method-label{'class': @report.valid_status? ? 'label-success' : 'label-danger'}= @report.response_status_code
 
 %div
   / Response Nav tabs
@@ -26,7 +56,7 @@
         .panel-body
           %pre.pre-scrollable
             %code
-              =format_json(@report.body)
+              =format_json(@report.response_body)
           .body-errors
             %ul
               - @report.body_errors.each do |e|
@@ -36,7 +66,7 @@
         .panel-body
           %table{class: "table table-striped"}
             %tbody
-            - @report.headers.each_pair do |key, value|
+            - @report.response_headers.each_pair do |key, value|
               %tr
                 %td= key
                 %td= value

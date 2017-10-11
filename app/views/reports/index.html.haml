@@ -4,6 +4,7 @@
   %table{class: "table table-striped"}
     %thead
       %tr
+        %th Method
         %th Url
         %th Status
         %th Date
@@ -12,8 +13,9 @@
     %tbody
       - @reports.each do |report|
         %tr{:class => (report.correct? ? 'valid' : 'invalid' )}
+          %td= report.route.http_method
           %td= report.url
-          %td= report.status_code
+          %td= report.response_status_code
           %td= report.created_at
           %td= report.correct? ? '☑' : '☐'
           %td= link_to 'Detail', project_report_path(@project, report)
