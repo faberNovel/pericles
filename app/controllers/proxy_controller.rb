@@ -6,8 +6,7 @@ class ProxyController < ApplicationController
     @project = Project.find(params[:project_id])
 
     proxy_response = MakeRequestToServerService.new(@project.server_url, request).execute
-    is_valid = validate(proxy_response)
-    report = create_report(proxy_response, is_valid)
+    report = create_report(proxy_response)
     add_validation_header(report)
 
     set_headers(proxy_response.headers.to_h)
@@ -21,16 +20,6 @@ class ProxyController < ApplicationController
       response.set_header(key, value) unless FORBIDDEN_HEADERS.include? key
     end
     response.set_header('Access-Control-Allow-Origin', '*')
-  end
-
-  def validate(proxy_response)
-    return unless route
-
-    route.responses.any? do |response|
-      validate_response_status(response, proxy_response) &&
-      validate_response_headers(response, proxy_response) &&
-      validate_response_body(response, proxy_response)
-    end
   end
 
   def route
@@ -51,31 +40,56 @@ class ProxyController < ApplicationController
     Route.find_by_id(main_route[:name])
   end
 
-  def validate_response_headers(response, proxy_response)
-    response.headers.all? { |h| proxy_response.headers.to_h.key? h.name }
-  end
-
-  def validate_response_status(response, proxy_response)
-    response.status_code == proxy_response.status.code
-  end
-
-  def validate_response_body(response, proxy_response)
-    JSON::Validator.fully_validate(response.body_schema, proxy_response.body, json: true).empty?
-  end
-
-  def create_report(proxy_response, is_valid)
+  def create_report(proxy_response)
     return unless route
-    Report.create!(
+
+    report = Report.create!(
       route: route,
       url: path,
       status_code: proxy_response.status.code,
       headers: proxy_response.headers.to_h,
       body: proxy_response.body,
-      is_valid: is_valid
     )
+    create_errors(proxy_response, report)
+
+    report
   end
 
   def add_validation_header(report)
-    response.set_header('X-Pericles-Report', report.id) unless report.nil? || report.is_valid
+    response.set_header('X-Pericles-Report', report.id) if report&.errors?
+  end
+
+  def create_errors(proxy_response, report)
+    return if report.nil?
+
+    response = find_response_with_lowest_errors(proxy_response)
+    save_errors_from_response(proxy_response, response, report)
+  end
+
+  def find_response_with_lowest_errors(proxy_response)
+    find_response_with_no_errors(proxy_response) ||
+    find_response_with_no_status_errors(proxy_response) ||
+    route.responses.first
+  end
+
+  def find_response_with_no_errors(proxy_response)
+    route.responses.detect do |r|
+      r.errors_from_http_response(proxy_response).empty?
+    end
+  end
+
+  def find_response_with_no_status_errors(proxy_response)
+    route.responses.detect do |r|
+      r.errors_for_status(proxy_response).empty?
+    end
+  end
+
+  def save_errors_from_response(proxy_response, response, report)
+    return if response.nil?
+
+    response.errors_from_http_response(proxy_response).each do |e|
+      e.report = report
+      e.save
+    end
   end
 end

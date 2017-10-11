@@ -21,6 +21,6 @@
         %td= key
         %td= value
 
-- unless @report.is_valid
+- if @report.errors?
   %h2 Errors
   /TODO Clément Villain 10/10/17

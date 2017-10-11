@@ -97,7 +97,7 @@ class ProxyControllerTest < ActionDispatch::IntegrationTest
   test "save report with error" do
     project = create(:full_project)
 
-    assert_difference 'Report.where(is_valid: false).count' do
+    assert_difference 'Report.all.select(&:errors?).count' do
       VCR.use_cassette('wrong_body_full_project') do
         get "/projects/#{project.id}/proxy/users/1"
       end
@@ -107,7 +107,7 @@ class ProxyControllerTest < ActionDispatch::IntegrationTest
   test "save report with no error" do
     project = create(:full_project)
 
-    assert_difference 'Report.where(is_valid: true).count' do
+    assert_difference 'Report.all.select(&:correct?).count' do
       VCR.use_cassette('correct_full_project') do
         get "/projects/#{project.id}/proxy/users/1"
       end

@@ -121,7 +121,6 @@ ActiveRecord::Schema.define(version: 20171009090238) do
   end
 
   create_table "reports", force: :cascade do |t|
-    t.boolean  "is_valid"
     t.integer  "status_code"
     t.string   "body"
     t.string   "url"
@@ -203,6 +202,15 @@ ActiveRecord::Schema.define(version: 20171009090238) do
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
   end
 
+  create_table "validation_errors", force: :cascade do |t|
+    t.integer  "category"
+    t.string   "description"
+    t.integer  "report_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["report_id"], name: "index_validation_errors_on_report_id", using: :btree
+  end
+
   create_table "validations", force: :cascade do |t|
     t.text     "json_schema"
     t.text     "json_instance"
@@ -227,4 +235,5 @@ ActiveRecord::Schema.define(version: 20171009090238) do
   add_foreign_key "responses", "routes"
   add_foreign_key "routes", "resource_representations", column: "request_resource_representation_id"
   add_foreign_key "routes", "resources"
+  add_foreign_key "validation_errors", "reports"
 end
