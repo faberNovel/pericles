@@ -24,6 +24,6 @@ class ProxyController < ApplicationController
   end
 
   def add_validation_header(report)
-    response.set_header('X-Pericles-Report', report.id) if report&.errors?
+    response.set_header('X-Pericles-Report', report.id.to_s) if report&.errors?
   end
 end
