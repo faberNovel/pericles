@@ -1,6 +1,19 @@
 require 'test_helper'
 
 class ResponsesControllerTest < ControllerWithAuthenticationTest
+  test "should get new" do
+    route = create(:route)
+    get new_route_response_path(route)
+    assert_response :success
+  end
+
+  test "should not get new (not authenticated)" do
+    sign_out :user
+    route = create(:route)
+    get new_route_response_path(route)
+    assert_redirected_to new_user_session_path
+  end
+
   test "should get edit" do
     response = create(:response)
     get edit_route_response_path(response.route, response)

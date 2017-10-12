@@ -1,6 +1,11 @@
 class ResponsesController < AuthenticatedController
   layout 'generic'
-  before_action :setup_route_resource_project_and_response
+  before_action :setup_route_resource_and_project, only: [:new]
+  before_action :setup_route_resource_project_and_response, except: [:new]
+
+  def new
+    @response = @route.responses.build
+  end
 
   def edit
   end

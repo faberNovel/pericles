@@ -11,7 +11,7 @@ Rails.application.routes.draw do
     resources :routes, except: [:index]
   end
   resources :routes, only: [] do
-    resources :responses, only: [:edit, :update]
+    resources :responses, except: [:index, :show, :destroy]
   end
   resources :validations, only: [:create, :new, :index]
   resources :instances, only: [:create]

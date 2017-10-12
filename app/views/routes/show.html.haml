@@ -109,6 +109,9 @@
   .col-xs-12
     %h2 Responses
 
+    .flexcontainer.flexcontainer-justify-end
+      = link_to 'New Response', new_route_response_path(@route), class: "btn btn-default"
+
     %div
       / Nav tabs with status codes for all responses
       %ul.nav.nav-pills{ role: "tablist" }
