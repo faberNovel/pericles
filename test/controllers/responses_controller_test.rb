@@ -27,6 +27,38 @@ class ResponsesControllerTest < ControllerWithAuthenticationTest
     assert_redirected_to new_user_session_path
   end
 
+  test "should create response" do
+    response = build(:response)
+    route = response.route
+    resource = route.resource
+    assert_difference('Response.count') do
+      post route_responses_path(route), params: { response: response.attributes }
+    end
+    response = assigns(:response)
+    assert_not_nil response, "should create response"
+    assert_redirected_to resource_route_path(resource, route)
+  end
+
+  test "should not create response without a status code" do
+    response = build(:response)
+    route = response.route
+    response.status_code = nil
+    assert_no_difference('Response.count') do
+      post route_responses_path(route), params: { response: response.attributes }
+    end
+    assert_response :unprocessable_entity
+  end
+
+  test "should not create response (not authenticated)" do
+    sign_out :user
+    response = build(:response)
+    route = response.route
+    assert_no_difference('Response.count') do
+      post route_responses_path(route), params: { response: response.attributes }
+    end
+    assert_redirected_to new_user_session_path
+  end
+
   test "should update response" do
     response = create(:response)
     route = response.route

@@ -1,13 +1,22 @@
 class ResponsesController < AuthenticatedController
   layout 'generic'
-  before_action :setup_route_resource_and_project, only: [:new]
-  before_action :setup_route_resource_project_and_response, except: [:new]
+  before_action :setup_route_resource_and_project, only: [:new, :create]
+  before_action :setup_route_resource_project_and_response, except: [:new, :create]
 
   def new
     @response = @route.responses.build
   end
 
   def edit
+  end
+
+  def create
+    @response = @route.responses.build(response_params)
+    if @response.save
+      redirect_to resource_route_path(@resource, @route)
+    else
+      render 'new', status: :unprocessable_entity
+    end
   end
 
   def update
