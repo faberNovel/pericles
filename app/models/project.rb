@@ -10,7 +10,7 @@ class Project < ApplicationRecord
     route_set = ActionDispatch::Routing::RouteSet.new
     route_set.draw do
       routes.map do |route|
-        match route.url, to: '', via: [route.http_method], controller: 'mocks', action: '', name: route.id
+        match route.url, to: '', via: [route.http_method.downcase.to_sym], controller: 'mocks', action: '', name: route.id
       end
     end
     route_set
