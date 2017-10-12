@@ -5,6 +5,14 @@ class ResponsesController < AuthenticatedController
   def edit
   end
 
+  def update
+    if @response.update(response_params)
+      redirect_to resource_route_path(@resource, @route)
+    else
+      render 'edit', status: :unprocessable_entity
+    end
+  end
+
   private
 
   def setup_route_resource_and_project
