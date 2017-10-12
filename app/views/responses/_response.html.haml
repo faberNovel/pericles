@@ -1,3 +1,6 @@
+.flexcontainer.flexcontainer-justify-end
+  = link_to 'Edit', edit_route_response_path(@route, response), class: "btn btn-default"
+
 .row.margin-top-element
   - unless response.description.blank?
     .col-xs-6

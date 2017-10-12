@@ -10,6 +10,9 @@ Rails.application.routes.draw do
     resources :resource_representations, except: [:index]
     resources :routes, except: [:index]
   end
+  resources :routes, only: [] do
+    resources :responses, only: [:edit, :update]
+  end
   resources :validations, only: [:create, :new, :index]
   resources :instances, only: [:create]
   resources :headers, only: [:index]

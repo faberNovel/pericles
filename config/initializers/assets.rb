@@ -12,5 +12,6 @@ Rails.application.config.assets.version = '1.0'
 Rails.application.config.assets.precompile += %w( validate_instance.js )
 Rails.application.config.assets.precompile += %w( generate_instance.js )
 Rails.application.config.assets.precompile += %w( routes/show.js )
-Rails.application.config.assets.precompile += %w( routes/edit.js )
 Rails.application.config.assets.precompile += %w( validations/new.js )
+Rails.application.config.assets.precompile += %w( header_autocomplete.js )
+Rails.application.config.assets.precompile += %w( generate_schema.js )
