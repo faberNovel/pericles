@@ -9,6 +9,8 @@ class CreateReport < ActiveRecord::Migration[5.0]
       t.string :request_method
       t.string :url
       t.references :route, foreign_key: true
+      t.references :response, foreign_key: true
+      t.references :project, foreign_key: true
 
       t.timestamps null: false
     end

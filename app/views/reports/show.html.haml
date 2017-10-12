@@ -1,6 +1,9 @@
 %h1 Report
 
-= render partial: 'routes/route_summary', locals: { route: @report.route, real_url: @report.url }
+- if @report.route.blank?
+  You forgot to register this route :O
+- else
+  = render partial: 'routes/route_summary', locals: { route: @report.route, real_url: @report.url }
 
 %h4 Request
 / Response Nav tabs
@@ -33,6 +36,9 @@
               %td= value
 
 %h4 Response
+
+- if @report.response.blank?
+  We could not find any response for this route :O
 
 .status-code
   %span.label.http-method-label{'class': @report.valid_status? ? 'label-success' : 'label-danger'}= @report.response_status_code

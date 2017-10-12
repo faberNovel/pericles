@@ -1,5 +1,7 @@
 class Report < ApplicationRecord
-  belongs_to :route
+  belongs_to :project
+  belongs_to :route, optional: true
+  belongs_to :response, optional: true
 
   has_many :validation_errors
 

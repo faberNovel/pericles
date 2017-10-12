@@ -129,8 +129,12 @@ ActiveRecord::Schema.define(version: 20171009090238) do
     t.string   "request_method"
     t.string   "url"
     t.integer  "route_id"
+    t.integer  "response_id"
+    t.integer  "project_id"
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false
+    t.index ["project_id"], name: "index_reports_on_project_id", using: :btree
+    t.index ["response_id"], name: "index_reports_on_response_id", using: :btree
     t.index ["route_id"], name: "index_reports_on_route_id", using: :btree
   end
 
@@ -231,6 +235,8 @@ ActiveRecord::Schema.define(version: 20171009090238) do
   add_foreign_key "attributes_resource_representations", "resource_representations", column: "parent_resource_representation_id"
   add_foreign_key "json_errors", "validations"
   add_foreign_key "query_parameters", "routes"
+  add_foreign_key "reports", "projects"
+  add_foreign_key "reports", "responses"
   add_foreign_key "reports", "routes"
   add_foreign_key "resource_representations", "resources"
   add_foreign_key "resources", "projects"

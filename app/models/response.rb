@@ -3,6 +3,7 @@ class Response < ApplicationRecord
   belongs_to :resource_representation, inverse_of: :responses
 
   has_many :headers, inverse_of: :http_message, as: :http_message, dependent: :destroy
+  has_many :reports
 
   accepts_nested_attributes_for :headers, allow_destroy: true, reject_if: :all_blank
 

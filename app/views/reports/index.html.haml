@@ -12,8 +12,8 @@
         %th
     %tbody
       - @reports.each do |report|
-        %tr{:class => (report.correct? ? 'valid' : 'invalid' )}
-          %td= report.route.http_method
+        %tr{:class => (report.route.blank? || report.response.blank?) ? 'missing' : (report.correct? ? 'valid' : 'invalid' )}
+          %td= report.request_method
           %td= report.url
           %td= report.response_status_code
           %td= report.created_at

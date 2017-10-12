@@ -16,5 +16,7 @@ FactoryGirl.define do
       'Accept-Encoding' => 'gzip'
     }}
     route
+    project
+    response
   end
 end

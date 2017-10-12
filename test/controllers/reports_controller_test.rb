@@ -3,7 +3,7 @@ require 'test_helper'
 class ReportsControllerTest < ActionDispatch::IntegrationTest
   setup do
     @project = create(:full_project)
-    @report = create(:report, route: @project.routes.first)
+    @report = create(:report, route: @project.routes.first, project: @project)
   end
 
   test "should get index" do

@@ -6,16 +6,16 @@ class ReportBuilder
   end
 
   def build
-    return unless route
-
     report = Report.create(
+      project: @project,
       route: route,
       url: path,
       response_status_code: @http_response.status.code,
       response_headers: @http_response.headers.to_h,
       response_body: @http_response.body,
       request_body: @request.body.read,
-      request_headers: request_headers
+      request_headers: request_headers,
+      request_method: @request.method.upcase
     )
     create_errors(report)
 
@@ -49,9 +49,11 @@ class ReportBuilder
   end
 
   def create_errors(report)
-    return if report.nil?
+    return if report.nil? || route.nil?
 
     response = find_response_with_lowest_errors
+    report.update(response: response)
+
     save_errors_from_response(response, report)
   end
 
