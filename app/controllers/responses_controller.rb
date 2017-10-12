@@ -27,6 +27,12 @@ class ResponsesController < AuthenticatedController
     end
   end
 
+  def destroy
+    @response.destroy
+
+    redirect_to resource_route_path(@resource, @route)
+  end
+
   private
 
   def setup_route_resource_and_project

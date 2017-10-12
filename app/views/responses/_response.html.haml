@@ -1,5 +1,8 @@
 .flexcontainer.flexcontainer-justify-end
-  = link_to 'Edit', edit_route_response_path(@route, response), class: "btn btn-default"
+  .btn-group{ role: "group" }
+    = link_to 'Edit', edit_route_response_path(@route, response), class: "btn btn-default"
+    = link_to "Delete", route_response_path(@route, response), method: :delete, data: { confirm: 'Are you sure ?' },
+      class: "btn btn-default"
 
 .row.margin-top-element
   - unless response.description.blank?

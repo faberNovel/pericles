@@ -89,4 +89,24 @@ class ResponsesControllerTest < ControllerWithAuthenticationTest
     response.reload
     assert_equal original_status_code, response.status_code
   end
+
+  test "should delete response" do
+    response = create(:response)
+    route = response.route
+    resource = route.resource
+    assert_difference('Response.count', -1) do
+      delete route_response_path(route, response)
+    end
+    assert_redirected_to resource_route_path(resource, route)
+  end
+
+  test "should not delete response (not authenticated)" do
+    sign_out :user
+    response = create(:response)
+    route = response.route
+    assert_no_difference('Response.count') do
+      delete route_response_path(route, response)
+    end
+    assert_redirected_to new_user_session_path
+  end
 end
