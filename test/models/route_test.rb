@@ -39,12 +39,6 @@ class RouteTest < ActiveSupport::TestCase
     assert build(:route, name: "New route", description: "New test route", http_method: :POST, url: "/tests", request_body_schema: "").valid?
   end
 
-  test 'Route is collection' do
-    resource = create(:resource, name: 'Movie')
-    route = create(:route, resource: resource, url: '/movies', http_method: :GET)
-    assert route.is_restful_collection?, 'route should be a restful collection'
-  end
-
   test "routes of project" do
     route = create(:route)
     create(:route, resource: route.resource)

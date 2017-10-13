@@ -24,10 +24,6 @@ class Route < ApplicationRecord
   audited
   has_associated_audits
 
-  def is_restful_collection?
-    #TODO: Emilie Paillous (25/04/2017) : should be directly in the database model route
-    return self.GET? && url.ends_with?(resource.name.downcase.pluralize)
-  end
 
   def request_json_instance
     schema = JSON.parse(request_body_schema)
