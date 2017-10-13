@@ -63,7 +63,7 @@ class RoutesController < AuthenticatedController
   end
 
   def route_params
-    params.require(:route).permit(:name, :description, :http_method, :url, :request_body_schema,
+    params.require(:route).permit(:name, :description, :http_method, :url,
      :request_resource_representation_id, :is_collection, :request_description,
       request_query_parameters_attributes: [:id, :name, :description, :primitive_type, :is_optional, :_destroy],
       request_headers_attributes: [:id, :name, :description, :_destroy])

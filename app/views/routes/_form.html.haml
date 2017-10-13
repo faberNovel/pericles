@@ -92,7 +92,7 @@
           onclick: "generate_schema_from_resource_representation(this)")
 
         = f.check_box :is_collection
-        = f.text_area :request_body_schema, size: "60x20", label: 'Body JSON schema'
+        = f.text_area :request_json_schema, size: "60x20", label: 'Body JSON schema', readonly: true
 
   %p
     = f.submit

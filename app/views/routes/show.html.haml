@@ -47,15 +47,15 @@
             .panel-heading
               .flexcontainer.flexcontainer-justify-end
                 .btn-group{ role: "group" }
-                  - unless @route.request_body_schema.blank?
+                  - unless @route.request_json_schema.blank?
                     = submit_tag("Validate JSON", class: "btn btn-default validate-json-instance",
-                      json_schema: @route.request_body_schema)
+                      json_schema: @route.request_json_schema)
                     = submit_tag("Generate JSON", class: "btn btn-default generate-json-instance",
-                      json_schema: @route.request_body_schema)
+                      json_schema: @route.request_json_schema)
                   = link_to 'Edit', edit_resource_route_path(@resource, @route, section: "request_body"),
                  class: "btn btn-default"
             .panel-body
-              - unless @route.request_body_schema.blank?
+              - unless @route.request_json_schema.blank?
                 .row
                   .col-xs-6
                     / TODO Clément Villain 30/10/17:
@@ -63,7 +63,7 @@
                     %h4= "JSON Schema #{schema_summary('', @route.request_resource_representation&.name, @route.is_collection)}"
                     %pre.pre-scrollable
                       %code
-                        =format_json(@route.request_body_schema)
+                        =format_json(@route.request_json_schema)
 
                   .col-xs-6
                     %h4 JSON Instance

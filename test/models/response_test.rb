@@ -5,14 +5,6 @@ class ResponseTest < ActiveSupport::TestCase
     assert_not build(:response, status_code: nil).valid?
   end
 
-  test "body_schema_backup must be a valid JSON text" do
-    assert_not build(:response, body_schema_backup: "{ invalid }").valid?
-  end
-
-  test "body_schema_backup must conform to the JSON Schema spec" do
-    assert_not build(:response, body_schema_backup: '{ "type": "invalid" }').valid?
-  end
-
   test "shouldn't exist without a route" do
     assert_not build(:response, route: nil).valid?
   end

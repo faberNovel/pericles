@@ -174,7 +174,7 @@ ActiveRecord::Schema.define(version: 20171030102800) do
     t.integer  "resource_id"
     t.datetime "created_at",                                         null: false
     t.datetime "updated_at",                                         null: false
-    t.json     "request_body_schema"
+    t.json     "request_body_schema_backup"
     t.integer  "request_resource_representation_id"
     t.boolean  "is_collection",                      default: false, null: false
     t.text     "request_description"
