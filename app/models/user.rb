@@ -5,7 +5,7 @@ class User < ApplicationRecord
 
   def self.from_omniauth(access_token)
     data = access_token.info
-    return unless /.+@applidium\.com/ =~ data['email']
+    return unless /.+@fabernovel\.com/ =~ data['email']
 
     User.find_or_create_by(email: data['email']) do |user|
       user.first_name = data['first_name']
