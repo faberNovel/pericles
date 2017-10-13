@@ -1,14 +1,23 @@
 .invalid {
-  color: red;
+  background-color: rgba(217, 83, 79, .3) !important;
+}
+
+.valid {
+  background-color: rgba(92, 184, 92, .3) !important;
 }
 
 .missing {
-  color: #ffc107;
+  background-color: rgba(240, 173, 78, .3) !important;
 }
 
 
 .status-code {
   margin: 16px 0 16px 0;
+}
+
+.request-method {
+  margin: 16px 0 16px 0;
+  width: 120px;
 }
 
 .header-error {
@@ -25,4 +34,8 @@
 .pagination {
   width: 100%;
   text-align: center;
+}
+
+#reports td {
+  vertical-align: middle;
 }

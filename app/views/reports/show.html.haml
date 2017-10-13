@@ -6,6 +6,10 @@
   = render partial: 'routes/route_summary', locals: { route: @report.route, real_url: @report.url }
 
 %h4 Request
+
+.request-method
+  %span{ class: label_class_for_http_method(@report.request_method) }= @report.request_method
+
 / Response Nav tabs
 %ul.nav.nav-tabs{ role: "tablist" }
   %li.active{ role: "presentation" }
