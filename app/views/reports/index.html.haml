@@ -1,0 +1,25 @@
+%h1 Reports
+
+- if @reports.any?
+  %table#reports{class: "table table-striped"}
+    %thead
+      %tr
+        %th Method
+        %th Url
+        %th Status
+        %th Date
+        %th
+        %th
+    %tbody
+      - @reports.each do |report|
+        %tr{:class => (report.route.blank? || report.response.blank?) ? 'missing' : (report.correct? ? 'valid' : 'invalid' )}
+          %td
+            .request-method
+              %span{ class: label_class_for_http_method(report.request_method) }= report.request_method
+          %td= report.url
+          %td= report.response_status_code
+          %td= time_ago_in_words(report.created_at) + ' ago'
+          %td= report.response.blank? ? '?' : (report.correct? ? '☑' : '☐')
+          %td= link_to 'Detail', project_report_path(@project, report)
+
+  = paginate @reports

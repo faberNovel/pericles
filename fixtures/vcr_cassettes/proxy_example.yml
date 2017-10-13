@@ -1,0 +1,82 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://example.com/index.html
+    body:
+      encoding: ASCII-8BIT
+      string: ''
+    headers:
+      Request-Method:
+      - GET
+      Server-Name:
+      - www.example.com
+      Server-Port:
+      - '80'
+      Path-Info:
+      - "/projects/690/proxy/index.html"
+      Https:
+      - 'off'
+      Content-Length:
+      - '0'
+      Remote-Addr:
+      - 127.0.0.1
+      Accept:
+      - text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5
+      Connection:
+      - close
+      Host:
+      - example.com
+      User-Agent:
+      - http.rb/2.2.2
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - max-age=604800
+      Content-Type:
+      - text/html
+      Date:
+      - Fri, 29 Sep 2017 16:25:57 GMT
+      Etag:
+      - '"359670651+gzip+ident"'
+      Expires:
+      - Fri, 06 Oct 2017 16:25:57 GMT
+      Last-Modified:
+      - Fri, 09 Aug 2013 23:54:35 GMT
+      Server:
+      - ECS (lga/1384)
+      Vary:
+      - Accept-Encoding
+      X-Cache:
+      - HIT
+      Content-Length:
+      - '1270'
+      Connection:
+      - close
+      Transfer-Encoding:
+      - 'chunked'
+    body:
+      encoding: ASCII-8BIT
+      string: "<!doctype html>\n<html>\n<head>\n    <title>Example Domain</title>\n\n
+        \   <meta charset=\"utf-8\" />\n    <meta http-equiv=\"Content-type\" content=\"text/html;
+        charset=utf-8\" />\n    <meta name=\"viewport\" content=\"width=device-width,
+        initial-scale=1\" />\n    <style type=\"text/css\">\n    body {\n        background-color:
+        #f0f0f2;\n        margin: 0;\n        padding: 0;\n        font-family: \"Open
+        Sans\", \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n        \n    }\n
+        \   div {\n        width: 600px;\n        margin: 5em auto;\n        padding:
+        50px;\n        background-color: #fff;\n        border-radius: 1em;\n    }\n
+        \   a:link, a:visited {\n        color: #38488f;\n        text-decoration:
+        none;\n    }\n    @media (max-width: 700px) {\n        body {\n            background-color:
+        #fff;\n        }\n        div {\n            width: auto;\n            margin:
+        0 auto;\n            border-radius: 0;\n            padding: 1em;\n        }\n
+        \   }\n    </style>    \n</head>\n\n<body>\n<div>\n    <h1>Example Domain</h1>\n
+        \   <p>This domain is established to be used for illustrative examples in
+        documents. You may use this\n    domain in examples without prior coordination
+        or asking for permission.</p>\n    <p><a href=\"http://www.iana.org/domains/example\">More
+        information...</a></p>\n</div>\n</body>\n</html>\n"
+    http_version:
+  recorded_at: Fri, 29 Sep 2017 16:25:57 GMT
+recorded_with: VCR 3.0.3

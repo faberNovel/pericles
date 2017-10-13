@@ -2,11 +2,14 @@
   .panel-body
     .row
       .col-xs-2.http-method-column
-        %span{ class: get_http_method_label_class(route) }= route.http_method
+        %span{ class: label_class_for_http_method(route.http_method) }= route.http_method
       .col-xs-3
         %dl
           %dt URL
           %dd= route.url
+          -if url = local_assigns[:real_url]
+            %dd
+              %strong= url
       .col-xs-3
         %dl
           %dt Description

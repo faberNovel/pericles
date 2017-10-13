@@ -106,6 +106,7 @@ ActiveRecord::Schema.define(version: 20171009090238) do
     t.text     "description"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.string   "server_url"
   end
 
   create_table "query_parameters", force: :cascade do |t|
@@ -117,6 +118,24 @@ ActiveRecord::Schema.define(version: 20171009090238) do
     t.datetime "created_at",                    null: false
     t.datetime "updated_at",                    null: false
     t.index ["route_id"], name: "index_query_parameters_on_route_id", using: :btree
+  end
+
+  create_table "reports", force: :cascade do |t|
+    t.integer  "response_status_code"
+    t.string   "response_body"
+    t.json     "response_headers"
+    t.string   "request_body"
+    t.json     "request_headers"
+    t.string   "request_method"
+    t.string   "url"
+    t.integer  "route_id"
+    t.integer  "response_id"
+    t.integer  "project_id"
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+    t.index ["project_id"], name: "index_reports_on_project_id", using: :btree
+    t.index ["response_id"], name: "index_reports_on_response_id", using: :btree
+    t.index ["route_id"], name: "index_reports_on_route_id", using: :btree
   end
 
   create_table "resource_representations", force: :cascade do |t|
@@ -190,6 +209,15 @@ ActiveRecord::Schema.define(version: 20171009090238) do
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
   end
 
+  create_table "validation_errors", force: :cascade do |t|
+    t.integer  "category"
+    t.string   "description"
+    t.integer  "report_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["report_id"], name: "index_validation_errors_on_report_id", using: :btree
+  end
+
   create_table "validations", force: :cascade do |t|
     t.text     "json_schema"
     t.text     "json_instance"
@@ -207,10 +235,14 @@ ActiveRecord::Schema.define(version: 20171009090238) do
   add_foreign_key "attributes_resource_representations", "resource_representations", column: "parent_resource_representation_id"
   add_foreign_key "json_errors", "validations"
   add_foreign_key "query_parameters", "routes"
+  add_foreign_key "reports", "projects"
+  add_foreign_key "reports", "responses"
+  add_foreign_key "reports", "routes"
   add_foreign_key "resource_representations", "resources"
   add_foreign_key "resources", "projects"
   add_foreign_key "responses", "resource_representations"
   add_foreign_key "responses", "routes"
   add_foreign_key "routes", "resource_representations", column: "request_resource_representation_id"
   add_foreign_key "routes", "resources"
+  add_foreign_key "validation_errors", "reports"
 end

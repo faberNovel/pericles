@@ -14,6 +14,8 @@ gem  'execjs'
 gem 'devise', '~> 4.3'
 gem 'omniauth-google-oauth2', '~> 0.5.2'
 gem "audited", "~> 4.5"
+gem 'http'
+gem 'kaminari'
 
 # Recommended for admin interface
 # gem 'activeadmin', github: 'activeadmin' # There is no Rails 4 version just yet
@@ -42,6 +44,8 @@ group :test do
   gem 'minitest-reporters'
   gem 'factory_girl_rails'
   gem 'simplecov', :require => false
+  gem 'vcr'
+  gem 'webmock'
 end
 
 group :development do

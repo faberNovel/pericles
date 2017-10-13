@@ -5,6 +5,7 @@ class Route < ApplicationRecord
   has_many :request_query_parameters, inverse_of: :route, class_name: 'QueryParameter', dependent: :destroy
   has_many :responses, inverse_of: :route, dependent: :destroy
   has_many :resource_representations, through: :responses
+  has_many :reports
 
   belongs_to :resource, inverse_of: :routes
   belongs_to :request_resource_representation, class_name: "ResourceRepresentation"
