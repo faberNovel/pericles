@@ -31,8 +31,8 @@ class Route < ApplicationRecord
   def request_json_schema
     ResourceRepresentationSchemaSerializer.new(
       request_resource_representation,
-      is_collection: false, # TODO Clément Villain 13/10/17: TBD
-      root_key: '' # TODO Clément Villain 13/10/17: TBD
+      is_collection: request_is_collection,
+      root_key: request_root_key
     ).as_json if request_resource_representation
   end
 end

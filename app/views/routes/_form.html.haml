@@ -91,7 +91,7 @@
         = button_tag("Generate Schema from Resource Representation", type: 'button', resource_id: "#{@resource.id}",
           onclick: "generate_schema_from_resource_representation(this)")
 
-        = f.check_box :is_collection
+        = f.check_box :request_is_collection
         = f.text_area :request_json_schema, size: "60x20", label: 'Body JSON schema', readonly: true
 
   %p

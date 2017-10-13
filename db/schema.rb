@@ -176,8 +176,9 @@ ActiveRecord::Schema.define(version: 20171030102800) do
     t.datetime "updated_at",                                         null: false
     t.json     "request_body_schema_backup"
     t.integer  "request_resource_representation_id"
-    t.boolean  "is_collection",                      default: false, null: false
+    t.boolean  "request_is_collection",              default: false, null: false
     t.text     "request_description"
+    t.string   "request_root_key"
     t.index ["request_resource_representation_id"], name: "index_routes_on_request_resource_representation_id", using: :btree
     t.index ["resource_id"], name: "index_routes_on_resource_id", using: :btree
   end

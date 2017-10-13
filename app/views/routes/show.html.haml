@@ -58,9 +58,7 @@
               - unless @route.request_json_schema.blank?
                 .row
                   .col-xs-6
-                    / TODO Clément Villain 30/10/17:
-                    / Add root key
-                    %h4= "JSON Schema #{schema_summary('', @route.request_resource_representation&.name, @route.is_collection)}"
+                    %h4= "JSON Schema #{schema_summary(@route.request_root_key, @route.request_resource_representation&.name, @route.request_is_collection)}"
                     %pre.pre-scrollable
                       %code
                         =format_json(@route.request_json_schema)
