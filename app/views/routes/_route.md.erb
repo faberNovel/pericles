@@ -1,0 +1,33 @@
+## <%= route.name %>
+
+<%= route.description %>
+
+> Request Body JSON Schema
+
+```json
+<%= raw format_json(route.request_body_schema) %>
+```
+
+### Request
+
+`<%= "#{route.http_method} #{route.url}" %>`
+
+**Headers**
+
+Name | Description
+---- | -----------
+<%= render route.request_headers %>
+
+**Query Parameters**
+
+Name | Description | Type | Optional ?
+---- | ----------- | ---- | ----------
+<%= render route.request_query_parameters %>
+
+### Responses
+
+<% route.responses.each do |response| %>
+<%= render partial: "responses/response_body_schema", locals: {response: response} %>
+<% end %>
+
+<%= render route.responses %>

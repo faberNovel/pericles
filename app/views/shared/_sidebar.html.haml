@@ -1,0 +1,12 @@
+#sidebar-wrapper
+  %ul.sidebar-nav
+    %li.sidebar-brand
+      %h3= @project.title
+    %li
+      = link_to 'Project Description', project_path(@project)
+    %li
+      = link_to 'Resources', project_resources_path(@project)
+    %li
+      = link_to 'Routes', project_routes_path(@project)
+    %li
+      = link_to 'Reports', project_reports_path(@project)

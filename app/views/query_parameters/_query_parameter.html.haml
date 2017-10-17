@@ -1,0 +1,22 @@
+.panel.panel-default
+  .panel-body
+    .row
+      .col-xs-4
+        %dl
+          %dt Name
+          %dd
+            %strong= query_parameter.name
+      .col-xs-2
+        %dl
+          %dt Type
+          %dd
+            %strong= query_parameter.primitive_type
+      .col-xs-2
+        %dl
+          %dt Required ?
+          %dd= query_parameter.is_optional ? t('optional') : t('required')
+      - unless query_parameter.description.blank?
+        .col-xs-4
+          %dl
+            %dt Description
+            %dd= simple_format(query_parameter.description)

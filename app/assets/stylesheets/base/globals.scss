@@ -1,0 +1,18 @@
+.margin-top-element {
+  margin-top: 20px;
+}
+
+.flexcontainer {
+  display: flex;
+  flex-direction: row;
+}
+
+.flexcontainer-justify-end {
+  justify-content: flex-end;
+}
+
+dl dt {
+  font-size: 75%;
+  font-weight: normal;
+  color: #777;
+}

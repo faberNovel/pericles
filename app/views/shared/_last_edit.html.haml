@@ -1,0 +1,3 @@
+- if last_audit&.user&.name && last_audit&.created_at
+  .last-edit
+    = "last edit by #{last_audit.user.name} (#{time_ago_in_words(last_audit.created_at)} ago)"

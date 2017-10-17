@@ -9,7 +9,14 @@ gem 'uglifier'
 gem 'coffee-rails'
 gem 'jquery-rails'
 gem 'turbolinks'
-gem 'sdoc', '~> 0.4.0', group: :doc
+gem 'json_schema-faker'
+gem  'execjs'
+gem 'devise', '~> 4.3'
+gem 'omniauth-google-oauth2', '~> 0.5.2'
+gem "audited", "~> 4.5"
+gem 'http'
+gem 'kaminari'
+gem 'rollbar', '~> 2.15', '>= 2.15.4'
 
 # Recommended for admin interface
 # gem 'activeadmin', github: 'activeadmin' # There is no Rails 4 version just yet
@@ -38,6 +45,8 @@ group :test do
   gem 'minitest-reporters'
   gem 'factory_girl_rails'
   gem 'simplecov', :require => false
+  gem 'vcr'
+  gem 'webmock'
 end
 
 group :development do
@@ -49,3 +58,24 @@ group :staging, :production do
   gem 'newrelic_rpm'
 end
 
+gem 'bootstrap-sass', '~> 3.3.6'
+gem 'autoprefixer-rails'
+
+gem "haml-rails", "~> 0.9"
+
+gem 'rails-controller-testing'
+
+gem 'json-schema', '~> 2.8'
+gem 'json', '~> 2.0.2'
+
+gem "nested_form"
+gem 'bootstrap_form'
+gem 'rails-erd', '~> 1.5'
+
+gem 'active_model_serializers', '~> 0.10.0'
+
+gem 'rubyzip'
+
+gem 'ransack', github: 'activerecord-hackery/ransack'
+
+gem 'jquery-ui-rails'

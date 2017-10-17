@@ -1,0 +1,28 @@
+- content_for :page_scripts do
+  = javascript_include_tag("validate_instance")
+  = javascript_include_tag("validations/new")
+
+
+- content_for :page_title do
+  %h1 Validate a JSON instance
+
+.row
+  .col-xs-12
+    #json-validation-result
+
+.row
+  .col-xs-6
+    %h2 JSON Schema
+    %p
+      = text_area_tag(:json_schema, @default_json_instance, size: "60x20")
+  .col-xs-6
+    %h2 JSON instance
+    %p
+      = text_area_tag(:json_instance, @default_json_instance, size: "60x20")
+
+.row
+  .col-xs-12
+    %p
+      = submit_tag("Validate", id: 'validate_json_instance')
+
+= link_to 'See Validations History', validations_path

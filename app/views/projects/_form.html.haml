@@ -1,0 +1,18 @@
+= bootstrap_form_for @project do |f|
+  - if @project.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(@project.errors.count, "error")
+        prohibited this project from being saved:
+      %ul
+        - @project.errors.full_messages.each do |msg|
+          %li= msg
+
+  = f.text_field :title
+
+  = f.text_area :description
+
+  = f.text_field :server_url
+
+  %p
+    = f.submit

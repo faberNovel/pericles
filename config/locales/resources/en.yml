@@ -1,0 +1,11 @@
+en:
+  activerecord:
+    errors:
+      models:
+        resource:
+          attributes:
+            base:
+              destroy_failed_foreign_key: "Could not destroy resource because it is the type for an/several attribute(s) in other resources."
+  resources:
+    show:
+      no_route_placeholder: "No routes for this resource"

@@ -1,0 +1,129 @@
+- content_for :page_scripts do
+  = javascript_include_tag("validate_instance")
+  = javascript_include_tag("generate_instance")
+  = javascript_include_tag("routes/show")
+
+.row
+  .col-xs-12
+    .page-header
+      %h1
+        !="#{@resource.name} <small> #{@route.name} </small>"
+        = render partial: "shared/last_edit", locals: {last_audit: @route.last_audit}
+        .pull-right
+          .btn-group{ role: "group" }
+            = link_to 'Edit', edit_resource_route_path(@resource, @route, section: "base"), class: "btn btn-default"
+            = link_to "Delete", resource_route_path(@resource, @route), method: :delete, data: { confirm: 'Are you sure ?' },
+             class: "btn btn-default"
+    = render partial: 'routes/route_summary', locals: { route: @route }
+
+.row
+  .col-xs-12
+    %h2 Request
+
+    .row
+      - unless @route.request_description.blank?
+        .col-xs-6
+          %dl
+            %dt Description
+            %dd= @route.request_description
+
+      - unless @route.request_resource_representation.blank?
+        .col-xs-6
+          %dl
+            %dt Resource Representation
+            %dd= @route.request_resource_representation.name
+            %dd= "Is collection ? #{@route.is_collection}"
+
+    %div
+      / Nav tabs
+      %ul.nav.nav-tabs{ role: "tablist" }
+        %li.active{ role: "presentation" }
+          %a{ "aria-controls" => "request headers", "data-toggle" => "tab", href: "#request-headers", role: "tab" }
+            = "Headers"
+        %li{ role: "presentation" }
+          %a{ "aria-controls" => "query parameters", "data-toggle" => "tab", href: "#query-parameters", role: "tab" }
+            = "Query Parameters"
+        %li{ role: "presentation" }
+          %a{ "aria-controls" => "request body", "data-toggle" => "tab", href: "#request-body", role: "tab" }
+            = "Body"
+
+      / Tab panes
+      .tab-content
+        #request-headers.tab-pane.active{ role: "tabpanel" }
+          .panel.panel-default
+            .panel-heading
+              .flexcontainer.flexcontainer-justify-end
+                = link_to 'Edit', edit_resource_route_path(@resource, @route, section: "request_headers"),
+                 class: "btn btn-default"
+            .panel-body
+              - if @route.request_headers.any?
+                - @route.request_headers.each do |header|
+                  = render header
+              - else
+                %p
+                  %i= t('.no_header_placeholder')
+        #query-parameters.tab-pane{ role: "tabpanel" }
+          .panel.panel-default
+            .panel-heading
+              .flexcontainer.flexcontainer-justify-end
+                = link_to 'Edit', edit_resource_route_path(@resource, @route, section: "query_parameters"),
+                 class: "btn btn-default"
+            .panel-body
+              - if @route.request_query_parameters.any?
+                - @route.request_query_parameters.each do |query_parameter|
+                  = render query_parameter
+              - else
+                %p
+                  %i= t('.no_query_parameter_placeholder')
+        #request-body.tab-pane{ role: "tabpanel" }
+          .panel.panel-default
+            .panel-heading
+              .flexcontainer.flexcontainer-justify-end
+                .btn-group{ role: "group" }
+                  - unless @route.request_body_schema.blank?
+                    = submit_tag("Validate JSON", class: "btn btn-default validate-json-instance",
+                      json_schema: @route.request_body_schema)
+                    = submit_tag("Generate JSON", class: "btn btn-default generate-json-instance",
+                      json_schema: @route.request_body_schema)
+                  = link_to 'Edit', edit_resource_route_path(@resource, @route, section: "request_body"),
+                 class: "btn btn-default"
+            .panel-body
+              - unless @route.request_body_schema.blank?
+                .row
+                  .col-xs-6
+                    %h4 JSON Schema
+                    %pre.pre-scrollable
+                      %code
+                        =format_json(@route.request_body_schema)
+
+                  .col-xs-6
+                    #request-json-validation-result
+                    = text_area_tag(:request_json_instance, @default_json_instance, size: "70x15",
+                     class: "generated-json-instance-or-to-validate")
+
+              - else
+                %p
+                  %i= t('.no_body_placeholder')
+
+.row
+  .col-xs-12
+    %h2 Responses
+
+    .flexcontainer.flexcontainer-justify-end
+      = link_to 'New Response', new_route_response_path(@route), class: "btn btn-default"
+
+    %div
+      / Nav tabs with status codes for all responses
+      %ul.nav.nav-pills{ role: "tablist" }
+        - @responses.each_with_index do |response, index|
+          %li{ role: "presentation", class: ('active' if index.zero?) }
+            %a{ "aria-controls" => "response", "data-toggle" => "pill", href: "#resp-#{response.id}", role: "tab" }
+              = response.status_code
+
+      / Tab panes for all responses
+      .tab-content
+        - @responses.each_with_index do |response, index|
+          .tab-pane{ role: "tabpanel", id: "resp-#{response.id}", class: ('active' if index.zero?) }
+            = render response
+
+= link_to 'Back', project_resource_path(@project, @resource)

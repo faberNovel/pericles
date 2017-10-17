@@ -1,0 +1,104 @@
+= bootstrap_nested_form_for([@project, @resource]) do |f|
+  - if @resource.errors.any?
+    #error_explanation
+      %h2
+        = "#{pluralize(@resource.errors.count, "error")} prohibited this resource from being saved:"
+      %ul
+        - @resource.errors.full_messages.each do |msg|
+          %li= msg
+
+  - unless params[:section] == "all_attributes"
+
+    = f.text_field :name
+
+    = f.text_area :description
+
+  - unless params[:section] == "base"
+    %h3 Attributes
+
+    %table{class: "table table-striped", id: "table_attributes"}
+      %thead
+        %tr
+          %th Name
+          %th Description
+          %th Primitive type
+          %th Resource type
+          %th Array ?
+          %th Nullable ?
+          %th Enum
+          %th Scheme
+          %th Minimum
+          %th Maximum
+          %th Minimum length
+          %th Maximum length
+          %th Example
+          %th Faker
+          %th
+      %tbody
+        = f.fields_for :resource_attributes, @resource.resource_attributes.sorted_by_name, wrapper: false do |attribute_fields|
+          %tr.fields
+            %td
+              = attribute_fields.text_field :name, hide_label: true
+            %td
+              = attribute_fields.text_area :description, hide_label: true
+            %td
+              = attribute_fields.select :primitive_type, Attribute.primitive_types.keys.to_a, include_blank: true, hide_label: true
+            %td
+              = attribute_fields.select :resource_id, @selectable_resources.collect { |r| [ r.name, r.id ] }, include_blank: true, hide_label: true
+            %td
+              = attribute_fields.check_box :is_array, hide_label: true
+            %td
+              = attribute_fields.check_box :nullable, hide_label: true
+            %td
+              = attribute_fields.text_field :enum, hide_label: true
+            %td
+              = attribute_fields.collection_select(:scheme_id, Scheme.all, :id, :name, include_blank: true, hide_label: true)
+            %td
+              = attribute_fields.number_field :minimum, hide_label: true
+            %td
+              = attribute_fields.number_field :maximum, hide_label: true
+            %td
+              = attribute_fields.number_field :min_length, hide_label: true, min: 0
+            %td
+              = attribute_fields.number_field :max_length, hide_label: true, min: 0
+            %td
+              = attribute_fields.text_area :example, hide_label: true
+            %td
+              = attribute_fields.collection_select :faker_id, AttributeFaker.all, :id, :name, include_blank: true, hide_label: true
+            %td
+              = attribute_fields.link_to_remove "Remove"
+    %p
+      = f.link_to_add "Add an Attribute", :resource_attributes, data: { target: "#table_attributes" }
+
+  - unless @resource.persisted?
+    %h3 Routes
+
+    %table{class: "table table-striped", id: "table_routes"}
+      %thead
+        %tr
+          %th Name
+          %th Description
+          %th HTTP method
+          %th URI
+          %th
+      %tbody
+        = f.fields_for :routes, wrapper: false do |route_fields|
+          %tr.fields
+            %td
+              = route_fields.text_field :name, hide_label: true
+            %td
+              = route_fields.text_area :description, hide_label: true
+            %td
+              = route_fields.select :http_method, Route.http_methods.keys.to_a, hide_label: true
+            %td
+              = route_fields.text_field :url, hide_label: true
+            %td
+              = route_fields.link_to_remove "Remove"
+
+    %p
+      = f.link_to_add "Add a Route", :routes, data: { target: "#table_routes" }
+
+  = link_to 'Add scheme', new_scheme_path,  :target => '_blank'
+
+  %p
+    = f.submit

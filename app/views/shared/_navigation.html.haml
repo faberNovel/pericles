@@ -1,0 +1,26 @@
+%nav.navbar.navbar-inverse.navbar-fixed-top
+  .container-fluid
+    / Brand and toggle get grouped for better mobile display
+    .navbar-header
+      %button.navbar-toggle.collapsed{"aria-expanded" => "false", "data-target" => "#bs-example-navbar-collapse-1", "data-toggle" => "collapse", :type => "button"}
+        %span.sr-only Toggle navigation
+        %span.icon-bar
+        %span.icon-bar
+        %span.icon-bar
+      %a.navbar-brand{:href => "/"} Pericles
+    / Collect the nav links, forms, and other content for toggling
+    #bs-example-navbar-collapse-1.collapse.navbar-collapse
+      %ul.nav.navbar-nav
+        %li.active
+          %a{:href => "/projects/"}
+            Projects
+            %span.sr-only (current)
+        %li
+          = link_to 'JSON Validation', new_validation_path
+      - if user_signed_in?
+        %ul.nav.navbar-nav.navbar-right
+          %li
+            %a{href: "#{user_path(current_user)}"}
+              %img.img-rounded{ src: "#{current_user.avatar_url}", height: "30", width: "30" }
+          %li
+            = link_to "Log out", destroy_user_session_path, method: :delete

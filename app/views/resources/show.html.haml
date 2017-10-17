@@ -1,0 +1,67 @@
+- if flash[:error]
+  %div{class: "alert alert-danger"}
+    =flash[:error]
+
+.page-header
+  %h1
+    = @resource.name
+    .pull-right
+      .btn-group{ role: "group" }
+        = link_to 'Edit', edit_project_resource_path(@project, @resource, section: "base"), class: "btn btn-default"
+        = link_to "Delete", project_resource_path(@project, @resource), method: :delete, data: { confirm: 'Are you sure ?' },
+       class: "btn btn-default"
+
+%p
+  = @resource.description
+
+%h3
+  Attributes
+  = render partial: "shared/last_edit", locals: {last_audit: @resource.last_audit}
+
+%div
+  / Global Nav tabs
+  %ul.nav.nav-tabs.nav-justified{ role: "tablist" }
+    %li.active{ role: "presentation" }
+      %a{ "aria-controls" => "all attributes", "data-toggle" => "tab", href: "#all-attributes", role: "tab" }
+        = "All Attributes"
+    %li{ role: "presentation" }
+      %a{ "aria-controls" => "resource representations", "data-toggle" => "tab", href: "#resource-reps", role: "tab" }
+        = "Resource Representations"
+  / Global Tab panes
+  .tab-content
+    #all-attributes.tab-pane.active{ role: "tabpanel" }
+      .panel.panel-default
+        .panel-heading
+          .flexcontainer.flexcontainer-justify-end
+            = link_to 'Edit', edit_project_resource_path(@project, @resource, section: "all_attributes"), class: "btn btn-default"
+        .panel-body
+          - @resource.resource_attributes.sorted_by_name.each do |attribute|
+            = render attribute
+    #resource-reps.tab-pane{ role: "tabpanel" }
+      %div
+        / Nav tabs for Resource Representations
+        %ul.nav.nav-tabs{ role: "tablist" }
+          - @resource_representations.each_with_index do |resource_rep, index|
+            %li{ role: "presentation", class: ('active' if index.zero?) }
+              %a{ "aria-controls" => "#{resource_rep.name}", "data-toggle" => "tab", href: "#res-#{resource_rep.name}", role: "tab" }
+                = resource_rep.name
+          %li{ role: "presentation" }
+            = link_to '+', new_resource_resource_representation_path(@resource)
+        / Tab panes for Resource Representations
+        .tab-content
+          - @resource_representations.each_with_index do |resource_rep, index|
+            .tab-pane{ role: "tabpanel", id: "res-#{resource_rep.name}", class: ('active' if index.zero?) }
+              = render resource_rep
+
+%h3 Routes
+
+.flexcontainer.flexcontainer-justify-end
+  = link_to 'New Route', new_resource_route_path(@resource), class: "btn btn-default btn-lg"
+
+.margin-top-element
+  - if @resource.routes.any?
+    - @resource.routes.includes(:resource_representations).each do |route|
+      = render partial: 'routes/route_summary', locals: { resource: @resource, route: route }
+  - else
+    %p
+      %i= t('.no_route_placeholder')

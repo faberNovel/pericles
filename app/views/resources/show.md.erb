@@ -1,0 +1,11 @@
+# <%= @resource.name %>
+
+<%= @resource.description %>
+
+## The <%= @resource.name %> object
+
+Attributes | Type | Description | Enum | Pattern | Example
+---------- | ---- | ----------- | ---- | ------- | -------
+<%= render @resource.resource_attributes %>
+
+<%= render @resource.routes %>

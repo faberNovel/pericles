@@ -1,0 +1,12 @@
+fr:
+  activerecord:
+    attributes:
+      validation:
+        status:
+          one: statut
+          other: statuts
+          success: "L'instance de JSON entrée est validée par le JSON schema entré (JSON Schema Draft 4)."
+          schema_parse_error: "Le JSON schema entré n'est pas un JSON text valide (RFC 7159)."
+          instance_parse_error: "L'instance de JSON entrée n'est pas un JSON text valide (RFC 7159)."
+          schema_validation_error: "Le JSON schema entré n'est pas conforme au JSON Schema Draft 4. Erreurs:"
+          instance_validation_error: "L'instance de JSON entrée n'est pas validée par le JSON schema entré (JSON Schema Draft 4). Erreurs:"

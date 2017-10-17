@@ -1,0 +1,9 @@
+.row.margin-top-element
+  .col-xs-12.flexcontainer.flexcontainer-justify-end
+    = link_to 'New Project', new_project_path, class: "btn btn-default btn-lg"
+.row.margin-top-element
+  .col-xs-12
+    .list-group
+      - @projects.each do |project|
+        %a{class: "list-group-item", href: project_path(project)}
+          = project.title

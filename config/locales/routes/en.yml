@@ -1,0 +1,16 @@
+en:
+  activerecord:
+    errors:
+      models:
+        route:
+          attributes:
+            request_body_schema:
+              schema_must_be_valid_json: "The input JSON Schema is not a valid JSON text (RFC 7159)"
+              schema_must_respect_json_schema_spec: "The input JSON Schema does not conform to JSON Schema Draft 4. Error: %{error}"
+  routes:
+    index:
+      no_route_placeholder: "No routes for this project."
+    show:
+      no_header_placeholder: "There are no headers for this HTTP message."
+      no_query_parameter_placeholder: "There are no query parameters for this request."
+      no_body_placeholder: "No description was entered for the body of this HTTP message."

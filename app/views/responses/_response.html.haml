@@ -1,0 +1,68 @@
+.flexcontainer.flexcontainer-justify-end
+  .btn-group{ role: "group" }
+    = link_to 'Edit', edit_route_response_path(@route, response), class: "btn btn-default"
+    = link_to "Delete", route_response_path(@route, response), method: :delete, data: { confirm: 'Are you sure ?' },
+      class: "btn btn-default"
+
+.row.margin-top-element
+  - unless response.description.blank?
+    .col-xs-6
+      %dl
+        %dt Description
+        %dd= response.description
+
+  - unless response.resource_representation.blank?
+    .col-xs-6
+      %dl
+        %dt Resource Representation
+        %dd= response.resource_representation.name
+        %dd= "Is collection ? #{response.is_collection}"
+
+%div
+  / Response Nav tabs
+  %ul.nav.nav-tabs{ role: "tablist" }
+    %li.active{ role: "presentation" }
+      %a{ "aria-controls" => "response headers", "data-toggle" => "tab", href: "#resp-#{response.id}-headers",
+        role: "tab" }
+        = "Headers"
+    %li{ role: "presentation" }
+      %a{ "aria-controls" => "response body", "data-toggle" => "tab", href: "#resp-#{response.id}-body",
+        role: "tab" }
+        = "Body"
+  / Response Tab panes
+  .tab-content
+    .tab-pane.active{ role: "tabpanel", id: "resp-#{response.id}-headers" }
+      .panel.panel-default
+        .panel-body
+          - if response.headers.any?
+            - response.headers.each do |response_header|
+              = render response_header
+          - else
+            %p
+              %i= t('routes.show.no_header_placeholder')
+    .tab-pane{ role: "tabpanel", id: "resp-#{response.id}-body" }
+      .panel.panel-default
+        - unless response.body_schema.blank?
+          .panel-heading
+            .flexcontainer.flexcontainer-justify-end
+              .btn-group{ role: "group" }
+                = submit_tag("Validate JSON", class: "btn btn-default validate-json-instance", json_schema: response.body_schema)
+                = submit_tag("Generate JSON", class: "btn btn-default generate-json-instance", json_schema: response.body_schema)
+        .panel-body
+          - unless response.body_schema.blank?
+            .row
+              .col-xs-6
+                %h4 JSON Schema
+                %pre.pre-scrollable
+                  %code
+                    =format_json(response.body_schema)
+
+              .col-xs-6
+                %div{ id: "resp-#{response.id}-json-validation-result" }
+                = text_area_tag(:response_json_instance, @default_json_instance,
+                 id: "resp-#{response.id}-generated-json-instance-or-to-validate", class: "generated-json-instance-or-to-validate",
+                 size: "70x15")
+
+          - else
+            %p
+              %i= t('routes.show.no_body_placeholder')

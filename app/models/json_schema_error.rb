@@ -1,0 +1,2 @@
+class JsonSchemaError < JsonError
+end

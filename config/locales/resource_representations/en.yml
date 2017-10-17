@@ -1,0 +1,9 @@
+en:
+  activerecord:
+    errors:
+      models:
+        resource_representation:
+          attributes:
+            base:
+              destroy_failed_foreign_key: "Could not destroy resource representation because it is still referenced in responses
+               or in resource representations."

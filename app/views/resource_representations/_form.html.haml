@@ -1,0 +1,64 @@
+= bootstrap_form_for([@resource, @representation]) do |f|
+  - if @representation.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(@representation.errors.count, "error")
+        prohibited this resource_representation from being saved:
+      %ul
+        - @representation.errors.full_messages.each do |msg|
+          %li= msg
+
+  .row
+    .col-xs-6
+      = f.text_field :name
+
+      = f.text_area :description
+
+  .row
+    .col-xs-10
+      %h3 Attributes
+      %table{class: "table table-striped"}
+        %thead
+          %tr
+            %th
+            %th Name
+            %th Type
+            %th Nullable ?
+            %th Enum
+            %th Pattern
+            %th Resource Representation
+            %th Required ?
+            %th Faker
+            %th
+        %tbody
+          = f.fields_for :attributes_resource_representations, @attributes_resource_representations_ordered_by_attribute_name do |fields|
+            - attributes_resource_representation = fields.object
+            - attribute = attributes_resource_representation.resource_attribute
+            - type_resource = attribute.resource
+            %tr
+              %td
+                = fields.check_box :_destroy,
+                { label: "Selected", checked: !attributes_resource_representation.new_record? }, "0", "1"
+              %td
+                = attribute.name
+              %td
+                = format_type(attribute.primitive_type, attribute.resource_id, attribute.is_array)
+              %td
+                = fields.select :custom_nullable, [true, false], include_blank: true, hide_label: true
+              %td
+                = fields.text_field :custom_enum, hide_label: true
+              %td
+                = fields.text_field :custom_pattern, hide_label: true
+              %td
+                = fields.select :resource_representation_id,
+                 type_resource.resource_representations.collect { |r| [ r.name, r.id ] }, include_blank: true,
+                  hide_label: true if type_resource
+              %td
+                = fields.check_box :is_required
+              %td
+                = fields.collection_select :custom_faker_id, AttributeFaker.all, :id, :name, include_blank: true, hide_label: true
+              %td
+                = fields.hidden_field :attribute_id
+
+  %p
+    = f.submit
