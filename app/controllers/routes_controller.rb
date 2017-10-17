@@ -58,6 +58,7 @@ class RoutesController < AuthenticatedController
 
   def setup_route
     @route = Route.find(params[:id])
+    @responses = @route.responses.order(:status_code)
   end
 
   def route_params

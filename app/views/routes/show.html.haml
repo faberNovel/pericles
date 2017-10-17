@@ -115,15 +115,15 @@
     %div
       / Nav tabs with status codes for all responses
       %ul.nav.nav-pills{ role: "tablist" }
-        - @route.responses.each do |response|
-          %li{ role: "presentation" }
+        - @responses.each_with_index do |response, index|
+          %li{ role: "presentation", class: ('active' if index.zero?) }
             %a{ "aria-controls" => "response", "data-toggle" => "pill", href: "#resp-#{response.id}", role: "tab" }
               = response.status_code
 
       / Tab panes for all responses
       .tab-content
-        - @route.responses.each do |response|
-          .tab-pane{ role: "tabpanel", id: "resp-#{response.id}" }
+        - @responses.each_with_index do |response, index|
+          .tab-pane{ role: "tabpanel", id: "resp-#{response.id}", class: ('active' if index.zero?) }
             = render response
 
 = link_to 'Back', project_resource_path(@project, @resource)
