@@ -57,6 +57,7 @@ class ResourcesController < AuthenticatedController
   def setup_project_and_resource
     setup_project
     @resource = @project.resources.find(params[:id])
+    @resource_representations = @resource.resource_representations.order(:name)
   end
 
   def setup_selectable_resources(project, resource)

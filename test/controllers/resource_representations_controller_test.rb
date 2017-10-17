@@ -117,13 +117,14 @@ class ResourceRepresentationsControllerTest < ControllerWithAuthenticationTest
 
   test "should not delete resource_representation (foreign key constraint)" do
     resource_representation = create(:resource_representation)
+    project = resource_representation.resource.project
     resource = resource_representation.resource
     route = create(:route, resource: resource)
     create(:response, route: route, resource_representation: resource_representation)
     assert_no_difference('ResourceRepresentation.count') do
       delete resource_resource_representation_path(resource, resource_representation)
     end
-    assert_response :conflict
+    assert_redirected_to project_resource_path(project, resource)
   end
 
   test "should not delete resource_representation (not authenticated)" do

@@ -41,16 +41,16 @@
       %div
         / Nav tabs for Resource Representations
         %ul.nav.nav-tabs{ role: "tablist" }
-          - @resource.resource_representations.each do |resource_rep|
-            %li{ role: "presentation" }
+          - @resource_representations.each_with_index do |resource_rep, index|
+            %li{ role: "presentation", class: ('active' if index.zero?) }
               %a{ "aria-controls" => "#{resource_rep.name}", "data-toggle" => "tab", href: "#res-#{resource_rep.name}", role: "tab" }
                 = resource_rep.name
           %li{ role: "presentation" }
             = link_to '+', new_resource_resource_representation_path(@resource)
         / Tab panes for Resource Representations
         .tab-content
-          - @resource.resource_representations.each do |resource_rep|
-            .tab-pane{ role: "tabpanel", id: "res-#{resource_rep.name}" }
+          - @resource_representations.each_with_index do |resource_rep, index|
+            .tab-pane{ role: "tabpanel", id: "res-#{resource_rep.name}", class: ('active' if index.zero?) }
               = render resource_rep
 
 %h3 Routes

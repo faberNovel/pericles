@@ -45,12 +45,11 @@ class ResourceRepresentationsController < AuthenticatedController
   def destroy
     begin
       @representation.destroy
-
-      redirect_to project_resource_path(@project, @resource)
     rescue ActiveRecord::InvalidForeignKey
-      flash.now[:error] = t('activerecord.errors.models.resource_representation.attributes.base.destroy_failed_foreign_key')
-      render 'resources/show', layout: 'full_width_column', status: :conflict
+      flash[:error] = t('activerecord.errors.models.resource_representation.attributes.base.destroy_failed_foreign_key')
     end
+
+    redirect_to project_resource_path(@project, @resource)
   end
 
   private
