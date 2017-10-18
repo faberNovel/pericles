@@ -1,0 +1,126 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://pokeapi.co/api/v2/pokemon
+    body:
+      encoding: ASCII-8BIT
+      string: ''
+    headers:
+      Request-Method:
+      - GET
+      Server-Name:
+      - www.example.com
+      Server-Port:
+      - '80'
+      Path-Info:
+      - "/projects/537/proxy/pokemon"
+      Https:
+      - 'off'
+      Content-Length:
+      - '0'
+      Remote-Addr:
+      - 127.0.0.1
+      Accept:
+      - text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5
+      Connection:
+      - close
+      Host:
+      - pokeapi.co
+      User-Agent:
+      - http.rb/2.2.2
+  response:
+    status:
+      code: 301
+      message: Moved Permanently
+    headers:
+      Date:
+      - Wed, 18 Oct 2017 12:28:26 GMT
+      Content-Type:
+      - text/html; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - close
+      Set-Cookie:
+      - __cfduid=d76c1b57aaf8eae738a8968a8ad09103f1508329705; expires=Thu, 18-Oct-18
+        12:28:25 GMT; path=/; domain=.pokeapi.co; HttpOnly; Secure
+      X-Frame-Options:
+      - SAMEORIGIN
+      Location:
+      - https://pokeapi.co/api/v2/pokemon/
+      X-Xss-Protection:
+      - 1; mode=block
+      Server:
+      - cloudflare-nginx
+      Cf-Ray:
+      - 3afb7f55ec55693e-CDG
+    body:
+      encoding: UTF-8
+      string: ''
+    http_version: 
+  recorded_at: Wed, 18 Oct 2017 12:28:26 GMT
+- request:
+    method: get
+    uri: https://pokeapi.co/api/v2/pokemon/
+    body:
+      encoding: ASCII-8BIT
+      string: ''
+    headers:
+      Request-Method:
+      - GET
+      Server-Name:
+      - www.example.com
+      Server-Port:
+      - '80'
+      Path-Info:
+      - "/projects/537/proxy/pokemon"
+      Https:
+      - 'off'
+      Content-Length:
+      - '0'
+      Remote-Addr:
+      - 127.0.0.1
+      Accept:
+      - text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5
+      Connection:
+      - close
+      User-Agent:
+      - http.rb/2.2.2
+      Host:
+      - pokeapi.co
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 18 Oct 2017 12:28:26 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - close
+      Set-Cookie:
+      - __cfduid=d859fb6f592476af031e8818b1ddb82e11508329706; expires=Thu, 18-Oct-18
+        12:28:26 GMT; path=/; domain=.pokeapi.co; HttpOnly; Secure
+      Vary:
+      - Accept-Encoding
+      - Cookie
+      X-Frame-Options:
+      - SAMEORIGIN
+      Allow:
+      - GET, HEAD, OPTIONS
+      X-Xss-Protection:
+      - 1; mode=block
+      Server:
+      - cloudflare-nginx
+      Cf-Ray:
+      - 3afb7f58a85969a6-CDG
+    body:
+      encoding: ASCII-8BIT
+      string: '{"count":811,"previous":null,"results":[{"url":"https:\/\/pokeapi.co\/api\/v2\/pokemon\/1\/","name":"bulbasaur"}],"next":"https:\/\/pokeapi.co\/api\/v2\/pokemon\/?offset=20"}'
+    http_version: 
+  recorded_at: Wed, 18 Oct 2017 12:28:26 GMT
+recorded_with: VCR 3.0.3
