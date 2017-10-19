@@ -55,6 +55,15 @@ class ProxyControllerTest < ActionDispatch::IntegrationTest
     assert_not response.headers['Transfer-Encoding']
   end
 
+  test "should follow redirection" do
+    project = create(:project, server_url: 'https://pokeapi.co/api/v2/')
+    VCR.use_cassette('proxy_example_redirection') do
+      get "/projects/#{project.id}/proxy/pokemon"
+    end
+    assert_equal 200, response.status
+    assert_match(/{"count".*/, response.body)
+  end
+
   test "should validate correct response" do
     project = create(:full_project)
 
