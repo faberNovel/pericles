@@ -7,7 +7,7 @@ class MakeRequestToServerService
   end
 
   def execute
-    url = URI.join(@server_url, @request.params[:path])
+    url = URI.join(@server_url, ActionDispatch::Journey::Router::Utils::escape_path(@request.params[:path]))
     url = URI.join(url.to_s, '?' + @request.query_string) unless @request.query_string.blank?
 
     HTTP.follow.use(:auto_inflate).send(@request.method.downcase, url, body: @request.body.read, headers: headers)

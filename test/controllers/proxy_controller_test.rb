@@ -122,4 +122,11 @@ class ProxyControllerTest < ActionDispatch::IntegrationTest
       end
     end
   end
+
+  test "should proxy special character URI" do
+    project = create(:full_project)
+    VCR.use_cassette('correct_full_project_with_special_uri', match_requests_on: [:uri]) do
+      get ActionDispatch::Journey::Router::Utils::escape_path("/projects/#{project.id}/proxy/users/<135>-<01>-<30-10-2017>-<60234>-<V17>-<103>")
+    end
+  end
 end
