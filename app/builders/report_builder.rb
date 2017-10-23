@@ -39,7 +39,7 @@ class ReportBuilder
   end
 
   def path
-    @request.path[/proxy(\/.+)/, 1]
+     @request.params[:path]
   end
 
   def request_headers
