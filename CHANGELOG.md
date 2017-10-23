@@ -2,6 +2,12 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.1.3 - 2017-10-23
+
+## Changed
+
+* Proxy uses encoded URL
+
 ## 0.1.2 - 2017-10-23
 
 ## Changed
