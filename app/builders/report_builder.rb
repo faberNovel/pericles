@@ -9,7 +9,7 @@ class ReportBuilder
     report = Report.create(
       project: @project,
       route: route,
-      url: ActionDispatch::Journey::Router::Utils::unescape_uri(path),
+      url: path,
       response_status_code: @http_response.status.code,
       response_headers: @http_response.headers.to_h,
       response_body: @http_response.body,
@@ -39,7 +39,7 @@ class ReportBuilder
   end
 
   def path
-    @request.path[/proxy(\/.+)/, 1]
+     @request.params[:path]
   end
 
   def request_headers
