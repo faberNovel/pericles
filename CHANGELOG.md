@@ -2,6 +2,12 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.1.2 - 2017-10-23
+
+## Changed
+
+* JSON Schema are now generated with additionalProperties = false
+
 ## 0.1.1 - 2017-10-19
 
 ## Changed
