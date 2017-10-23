@@ -4,6 +4,7 @@ class ResourceRepresentationSchemaSerializer < ActiveModel::Serializer
   attribute :items, if: :items?
   attribute :required, if: :required?
   attribute :description, if: :description?
+  attribute :additionalProperties
 
   def initialize(object, options = {})
     @resource_representation = object
@@ -12,6 +13,10 @@ class ResourceRepresentationSchemaSerializer < ActiveModel::Serializer
     @is_collection = options[:is_collection]
     @root_key = options[:root_key]
     super
+  end
+
+  def additionalProperties
+    false
   end
 
   def properties?
@@ -27,7 +32,8 @@ class ResourceRepresentationSchemaSerializer < ActiveModel::Serializer
   end
 
   def required?
-    !@root_key.blank? || !@is_collection
+    # see https://github.com/json-schema-faker/json-schema-faker/issues/338
+    (!@root_key.blank? || !@is_collection) && !required.empty?
   end
 
   def required
@@ -81,6 +87,7 @@ class ResourceRepresentationSchemaSerializer < ActiveModel::Serializer
     resource_hash = {}
     resource_hash[:type] = 'object'
     resource_hash[:properties] = properties_from_resource_representation(@resource_representation)
+    resource_hash[:additionalProperties] = false
     add_required_if_not_empty(resource_hash, @resource_representation)
     resource_hash
   end
@@ -138,6 +145,7 @@ class ResourceRepresentationSchemaSerializer < ActiveModel::Serializer
   def hash_from_attributes_resource_representation_with_child_resource_representation(association)
     attribute_hash = set_main_fields_from_attribute(association.resource_attribute)
     attribute_hash[:properties] = properties_from_resource_representation(association.resource_representation)
+    attribute_hash[:additionalProperties] = false
     add_required_if_not_empty(attribute_hash, association.resource_representation)
     return attribute_hash
   end

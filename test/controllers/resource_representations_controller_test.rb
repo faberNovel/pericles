@@ -159,9 +159,11 @@ class ResourceRepresentationsControllerTest < ControllerWithAuthenticationTest
               pattern: "The Godfather II"
             }
           },
+          additionalProperties: false,
           required: ["main_title"]
         }
       },
+      additionalProperties: false,
       required: ['movie']
     }
     get resource_resource_representation_path(resource, resource_representation, format: :json_schema, root_key: 'movie')
@@ -189,10 +191,12 @@ class ResourceRepresentationsControllerTest < ControllerWithAuthenticationTest
                 type: 'string',
                 description: 'title of the film'
               }
-            }
+            },
+            additionalProperties: false
           }
         }
       },
+      additionalProperties: false,
       required: ['movies']
     }
     get resource_resource_representation_path(resource, resource_representation, format: :json_schema, params: {is_collection: 'true', root_key: 'movies'})
@@ -218,6 +222,7 @@ class ResourceRepresentationsControllerTest < ControllerWithAuthenticationTest
           pattern: "The Godfather II"
         }
       },
+      additionalProperties: false,
       required: ["main_title"]
     }
     get resource_resource_representation_path(resource, resource_representation, format: :json_schema)

@@ -109,11 +109,14 @@ class ResourceRepresentationSchemaSerializerTest < ActiveSupport::TestCase
               title: 'User',
               properties: {
                 name: { type: 'string', description: 'name of the user'}
-              }
+              },
+              additionalProperties: false
             }
-          }
+          },
+          additionalProperties: false
         }
       },
+      additionalProperties: false,
       required: ['user']
     }
 
