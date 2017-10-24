@@ -7,7 +7,7 @@ class MakeRequestToServerService
   end
 
   def execute
-    relative_url = @request.path[/proxy(\/.+)/, 1][1..-1]
+    relative_url = @request.path[/proxy\/?(.*)/, 1]
     url = URI.join(@server_url, relative_url)
     url = URI.join(url.to_s, '?' + @request.query_string) unless @request.query_string.blank?
 
