@@ -4,7 +4,6 @@ class ProxyController < ApplicationController
 
   def compute_request
     @project = Project.find(params[:project_id])
-
     @request_service = MakeRequestToServerService.new(@project.server_url, request)
     proxy_response = @request_service.execute
     report = ReportBuilder.new(@project, proxy_response, request).build
