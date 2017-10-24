@@ -6,10 +6,11 @@ class ReportBuilder
   end
 
   def build
+    human_readable_url = @request.params[:path] || '/'
     report = Report.create(
       project: @project,
       route: route,
-      url: path,
+      url: human_readable_url,
       response_status_code: @http_response.status.code,
       response_headers: @http_response.headers.to_h,
       response_body: @http_response.body,
@@ -30,16 +31,13 @@ class ReportBuilder
 
   def find_route
     routes = @project.build_route_set
+    escaped_url =  @request.path[/proxy(\/?.*)/, 1]
     begin
-      main_route = routes.recognize_path(path, { method: @request.method })
+      main_route = routes.recognize_path(escaped_url, { method: @request.method })
     rescue ActionController::RoutingError
       return nil
     end
     Route.find_by_id(main_route[:name])
-  end
-
-  def path
-     @request.params[:path]
   end
 
   def request_headers

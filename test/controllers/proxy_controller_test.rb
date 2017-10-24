@@ -61,7 +61,7 @@ class ProxyControllerTest < ActionDispatch::IntegrationTest
       get "/projects/#{project.id}/proxy/pokemon"
     end
     assert_equal 200, response.status
-    assert_match(/{"count".*/, response.body)
+    assert_match('"count":811', response.body)
   end
 
   test "should validate correct response" do
@@ -127,6 +127,28 @@ class ProxyControllerTest < ActionDispatch::IntegrationTest
     project = create(:full_project)
     VCR.use_cassette('correct_full_project_with_special_uri', match_requests_on: [:uri]) do
       get ActionDispatch::Journey::Router::Utils::escape_path("/projects/#{project.id}/proxy/users/<135>-<01>-<30-10-2017>-<60234>-<V17>-<103>")
+    end
+  end
+
+  test "should find route with special character" do
+    project = create(:full_project)
+    route = project.routes.first
+    route.update(url: '/users/:uuid')
+    VCR.use_cassette('correct_full_project_with_special_uri') do
+      assert_difference 'Report.where(route: route).count' do
+        get ActionDispatch::Journey::Router::Utils::escape_path("/projects/#{project.id}/proxy/users/<135>-<01>-<30-10-2017>-<60234>-<V17>-<103>")
+      end
+    end
+  end
+
+  test "should find root route (/)" do
+    project = create(:full_project)
+    route = project.routes.first
+    route.update(url: '/')
+    VCR.use_cassette('correct_full_project_root_url', match_requests_on: [:uri]) do
+      assert_difference 'Report.where(route: route).count' do
+        get "/projects/#{project.id}/proxy/"
+      end
     end
   end
 end
