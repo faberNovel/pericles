@@ -19,36 +19,15 @@ function generate_schema_from_resource_representation(clicked_button) {
         dataType: 'json'
       })
       .done(function(data) {
-        var result_json = {};
-        var original_data = body_json_schema.val();
-        if (original_data) {
-          original_json = JSON.parse(original_data);
-          result_json = deep_merge(original_json, data);
-        } else {
-          result_json = data;
-        }
-        body_json_schema.val(JSON.stringify(result_json, null, 2));
+        body_json_schema.val(JSON.stringify(data, null, 2));
       });
   }
 }
 
-function deep_merge(first_object, last_object) {
-  var result = first_object;
-  for (var key in first_object) {
-    if (last_object[key] && isObject(last_object[key])) {
-      result[key] = deep_merge(first_object[key], last_object[key]);
-    } else {
-      result[key] = first_object[key];
-    }
-  }
-  for (var key_last_object in last_object) {
-    if (!result[key_last_object]) {
-      result[key_last_object] = last_object[key_last_object];
-    }
-  }
-  return result;
-}
-
-function isObject(item) {
-  return (item && typeof item === 'object' && !Array.isArray(item));
-}
+$(document).ready(function() {
+  $("#route_request_resource_representation_id, #route_request_is_collection, #route_request_root_key, " +
+    "#response_resource_representation_id, #response_is_collection, #response_root_key"
+  ).change(function() {
+    generate_schema_from_resource_representation($( "#generate-schema" ))
+  });
+});

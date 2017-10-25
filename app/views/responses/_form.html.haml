@@ -41,7 +41,7 @@
       = f.select :resource_representation_id, @resource.resource_representations.pluck(:name, :id), include_blank: true
 
       %h5 JSON Schema
-      = button_tag("Generate Schema from Resource Representation", type: 'button', resource_id: "#{@resource.id}",
+      = button_tag("Generate Schema from Resource Representation", type: 'button', resource_id: "#{@resource.id}", id: 'generate-schema', style: "display: none;",
         onclick: "generate_schema_from_resource_representation(this)")
 
       = f.check_box :is_collection
