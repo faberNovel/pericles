@@ -23,7 +23,5 @@ Rails.application.routes.draw do
   resources :users, only: [:show]
   resources :schemes, only: [:create, :new, :index, :destroy]
   root "projects#index"
-  match "/not_found", to: "errors#not_found", via: :all
-  match '*path', to: "errors#not_found", via: :all
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

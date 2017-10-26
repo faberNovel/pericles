@@ -1,4 +1,0 @@
-fr:
-  errors:
-    not_found:
-      description: "Il semble que la ressource que vous recherchez n'a pas pu être trouvée."
