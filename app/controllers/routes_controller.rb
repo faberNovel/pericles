@@ -4,7 +4,9 @@ class RoutesController < AuthenticatedController
   before_action :setup_route, except: [:index, :new, :create]
 
   def index
-    @routes = Route.of_project(@project).includes(:resource, :resource_representations).order('lower(resources.name)')
+    @routes_by_resource = Route.of_project(@project).includes(:resource, :resource_representations)
+      .group_by(&:resource)
+    @resources = @routes_by_resource.keys.sort_by {|r| r.name.downcase}
     render layout: 'full_width_column'
   end
 
