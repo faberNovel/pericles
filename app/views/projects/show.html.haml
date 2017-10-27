@@ -1,7 +1,6 @@
 .flexcontainer.flexcontainer-justify-end
   .btn-group{ role: "group" }
     = link_to 'Edit', edit_project_path(@project), class: "btn btn-default"
-    = link_to 'Delete', project_path(@project), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-default"
 %p
   = simple_format(@project.description)
 
@@ -10,3 +9,4 @@
   %h1 Url des Webservices
 
   %p= @project.server_url
+= link_to 'Delete', project_path(@project), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-default", id: 'delete-button'

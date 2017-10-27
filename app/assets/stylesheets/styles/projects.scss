@@ -24,7 +24,7 @@
 }
 
 #sidebar-wrapper {
-    z-index: 1000;
+    z-index: 1;
     position: fixed;
     left: 250px;
     width: 0;
@@ -118,4 +118,11 @@
     font-size: 10px;
     font-style: italic;
     margin-left: 8px;
+}
+
+#delete-button {
+  position: fixed;
+  bottom: 16px;
+  left: 16px;
+  z-index: 1
 }
