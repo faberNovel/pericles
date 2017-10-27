@@ -43,14 +43,14 @@
         %ul.nav.nav-tabs{ role: "tablist" }
           - @resource_representations.each_with_index do |resource_rep, index|
             %li{ role: "presentation", class: ('active' if index.zero?) }
-              %a{ "aria-controls" => "#{resource_rep.name}", "data-toggle" => "tab", href: "#res-#{resource_rep.name}", role: "tab" }
+              %a{ "aria-controls" => "#{resource_rep.name}", "data-toggle" => "tab", href: "#res-#{resource_rep.id}", role: "tab" }
                 = resource_rep.name
           %li{ role: "presentation" }
             = link_to '+', new_resource_resource_representation_path(@resource)
         / Tab panes for Resource Representations
         .tab-content
           - @resource_representations.each_with_index do |resource_rep, index|
-            .tab-pane{ role: "tabpanel", id: "res-#{resource_rep.name}", class: ('active' if index.zero?) }
+            .tab-pane{ role: "tabpanel", id: "res-#{resource_rep.id}", class: ('active' if index.zero?) }
               = render resource_rep
 
 %h3 Routes
