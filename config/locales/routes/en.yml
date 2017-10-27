@@ -14,3 +14,12 @@ en:
       no_header_placeholder: "There are no headers for this HTTP message."
       no_query_parameter_placeholder: "There are no query parameters for this request."
       no_body_placeholder: "No description was entered for the body of this HTTP message."
+    form:
+      description_placeholder: |
+        What does this route describe?
+        Does it require specific authentication to access it?
+        Is it filterable?
+        Is there a cache?
+        If yes:
+        - Think about the lifetime of the data (GET requests)
+        - Define cache headers accordingly
