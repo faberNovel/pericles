@@ -1,7 +1,6 @@
 .flexcontainer.flexcontainer-justify-end
   .btn-group{ role: "group" }
     = link_to 'Edit', edit_project_path(@project), class: "btn btn-default"
-    = link_to 'Generate doc', project_path(@project, format: :zip), class: "btn btn-default"
     = link_to 'Delete', project_path(@project), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-default"
 %p
   = simple_format(@project.description)
