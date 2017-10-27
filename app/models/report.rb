@@ -3,7 +3,7 @@ class Report < ApplicationRecord
   belongs_to :route, optional: true
   belongs_to :response, optional: true
 
-  has_many :validation_errors
+  has_many :validation_errors, dependent: :destroy
 
   default_scope { includes(:validation_errors) }
 
