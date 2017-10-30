@@ -4,7 +4,8 @@
 - if @routes_by_resource.any?
   - @resources.each do |resource|
     .routes-container
-      %h4= resource.name
+      %a{href: project_resource_path(@project, resource)}
+        %h4= resource.name
       = link_to 'New Route', new_resource_route_path(resource), class: "btn btn-default btn-lg"
 
     %div
