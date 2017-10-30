@@ -19,3 +19,17 @@
 #route_description {
   height: 150px;
 }
+
+.routes-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 24px;
+  align-items: center;
+
+  .btn-lg, .btn-group-lg > .btn {
+    padding: 8px;
+    line-height: 20px;
+    margin: 8px 0;
+    font-size: 14px;
+  }
+}

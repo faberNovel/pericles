@@ -1,8 +1,11 @@
+
 %h1 Routes
 
 - if @routes_by_resource.any?
   - @resources.each do |resource|
-    %h4= resource.name
+    .routes-container
+      %h4= resource.name
+      = link_to 'New Route', new_resource_route_path(resource), class: "btn btn-default btn-lg"
 
     %div
       - @routes_by_resource[resource].each do |route|
