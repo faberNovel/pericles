@@ -58,8 +58,9 @@
                     =format_json(response.body_schema)
 
               .col-xs-6
+                %h4 JSON Instance
                 %div{ id: "resp-#{response.id}-json-validation-result" }
-                = text_area_tag(:response_json_instance, @default_json_instance,
+                = text_area_tag(:response_json_instance, format_json(response.json_instance),
                  id: "resp-#{response.id}-generated-json-instance-or-to-validate", class: "generated-json-instance-or-to-validate",
                  size: "70x15")
 

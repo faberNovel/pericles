@@ -97,8 +97,9 @@
                         =format_json(@route.request_body_schema)
 
                   .col-xs-6
+                    %h4 JSON Instance
                     #request-json-validation-result
-                    = text_area_tag(:request_json_instance, @default_json_instance, size: "70x15",
+                    = text_area_tag(:request_json_instance, format_json(@route.request_json_instance), size: "70x15",
                      class: "generated-json-instance-or-to-validate")
 
               - else

@@ -11,7 +11,6 @@ class RoutesController < AuthenticatedController
   end
 
   def show
-    @default_json_instance = "{}"
     render layout: 'generic'
   end
 
