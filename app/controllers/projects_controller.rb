@@ -50,7 +50,7 @@ class ProjectsController < AuthenticatedController
   end
 
   def project_params
-    params.require(:project).permit(:title, :description, :server_url)
+    params.require(:project).permit(:title, :description, :proxy_url)
   end
 
 end

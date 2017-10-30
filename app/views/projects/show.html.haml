@@ -4,9 +4,9 @@
 %p
   = simple_format(@project.description)
 
-- if @project.server_url
+- unless @project.proxy_url.blank?
 
-  %h1 Url des Webservices
+  %h1 Proxy Url
 
-  %p= @project.server_url
+  %p= @project.proxy_url
 = link_to 'Delete', project_path(@project), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-default", id: 'delete-button'

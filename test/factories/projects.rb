@@ -7,10 +7,10 @@ FactoryGirl.define do
   factory :project do
     title { generate(:project_title) }
     description "That's it !"
-    server_url nil
+    proxy_url nil
 
     factory :full_project do
-      server_url 'http://api.xyz/'
+      proxy_url 'http://api.xyz/'
 
       after(:create) do |project, _|
         resource = create(:resource, project: project)
