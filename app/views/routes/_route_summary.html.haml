@@ -15,7 +15,7 @@
           %dt Description
           %dd= route.description
       .col-xs-3
-        - unless route.resource_representations.empty?
+        - if should_display_representations && !route.resource_representations.empty?
           %dl
             %dt Resource representations
             %dd= route.resource_representations.uniq.map(&:name).join(", ")

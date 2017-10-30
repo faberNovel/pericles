@@ -3,7 +3,7 @@
 - if @report.route.blank?
   You forgot to register this route :O
 - else
-  = render partial: 'routes/route_summary', locals: { route: @report.route, real_url: @report.url }
+  = render partial: 'routes/route_summary', locals: { route: @report.route, real_url: @report.url, should_display_representations: true }
 
 %h4 Request
 
