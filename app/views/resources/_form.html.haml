@@ -13,7 +13,7 @@
 
     = f.text_area :description
 
-  - unless params[:section] == "base"
+  - if @resource.persisted? && params[:section] != "base"
     %h3 Attributes
 
     %table{class: "table table-striped", id: "table_attributes"}
@@ -70,35 +70,8 @@
     %p
       = f.link_to_add "Add an Attribute", :resource_attributes, data: { target: "#table_attributes" }
 
-  - unless @resource.persisted?
-    %h3 Routes
-
-    %table{class: "table table-striped", id: "table_routes"}
-      %thead
-        %tr
-          %th Name
-          %th Description
-          %th HTTP method
-          %th URI
-          %th
-      %tbody
-        = f.fields_for :routes, wrapper: false do |route_fields|
-          %tr.fields
-            %td
-              = route_fields.text_field :name, hide_label: true
-            %td
-              = route_fields.text_area :description, hide_label: true
-            %td
-              = route_fields.select :http_method, Route.http_methods.keys.to_a, hide_label: true
-            %td
-              = route_fields.text_field :url, hide_label: true
-            %td
-              = route_fields.link_to_remove "Remove"
-
-    %p
-      = f.link_to_add "Add a Route", :routes, data: { target: "#table_routes" }
-
-  = link_to 'Add scheme', new_scheme_path,  :target => '_blank'
+  - if @resource.persisted?
+    = link_to 'Add scheme', new_scheme_path,  :target => '_blank'
 
   %p
     = f.submit
