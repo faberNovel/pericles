@@ -36,33 +36,25 @@ class AttributeTest < ActiveSupport::TestCase
     assert_not build(:attribute, primitive_type: :boolean, scheme: create(:scheme)).valid?
   end
 
+  test "A string/integer/number attribute can have a min or max" do
+    [:string, :integer, :number].each do |type|
+      assert build(:attribute, primitive_type: type, minimum: 3).valid?
+      assert build(:attribute, primitive_type: type, maximum: 3).valid?
+    end
+  end
+
+  test "A resource/boolean/null attribute cannot have a min or max" do
+    [:boolean, :null].each do |type|
+      assert_not build(:attribute, primitive_type: type, minimum: 3).valid?
+      assert_not build(:attribute, primitive_type: type, maximum: 3).valid?
+    end
+
+    assert_not build(:attribute_with_resource, maximum: 3).valid?
+    assert_not build(:attribute_with_resource, minimum: 3).valid?
+  end
+
   test "An attribute can have a scheme if it is a string" do
     assert build(:attribute, primitive_type: :string, scheme: create(:scheme)).valid?
-  end
-
-  test "An attribute cannot have a max length if it is not a string" do
-    assert_not build(:attribute_with_resource, max_length: 3).valid?
-    assert_not build(:attribute, primitive_type: :boolean, max_length: 3).valid?
-    assert build(:attribute, primitive_type: :string,  max_length: 3).valid?
-  end
-
-  test "An attribute cannot have a min length if it is not a string" do
-    assert_not build(:attribute_with_resource, min_length: 3).valid?
-    assert_not build(:attribute, primitive_type: :boolean,  min_length: 3).valid?
-    assert build(:attribute, primitive_type: :string,  min_length: 3).valid?
-  end
-
-  test "An attribute cannot have a min if it is not a integer or if it has enum value" do
-    assert_not build(:attribute_with_resource, minimum: 3).valid?
-    assert_not build(:attribute, primitive_type: :boolean,  minimum: 3).valid?
-    assert_not build(:attribute, primitive_type: :integer,  enum: "0, 1", minimum: 3).valid?
-    assert build(:attribute, primitive_type: :integer, minimum: 3).valid?
-  end
-  test "An attribute cannot have a max if it is not a integer or if it has enum value" do
-    assert_not build(:attribute_with_resource, maximum: 3).valid?
-    assert_not build(:attribute, primitive_type: :boolean,  maximum: 3).valid?
-    assert_not build(:attribute, primitive_type: :integer,  enum: "0, 1", maximum: 3).valid?
-    assert build(:attribute, primitive_type: :integer, maximum: 3).valid?
   end
 
   test "Attribute should be valid with all fields set correctly" do
