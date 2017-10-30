@@ -14,25 +14,17 @@
   / Response Nav tabs
   %ul.nav.nav-tabs{ role: "tablist" }
     %li.active{ role: "presentation" }
-      %a{ "aria-controls" => "response headers", "data-toggle" => "tab", href: "#resp-#{response.id}-headers",
-        role: "tab" }
-        = "Headers"
-    %li{ role: "presentation" }
       %a{ "aria-controls" => "response body", "data-toggle" => "tab", href: "#resp-#{response.id}-body",
         role: "tab" }
         = "Body"
+    %li{ role: "presentation" }
+      %a{ "aria-controls" => "response headers", "data-toggle" => "tab", href: "#resp-#{response.id}-headers",
+        role: "tab" }
+        = "Headers"
+
   / Response Tab panes
   .tab-content
-    .tab-pane.active{ role: "tabpanel", id: "resp-#{response.id}-headers" }
-      .panel.panel-default
-        .panel-body
-          - if response.headers.any?
-            - response.headers.each do |response_header|
-              = render response_header
-          - else
-            %p
-              %i= t('routes.show.no_header_placeholder')
-    .tab-pane{ role: "tabpanel", id: "resp-#{response.id}-body" }
+    .tab-pane.active{ role: "tabpanel", id: "resp-#{response.id}-body" }
       .panel.panel-default
         - unless response.body_schema.blank?
           .panel-heading
@@ -59,3 +51,12 @@
           - else
             %p
               %i= t('routes.show.no_body_placeholder')
+    .tab-pane{ role: "tabpanel", id: "resp-#{response.id}-headers" }
+      .panel.panel-default
+        .panel-body
+          - if response.headers.any?
+            - response.headers.each do |response_header|
+              = render response_header
+          - else
+            %p
+              %i= t('routes.show.no_header_placeholder')
