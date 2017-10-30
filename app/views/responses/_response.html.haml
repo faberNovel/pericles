@@ -10,14 +10,6 @@
       %dl
         %dt Description
         %dd= response.description
-
-  - unless response.resource_representation.blank?
-    .col-xs-6
-      %dl
-        %dt Resource Representation
-        %dd= response.resource_representation.name
-        %dd= "Is collection ? #{response.is_collection}"
-
 %div
   / Response Nav tabs
   %ul.nav.nav-tabs{ role: "tablist" }
@@ -52,7 +44,7 @@
           - unless response.body_schema.blank?
             .row
               .col-xs-6
-                %h4 JSON Schema
+                %h4= "JSON Schema #{schema_summary(response.root_key, response.resource_representation&.name, response.is_collection)}"
                 %pre.pre-scrollable
                   %code
                     =format_json(response.body_schema)

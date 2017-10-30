@@ -26,14 +26,6 @@
           %dl
             %dt Description
             %dd= @route.request_description
-
-      - unless @route.request_resource_representation.blank?
-        .col-xs-6
-          %dl
-            %dt Resource Representation
-            %dd= @route.request_resource_representation.name
-            %dd= "Is collection ? #{@route.is_collection}"
-
     %div
       / Nav tabs
       %ul.nav.nav-tabs{ role: "tablist" }
@@ -91,7 +83,9 @@
               - unless @route.request_body_schema.blank?
                 .row
                   .col-xs-6
-                    %h4 JSON Schema
+                    / TODO Clément Villain 30/10/17:
+                    / Add root key
+                    %h4= "JSON Schema #{schema_summary('', @route.request_resource_representation&.name, @route.is_collection)}"
                     %pre.pre-scrollable
                       %code
                         =format_json(@route.request_body_schema)
