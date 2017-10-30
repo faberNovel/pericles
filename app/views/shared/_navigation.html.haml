@@ -11,11 +11,11 @@
     / Collect the nav links, forms, and other content for toggling
     #bs-example-navbar-collapse-1.collapse.navbar-collapse
       %ul.nav.navbar-nav
-        %li.active
-          %a{:href => "/projects/"}
+        %li{class: top_nav_active_class(projects_path)}
+          %a{:href => projects_path}
             Projects
             %span.sr-only (current)
-        %li
+        %li{class: top_nav_active_class(new_validation_path)}
           = link_to 'JSON Validation', new_validation_path
       - if user_signed_in?
         %ul.nav.navbar-nav.navbar-right
