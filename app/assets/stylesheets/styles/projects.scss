@@ -78,6 +78,11 @@
     text-decoration: none;
 }
 
+.sidebar-nav li.active a {
+    text-decoration: none;
+    color: white;
+}
+
 .sidebar-nav > .sidebar-brand {
     height: 65px;
     font-size: 18px;
