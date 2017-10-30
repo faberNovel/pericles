@@ -1,0 +1,17 @@
+.valid-response {
+  background-color: #5cb85c !important;
+  color: white !important;
+}
+
+.invalid-response {
+  background-color: #d9534f !important;
+  color: white !important;
+}
+
+li > a.valid-response, a.invalid-response {
+  opacity: 0.5;
+}
+
+li.active > a {
+  opacity: 1;
+}

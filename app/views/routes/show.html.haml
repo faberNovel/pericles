@@ -113,7 +113,7 @@
       %ul.nav.nav-pills{ role: "tablist" }
         - @responses.each_with_index do |response, index|
           %li{ role: "presentation", class: ('active' if index.zero?) }
-            %a{ "aria-controls" => "response", "data-toggle" => "pill", href: "#resp-#{response.id}", role: "tab" }
+            %a{ "aria-controls" => "response", "data-toggle" => "pill", href: "#resp-#{response.id}", role: "tab", class: response_status_code_class(response.status_code) }
               = response.status_code
 
       / Tab panes for all responses
