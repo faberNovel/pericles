@@ -19,6 +19,8 @@ class Attribute < ApplicationRecord
   validates :scheme, absence: true, unless: :string?
   validates :minimum, absence: true, if: :cannot_have_min_max
   validates :maximum, absence: true, if: :cannot_have_min_max
+  validates :min_items, absence: true, unless: :is_array
+  validates :max_items, absence: true, unless: :is_array
 
   scope :sorted_by_name, -> { order(:name) }
 

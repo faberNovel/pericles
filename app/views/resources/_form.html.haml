@@ -29,6 +29,8 @@
           %th Scheme
           %th Minimum
           %th Maximum
+          %th Min Items
+          %th Max Items
           %th Example
           %th Faker
           %th
@@ -55,6 +57,10 @@
               = attribute_fields.number_field :minimum, hide_label: true
             %td
               = attribute_fields.number_field :maximum, hide_label: true
+            %td
+              = attribute_fields.number_field :min_items, hide_label: true
+            %td
+              = attribute_fields.number_field :max_items, hide_label: true
             %td
               = attribute_fields.text_area :example, hide_label: true
             %td

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171030155238) do
+ActiveRecord::Schema.define(version: 20171031084915) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,6 +37,8 @@ ActiveRecord::Schema.define(version: 20171030155238) do
     t.boolean  "nullable",           default: false, null: false
     t.integer  "faker_id"
     t.integer  "scheme_id"
+    t.integer  "min_items"
+    t.integer  "max_items"
     t.index ["faker_id"], name: "index_attributes_on_faker_id", using: :btree
     t.index ["resource_id"], name: "index_attributes_on_resource_id", using: :btree
     t.index ["scheme_id"], name: "index_attributes_on_scheme_id", using: :btree

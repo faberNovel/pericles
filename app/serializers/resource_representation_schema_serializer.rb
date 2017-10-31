@@ -133,6 +133,7 @@ class ResourceRepresentationSchemaSerializer < ActiveModel::Serializer
       array_of_attribute_hash = {}
       array_of_attribute_hash[:type] = 'array'
       array_of_attribute_hash[:items] = attribute_hash
+      add_array_minmax_constraints(array_of_attribute_hash, attribute)
     end
 
     hash_for_non_nullable_attribute = array_of_attribute_hash ? array_of_attribute_hash : attribute_hash
@@ -161,7 +162,7 @@ class ResourceRepresentationSchemaSerializer < ActiveModel::Serializer
       attribute_hash[:enum] = enum.split(", ")
       attribute_hash[:enum] = cast_enum_elements(attribute_hash[:enum], attribute_hash[:type]).uniq
     end
-    add_minmax_constraints(attribute_hash, attribute)
+    add_primitive_minmax_constraints(attribute_hash, attribute)
     return attribute_hash
   end
 
@@ -203,12 +204,23 @@ class ResourceRepresentationSchemaSerializer < ActiveModel::Serializer
     end
   end
 
-  def add_minmax_constraints(hash, attribute)
+  def add_array_minmax_constraints(hash, attribute)
+    [:min_items, :max_items].each do |attribute_name|
+      constraint_value = attribute.send(attribute_name)
+      next if constraint_value.blank?
+
+      key = attribute_name.to_s.camelize(:lower)
+      hash[key] = constraint_value
+    end
+  end
+
+  def add_primitive_minmax_constraints(hash, attribute)
     [:minimum, :maximum].each do |attribute_name|
-      unless attribute.send(attribute_name).blank?
-        key = minmax_key_name(attribute_name, attribute)
-        hash[key] = attribute.send(attribute_name)
-      end
+      constraint_value = attribute.send(attribute_name)
+      next if constraint_value.blank?
+
+      key = minmax_key_name(attribute_name, attribute)
+      hash[key] = constraint_value
     end
   end
 

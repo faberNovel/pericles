@@ -81,6 +81,8 @@ class ResourcesController < AuthenticatedController
         :scheme_id,
         :minimum,
         :maximum,
+        :min_items,
+        :max_items,
         :nullable,
         :faker_id,
         :_destroy

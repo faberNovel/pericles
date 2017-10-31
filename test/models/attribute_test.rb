@@ -53,6 +53,14 @@ class AttributeTest < ActiveSupport::TestCase
     assert_not build(:attribute_with_resource, minimum: 3).valid?
   end
 
+  test "Only array attribute can have min_items or max_items" do
+    assert build(:attribute, primitive_type: :boolean, is_array: true, min_items: 3).valid?
+    assert build(:attribute, primitive_type: :boolean, is_array: true, max_items: 3).valid?
+
+    assert_not build(:attribute, primitive_type: :boolean, is_array: false, max_items: 3).valid?
+    assert_not build(:attribute, primitive_type: :boolean, is_array: false, min_items: 3).valid?
+  end
+
   test "An attribute can have a scheme if it is a string" do
     assert build(:attribute, primitive_type: :string, scheme: create(:scheme)).valid?
   end
