@@ -16,9 +16,8 @@ class ResourceRepresentationSchemaSerializerTest < ActiveSupport::TestCase
   end
 
   test "should produce a valid json schema" do
-    meta_schema = 'http://json-schema.org/draft-04/schema#'
     schema = generate_schema(false, 'root_key').to_json
-    assert JSON::Validator.fully_validate(meta_schema, schema, json: true).empty?
+    assert JSON::Validator.fully_validate(META_SCHEMA, schema, json: true).empty?
   end
 
   test "should be an array if is_collection is set and not root_key" do
