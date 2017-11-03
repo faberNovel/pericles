@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171009090238) do
+ActiveRecord::Schema.define(version: 20171030102800) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -46,15 +46,11 @@ ActiveRecord::Schema.define(version: 20171009090238) do
 
   create_table "attributes_resource_representations", force: :cascade do |t|
     t.boolean  "is_required",                       default: false, null: false
-    t.string   "custom_enum"
-    t.string   "custom_pattern"
     t.integer  "parent_resource_representation_id"
     t.integer  "attribute_id"
     t.datetime "created_at",                                        null: false
     t.datetime "updated_at",                                        null: false
     t.integer  "resource_representation_id"
-    t.boolean  "custom_nullable"
-    t.integer  "custom_faker_id"
     t.index ["attribute_id"], name: "index_attributes_resource_representations_on_attribute_id", using: :btree
     t.index ["parent_resource_representation_id"], name: "index_arr_on_parent_resource_representation_id", using: :btree
     t.index ["resource_representation_id"], name: "index_arr_on_resource_representation_id", using: :btree
@@ -106,7 +102,7 @@ ActiveRecord::Schema.define(version: 20171009090238) do
     t.text     "description"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
-    t.string   "server_url"
+    t.string   "proxy_url"
   end
 
   create_table "query_parameters", force: :cascade do |t|
@@ -229,7 +225,6 @@ ActiveRecord::Schema.define(version: 20171009090238) do
   add_foreign_key "attributes", "resources"
   add_foreign_key "attributes", "resources", column: "parent_resource_id"
   add_foreign_key "attributes", "schemes"
-  add_foreign_key "attributes_resource_representations", "attribute_fakers", column: "custom_faker_id"
   add_foreign_key "attributes_resource_representations", "attributes"
   add_foreign_key "attributes_resource_representations", "resource_representations"
   add_foreign_key "attributes_resource_representations", "resource_representations", column: "parent_resource_representation_id"

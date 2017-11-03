@@ -31,7 +31,7 @@ class ValidationsController < AuthenticatedController
   end
 
   def validate_json_schema(schema)
-    return validate_json("http://json-schema.org/draft-04/schema#", schema)
+    return validate_json(META_SCHEMA, schema)
   end
 
   def validate_json_instance(schema, instance)

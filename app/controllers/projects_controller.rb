@@ -9,21 +9,6 @@ class ProjectsController < AuthenticatedController
   end
 
   def show
-    respond_to do |format|
-      format.html
-      format.zip do
-        compressed_filestream = Zip::OutputStream.write_buffer do |zos|
-          @project.resources.each do |resource|
-            zos.put_next_entry "includes/_#{resource.name.downcase}.md"
-            zos.print ResourcesController.render :show, assigns: { resource: resource }, formats: :md
-          end
-          zos.put_next_entry "index.md"
-          zos.print ResourcesController.render :index, assigns: { project: @project, resources: @project.resources }, formats: :md
-        end
-        compressed_filestream.rewind
-        send_data compressed_filestream.read, filename: "#{@project.title.downcase}.zip"
-      end
-    end
   end
 
   def new
@@ -65,7 +50,7 @@ class ProjectsController < AuthenticatedController
   end
 
   def project_params
-    params.require(:project).permit(:title, :description, :server_url)
+    params.require(:project).permit(:title, :description, :proxy_url)
   end
 
 end

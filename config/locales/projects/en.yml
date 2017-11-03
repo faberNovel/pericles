@@ -1,0 +1,30 @@
+en:
+  projects:
+    form:
+      description_default: |
+        URL
+        ** Please fill URL PROD if it exists or any other urls relative to this project
+
+        Format
+        ** Specify JSON / Restful format : https://i.imgur.com/rzoYLSX.png
+
+        Encoding
+        ** Define encoding - utf-8 par défaut : https://i.imgur.com/j7pvEy1.png
+
+        Compression
+        ** Define compression : https://i.imgur.com/Eix5nng.png
+
+        Protocol
+        ** Make call with HTTPS (cf. Apple) : https://i.imgur.com/2a6mD2B.png
+
+        Localization
+        ** Define localization (header preferably or parameter) : https://i.imgur.com/NFDbaiL.png
+
+        Dates
+        ** Our date format should fullfill iso 8601 : https://fr.wikipedia.org/wiki/ISO_8601
+
+        Authentication
+        ** Define the format of the request and the authentication response => Example: authentication OAuth => Think to create a route!
+        ** Define errors and associated messages
+        ** Define the headers for each public / private route
+        ** Define the expiration logic of tokens

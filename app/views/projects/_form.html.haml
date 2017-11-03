@@ -10,9 +10,17 @@
 
   = f.text_field :title
 
+  - if @project.persisted?
+    .form-group
+      %label.control-label
+        URL Mocks
+      %input.form-control{type: 'text', value: project_mocks_root_url(@project), disabled: 'true'}
+
+  = f.text_field :proxy_url
+
+  - @project.description ||= t('.description_default')
   = f.text_area :description
 
-  = f.text_field :server_url
 
   %p
     = f.submit

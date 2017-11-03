@@ -137,7 +137,7 @@ class ResourceRepresentationSchemaSerializer < ActiveModel::Serializer
 
     hash_for_non_nullable_attribute = array_of_attribute_hash ? array_of_attribute_hash : attribute_hash
 
-    is_nullable = association.custom_nullable.nil? ? attribute.nullable : association.custom_nullable
+    is_nullable = attribute.nullable
 
     return is_nullable ? { oneOf: [hash_for_non_nullable_attribute, { type: 'null' }] } : hash_for_non_nullable_attribute
   end
@@ -156,8 +156,8 @@ class ResourceRepresentationSchemaSerializer < ActiveModel::Serializer
     attribute_hash[:description] = attribute.description unless attribute.description.blank?
     attribute_hash[:type] = attribute.primitive_type
     add_scheme_validation(attribute_hash, association)
-    unless attribute.enum.blank? && association.custom_enum.blank?
-      enum = association.custom_enum.blank? ? attribute.enum : association.custom_enum
+    unless attribute.enum.blank?
+      enum = attribute.enum
       attribute_hash[:enum] = enum.split(", ")
       attribute_hash[:enum] = cast_enum_elements(attribute_hash[:enum], attribute_hash[:type]).uniq
     end
@@ -170,11 +170,6 @@ class ResourceRepresentationSchemaSerializer < ActiveModel::Serializer
   end
 
   def add_scheme_validation(attribute_hash, association)
-    unless association.custom_pattern.blank?
-      attribute_hash[:pattern] = association.custom_pattern
-      return
-    end
-
     scheme = association.resource_attribute.scheme
     attribute_hash[:format] = scheme.name if scheme&.format?
     attribute_hash[:pattern] = scheme.regexp if scheme&.pattern?
@@ -207,9 +202,7 @@ class ResourceRepresentationSchemaSerializer < ActiveModel::Serializer
 
   def add_faker_data_to_attribute_hash(attribute_hash, association)
     attribute = association.resource_attribute
-    if association.custom_faker_id?
-      attribute_hash[:faker] = association.custom_faker.name
-    elsif attribute.faker_id?
+    if attribute.faker_id?
       attribute_hash[:faker] = attribute.faker.name
     end
   end

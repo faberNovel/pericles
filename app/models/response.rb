@@ -48,4 +48,9 @@ class Response < ApplicationRecord
       )
     end
   end
+
+  def json_instance
+    schema = JSON.parse(body_schema)
+    GenerateJsonInstanceService.new(schema).execute
+  end
 end

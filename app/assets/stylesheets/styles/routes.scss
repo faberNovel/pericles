@@ -1,0 +1,39 @@
+.route-row {
+  display: flex;
+  justify-content: space-between;
+  margin: 0;
+  border-top: 1px solid #ddd;
+
+  * {
+    overflow: hidden;
+    padding: 8px;
+    margin: 4px;
+  }
+}
+
+.route-row:nth-child(odd) {
+  background-color: #f9f9f9;
+}
+
+
+#route_description {
+  height: 150px;
+}
+
+.routes-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 24px;
+  align-items: center;
+
+  .btn-lg, .btn-group-lg > .btn {
+    padding: 8px;
+    line-height: 20px;
+    margin: 8px 0;
+    font-size: 14px;
+  }
+
+  a {
+    color: black;
+  }
+}

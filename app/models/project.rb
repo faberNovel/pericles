@@ -4,8 +4,6 @@ class Project < ApplicationRecord
   has_many :reports
 
   validates :title, presence: true, length: { in: 2..25 }, uniqueness: true
-  validates :description, length: { maximum: 500 }
-
 
   def build_route_set
     routes = Route.of_project(self)

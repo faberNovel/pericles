@@ -27,16 +27,6 @@
                 %dt Type
                 %dd
                   %strong= format_type(attribute.primitive_type, attribute.resource_id, attribute.is_array)
-            - unless attr_resource_rep.custom_enum.blank?
-              .col-xs-2
-                %dl
-                  %dt Enum
-                  %dd= attr_resource_rep.custom_enum
-            - unless attr_resource_rep.custom_pattern.blank?
-              .col-xs-2
-                %dl
-                  %dt Pattern
-                  %dd= attr_resource_rep.custom_pattern
             - if resource_representation_for_attr
               .col-xs-2
                 %dl
@@ -47,13 +37,3 @@
               %dl
                 %dt Required ?
                 %dd= attr_resource_rep.is_required ? t('required') : t('optional')
-            - unless attr_resource_rep.custom_nullable.nil?
-              .col-xs-1
-                %dl
-                  %dt Nullable
-                  %dd= attr_resource_rep.custom_nullable
-            - if attr_resource_rep.custom_faker
-              .col-xs-2
-                %dl
-                  %dt Faker
-                  %dd= attr_resource_rep.custom_faker&.name

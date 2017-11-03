@@ -5,7 +5,8 @@ Rails.application.routes.draw do
     resources :resources
     resources :routes, only: [:index]
     resources :reports, only: [:index, :show]
-    match 'mocks/*path', to: "mocks#compute_mock", via: :all
+    match 'mocks', to: "mocks#compute_mock", via: :all, as: 'mocks_root'
+    match 'mocks/*path', to: "mocks#compute_mock", via: :all, as: 'mocks'
     match 'proxy', to: "proxy#compute_request", via: :all, format: false
     match 'proxy/*path', to: "proxy#compute_request", via: :all, format: false
   end
@@ -22,7 +23,5 @@ Rails.application.routes.draw do
   resources :users, only: [:show]
   resources :schemes, only: [:create, :new, :index, :destroy]
   root "projects#index"
-  match "/not_found", to: "errors#not_found", via: :all
-  match '*path', to: "errors#not_found", via: :all
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

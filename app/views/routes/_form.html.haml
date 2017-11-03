@@ -17,7 +17,7 @@
       .col-xs-6
         = f.text_field :name
 
-        = f.text_area :description
+        = f.text_area :description, placeholder: t('.description_placeholder')
 
         = f.select :http_method, Route.http_methods.keys.to_a
 

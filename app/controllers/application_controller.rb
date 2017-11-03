@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   rescue_from ActiveRecord::RecordNotFound do
-    redirect_to "/not_found"
+    render file: 'public/404.html', status: :not_found, layout: false
   end
 
   rescue_from ActionController::ParameterMissing do

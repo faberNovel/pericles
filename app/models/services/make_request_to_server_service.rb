@@ -1,14 +1,14 @@
 class MakeRequestToServerService
 
-  def initialize(server_url, request)
-    @server_url = server_url
-    @server_url += '/' unless @server_url.ends_with? '/'
+  def initialize(proxy_url, request)
+    @proxy_url = proxy_url
+    @proxy_url += '/' unless @proxy_url.ends_with? '/'
     @request = request
   end
 
   def execute
     relative_url = @request.path[/proxy\/?(.*)/, 1]
-    url = URI.join(@server_url, relative_url)
+    url = URI.join(@proxy_url, relative_url)
     url = URI.join(url.to_s, '?' + @request.query_string) unless @request.query_string.blank?
 
     HTTP.follow.use(:auto_inflate).send(@request.method.downcase, url, body: @request.body.read, headers: headers)
