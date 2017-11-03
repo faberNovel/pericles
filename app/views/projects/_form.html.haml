@@ -18,7 +18,8 @@
 
   = f.text_field :proxy_url
 
-  = f.text_area :description, placeholder: t('.description_placeholder')
+  - @project.description ||= t('.description_default')
+  = f.text_area :description
 
 
   %p

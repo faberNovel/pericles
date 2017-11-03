@@ -15,17 +15,6 @@ class ProjectTest < ActiveSupport::TestCase
     assert_not build(:project, title: "testtesttesttesttesttesttesttesttesttesttest").valid?
   end
 
-  test "shouldn't exist without a description that's too long" do
-    assert_not build(:project, description: "testtesttesttesttesttesttesttesttest
-      testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest
-      testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest
-      testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest
-      testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest
-      testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest
-      testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest
-      testtesttesttesttesttesttesttesttest").valid?
-  end
-
   test "Project should be valid with all attributes set correctly" do
     assert build(:project, title: "New Project", description: "Project description").valid?
   end

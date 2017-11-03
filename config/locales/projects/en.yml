@@ -1,7 +1,7 @@
 en:
   projects:
     form:
-      description_placeholder: |
+      description_default: |
         URL
         ** Please fill URL PROD if it exists or any other urls relative to this project
 
