@@ -93,7 +93,7 @@
 
         = f.check_box :request_is_collection
         = f.text_field :request_root_key, class: 'root-key'
-        = f.text_area :request_json_schema, size: "60x20", label: 'Body JSON schema', readonly: true
+        = f.text_area :request_json_schema, size: "60x20", label: 'Body JSON schema', readonly: true, value: format_json(@route.request_json_schema)
 
   %p
     = f.submit

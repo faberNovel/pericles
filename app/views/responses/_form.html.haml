@@ -47,7 +47,7 @@
       = f.check_box :is_collection
       = f.text_field :root_key, class: 'root-key'
 
-      = f.text_area :json_schema, size: "60x20", label: 'Body JSON schema', readonly: true
+      = f.text_area :json_schema, size: "60x20", label: 'Body JSON schema', readonly: true, value: format_json(@response.json_schema)
 
   %p
     = f.submit
