@@ -5,7 +5,6 @@
     %title Pericles
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
-    = yield :page_scripts
     = csrf_meta_tags
   %body
     = render 'shared/navigation'
@@ -20,3 +19,4 @@
         .col-xs-12
           = yield :page_title
       = yield
+    = yield :page_scripts
