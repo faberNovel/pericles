@@ -16,7 +16,6 @@ class Route < ApplicationRecord
   validates :name, presence: true, uniqueness: { scope: :resource }
   validates :http_method, presence: true
   validates :url, presence: true
-  validates :request_body_schema, json_schema: true, allow_blank: true
   validates :resource, presence: true, uniqueness: { scope: [:http_method, :url]}
 
   scope :of_project, ->(project) { joins(:resource).where(resources: { project_id: project.id }) }
@@ -24,13 +23,16 @@ class Route < ApplicationRecord
   audited
   has_associated_audits
 
-  def is_restful_collection?
-    #TODO: Emilie Paillous (25/04/2017) : should be directly in the database model route
-    return self.GET? && url.ends_with?(resource.name.downcase.pluralize)
-  end
 
   def request_json_instance
-    schema = JSON.parse(request_body_schema)
-    GenerateJsonInstanceService.new(schema).execute
+    GenerateJsonInstanceService.new(request_json_schema).execute if request_json_schema
+  end
+
+  def request_json_schema
+    ResourceRepresentationSchemaSerializer.new(
+      request_resource_representation,
+      is_collection: request_is_collection,
+      root_key: request_root_key
+    ).as_json if request_resource_representation
   end
 end

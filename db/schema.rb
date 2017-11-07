@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171030102800) do
+ActiveRecord::Schema.define(version: 20171031084915) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,13 +32,13 @@ ActiveRecord::Schema.define(version: 20171030102800) do
     t.datetime "created_at",                         null: false
     t.datetime "updated_at",                         null: false
     t.string   "enum"
-    t.integer  "min_length"
-    t.integer  "max_length"
     t.integer  "minimum"
     t.integer  "maximum"
     t.boolean  "nullable",           default: false, null: false
     t.integer  "faker_id"
     t.integer  "scheme_id"
+    t.integer  "min_items"
+    t.integer  "max_items"
     t.index ["faker_id"], name: "index_attributes_on_faker_id", using: :btree
     t.index ["resource_id"], name: "index_attributes_on_resource_id", using: :btree
     t.index ["scheme_id"], name: "index_attributes_on_scheme_id", using: :btree
@@ -155,7 +155,7 @@ ActiveRecord::Schema.define(version: 20171030102800) do
   create_table "responses", force: :cascade do |t|
     t.integer  "status_code"
     t.text     "description"
-    t.json     "body_schema"
+    t.json     "body_schema_backup"
     t.datetime "created_at",                                 null: false
     t.datetime "updated_at",                                 null: false
     t.integer  "route_id"
@@ -174,10 +174,11 @@ ActiveRecord::Schema.define(version: 20171030102800) do
     t.integer  "resource_id"
     t.datetime "created_at",                                         null: false
     t.datetime "updated_at",                                         null: false
-    t.json     "request_body_schema"
+    t.json     "request_body_schema_backup"
     t.integer  "request_resource_representation_id"
-    t.boolean  "is_collection",                      default: false, null: false
+    t.boolean  "request_is_collection",              default: false, null: false
     t.text     "request_description"
+    t.string   "request_root_key"
     t.index ["request_resource_representation_id"], name: "index_routes_on_request_resource_representation_id", using: :btree
     t.index ["resource_id"], name: "index_routes_on_resource_id", using: :btree
   end

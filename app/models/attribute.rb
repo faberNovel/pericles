@@ -17,10 +17,10 @@ class Attribute < ApplicationRecord
   validate :type_cannot_be_primitive_type_and_resource
   validates :enum, absence: true, unless: :is_enumerable?
   validates :scheme, absence: true, unless: :string?
-  validates :min_length, absence: true, unless: :string?
-  validates :max_length, absence: true, unless: :string?
-  validates :minimum, absence: true, unless: "self.integer? && enum.blank?"
-  validates :maximum, absence: true, unless: "self.integer? && enum.blank?"
+  validates :minimum, absence: true, if: :cannot_have_min_max
+  validates :maximum, absence: true, if: :cannot_have_min_max
+  validates :min_items, absence: true, unless: :is_array
+  validates :max_items, absence: true, unless: :is_array
 
   scope :sorted_by_name, -> { order(:name) }
 
@@ -36,5 +36,9 @@ class Attribute < ApplicationRecord
     unless primitive_type.nil? || resource.nil?
       errors.add(:base, :type_cannot_be_primitive_type_and_resource)
     end
+  end
+
+  def cannot_have_min_max
+    resource || boolean? || null?
   end
 end

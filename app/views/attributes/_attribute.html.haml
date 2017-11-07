@@ -51,13 +51,3 @@
           %dl
             %dt Faker
             %dd= attribute.faker&.name
-      - unless attribute.min_length.blank?
-        .col-xs-1
-          %dl
-            %dt Minimum length
-            %dd= attribute.min_length
-      - unless attribute.max_length.blank?
-        .col-xs-1
-          %dl
-            %dt Maximum length
-            %dd= attribute.max_length

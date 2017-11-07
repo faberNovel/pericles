@@ -16,7 +16,7 @@ class RoutesControllerTest < ControllerWithAuthenticationTest
   end
 
   test "should show route" do
-    route = create(:route, request_body_schema: "{}")
+    route = create(:route)
     get resource_route_path(route.resource, route)
     assert_response :success
   end

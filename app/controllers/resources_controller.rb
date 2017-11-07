@@ -66,9 +66,35 @@ class ResourcesController < AuthenticatedController
   end
 
   def resource_params
-    params.require(:resource).permit(:name, :description,
-      resource_attributes_attributes: [:id, :name, :description, :primitive_type, :resource_id, :is_array, :enum, :example,
-        :scheme_id, :min_length, :max_length, :minimum, :maximum, :nullable, :faker_id, :_destroy],
-      routes_attributes: [:id, :name, :description, :http_method, :url, :_destroy])
+    params.require(:resource).permit(
+      :name,
+      :description,
+      resource_attributes_attributes: [
+        :id,
+        :name,
+        :description,
+        :primitive_type,
+        :resource_id,
+        :is_array,
+        :enum,
+        :example,
+        :scheme_id,
+        :minimum,
+        :maximum,
+        :min_items,
+        :max_items,
+        :nullable,
+        :faker_id,
+        :_destroy
+      ],
+      routes_attributes: [
+        :id,
+        :name,
+        :description,
+        :http_method,
+        :url,
+        :_destroy
+      ]
+    )
   end
 end

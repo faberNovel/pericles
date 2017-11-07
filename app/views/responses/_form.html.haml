@@ -41,13 +41,13 @@
       = f.select :resource_representation_id, @resource.resource_representations.pluck(:name, :id), include_blank: true
 
       %h5 JSON Schema
-      = button_tag("Generate Schema from Resource Representation", type: 'button', resource_id: "#{@resource.id}",
+      = button_tag("Generate Schema from Resource Representation", type: 'button', resource_id: "#{@resource.id}", id: 'generate-schema', style: "display: none;",
         onclick: "generate_schema_from_resource_representation(this)")
 
       = f.check_box :is_collection
       = f.text_field :root_key, class: 'root-key'
 
-      = f.text_area :body_schema, size: "60x20", label: 'Body JSON schema'
+      = f.text_area :json_schema, size: "60x20", label: 'Body JSON schema', readonly: true, value: format_json(@response.json_schema)
 
   %p
     = f.submit

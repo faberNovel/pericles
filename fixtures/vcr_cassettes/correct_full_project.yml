@@ -62,7 +62,7 @@ http_interactions:
       - 'Hello <3'
     body:
       encoding: ASCII-8BIT
-      string: '{"user": "hello"}'
+      string: '{"user": "pericles"}'
     http_version:
   recorded_at: Fri, 29 Sep 2017 16:25:57 GMT
 recorded_with: VCR 3.0.3

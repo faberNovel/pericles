@@ -14,27 +14,11 @@ FactoryGirl.define do
 
       after(:create) do |project, _|
         resource = create(:resource, project: project)
+        attribute = create(:attribute, parent_resource: resource, name: 'user', primitive_type: :string)
+        resource_representation = create(:resource_representation, resource: resource)
+        create(:attributes_resource_representation, parent_resource_representation: resource_representation, is_required: true, resource_attribute: attribute)
         route = create(:route, url: '/users/:id', http_method: 'GET', resource: resource)
-        body_schema = '{
-          "$schema": "http://json-schema.org/draft-04/schema#",
-          "definitions": {},
-          "id": "http://example.com/example.json",
-          "properties": {
-            "user": {
-              "default": "hello",
-              "description": "An explanation about the purpose of this instance.",
-              "examples": [
-                "hello"
-              ],
-              "id": "/properties/user",
-              "title": "The user schema.",
-              "type": "string"
-            }
-          },
-          "required": ["user"],
-          "type": "object"
-        }'
-        response = create(:response, route: route, body_schema: body_schema)
+        response = create(:response, route: route, root_key: '', is_collection: false, resource_representation: resource_representation)
         create(:header, http_message: response, name: 'X-Special-Header')
       end
     end

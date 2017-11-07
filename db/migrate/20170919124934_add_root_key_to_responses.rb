@@ -1,3 +1,6 @@
+class Response < ApplicationRecord
+end
+
 class AddRootKeyToResponses < ActiveRecord::Migration[5.0]
   def change
     add_column :responses, :root_key, :string
