@@ -30,8 +30,8 @@
           .panel-heading
             .flexcontainer.flexcontainer-justify-end
               .btn-group{ role: "group" }
-                = submit_tag("Validate JSON", class: "btn btn-default validate-json-instance", json_schema: response.json_schema)
-                = submit_tag("Generate JSON", class: "btn btn-default generate-json-instance", json_schema: response.json_schema)
+                = submit_tag("Validate JSON", class: "btn btn-default validate-json-instance", json_schema: format_json(response.json_schema))
+                = submit_tag("Generate JSON", class: "btn btn-default generate-json-instance", json_schema: format_json(response.json_schema))
 
         .panel-body
           - unless response.json_schema.blank?
