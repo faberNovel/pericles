@@ -6,9 +6,11 @@ class Route < ApplicationRecord
   has_many :responses, inverse_of: :route, dependent: :destroy
   has_many :resource_representations, through: :responses
   has_many :reports
+  has_many :mocks, through: :responses
 
   belongs_to :resource, inverse_of: :routes
   belongs_to :request_resource_representation, class_name: "ResourceRepresentation"
+  belongs_to :active_mock, class_name: 'MockInstance', foreign_key: 'mock_instance_id'
 
   accepts_nested_attributes_for :request_headers, allow_destroy: true, reject_if: :all_blank
   accepts_nested_attributes_for :request_query_parameters, allow_destroy: true, reject_if: :all_blank

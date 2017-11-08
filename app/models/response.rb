@@ -4,6 +4,7 @@ class Response < ApplicationRecord
 
   has_many :headers, inverse_of: :http_message, as: :http_message, dependent: :destroy
   has_many :reports
+  has_many :mock_instances
 
   accepts_nested_attributes_for :headers, allow_destroy: true, reject_if: :all_blank
 
