@@ -72,6 +72,7 @@ class RoutesController < AuthenticatedController
       :request_description,
       :request_is_collection,
       :request_root_key,
+      :mock_instance_id,
       request_query_parameters_attributes: [:id, :name, :description, :primitive_type, :is_optional, :_destroy],
       request_headers_attributes: [:id, :name, :description, :_destroy]
     )

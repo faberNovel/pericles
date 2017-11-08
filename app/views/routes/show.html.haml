@@ -15,7 +15,10 @@
             = link_to "Delete", resource_route_path(@resource, @route), method: :delete, data: { confirm: 'Are you sure ?' },
              class: "btn btn-default"
     = render partial: 'routes/route_summary', locals: { route: @route, should_display_representations: false }
-
+    -if @route.active_mock
+      %p
+        Active mock :&nbsp;
+        %strong=@route.active_mock.name
 .row
   .col-xs-12
     %h2 Request

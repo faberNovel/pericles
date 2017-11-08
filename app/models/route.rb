@@ -6,7 +6,7 @@ class Route < ApplicationRecord
   has_many :responses, inverse_of: :route, dependent: :destroy
   has_many :resource_representations, through: :responses
   has_many :reports
-  has_many :mocks, through: :responses
+  has_many :mock_instances, through: :responses
 
   belongs_to :resource, inverse_of: :routes
   belongs_to :request_resource_representation, class_name: "ResourceRepresentation"
