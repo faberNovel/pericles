@@ -20,6 +20,7 @@ Rails.application.routes.draw do
   resources :responses, only: [] do
     resources :mock_instances, only: [:new, :create]
   end
+  resources :mock_instances, only: [:edit, :update, :destroy]
   resources :validations, only: [:create, :new, :index]
   resources :instances, only: [:create]
   resources :headers, only: [:index]

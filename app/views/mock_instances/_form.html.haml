@@ -1,4 +1,4 @@
-= bootstrap_form_for [@response, @mock_instance] do |f|
+= bootstrap_form_for(@mock_instance.persisted? ? @mock_instance : [@response, @mock_instance]) do |f|
   - if @mock_instance.errors.any?
     #error_explanation
       %h2

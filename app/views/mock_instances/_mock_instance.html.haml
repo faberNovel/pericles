@@ -1,6 +1,10 @@
 .row
   .col-xs-6
-    %dl
-      %dt Name
-      %dd
-        %strong= mock_instance.name
+    %div
+      %strong= mock_instance.name
+    %textarea.mock_instance_text_area=format_json(mock_instance.body)
+  .col-xs-6
+    .flexcontainer.flexcontainer-justify-end
+      .btn-group{ role: "group" }
+        = link_to 'Edit', edit_mock_instance_path(mock_instance), class: "btn btn-default"
+        = link_to 'Delete', mock_instance_path(mock_instance), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-default"
