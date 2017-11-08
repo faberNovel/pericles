@@ -21,6 +21,10 @@
       %a{ "aria-controls" => "response headers", "data-toggle" => "tab", href: "#resp-#{response.id}-headers",
         role: "tab" }
         = "Headers"
+    %li{ role: "presentation" }
+      %a{ "aria-controls" => "response mocks", "data-toggle" => "tab", href: "#resp-#{response.id}-mocks",
+        role: "tab" }
+        = "Mocks"
 
   / Response Tab panes
   .tab-content
@@ -61,3 +65,15 @@
           - else
             %p
               %i= t('routes.show.no_header_placeholder')
+    .tab-pane{ role: "tabpanel", id: "resp-#{response.id}-mocks" }
+      .panel.panel-default
+        .panel-heading
+          .flexcontainer.flexcontainer-justify-end
+            = link_to 'New', new_response_mock_instance_path(response), class: "btn btn-default"
+        .panel-body
+          - if response.mock_instances.any?
+            - response.mock_instances.each do |mock|
+              = render mock
+          - else
+            %p
+              %i= t('routes.show.no_mocks_placeholder')
