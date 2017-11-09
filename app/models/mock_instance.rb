@@ -4,6 +4,10 @@ class MockInstance < ApplicationRecord
   validates :name, presence: true
   validate :body_must_comply_with_resource_json_schema
 
+  def body_sliced_with(resource_representation)
+    SliceJSONWithResourceRepresentation.new(JSON.parse(body), resource_representation).execute
+  end
+
   private
 
   def body_must_comply_with_resource_json_schema

@@ -7,9 +7,9 @@ class MocksController < ApplicationController
       route = Route.find_by_id(main_route[:name])
       response = route.responses.first
       status_code = response.status_code
-      if response.resource_representation.mock_instances
-        # TODO: Clément Villain 9/11/17
-        mock_body = {}
+      if response.resource_representation.mock_instances.any?
+        mock = response.resource_representation.mock_instances.first
+        mock_body = mock.body_sliced_with(response.resource_representation)
       else
         schema = response.json_schema
         mock_body = GenerateJsonInstanceService.new(schema).execute
