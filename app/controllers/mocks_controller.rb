@@ -5,13 +5,13 @@ class MocksController < ApplicationController
     main_route = routes.recognize_path('/' + params[:path], { method: request.method })
     if main_route
       route = Route.find_by_id(main_route[:name])
-      if route.active_mock
-        mock_body = route.active_mock.body
-        status_code = route.active_mock.response.status_code
+      response = route.responses.first
+      status_code = response.status_code
+      if response.resource_representation.mock_instances
+        # TODO: Clément Villain 9/11/17
+        mock_body = {}
       else
-        response = route.responses.first
         schema = response.json_schema
-        status_code = response.status_code
         mock_body = GenerateJsonInstanceService.new(schema).execute
       end
       render json: mock_body, status: status_code

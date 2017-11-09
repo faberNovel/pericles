@@ -5,6 +5,7 @@ class ResourceRepresentation < ApplicationRecord
    foreign_key: "parent_resource_representation_id", dependent: :destroy
   has_many :resource_attributes, through: :attributes_resource_representations
   has_many :responses, inverse_of: :resource_representation
+  has_many :mock_instances, through: :resource
 
   accepts_nested_attributes_for :attributes_resource_representations, allow_destroy: true
 

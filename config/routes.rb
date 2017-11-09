@@ -13,12 +13,10 @@ Rails.application.routes.draw do
   resources :resources, only: [] do
     resources :resource_representations, except: [:index]
     resources :routes, except: [:index]
+    resources :mock_instances, only: [:new, :create]
   end
   resources :routes, only: [] do
     resources :responses, except: [:index, :show]
-  end
-  resources :responses, only: [] do
-    resources :mock_instances, only: [:new, :create]
   end
   resources :mock_instances, only: [:edit, :update, :destroy]
   resources :validations, only: [:create, :new, :index]

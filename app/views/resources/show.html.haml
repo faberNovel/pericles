@@ -69,3 +69,15 @@
     %p
       %i= t('.no_route_placeholder')
 
+%h3 Mock instances
+
+.flexcontainer.flexcontainer-justify-end
+  = link_to 'New Mock', new_resource_mock_instance_path(@resource), class: "btn btn-default btn-lg"
+
+.margin-top-element
+  - if @resource.mock_instances.any?
+    - @resource.mock_instances.each do |mock|
+      = render mock
+  - else
+    %p
+      %i= t('.no_mocks_placeholder')

@@ -23,9 +23,6 @@
 
         = f.text_field :url
 
-        = f.select :mock_instance_id, @route.mock_instances.collect { |m| [ m.name, m.id ] }, include_blank: true
-
-
   %h3 Request
 
   .row

@@ -6,7 +6,7 @@ FactoryGirl.define do
 
   factory :mock_instance do
     name { generate(:mock_name) }
-    body '{"id": 1}'
-    response
+    body '{}'
+    resource
   end
 end

@@ -2,7 +2,7 @@
   .col-xs-6
     %div
       %strong= mock_instance.name
-    %textarea.mock_instance_text_area=format_json(mock_instance.body)
+    %textarea.mock_instance_text_area{disabled: 'true'}=format_json(mock_instance.body)
   .col-xs-6
     .flexcontainer.flexcontainer-justify-end
       .btn-group{ role: "group" }

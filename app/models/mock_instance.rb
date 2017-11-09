@@ -1,15 +1,18 @@
 class MockInstance < ApplicationRecord
-  belongs_to :response
+  belongs_to :resource
 
-  validate :body_must_comply_with_response_json_schema
+  validates :name, presence: true
+  validate :body_must_comply_with_resource_json_schema
 
   private
 
-  def body_must_comply_with_response_json_schema
+  def body_must_comply_with_resource_json_schema
+    return unless resource.json_schema
+
     JSON::Validator.fully_validate(
-      response.json_schema, body, json: true
+      resource.json_schema, body, json: true
     ).each do |error_message|
       errors.add(:body, error_message)
-    end if response.json_schema
+    end
   end
 end

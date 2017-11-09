@@ -31,10 +31,6 @@ class RouteTest < ActiveSupport::TestCase
     assert build(:route, name: "New route", description: "New test route", http_method: :POST, url: "/tests").valid?
   end
 
-  test "Route can have an active_mock" do
-    assert build(:route, active_mock: create(:mock_instance)).valid?
-  end
-
   test "routes of project" do
     route = create(:route)
     create(:route, resource: route.resource)
