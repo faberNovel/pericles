@@ -2,7 +2,7 @@
   = bootstrap_nested_form_for(@mock_profile) do |f|
     = f.text_field :name
 
-    - @project.routes.order(:url).each do |route|
+    - @project.routes.includes(responses: [:resource_representation, :mock_instances]).order(:url).each do |route|
       .route-container.panel.panel-default
         .panel-heading
           .panel-title
@@ -12,7 +12,7 @@
             .response
               %span.label.status-code{class: response_status_code_class(response.status_code)}=response.status_code
               - if response.resource_representation
-                = f.fields_for :mock_pickers, @mock_profile.mock_pickers.where(response: response).first do |fields|
+                = f.fields_for :mock_pickers, @mock_picker_by_response_id[response.id] do |fields|
                   = fields.select :mock_instance_ids, response.mock_instances.pluck(:name, :id), { include_blank: true, hide_label: true }, multiple: response.is_collection
     %p
       = f.submit

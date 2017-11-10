@@ -18,6 +18,7 @@ class MockProfilesController < AuthenticatedController
   def setup_mock_profile
     @mock_profile = MockProfile.includes(:mock_pickers).find(params[:id])
     @mock_profile.create_missing_pickers
+    @mock_picker_by_response_id = @mock_profile.mock_pickers.includes(:mock_instances).group_by(&:response_id)
     @project = @mock_profile.project
   end
 
