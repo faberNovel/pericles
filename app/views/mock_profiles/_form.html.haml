@@ -3,14 +3,16 @@
     = f.text_field :name
 
     - @project.routes.order(:url).each do |route|
-      .route-container
-        .url=route.url
-        .responses
-        - route.responses.each do |response|
-          .response
-            %span.label.status-code{class: response_status_code_class(response.status_code)}=response.status_code
-            - if response.resource_representation
-              = f.fields_for :mock_pickers, @mock_profile.mock_pickers.where(response: response).first do |fields|
-                = fields.select :mock_instance_ids, response.mock_instances.pluck(:name, :id), { include_blank: true, hide_label: true }, multiple: response.is_collection
+      .route-container.panel.panel-default
+        .panel-heading
+          .panel-title
+            %h4.url=route.url
+        .responses.panel-body
+          - route.responses.each do |response|
+            .response
+              %span.label.status-code{class: response_status_code_class(response.status_code)}=response.status_code
+              - if response.resource_representation
+                = f.fields_for :mock_pickers, @mock_profile.mock_pickers.where(response: response).first do |fields|
+                  = fields.select :mock_instance_ids, response.mock_instances.pluck(:name, :id), { include_blank: true, hide_label: true }, multiple: response.is_collection
     %p
       = f.submit

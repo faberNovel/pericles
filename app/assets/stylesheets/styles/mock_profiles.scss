@@ -1,6 +1,7 @@
 #mock_profile_form {
   .status-code {
     padding: 10px 15px;
+    font-size: 14px;
   }
 
   .response {
@@ -11,6 +12,8 @@
     .fields {
       width: 50%;
     }
+
+    padding: 8px;
   }
 
   .chosen-choices {
