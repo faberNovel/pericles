@@ -26,6 +26,7 @@ class MockProfilesController < AuthenticatedController
       :name,
       mock_pickers_attributes: [
         :id,
+        :mock_instance_ids,
         mock_instance_ids: [],
       ]
     )

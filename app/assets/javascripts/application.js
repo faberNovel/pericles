@@ -15,3 +15,5 @@
 //= require jquery_nested_form
 //= require jquery-ui/widgets/autocomplete
 //= require bootstrap-sprockets
+//= require chosen-jquery
+//= require setup_chosen
