@@ -1,23 +1,47 @@
 class MocksController < ApplicationController
 
   def compute_mock
-    routes = Project.find(params[:project_id]).build_route_set
+    project = Project.find(params[:project_id])
+    routes = project.build_route_set
     main_route = routes.recognize_path('/' + params[:path], { method: request.method })
-    if main_route
-      route = Route.find_by_id(main_route[:name])
-      response = route.responses.first
-      status_code = response.status_code
-      if response.resource_representation.mock_instances.any?
-        mock = response.resource_representation.mock_instances.first
-        mock_body = mock.body_sliced_with(response.resource_representation)
-      else
-        schema = response.json_schema
-        mock_body = GenerateJsonInstanceService.new(schema).execute
-      end
-      render json: mock_body, status: status_code
-    else
+    unless main_route
       render json: {error: 'Route not found'}, status: :not_found
+      return
     end
+
+    route = Route.find_by_id(main_route[:name])
+
+    # TODO: Clément Villain 10/11/17
+    response = route.responses.first
+
+    # TODO: Clément Villain 10/11/17
+    profile = project.mock_profiles.first
+
+    mock_picker = profile.mock_pickers.where(response: response).first
+    mock_instances = mock_picker&.mock_instances
+
+    if mock_instances&.any?
+      mock_body = mock_body_from_instances(mock_instances, response)
+    else
+      mock_body = random_mock(response)
+    end
+
+    render json: mock_body, status: response.status_code
   end
 
+  def random_mock(response)
+    schema = response.json_schema
+    GenerateJsonInstanceService.new(schema).execute
+  end
+
+  def mock_body_from_instances(mock_instances, response)
+    if response.is_collection
+      mock_body = mock_instances.map { |m| m.body_sliced_with(response.resource_representation) }
+    else
+      mock_body = mock_instances.first.body_sliced_with(response.resource_representation)
+    end
+    mock_body = {response.root_key => mock_body} unless response.root_key.blank?
+
+    mock_body
+  end
 end
