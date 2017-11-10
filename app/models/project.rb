@@ -1,7 +1,9 @@
 class Project < ApplicationRecord
   has_many :resources, inverse_of: :project, dependent: :destroy
   has_many :routes, through: :resources
+  has_many :responses, through: :routes
   has_many :reports
+  has_many :mock_profiles
 
   validates :title, presence: true, length: { in: 2..25 }, uniqueness: true
 

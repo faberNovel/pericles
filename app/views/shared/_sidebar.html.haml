@@ -10,3 +10,7 @@
       = link_to 'Routes', project_routes_path(@project)
     %li{class: active_class(ReportsController)}
       = link_to 'Reports', project_reports_path(@project)
+
+    / TODO: Clément Villain 10/11/17
+    %li{class: active_class(MockProfilesController)}
+      = link_to 'Mock Profile', edit_mock_profile_path(@project.mock_profiles.first)

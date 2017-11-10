@@ -105,6 +105,32 @@ ActiveRecord::Schema.define(version: 20171114144052) do
     t.index ["resource_id"], name: "index_mock_instances_on_resource_id", using: :btree
   end
 
+  create_table "mock_instances_pickers", id: false, force: :cascade do |t|
+    t.integer "mock_instance_id", null: false
+    t.integer "mock_picker_id",   null: false
+    t.index ["mock_instance_id"], name: "index_mock_instances_pickers_on_mock_instance_id", using: :btree
+    t.index ["mock_picker_id"], name: "index_mock_instances_pickers_on_mock_picker_id", using: :btree
+  end
+
+  create_table "mock_pickers", force: :cascade do |t|
+    t.integer "mock_profile_id"
+    t.integer "mock_instance_id"
+    t.integer "response_id"
+    t.boolean "response_is_favorite"
+    t.index ["mock_instance_id"], name: "index_mock_pickers_on_mock_instance_id", using: :btree
+    t.index ["mock_profile_id", "response_id"], name: "profile_mock_instance_association_unique_index", unique: true, using: :btree
+    t.index ["mock_profile_id"], name: "index_mock_pickers_on_mock_profile_id", using: :btree
+    t.index ["response_id"], name: "index_mock_pickers_on_response_id", using: :btree
+  end
+
+  create_table "mock_profiles", force: :cascade do |t|
+    t.integer  "project_id"
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["project_id"], name: "index_mock_profiles_on_project_id", using: :btree
+  end
+
   create_table "projects", force: :cascade do |t|
     t.string   "title"
     t.text     "description"
@@ -241,6 +267,9 @@ ActiveRecord::Schema.define(version: 20171114144052) do
   add_foreign_key "attributes_resource_representations", "resource_representations", column: "parent_resource_representation_id"
   add_foreign_key "json_errors", "validations"
   add_foreign_key "mock_instances", "resources"
+  add_foreign_key "mock_pickers", "mock_instances"
+  add_foreign_key "mock_pickers", "mock_profiles"
+  add_foreign_key "mock_pickers", "responses"
   add_foreign_key "query_parameters", "routes"
   add_foreign_key "reports", "projects"
   add_foreign_key "reports", "responses"

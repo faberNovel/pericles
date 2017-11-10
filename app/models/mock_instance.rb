@@ -1,6 +1,8 @@
 class MockInstance < ApplicationRecord
   belongs_to :resource
 
+  has_and_belongs_to_many :mock_pickers
+
   validates :name, presence: true
   validate :body_must_comply_with_resource_json_schema
 

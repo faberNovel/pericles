@@ -19,6 +19,7 @@ Rails.application.routes.draw do
     resources :responses, except: [:index, :show]
   end
   resources :mock_instances, only: [:edit, :update, :destroy]
+  resources :mock_profiles, only: [:edit, :update]
   resources :validations, only: [:create, :new, :index]
   resources :instances, only: [:create]
   resources :headers, only: [:index]
