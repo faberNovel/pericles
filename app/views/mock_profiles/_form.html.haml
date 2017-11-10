@@ -1,3 +1,6 @@
+- content_for :page_scripts do
+  = javascript_include_tag("mock_profiles/form.js")
+
 #mock_profile_form
   = bootstrap_nested_form_for(@mock_profile) do |f|
     = f.text_field :name
@@ -14,5 +17,7 @@
               - if response.resource_representation
                 = f.fields_for :mock_pickers, @mock_picker_by_response_id[response.id] do |fields|
                   = fields.select :mock_instance_ids, response.mock_instances.pluck(:name, :id), { include_blank: true, hide_label: true }, multiple: response.is_collection
+                  = fields.hidden_field :response_is_favorite, value: false
+                  = fields.radio_button :response_is_favorite, true, label: 'Active'
     %p
       = f.submit
