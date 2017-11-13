@@ -9,7 +9,7 @@ class ResourceRepresentationSchemaSerializer < ActiveModel::Serializer
   def initialize(object, options = {})
     @resource_representation = object
     @resource = object.resource
-    @all_resource_representations = [@resource_representation.id]
+    @all_resource_representations = [uid(@resource_representation)]
     @is_collection = options[:is_collection]
     @root_key = options[:root_key]
     super
@@ -120,7 +120,7 @@ class ResourceRepresentationSchemaSerializer < ActiveModel::Serializer
       if cycle_detected(resource_representation)
         attribute_hash = set_main_fields_from_attribute(attribute)
       else
-        @all_resource_representations << resource_representation.id
+        @all_resource_representations << uid(resource_representation)
         attribute_hash = hash_from_attributes_resource_representation_with_child_resource_representation(association)
       end
     else
@@ -173,7 +173,7 @@ class ResourceRepresentationSchemaSerializer < ActiveModel::Serializer
   end
 
   def cycle_detected(resource_representation)
-    return resource_representation.id.in?(@all_resource_representations)
+    return uid(resource_representation).in?(@all_resource_representations)
   end
 
   def set_main_fields_from_attribute(attribute)
@@ -230,5 +230,9 @@ class ResourceRepresentationSchemaSerializer < ActiveModel::Serializer
     else
       minmax_name
     end
+  end
+
+  def uid(model)
+    model.id || model.hash
   end
 end

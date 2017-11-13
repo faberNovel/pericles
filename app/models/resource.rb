@@ -33,20 +33,6 @@ class Resource < ApplicationRecord
   end
 
   def build_default_resource_representation
-    resource_representation = self.resource_representations.new(
-      name: "Default#{self.name.capitalize}",
-      description: "Automatically generated"
-    )
-
-    resource_attributes.each do |attribute|
-      resource_referenced_by_attribute_representation = attribute.resource&.build_default_resource_representation
-      resource_representation.attributes_resource_representations.new(
-        resource_attribute: attribute,
-        is_required: true,
-        resource_representation: resource_referenced_by_attribute_representation
-      )
-    end
-
-    resource_representation
+    ResourceRepresentationService.new(self).build_default
   end
 end
