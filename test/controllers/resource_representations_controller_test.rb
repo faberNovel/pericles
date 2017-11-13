@@ -144,88 +144,13 @@ class ResourceRepresentationsControllerTest < ControllerWithAuthenticationTest
     resource_representation = create(:resource_representation, resource: resource)
     create(:attributes_resource_representation, parent_resource_representation: resource_representation,
      resource_attribute: attribute, is_required: true)
-    json_schema = {
-      type: 'object',
-      title: "Movie - #{resource_representation.name}",
-      description: 'A movie',
-      properties: {
-        movie: {
-          type: 'object',
-          properties: {
-            main_title: {
-              type: 'string',
-              description: 'title of the film',
-              enum: ["The Godfather", "Finding Nemo"],
-              pattern: "The Godfather II"
-            }
-          },
-          additionalProperties: false,
-          required: ["main_title"]
-        }
-      },
-      additionalProperties: false,
-      required: ['movie']
-    }
+    json_schema = ResourceRepresentationSchemaSerializer.new(
+      resource_representation,
+      is_collection: false,
+      root_key: 'movie'
+    ).as_json
+
     get resource_resource_representation_path(resource, resource_representation, format: :json_schema, root_key: 'movie')
-    assert_equal json_schema.deep_stringify_keys!, JSON.parse(response.body), "json schema is not correct"
-  end
-
-  test 'should get json schema associated to resource_representation that is a collection' do
-    resource = create(:resource, name: 'Movie', description: 'A movie')
-    attribute = create(:attribute, parent_resource: resource, name: 'main_title', description: 'title of the film',
-     primitive_type: :string)
-    resource_representation = create(:resource_representation, resource: resource)
-    create(:attributes_resource_representation, parent_resource_representation: resource_representation,
-     resource_attribute: attribute)
-    json_schema = {
-      type: 'object',
-      title: "Movie - #{resource_representation.name}",
-      description: 'A movie',
-      properties: {
-        movies: {
-          type: 'array',
-          items: {
-            type: 'object',
-            properties: {
-              main_title: {
-                type: 'string',
-                description: 'title of the film'
-              }
-            },
-            additionalProperties: false
-          }
-        }
-      },
-      additionalProperties: false,
-      required: ['movies']
-    }
-    get resource_resource_representation_path(resource, resource_representation, format: :json_schema, params: {is_collection: 'true', root_key: 'movies'})
-    assert_equal json_schema.deep_stringify_keys!, JSON.parse(response.body), "json schema is not correct"
-  end
-
-  test 'should not get root key if not specified' do
-    resource = create(:resource, name: 'Movie', description: 'A movie')
-    attribute = create(:attribute, parent_resource: resource, name: 'main_title', description: 'title of the film',
-     primitive_type: :string, enum: "The Godfather, Finding Nemo", scheme: create(:scheme, regexp: "The Godfather II"))
-    resource_representation = create(:resource_representation, resource: resource)
-    create(:attributes_resource_representation, parent_resource_representation: resource_representation,
-     resource_attribute: attribute, is_required: true)
-    json_schema = {
-      type: 'object',
-      title: "Movie - #{resource_representation.name}",
-      description: 'A movie',
-      properties: {
-        main_title: {
-          type: 'string',
-          description: 'title of the film',
-          enum: ["The Godfather", "Finding Nemo"],
-          pattern: "The Godfather II"
-        }
-      },
-      additionalProperties: false,
-      required: ["main_title"]
-    }
-    get resource_resource_representation_path(resource, resource_representation, format: :json_schema)
     assert_equal json_schema.deep_stringify_keys!, JSON.parse(response.body), "json schema is not correct"
   end
 
