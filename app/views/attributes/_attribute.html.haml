@@ -1,16 +1,27 @@
 .panel.panel-default
   .panel-body
-    .row
-      .col-xs-3
-        %dl
-          %dt Name
-          %dd
-            %strong= attribute.name
-      .col-xs-3
-        %dl
-          %dt Type
-          %dd
-            %strong= format_type(attribute.primitive_type, attribute.resource_id, attribute.is_array)
+    %a{'data-toggle': 'collapse', href: "#collapse-attribute-#{attribute.id}", style: 'color: black;'}
+      .row
+        .col-xs-3
+          %dl
+            %dt Name
+            %dd
+              %strong= attribute.name
+        - unless attribute.description.blank?
+          .col-xs-3
+            %dl
+              %dt Description
+              %dd= attribute.description
+        .col-xs-3
+          %dl
+            %dt Type
+            %dd
+              %strong= format_type(attribute.primitive_type, attribute.resource_id, attribute.is_array)
+        .col-xs-2
+          %dl
+            %dt Nullable
+            %dd= attribute.nullable
+    .row.collapse{id: "collapse-attribute-#{attribute.id}"}
       - unless attribute.enum.blank?
         .col-xs-2
           %dl
@@ -31,16 +42,6 @@
           %dl
             %dt Maximum
             %dd= attribute.maximum
-    .row
-      - unless attribute.description.blank?
-        .col-xs-3
-          %dl
-            %dt Description
-            %dd= attribute.description
-      .col-xs-2
-        %dl
-          %dt Nullable
-          %dd= attribute.nullable
       - if attribute.faker
         .col-xs-2
           %dl
