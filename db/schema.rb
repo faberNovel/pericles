@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171031084915) do
+ActiveRecord::Schema.define(version: 20171114144052) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,7 +24,6 @@ ActiveRecord::Schema.define(version: 20171031084915) do
   create_table "attributes", force: :cascade do |t|
     t.string   "name"
     t.text     "description"
-    t.json     "example"
     t.integer  "parent_resource_id"
     t.boolean  "is_array",           default: false, null: false
     t.integer  "primitive_type"

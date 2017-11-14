@@ -31,7 +31,6 @@
           %th Maximum
           %th Min Items
           %th Max Items
-          %th Example
           %th Faker
           %th
       %tbody
@@ -61,8 +60,6 @@
               = attribute_fields.number_field :min_items, hide_label: true
             %td
               = attribute_fields.number_field :max_items, hide_label: true
-            %td
-              = attribute_fields.text_area :example, hide_label: true
             %td
               = attribute_fields.collection_select :faker_id, AttributeFaker.all, :id, :name, include_blank: true, hide_label: true
             %td

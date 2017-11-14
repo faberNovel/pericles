@@ -69,7 +69,6 @@ class AttributeTest < ActiveSupport::TestCase
     assert build(:attribute,
       name: "New Attribute",
       description: "New test attribute",
-      example: '"Hello"',
       is_array: true,
       primitive_type: :string,
       enum: "valid",

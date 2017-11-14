@@ -77,7 +77,6 @@ class ResourcesController < AuthenticatedController
         :resource_id,
         :is_array,
         :enum,
-        :example,
         :scheme_id,
         :minimum,
         :maximum,
