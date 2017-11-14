@@ -134,9 +134,11 @@ ActiveRecord::Schema.define(version: 20171114144052) do
   create_table "projects", force: :cascade do |t|
     t.string   "title"
     t.text     "description"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
     t.string   "proxy_url"
+    t.integer  "mock_profile_id"
+    t.index ["mock_profile_id"], name: "index_projects_on_mock_profile_id", using: :btree
   end
 
   create_table "query_parameters", force: :cascade do |t|
@@ -270,6 +272,7 @@ ActiveRecord::Schema.define(version: 20171114144052) do
   add_foreign_key "mock_pickers", "mock_instances"
   add_foreign_key "mock_pickers", "mock_profiles"
   add_foreign_key "mock_pickers", "responses"
+  add_foreign_key "projects", "mock_profiles"
   add_foreign_key "query_parameters", "routes"
   add_foreign_key "reports", "projects"
   add_foreign_key "reports", "responses"

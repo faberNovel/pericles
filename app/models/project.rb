@@ -1,4 +1,6 @@
 class Project < ApplicationRecord
+  belongs_to :active_mock_profile, class_name: 'MockProfile', foreign_key: 'mock_profile_id'
+
   has_many :resources, inverse_of: :project, dependent: :destroy
   has_many :routes, through: :resources
   has_many :responses, through: :routes

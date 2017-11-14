@@ -12,10 +12,9 @@ class MocksController < ApplicationController
     route = Route.find_by_id(main_route[:name])
 
 
-    # TODO: Clément Villain 10/11/17
-    profile = project.mock_profiles.first
+    profile = project.active_mock_profile || project.mock_profiles.first
 
-    response = profile.mock_pickers.joins(:response).find_by(
+    response = profile&.mock_pickers&.joins(:response)&.find_by(
       responses: {route: route}, response_is_favorite: true
     )&.response
 
