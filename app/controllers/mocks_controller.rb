@@ -1,9 +1,9 @@
 class MocksController < ApplicationController
 
   def compute_mock
-    project = Project.find(params[:project_id])
-    routes = project.build_route_set
-    main_route = routes.recognize_path('/' + params[:path], { method: request.method })
+    @project = Project.find(params[:project_id])
+    routes = @project.build_route_set
+    main_route = routes.recognize_path('/' + (params[:path] || ''), { method: request.method })
     unless main_route
       render json: {error: 'Route not found'}, status: :not_found
       return
@@ -12,7 +12,7 @@ class MocksController < ApplicationController
     route = Route.find_by_id(main_route[:name])
 
 
-    profile = project.active_mock_profile || project.mock_profiles.first
+    profile = pick_profile
 
     response = profile&.mock_pickers&.joins(:response)&.find_by(
       responses: {route: route}, response_is_favorite: true
@@ -34,6 +34,12 @@ class MocksController < ApplicationController
 
     render json: mock_body, status: response.status_code
   end
+
+  def pick_profile
+    @project.active_mock_profile || @project.mock_profiles.first
+  end
+
+  private
 
   def random_mock(response)
     schema = response.json_schema

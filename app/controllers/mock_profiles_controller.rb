@@ -1,4 +1,4 @@
-class MockProfilesController < AuthenticatedController
+class MockProfilesController < MocksController
   layout 'full_width_column'
   before_action :setup_mock_profile, only: [:edit, :update]
   before_action :setup_project, only: [:index, :new, :create]
@@ -29,6 +29,10 @@ class MockProfilesController < AuthenticatedController
     else
       render 'edit', layout: 'full_width_column', status: :unprocessable_entity
     end
+  end
+
+  def pick_profile
+    MockProfile.find(params[:mock_profile_id])
   end
 
   private
