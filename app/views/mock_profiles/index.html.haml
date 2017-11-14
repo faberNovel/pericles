@@ -1,0 +1,11 @@
+%h1 Mock Profiles
+
+.row.margin-top-element
+  .col-xs-12.flexcontainer.flexcontainer-justify-end
+    = link_to 'New Profile', new_project_mock_profile_path(@project), class: "btn btn-default btn-lg"
+.row.margin-top-element
+  .col-xs-12
+    .list-group
+      - @mock_profiles.each do |mock_profile|
+        %a{class: "list-group-item", href: edit_mock_profile_path(mock_profile)}
+          = mock_profile.name

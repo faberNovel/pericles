@@ -1,6 +1,24 @@
 class MockProfilesController < AuthenticatedController
   layout 'full_width_column'
   before_action :setup_mock_profile, only: [:edit, :update]
+  before_action :setup_project, only: [:index, :new, :create]
+
+  def index
+    @mock_profiles = @project.mock_profiles
+  end
+
+  def new
+    @mock_profile = @project.mock_profiles.new()
+  end
+
+  def create
+    @mock_profile = @project.mock_profiles.new(mock_profile_params)
+    if @mock_profile.save
+      redirect_to_mock_profile
+    else
+      render 'new', layout: 'full_width_column', status: :unprocessable_entity
+    end
+  end
 
   def edit
   end
@@ -32,6 +50,10 @@ class MockProfilesController < AuthenticatedController
         mock_instance_ids: [],
       ]
     )
+  end
+
+  def setup_project
+    @project = Project.find(params[:project_id])
   end
 
   def redirect_to_mock_profile
