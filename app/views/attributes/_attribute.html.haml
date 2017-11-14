@@ -7,8 +7,8 @@
             %dt Name
             %dd
               %strong= attribute.name
-        - unless attribute.description.blank?
-          .col-xs-3
+        .col-xs-3
+          - unless attribute.description.blank?
             %dl
               %dt Description
               %dd= attribute.description
@@ -16,7 +16,11 @@
           %dl
             %dt Type
             %dd
-              %strong= format_type(attribute.primitive_type, attribute.resource_id, attribute.is_array)
+              - if attribute.resource_id
+                %a{href: project_resource_path(@project, attribute.resource_id)}
+                  %strong= format_type(attribute.primitive_type, attribute.resource_id, attribute.is_array)
+              - else
+                %strong= format_type(attribute.primitive_type, attribute.resource_id, attribute.is_array)
         .col-xs-2
           %dl
             %dt Nullable

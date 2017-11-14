@@ -1,3 +1,6 @@
+- content_for :page_scripts do
+  = javascript_include_tag("resources/show.js")
+
 - if flash[:error]
   %div{class: "alert alert-danger"}
     =flash[:error]
@@ -65,3 +68,4 @@
   - else
     %p
       %i= t('.no_route_placeholder')
+
