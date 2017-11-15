@@ -1,4 +1,4 @@
-class MockInstance < ApplicationRecord
+class ResourceInstance < ApplicationRecord
   belongs_to :resource
 
   has_and_belongs_to_many :mock_pickers

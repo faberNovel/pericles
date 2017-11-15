@@ -4,7 +4,7 @@ FactoryGirl.define do
     "Mock #{n}"
   end
 
-  factory :mock_instance do
+  factory :resource_instance do
     name { generate(:mock_name) }
     body '{}'
     resource

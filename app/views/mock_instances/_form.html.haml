@@ -1,7 +1,0 @@
-= bootstrap_form_for(@mock_instance.persisted? ? @mock_instance : [@resource, @mock_instance]) do |f|
-  = f.text_field :name
-
-  = f.text_area :body, value: format_json(@mock_instance.body)
-
-  %p
-    = f.submit

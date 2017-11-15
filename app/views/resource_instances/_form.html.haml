@@ -1,0 +1,7 @@
+= bootstrap_form_for(@resource_instance.persisted? ? @resource_instance : [@resource, @resource_instance]) do |f|
+  = f.text_field :name
+
+  = f.text_area :body, value: format_json(@resource_instance.body)
+
+  %p
+    = f.submit

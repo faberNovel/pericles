@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171115105126) do
+ActiveRecord::Schema.define(version: 20171115165949) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -96,31 +96,20 @@ ActiveRecord::Schema.define(version: 20171115105126) do
     t.index ["validation_id"], name: "index_json_errors_on_validation_id", using: :btree
   end
 
-  create_table "mock_instances", force: :cascade do |t|
-    t.string   "name"
-    t.json     "body"
-    t.integer  "resource_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-    t.index ["resource_id"], name: "index_mock_instances_on_resource_id", using: :btree
-  end
-
-  create_table "mock_instances_pickers", id: false, force: :cascade do |t|
-    t.integer "mock_instance_id", null: false
-    t.integer "mock_picker_id",   null: false
-    t.index ["mock_instance_id"], name: "index_mock_instances_pickers_on_mock_instance_id", using: :btree
-    t.index ["mock_picker_id"], name: "index_mock_instances_pickers_on_mock_picker_id", using: :btree
-  end
-
   create_table "mock_pickers", force: :cascade do |t|
     t.integer "mock_profile_id"
-    t.integer "mock_instance_id"
     t.integer "response_id"
     t.string  "url_pattern"
     t.string  "body_pattern"
-    t.index ["mock_instance_id"], name: "index_mock_pickers_on_mock_instance_id", using: :btree
     t.index ["mock_profile_id"], name: "index_mock_pickers_on_mock_profile_id", using: :btree
     t.index ["response_id"], name: "index_mock_pickers_on_response_id", using: :btree
+  end
+
+  create_table "mock_pickers_resource_instances", id: false, force: :cascade do |t|
+    t.integer "resource_instance_id", null: false
+    t.integer "mock_picker_id",       null: false
+    t.index ["mock_picker_id"], name: "index_mock_pickers_resource_instances_on_mock_picker_id", using: :btree
+    t.index ["resource_instance_id"], name: "index_mock_pickers_resource_instances_on_resource_instance_id", using: :btree
   end
 
   create_table "mock_profiles", force: :cascade do |t|
@@ -170,6 +159,15 @@ ActiveRecord::Schema.define(version: 20171115105126) do
     t.index ["route_id"], name: "index_reports_on_route_id", using: :btree
   end
 
+  create_table "resource_instances", force: :cascade do |t|
+    t.string   "name"
+    t.json     "body"
+    t.integer  "resource_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["resource_id"], name: "index_resource_instances_on_resource_id", using: :btree
+  end
+
   create_table "resource_representations", force: :cascade do |t|
     t.string   "name"
     t.text     "description"
@@ -198,8 +196,6 @@ ActiveRecord::Schema.define(version: 20171115105126) do
     t.integer  "resource_representation_id"
     t.boolean  "is_collection",              default: false, null: false
     t.string   "root_key"
-    t.integer  "mock_instance_id"
-    t.index ["mock_instance_id"], name: "index_responses_on_mock_instance_id", using: :btree
     t.index ["resource_representation_id"], name: "index_responses_on_resource_representation_id", using: :btree
     t.index ["route_id"], name: "index_responses_on_route_id", using: :btree
   end
@@ -268,8 +264,6 @@ ActiveRecord::Schema.define(version: 20171115105126) do
   add_foreign_key "attributes_resource_representations", "resource_representations"
   add_foreign_key "attributes_resource_representations", "resource_representations", column: "parent_resource_representation_id"
   add_foreign_key "json_errors", "validations"
-  add_foreign_key "mock_instances", "resources"
-  add_foreign_key "mock_pickers", "mock_instances"
   add_foreign_key "mock_pickers", "mock_profiles"
   add_foreign_key "mock_pickers", "responses"
   add_foreign_key "projects", "mock_profiles"
@@ -277,9 +271,9 @@ ActiveRecord::Schema.define(version: 20171115105126) do
   add_foreign_key "reports", "projects"
   add_foreign_key "reports", "responses"
   add_foreign_key "reports", "routes"
+  add_foreign_key "resource_instances", "resources"
   add_foreign_key "resource_representations", "resources"
   add_foreign_key "resources", "projects"
-  add_foreign_key "responses", "mock_instances"
   add_foreign_key "responses", "resource_representations"
   add_foreign_key "responses", "routes"
   add_foreign_key "routes", "resource_representations", column: "request_resource_representation_id"

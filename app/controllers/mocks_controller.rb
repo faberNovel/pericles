@@ -17,18 +17,11 @@ class MocksController < ApplicationController
     mock_picker = mock_pickers_of_route.detect do |picker|
       picker.match(request_url, request.body.read)
     end
-    response = mock_picker&.response
+    response = mock_picker&.response || route.responses.find {|r| r.status_code == 200} || route.responses.first
 
-    if response
-      mock_instances = mock_picker&.mock_instances
-
-      if mock_instances&.any?
-        mock_body = mock_body_from_instances(mock_instances, response)
-      else
-        mock_body = random_mock(response)
-      end
+    if mock_picker
+      mock_body = mock_picker.mock_body
     else
-      response = route.responses.find {|r| r.status_code == 200} || route.responses.first
       mock_body = random_mock(response)
     end
 
@@ -48,16 +41,5 @@ class MocksController < ApplicationController
   def random_mock(response)
     schema = response.json_schema
     GenerateJsonInstanceService.new(schema).execute
-  end
-
-  def mock_body_from_instances(mock_instances, response)
-    if response.is_collection
-      mock_body = mock_instances.map { |m| m.body_sliced_with(response.resource_representation) }
-    else
-      mock_body = mock_instances.first.body_sliced_with(response.resource_representation)
-    end
-    mock_body = {response.root_key => mock_body} unless response.root_key.blank?
-
-    mock_body
   end
 end

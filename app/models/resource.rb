@@ -7,7 +7,7 @@ class Resource < ApplicationRecord
   has_many :routes, inverse_of: :resource, dependent: :destroy
   has_many :resource_representations, inverse_of: :resource, dependent: :destroy
   has_many :reports, through: :routes
-  has_many :mock_instances
+  has_many :resource_instances
 
   accepts_nested_attributes_for :resource_attributes, allow_destroy: true, reject_if: :all_blank
   accepts_nested_attributes_for :routes, allow_destroy: true, reject_if: :all_blank

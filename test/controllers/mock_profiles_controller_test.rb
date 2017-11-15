@@ -5,7 +5,7 @@ class MockProfilesControllerTest < ControllerWithAuthenticationTest
     @project = create(:project)
     @resource = create(:resource, project: @project)
     @route = create(:route, resource: @resource, url: "/mock_route")
-    @mock_instance = create(:mock_instance, resource: @resource, body: '{}', name: 'old name')
+    @resource_instance = create(:resource_instance, resource: @resource, body: '{}', name: 'old name')
     @mock_profile = create(:mock_profile, project: @project)
   end
 
@@ -40,9 +40,9 @@ class MockProfilesControllerTest < ControllerWithAuthenticationTest
   test "mock profile mocks" do
     r = create(:response, route: @route, resource_representation: create(:resource_representation, resource: @resource))
     mock_picker = create(:mock_picker, response: r, mock_profile: @mock_profile)
-    mock_picker.mock_instances << @mock_instance
+    mock_picker.resource_instances << @resource_instance
     get "/projects/#{@project.id}/mock_profiles/#{@mock_profile.id}/mocks/#{@route.url}"
-    assert_equal response.body, @mock_instance.body
+    assert_equal response.body, @resource_instance.body
     assert_response :success
   end
 end
