@@ -3,17 +3,7 @@ class MockProfile < ApplicationRecord
   has_many :mock_pickers
   has_many :responses, through: :mock_pickers
 
-  accepts_nested_attributes_for :mock_pickers
+  accepts_nested_attributes_for :mock_pickers, allow_destroy: true
 
   validates :name, presence: true
-
-  def create_missing_pickers
-    project.responses.where.not(id: responses.pluck(:id)).find_each do |response|
-      MockPicker.create(mock_profile: self, response: response)
-    end
-  end
-
-  def active_responses
-    responses.where(mock_pickers: {response_is_favorite: true})
-  end
 end

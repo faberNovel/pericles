@@ -39,8 +39,7 @@ class MockProfilesController < MocksController
 
   def setup_mock_profile
     @mock_profile = MockProfile.includes(:mock_pickers).find(params[:id])
-    @mock_profile.create_missing_pickers
-    @mock_picker_by_response_id = @mock_profile.mock_pickers.includes(:mock_instances).group_by(&:response_id)
+    @mock_pickers_by_response_id = @mock_profile.mock_pickers.includes(:mock_instances).group_by(&:response_id)
     @project = @mock_profile.project
   end
 
@@ -49,8 +48,11 @@ class MockProfilesController < MocksController
       :name,
       mock_pickers_attributes: [
         :id,
-        :response_is_favorite,
+        :body_pattern,
+        :url_pattern,
         :mock_instance_ids,
+        :response_id,
+        :_destroy,
         mock_instance_ids: [],
       ]
     )

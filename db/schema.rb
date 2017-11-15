@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171114144052) do
+ActiveRecord::Schema.define(version: 20171115105126) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -116,9 +116,9 @@ ActiveRecord::Schema.define(version: 20171114144052) do
     t.integer "mock_profile_id"
     t.integer "mock_instance_id"
     t.integer "response_id"
-    t.boolean "response_is_favorite"
+    t.string  "url_pattern"
+    t.string  "body_pattern"
     t.index ["mock_instance_id"], name: "index_mock_pickers_on_mock_instance_id", using: :btree
-    t.index ["mock_profile_id", "response_id"], name: "profile_mock_instance_association_unique_index", unique: true, using: :btree
     t.index ["mock_profile_id"], name: "index_mock_pickers_on_mock_profile_id", using: :btree
     t.index ["response_id"], name: "index_mock_pickers_on_response_id", using: :btree
   end

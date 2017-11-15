@@ -1,4 +1,5 @@
 class MockInstancesController < AuthenticatedController
+  layout 'full_width_column'
   before_action :setup_resource_and_project, only: [:new, :create]
   before_action :setup_mock_instance, only: [:edit, :update, :destroy]
 

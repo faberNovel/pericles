@@ -4,7 +4,18 @@ class MockPicker < ApplicationRecord
 
   has_and_belongs_to_many :mock_instances
 
-  validates_uniqueness_of :mock_profile_id, scope: [:response_id]
+  validates :body_pattern, regexp: true, allow_blank: true
+  validates :url_pattern, regexp: true, allow_blank: true
 
-  # TODO: Clément Villain 10/11/17 is favorite must be unique if responses share the same route
+  def match(url, body)
+    (body_pattern.blank? || body_regexp.match(body)) && (url_pattern.blank? || url_regexp.match(url))
+  end
+
+  def body_regexp
+    Regexp.new(body_pattern) unless body_pattern.blank?
+  end
+
+  def url_regexp
+    Regexp.new(url_pattern) unless url_pattern.blank?
+  end
 end

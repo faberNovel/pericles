@@ -15,9 +15,16 @@
             .response
               %span.label.status-code{class: response_status_code_class(response.status_code)}=response.status_code
               - if response.resource_representation
-                = f.fields_for :mock_pickers, @mock_picker_by_response_id[response.id] do |fields|
-                  = fields.select :mock_instance_ids, response.mock_instances.pluck(:name, :id), { include_blank: true, hide_label: true }, multiple: response.is_collection
-                  = fields.hidden_field :response_is_favorite, value: false
-                  = fields.radio_button :response_is_favorite, true, label: 'Active'
+                .matchers{id: "matchers-#{response.id}"}
+                  = f.fields_for :mock_pickers, @mock_pickers_by_response_id[response.id] do |fields|
+                    = fields.text_field :url_pattern
+                    = fields.text_field :body_pattern
+                    = fields.select :mock_instance_ids, response.mock_instances.pluck(:name, :id),
+                      { include_blank: true, label: 'Mock Instance'.pluralize(response.is_collection ? 2 : 1) }, multiple: response.is_collection
+                    = fields.link_to_remove "Remove"
+                    = fields.hidden_field :response_id, class: 'response-id'
+            - if response.resource_representation
+              = f.link_to_add "Add Matcher", :mock_pickers, data: {target: "#matchers-#{response.id}" }
+
     %p
       = f.submit

@@ -3,6 +3,7 @@ FactoryGirl.define do
   factory :mock_picker do
     mock_profile
     response
-    response_is_favorite false
+    url_pattern ""
+    body_pattern ""
   end
 end

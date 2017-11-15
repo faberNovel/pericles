@@ -38,8 +38,8 @@ class MockProfilesControllerTest < ControllerWithAuthenticationTest
   end
 
   test "mock profile mocks" do
-    response_ = create(:response, route: @route, resource_representation: create(:resource_representation, resource: @resource))
-    mock_picker = create(:mock_picker, response: response_, mock_profile: @mock_profile, response_is_favorite: true)
+    r = create(:response, route: @route, resource_representation: create(:resource_representation, resource: @resource))
+    mock_picker = create(:mock_picker, response: r, mock_profile: @mock_profile)
     mock_picker.mock_instances << @mock_instance
     get "/projects/#{@project.id}/mock_profiles/#{@mock_profile.id}/mocks/#{@route.url}"
     assert_equal response.body, @mock_instance.body

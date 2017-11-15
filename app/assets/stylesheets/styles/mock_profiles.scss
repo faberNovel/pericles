@@ -9,11 +9,31 @@
     justify-content: space-between;
     align-items: center;
 
+    .matchers {
+      width: 75%;
+    }
+
     .fields {
-      width: 50%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .constraints {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .form-group {
+        margin: 8px;
+      }
     }
 
     padding: 8px;
+
+    .chosen-container {
+      display: block;
+    }
   }
 
   .chosen-choices {
