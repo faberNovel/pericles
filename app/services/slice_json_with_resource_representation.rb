@@ -1,13 +1,15 @@
 class SliceJSONWithResourceRepresentation
   def initialize(json, resource_representation)
-    @json = json
+    @json = json.deep_symbolize_keys
     @resource_representation = resource_representation
   end
 
   def execute
     sliced_json = {}
+
     @resource_representation.attributes_resource_representations.each do |attr_res_rep|
-      key = attr_res_rep.resource_attribute.name
+      key = attr_res_rep.resource_attribute.name.to_sym
+
       next unless @json.key? key
       if attr_res_rep.resource_representation
         if attr_res_rep.resource_attribute.is_array

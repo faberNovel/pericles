@@ -12,4 +12,8 @@ class MockProfile < ApplicationRecord
       MockPicker.create(mock_profile: self, response: response)
     end
   end
+
+  def active_responses
+    responses.where(mock_pickers: {response_is_favorite: true})
+  end
 end

@@ -14,9 +14,7 @@ class MocksController < ApplicationController
 
     profile = pick_profile
 
-    response = profile&.mock_pickers&.joins(:response)&.find_by(
-      responses: {route: route}, response_is_favorite: true
-    )&.response
+    response = profile.active_responses.find_by(route: route) if profile
 
     if response
       mock_picker = profile.mock_pickers.where(response: response).first
