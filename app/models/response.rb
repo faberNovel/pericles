@@ -1,10 +1,12 @@
 class Response < ApplicationRecord
   belongs_to :route
   belongs_to :resource_representation, inverse_of: :responses
+  belongs_to :api_error
 
   has_many :headers, inverse_of: :http_message, as: :http_message, dependent: :destroy
   has_many :reports
   has_many :resource_instances, through: :resource_representation
+  has_many :api_error_instances, through: :api_error
   has_many :mock_pickers
 
   accepts_nested_attributes_for :headers, allow_destroy: true, reject_if: :all_blank
@@ -13,6 +15,10 @@ class Response < ApplicationRecord
   validates :route, presence: true
 
   audited associated_with: :route
+
+  # TODO Clément Villain 16/11/17:
+  # validate api_error status >= 400
+  # validate resource_representation status < 400
 
   def errors_from_http_response(http_response)
     errors_for_status(http_response) +

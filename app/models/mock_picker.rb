@@ -3,6 +3,7 @@ class MockPicker < ApplicationRecord
   belongs_to :response
 
   has_and_belongs_to_many :resource_instances
+  has_and_belongs_to_many :api_error_instances
 
   validates :body_pattern, regexp: true, allow_blank: true
   validates :url_pattern, regexp: true, allow_blank: true

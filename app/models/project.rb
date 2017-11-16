@@ -6,6 +6,7 @@ class Project < ApplicationRecord
   has_many :responses, through: :routes
   has_many :reports
   has_many :mock_profiles
+  has_many :api_errors
 
   validates :title, presence: true, length: { in: 2..25 }, uniqueness: true
 

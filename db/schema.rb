@@ -10,10 +10,35 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171115165949) do
+ActiveRecord::Schema.define(version: 20171116161642) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "api_error_instances", force: :cascade do |t|
+    t.string   "name"
+    t.json     "body"
+    t.integer  "api_error_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.index ["api_error_id"], name: "index_api_error_instances_on_api_error_id", using: :btree
+  end
+
+  create_table "api_error_instances_mock_pickers", id: false, force: :cascade do |t|
+    t.integer "api_error_instance_id", null: false
+    t.integer "mock_picker_id",        null: false
+    t.index ["api_error_instance_id"], name: "index_api_error_instances_mock_pickers_on_api_error_instance_id", using: :btree
+    t.index ["mock_picker_id"], name: "index_api_error_instances_mock_pickers_on_mock_picker_id", using: :btree
+  end
+
+  create_table "api_errors", force: :cascade do |t|
+    t.string   "name"
+    t.json     "json_schema"
+    t.integer  "project_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["project_id"], name: "index_api_errors_on_project_id", using: :btree
+  end
 
   create_table "attribute_fakers", force: :cascade do |t|
     t.string   "name"
@@ -196,6 +221,8 @@ ActiveRecord::Schema.define(version: 20171115165949) do
     t.integer  "resource_representation_id"
     t.boolean  "is_collection",              default: false, null: false
     t.string   "root_key"
+    t.integer  "api_error_id"
+    t.index ["api_error_id"], name: "index_responses_on_api_error_id", using: :btree
     t.index ["resource_representation_id"], name: "index_responses_on_resource_representation_id", using: :btree
     t.index ["route_id"], name: "index_responses_on_route_id", using: :btree
   end
@@ -256,6 +283,7 @@ ActiveRecord::Schema.define(version: 20171115165949) do
     t.datetime "updated_at",    null: false
   end
 
+  add_foreign_key "api_error_instances", "api_errors"
   add_foreign_key "attributes", "attribute_fakers", column: "faker_id"
   add_foreign_key "attributes", "resources"
   add_foreign_key "attributes", "resources", column: "parent_resource_id"
@@ -274,6 +302,7 @@ ActiveRecord::Schema.define(version: 20171115165949) do
   add_foreign_key "resource_instances", "resources"
   add_foreign_key "resource_representations", "resources"
   add_foreign_key "resources", "projects"
+  add_foreign_key "responses", "api_errors"
   add_foreign_key "responses", "resource_representations"
   add_foreign_key "responses", "routes"
   add_foreign_key "routes", "resource_representations", column: "request_resource_representation_id"
