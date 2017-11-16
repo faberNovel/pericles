@@ -1,0 +1,13 @@
+.page-header
+  %h4
+    = @api_error.name
+    .pull-right
+      .btn-group{ role: "group" }
+        = link_to 'Edit', edit_project_api_error_path(@project, @api_error), class: "btn btn-default"
+        = link_to "Delete", project_api_error_path(@project, @api_error), method: :delete, data: { confirm: 'Are you sure ?' },
+       class: "btn btn-default"
+
+  %h4 JSON Schema
+  %pre.pre-scrollable
+    %code
+      =format_json(@api_error.json_schema)

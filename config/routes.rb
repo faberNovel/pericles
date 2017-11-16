@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
   resources :projects do
     resources :resources
+    resources :api_errors
     resources :routes, only: [:index]
     resources :reports, only: [:index, :show]
     resources :mock_profiles, only: [:index, :new, :create]
