@@ -1,0 +1,10 @@
+.row
+  .col-xs-6
+    %div
+      %strong= api_error_instance.name
+    %textarea.mock_instance_text_area{disabled: 'true'}=format_json(api_error_instance.body)
+  .col-xs-6
+    .flexcontainer.flexcontainer-justify-end
+      .btn-group{ role: "group" }
+        = link_to 'Edit', edit_api_error_instance_path(api_error_instance), class: "btn btn-default"
+        = link_to 'Delete', api_error_instance_path(api_error_instance), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-default"

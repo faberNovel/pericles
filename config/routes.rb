@@ -24,7 +24,11 @@ Rails.application.routes.draw do
   resources :routes, only: [] do
     resources :responses, except: [:index, :show]
   end
+  resources :api_error, only: [] do
+    resources :api_error_instances, only: [:new, :create]
+  end
   resources :resource_instances, only: [:edit, :update, :destroy]
+  resources :api_error_instances, only: [:edit, :update, :destroy]
   resources :mock_profiles, only: [:edit, :update]
   resources :validations, only: [:create, :new, :index]
   resources :instances, only: [:create]
