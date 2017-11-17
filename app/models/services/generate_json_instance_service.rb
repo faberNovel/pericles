@@ -1,7 +1,7 @@
 class GenerateJsonInstanceService
 
   def initialize(schema)
-    @schema = schema
+    @schema = schema.is_a?(String) ? JSON.parse(schema) : schema
   end
 
   def execute
