@@ -16,9 +16,8 @@ class Response < ApplicationRecord
 
   audited associated_with: :route
 
-  # TODO Clément Villain 16/11/17:
-  # validate api_error status >= 400
-  # validate resource_representation status < 400
+  validates :resource_representation, absence: true, unless: :can_have_resource_representation
+  validates :api_error, absence: true, unless: :can_have_api_error
 
   def errors_from_http_response(http_response)
     errors_for_status(http_response) +
@@ -66,5 +65,13 @@ class Response < ApplicationRecord
       is_collection: is_collection,
       root_key: root_key
     ).as_json if resource_representation
+  end
+
+  def can_have_api_error
+    status_code && status_code >= 400
+  end
+
+  def can_have_resource_representation
+    status_code && !can_have_api_error
   end
 end
