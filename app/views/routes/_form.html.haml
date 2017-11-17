@@ -2,7 +2,7 @@
   = javascript_include_tag("header_autocomplete")
   = javascript_include_tag("generate_schema")
 
-= bootstrap_nested_form_for([@resource, @route]) do |f|
+= bootstrap_form_for([@resource, @route]) do |f|
   - if @route.errors.any?
     #error_explanation
       %h2
@@ -43,19 +43,11 @@
               %th
           %tbody
             = f.fields_for :request_query_parameters, wrapper: false do |query_parameter_fields|
-              %tr.fields
-                %td
-                  = query_parameter_fields.text_field :name, hide_label: true
-                %td
-                  = query_parameter_fields.text_area :description, hide_label: true
-                %td
-                  = query_parameter_fields.select :primitive_type, QueryParameter.primitive_types.keys.to_a, include_blank: true, hide_label: true
-                %td
-                  = query_parameter_fields.check_box :is_optional, hide_label: true
-                %td
-                  = query_parameter_fields.link_to_remove "Remove"
+              = render 'request_query_parameters_fields', f: query_parameter_fields
 
-        = f.link_to_add "Add a Query Parameter", :request_query_parameters, data: { target: "#table_request_query_parameters" }
+
+        = link_to_add_association "Add a Query Parameter", f, :request_query_parameters,
+          { 'data-association-insertion-node' => "#table_request_query_parameters tbody", 'data-association-insertion-method' => 'append' }
 
       - if params[:section] == "request_headers" || @route.new_record?
         %h4 Headers
@@ -68,16 +60,12 @@
               %th
           %tbody
             = f.fields_for :request_headers, wrapper: false do |header_fields|
-              %tr.fields
-                %td
-                  = header_fields.text_field :name, hide_label: true
-                %td
-                  = header_fields.text_area :description, hide_label: true
-                %td
-                  = header_fields.link_to_remove "Remove"
+              = render 'request_header_fields', f: header_fields
 
 
-        = f.link_to_add "Add a Header", :request_headers, data: { target: "#table_request_headers" }
+
+        = link_to_add_association "Add a Header", f, :request_headers,
+          { 'data-association-insertion-node' => "#table_request_headers tbody", 'data-association-insertion-method' => 'append' }
 
   - if params[:section] == "request_body" || @route.new_record?
     .row

@@ -3,7 +3,7 @@
   = javascript_include_tag("generate_schema")
   = javascript_include_tag("responses/form.js")
 
-= bootstrap_nested_form_for([@route, @response]) do |f|
+= bootstrap_form_for([@route, @response]) do |f|
   - if @response.errors.any?
     #error_explanation
       %h2
@@ -28,15 +28,10 @@
             %th
         %tbody
           = f.fields_for :headers, wrapper: false do |response_header_fields|
-            %tr.fields
-              %td
-                = response_header_fields.text_field :name, hide_label: true
-              %td
-                = response_header_fields.text_area :description, hide_label: true
-              %td
-                = response_header_fields.link_to_remove "Remove"
+            = render 'header_fields', f: response_header_fields
 
-      = f.link_to_add "Add a Header", :headers, data: { target: "#headers" }
+      = link_to_add_association "Add a Header", f, :headers,
+        { 'data-association-insertion-node' => "#headers tbody", 'data-association-insertion-method' => 'append' }
 
     .col-xs-6{class: @response.can_have_resource_representation ? 'resource-representation' : 'api-error'}
       = f.select :resource_representation_id, @resource.resource_representations.pluck(:name, :id), include_blank: true

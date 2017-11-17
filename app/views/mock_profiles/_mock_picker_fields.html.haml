@@ -1,0 +1,11 @@
+.fields.nested-fields
+  = f.text_field :url_pattern
+  = f.text_field :body_pattern
+  - if response.can_have_resource_representation
+    = f.select :resource_instance_ids, response.resource_instances.pluck(:name, :id),
+        { include_blank: true, label: 'Mock Instance'.pluralize(response.is_collection ? 2 : 1) }, multiple: response.is_collection
+  - if response.can_have_api_error
+    = f.select :api_error_instance_ids, response.api_error_instances.pluck(:name, :id),
+        { include_blank: true, label: 'Mock Instance'.pluralize(response.is_collection ? 2 : 1) }, multiple: response.is_collection
+  = link_to_remove_association "Remove", f
+  = f.hidden_field :response_id, value: response.id

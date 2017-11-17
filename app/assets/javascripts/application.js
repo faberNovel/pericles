@@ -12,7 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require jquery_nested_form
+//= require cocoon
 //= require jquery-ui/widgets/autocomplete
 //= require bootstrap-sprockets
 //= require chosen-jquery

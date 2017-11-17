@@ -69,7 +69,7 @@ gem 'rails-controller-testing'
 gem 'json-schema', '~> 2.8'
 gem 'json', '~> 2.0.2'
 
-gem "nested_form"
+gem "cocoon", '~> 1.2'
 gem 'bootstrap_form'
 gem 'rails-erd', '~> 1.5'
 

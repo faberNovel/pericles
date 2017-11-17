@@ -80,6 +80,7 @@ GEM
     climate_control (0.1.0)
     cocaine (0.5.8)
       climate_control (>= 0.0.3, < 1.0)
+    cocoon (1.2.11)
     coffee-rails (4.2.2)
       coffee-script (>= 2.2.0)
       railties (>= 4.0.0)
@@ -187,7 +188,6 @@ GEM
     multi_json (1.12.2)
     multi_xml (0.6.0)
     multipart-post (2.0.0)
-    nested_form (0.3.2)
     newrelic_rpm (4.4.0.336)
     nio4r (2.1.0)
     nokogiri (1.8.1)
@@ -344,6 +344,7 @@ DEPENDENCIES
   byebug
   chosen-rails
   cocaine
+  cocoon (~> 1.2)
   coffee-rails
   devise (~> 4.3)
   execjs
@@ -358,7 +359,6 @@ DEPENDENCIES
   json_schema-faker
   kaminari
   minitest-reporters
-  nested_form
   newrelic_rpm
   omniauth-google-oauth2 (~> 0.5.2)
   passenger
