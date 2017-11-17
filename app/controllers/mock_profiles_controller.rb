@@ -39,7 +39,7 @@ class MockProfilesController < MocksController
 
   def setup_mock_profile
     @mock_profile = MockProfile.includes(:mock_pickers).find(params[:id])
-    @mock_pickers_by_response_id = @mock_profile.mock_pickers.includes(:resource_instances).group_by(&:response_id)
+    @mock_pickers_by_response_id = @mock_profile.mock_pickers.includes(:resource_instances, :api_error_instances).group_by(&:response_id)
     @project = @mock_profile.project
   end
 
@@ -51,9 +51,11 @@ class MockProfilesController < MocksController
         :body_pattern,
         :url_pattern,
         :resource_instance_ids,
+        :api_error_instance_ids,
         :response_id,
         :_destroy,
         resource_instance_ids: [],
+        api_error_instance_ids: [],
       ]
     )
   end

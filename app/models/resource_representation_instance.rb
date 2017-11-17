@@ -10,7 +10,7 @@ class ResourceRepresentationInstance
     resource_instance.name
   end
 
-  def body
+  def as_json
     resource_instance.body_sliced_with(response.resource_representation)
   end
 end

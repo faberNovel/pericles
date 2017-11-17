@@ -21,16 +21,16 @@ class MockPicker < ApplicationRecord
   end
 
   def mock_instances
-    resource_instances.to_a.map { |resource_instance| ResourceRepresentationInstance.new(resource_instance, response) }
+    resource_instances.to_a.map { |resource_instance| ResourceRepresentationInstance.new(resource_instance, response) } + api_error_instances.to_a
   end
 
   def mock_body
     return GenerateJsonInstanceService.new(response.json_schema).execute unless mock_instances.any?
 
     if response.is_collection
-      body = mock_instances.map(&:body)
+      body = mock_instances.map(&:as_json)
     else
-      body = mock_instances.first.body
+      body = mock_instances.first.as_json
     end
     body = { response.root_key => body } unless response.root_key.blank?
 

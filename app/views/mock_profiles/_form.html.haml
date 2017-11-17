@@ -5,25 +5,29 @@
   = bootstrap_nested_form_for(@mock_profile) do |f|
     = f.text_field :name
 
-    - @project.routes.includes(responses: [:resource_representation, :resource_instances]).order(:url).each do |route|
+    - @project.routes.includes(responses: [:resource_representation, :resource_instances, :api_error_instances, mock_pickers: [:resource_instances, :api_error_instances]]).order(:url).each do |route|
       .route-container.panel.panel-default
         .panel-heading
           .panel-title
             %h4.url=route.url
         .responses.panel-body
           - route.responses.each do |response|
-            .response
+            .response{'data-response-id': response.id}
               %span.label.status-code{class: response_status_code_class(response.status_code)}=response.status_code
-              - if response.resource_representation
+              - if response.representation
                 .matchers{id: "matchers-#{response.id}"}
-                  = f.fields_for :mock_pickers, @mock_pickers_by_response_id[response.id] do |fields|
+                  = f.fields_for :mock_pickers, @mock_pickers_by_response_id[response.id] || [] do |fields|
                     = fields.text_field :url_pattern
                     = fields.text_field :body_pattern
-                    = fields.select :resource_instance_ids, response.resource_instances.pluck(:name, :id),
-                      { include_blank: true, label: 'Mock Instance'.pluralize(response.is_collection ? 2 : 1) }, multiple: response.is_collection
+                    - if response.can_have_resource_representation
+                      = fields.select :resource_instance_ids, response.resource_instances.pluck(:name, :id),
+                        { include_blank: true, label: 'Mock Instance'.pluralize(response.is_collection ? 2 : 1) }, multiple: response.is_collection
+                    - if response.can_have_api_error
+                      = fields.select :api_error_instance_ids, response.api_error_instances.pluck(:name, :id),
+                        { include_blank: true, label: 'Mock Instance'.pluralize(response.is_collection ? 2 : 1) }, multiple: response.is_collection
                     = fields.link_to_remove "Remove"
                     = fields.hidden_field :response_id, class: 'response-id'
-            - if response.resource_representation
+            - if response.representation
               = f.link_to_add "Add Matcher", :mock_pickers, data: {target: "#matchers-#{response.id}" }
 
     %p

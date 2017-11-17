@@ -75,4 +75,8 @@ class Response < ApplicationRecord
   def can_have_resource_representation
     status_code && !can_have_api_error
   end
+
+  def representation
+    api_error || resource_representation
+  end
 end

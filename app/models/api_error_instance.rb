@@ -6,6 +6,10 @@ class ApiErrorInstance < ApplicationRecord
   validates :name, presence: true
   validate :body_must_comply_with_api_error_json_schema
 
+  def as_json
+    JSON.parse(body)
+  end
+
   private
 
   def body_must_comply_with_api_error_json_schema
@@ -17,4 +21,5 @@ class ApiErrorInstance < ApplicationRecord
       errors.add(:body, error_message)
     end
   end
+
 end
