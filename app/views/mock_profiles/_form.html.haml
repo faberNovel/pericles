@@ -14,19 +14,17 @@
               =route.url
         .responses.panel-body
           - route.responses.each do |response|
-            .response{'data-response-id': response.id}
+            .response{'data-response-id': response.id, class: response.can_have_resource_representation ? "resource-response" : "error-response"}
               %span.label.status-code{class: response_status_code_class(response.status_code)}=response.status_code
               - if response.representation
                 .matchers{id: "matchers-#{response.id}"}
                   = f.fields_for :mock_pickers, @mock_pickers_by_response_id[response.id] || [] do |fields|
                     = fields.text_field :url_pattern
                     = fields.text_field :body_pattern
-                    - if response.can_have_resource_representation
-                      = fields.select :resource_instance_ids, response.resource_instances.pluck(:name, :id),
-                        { include_blank: true, label: 'Mock Instance'.pluralize(response.is_collection ? 2 : 1) }, multiple: response.is_collection
-                    - if response.can_have_api_error
-                      = fields.select :api_error_instance_ids, response.api_error_instances.pluck(:name, :id),
-                        { include_blank: true, label: 'Mock Instance'.pluralize(response.is_collection ? 2 : 1) }, multiple: response.is_collection
+                    = fields.select :resource_instance_ids, response.resource_instances.pluck(:name, :id),
+                        { include_blank: true, label: 'Mock Instance'.pluralize(response.is_collection ? 2 : 1) }, multiple: response.is_collection, class: 'resource-instances'
+                    = fields.select :api_error_instance_ids, response.api_error_instances.pluck(:name, :id),
+                        { include_blank: true, label: 'Mock Instance'.pluralize(response.is_collection ? 2 : 1) }, multiple: response.is_collection, class: 'api-error-instances'
                     = fields.link_to_remove "Remove"
                     = fields.hidden_field :response_id, class: 'response-id'
             - if response.representation
