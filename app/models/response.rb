@@ -60,12 +60,22 @@ class Response < ApplicationRecord
   end
 
   def json_schema
-    # TODO: Clément Villain 17/11/17 handle api_error case
-    ResourceRepresentationSchemaSerializer.new(
-      resource_representation,
-      is_collection: is_collection,
-      root_key: root_key
-    ).as_json if resource_representation
+    # TODO Clément Villain 21/11/17:
+    # refactor json schema to use a JSONSchema objet with at least .to_h and .to_json
+    # (We could also add .validate(json) and .json_instance)
+    if resource_representation
+      ResourceRepresentationSchemaSerializer.new(
+        resource_representation,
+        is_collection: is_collection,
+        root_key: root_key
+      ).as_json
+    elsif api_error
+      JSONSchemaWrapper.new(
+        api_error.json_schema,
+        root_key,
+        is_collection,
+      ).execute
+    end
   end
 
   def can_have_api_error
