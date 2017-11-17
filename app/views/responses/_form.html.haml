@@ -38,7 +38,7 @@
 
       = f.link_to_add "Add a Header", :headers, data: { target: "#headers" }
 
-    .col-xs-6
+    .col-xs-6{class: @response.can_have_resource_representation ? 'resource-representation' : 'api-error'}
       = f.select :resource_representation_id, @resource.resource_representations.pluck(:name, :id), include_blank: true
       = f.select :api_error_id, @project.api_errors.pluck(:name, :id), include_blank: true
 

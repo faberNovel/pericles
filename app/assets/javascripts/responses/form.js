@@ -10,4 +10,7 @@ $(document).ready(function () {
       $('#response_resource_representation_id').parent().show()
     }
   });
+
+  $('.resource-representation #response_api_error_id').parent().hide();
+  $('.api-error #response_resource_representation_id').parent().hide();
 });
