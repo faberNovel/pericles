@@ -60,6 +60,7 @@ class Response < ApplicationRecord
   end
 
   def json_schema
+    # TODO: Clément Villain 17/11/17 handle api_error case
     ResourceRepresentationSchemaSerializer.new(
       resource_representation,
       is_collection: is_collection,

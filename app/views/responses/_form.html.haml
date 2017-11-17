@@ -1,6 +1,7 @@
 - content_for :page_scripts do
   = javascript_include_tag("header_autocomplete")
   = javascript_include_tag("generate_schema")
+  = javascript_include_tag("responses/form.js")
 
 = bootstrap_nested_form_for([@route, @response]) do |f|
   - if @response.errors.any?
@@ -39,6 +40,8 @@
 
     .col-xs-6
       = f.select :resource_representation_id, @resource.resource_representations.pluck(:name, :id), include_blank: true
+      = f.select :api_error_id, @project.api_errors.pluck(:name, :id), include_blank: true
+
 
       %h5 JSON Schema
       = button_tag("Generate Schema from Resource Representation", type: 'button', resource_id: "#{@resource.id}", id: 'generate-schema', style: "display: none;",

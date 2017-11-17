@@ -47,7 +47,14 @@ class ResponsesController < AuthenticatedController
   end
 
   def response_params
-    params.require(:response).permit(:status_code, :description, :resource_representation_id, :is_collection,
-     :root_key, headers_attributes: [:id, :name, :description, :_destroy])
+    params.require(:response).permit(
+      :status_code,
+      :description,
+      :resource_representation_id,
+      :api_error_id,
+      :is_collection,
+      :root_key,
+      headers_attributes: [:id, :name, :description, :_destroy]
+    )
   end
 end

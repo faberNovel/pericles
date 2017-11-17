@@ -26,7 +26,8 @@ function generate_schema_from_resource_representation(clicked_button) {
 
 $(document).ready(function() {
   $("#route_request_resource_representation_id, #route_request_is_collection, #route_request_root_key, " +
-    "#response_resource_representation_id, #response_is_collection, #response_root_key"
+    "#response_resource_representation_id, #response_is_collection, #response_root_key" +
+    "#response_api_error_id"
   ).change(function() {
     generate_schema_from_resource_representation($( "#generate-schema" ))
   });
