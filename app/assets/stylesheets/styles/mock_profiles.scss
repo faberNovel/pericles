@@ -1,4 +1,8 @@
 #mock_profile_form {
+  .url span {
+    margin-right: 8px;
+  }
+
   .status-code {
     padding: 10px 15px;
     font-size: 14px;
@@ -17,6 +21,11 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+
+      .form-group {
+        flex: 1;
+        margin: 0 8px;
+      }
     }
 
     .constraints {

@@ -9,7 +9,9 @@
       .route-container.panel.panel-default
         .panel-heading
           .panel-title
-            %h4.url=route.url
+            %h4.url
+              %span{ class: label_class_for_http_method(route.http_method) }= route.http_method
+              =route.url
         .responses.panel-body
           - route.responses.each do |response|
             .response{'data-response-id': response.id}
