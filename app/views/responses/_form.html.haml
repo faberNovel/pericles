@@ -3,6 +3,8 @@
   = javascript_include_tag("generate_schema")
   = javascript_include_tag("responses/form.js")
 
+= hidden_field_tag 'project_id', @route.resource.project.id
+
 = bootstrap_form_for([@route, @response]) do |f|
   - if @response.errors.any?
     #error_explanation

@@ -8,6 +8,19 @@ class ApiErrorsController < AuthenticatedController
 
   def show
     @api_error = ApiError.find(params[:id])
+
+    respond_to do |format|
+      format.html
+      format.json_schema do
+        render(
+          json: JSONSchemaWrapper.new(
+            @api_error.json_schema,
+            params[:root_key],
+            ActiveModel::Type::Boolean.new.cast(params[:is_collection]),
+          ).execute
+        )
+      end
+    end
   end
 
   def new
