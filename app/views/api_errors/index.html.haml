@@ -7,4 +7,9 @@
 .list-group.margin-top-element
   - @api_errors.each do |api_error|
     %a{class: "list-group-item", href: project_api_error_path(@project, api_error)}
-      = api_error.name
+      .flexcontainer.flexcontainer-space-between
+        .name
+          = api_error.name
+        .error
+          - if api_error.has_invalid_mocks?
+            INVALID MOCKS !

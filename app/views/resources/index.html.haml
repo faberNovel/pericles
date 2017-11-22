@@ -4,4 +4,10 @@
 .list-group.margin-top-element
   - @resources.each do |resource|
     %a{class: "list-group-item", href: project_resource_path(@project, resource)}
-      = resource.name
+      .flexcontainer.flexcontainer-space-between
+        .name
+          = resource.name
+        .error
+          - if resource.has_invalid_mocks?
+            INVALID MOCKS !
+

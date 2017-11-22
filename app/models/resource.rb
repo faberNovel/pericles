@@ -26,6 +26,10 @@ class Resource < ApplicationRecord
     ).as_json
   end
 
+  def has_invalid_mocks?
+    resource_instances.any? { |mock| !mock.valid? }
+  end
+
   private
 
   def create_default_resource_representation
