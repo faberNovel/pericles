@@ -15,6 +15,10 @@
 
     .matchers {
       width: 75%;
+
+      pre.regex {
+        background-color: transparent;
+      }
     }
 
     .fields {

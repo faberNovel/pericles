@@ -17,3 +17,5 @@
 //= require bootstrap-sprockets
 //= require chosen-jquery
 //= require setup_chosen
+//= require regex-colorizer
+//= require regex
