@@ -1,13 +1,11 @@
 class GenerateJsonInstanceService
-  source = File.open(File.join(Rails.root, 'app', 'assets', 'javascripts', 'json-schema-faker.min.js')).read
-  # Avoid reloading the context, we save ~500ms/request
-  @@context = ExecJS.compile(source)
 
   def initialize(schema)
-    @schema = schema
+    @schema = schema.is_a?(String) ? JSON.parse(schema) : schema
   end
 
   def execute
-    @@context.eval("jsf(" + @schema.to_json + ")");
+    js_file = File.join(Rails.root, 'lib', 'node', 'generate_mock.js')
+    JSON.parse(Cocaine::CommandLine.new("node", ":js :schema").run(js: js_file, schema: @schema.to_json))
   end
 end

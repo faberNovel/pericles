@@ -1,0 +1,25 @@
+#mock_profile_form
+  = bootstrap_form_for(@mock_profile) do |f|
+    = f.text_field :name
+
+    - @project.routes.includes(responses: [:resource_representation, :resource_instances, :api_error_instances]).order(:url).each do |route|
+      .route-container.panel.panel-default
+        .panel-heading
+          .panel-title
+            %h4.url
+              %span{ class: label_class_for_http_method(route.http_method) }= route.http_method
+              =route.url
+        .responses.panel-body
+          - route.responses.each do |response|
+            .response{'data-response-id': response.id, class: response.can_have_resource_representation ? "resource-response" : "error-response"}
+              %span.label.status-code{class: response_status_code_class(response.status_code)}=response.status_code
+              - if response.representation
+                .matchers{id: "matchers-#{response.id}"}
+                  = f.fields_for :mock_pickers, @mock_pickers_by_response_id[response.id] || [] do |fields|
+                    = render 'mock_picker_fields', f: fields, response: response
+            - if response.representation
+              = link_to_add_association "Add Matcher", f, :mock_pickers,
+                { 'data-association-insertion-node' => "#matchers-#{response.id}", 'data-association-insertion-method' => 'append', render_options: { locals: { response: response } } }
+
+    %p
+      = f.submit

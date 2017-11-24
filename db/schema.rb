@@ -10,10 +10,35 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171114144052) do
+ActiveRecord::Schema.define(version: 20171116161642) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "api_error_instances", force: :cascade do |t|
+    t.string   "name"
+    t.json     "body"
+    t.integer  "api_error_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.index ["api_error_id"], name: "index_api_error_instances_on_api_error_id", using: :btree
+  end
+
+  create_table "api_error_instances_mock_pickers", id: false, force: :cascade do |t|
+    t.integer "api_error_instance_id", null: false
+    t.integer "mock_picker_id",        null: false
+    t.index ["api_error_instance_id"], name: "index_api_error_instances_mock_pickers_on_api_error_instance_id", using: :btree
+    t.index ["mock_picker_id"], name: "index_api_error_instances_mock_pickers_on_mock_picker_id", using: :btree
+  end
+
+  create_table "api_errors", force: :cascade do |t|
+    t.string   "name"
+    t.json     "json_schema"
+    t.integer  "project_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["project_id"], name: "index_api_errors_on_project_id", using: :btree
+  end
 
   create_table "attribute_fakers", force: :cascade do |t|
     t.string   "name"
@@ -96,12 +121,38 @@ ActiveRecord::Schema.define(version: 20171114144052) do
     t.index ["validation_id"], name: "index_json_errors_on_validation_id", using: :btree
   end
 
+  create_table "mock_pickers", force: :cascade do |t|
+    t.integer "mock_profile_id"
+    t.integer "response_id"
+    t.string  "url_pattern"
+    t.string  "body_pattern"
+    t.index ["mock_profile_id"], name: "index_mock_pickers_on_mock_profile_id", using: :btree
+    t.index ["response_id"], name: "index_mock_pickers_on_response_id", using: :btree
+  end
+
+  create_table "mock_pickers_resource_instances", id: false, force: :cascade do |t|
+    t.integer "resource_instance_id", null: false
+    t.integer "mock_picker_id",       null: false
+    t.index ["mock_picker_id"], name: "index_mock_pickers_resource_instances_on_mock_picker_id", using: :btree
+    t.index ["resource_instance_id"], name: "index_mock_pickers_resource_instances_on_resource_instance_id", using: :btree
+  end
+
+  create_table "mock_profiles", force: :cascade do |t|
+    t.integer  "project_id"
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["project_id"], name: "index_mock_profiles_on_project_id", using: :btree
+  end
+
   create_table "projects", force: :cascade do |t|
     t.string   "title"
     t.text     "description"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
     t.string   "proxy_url"
+    t.integer  "mock_profile_id"
+    t.index ["mock_profile_id"], name: "index_projects_on_mock_profile_id", using: :btree
   end
 
   create_table "query_parameters", force: :cascade do |t|
@@ -133,6 +184,15 @@ ActiveRecord::Schema.define(version: 20171114144052) do
     t.index ["route_id"], name: "index_reports_on_route_id", using: :btree
   end
 
+  create_table "resource_instances", force: :cascade do |t|
+    t.string   "name"
+    t.json     "body"
+    t.integer  "resource_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["resource_id"], name: "index_resource_instances_on_resource_id", using: :btree
+  end
+
   create_table "resource_representations", force: :cascade do |t|
     t.string   "name"
     t.text     "description"
@@ -161,6 +221,8 @@ ActiveRecord::Schema.define(version: 20171114144052) do
     t.integer  "resource_representation_id"
     t.boolean  "is_collection",              default: false, null: false
     t.string   "root_key"
+    t.integer  "api_error_id"
+    t.index ["api_error_id"], name: "index_responses_on_api_error_id", using: :btree
     t.index ["resource_representation_id"], name: "index_responses_on_resource_representation_id", using: :btree
     t.index ["route_id"], name: "index_responses_on_route_id", using: :btree
   end
@@ -221,6 +283,7 @@ ActiveRecord::Schema.define(version: 20171114144052) do
     t.datetime "updated_at",    null: false
   end
 
+  add_foreign_key "api_error_instances", "api_errors"
   add_foreign_key "attributes", "attribute_fakers", column: "faker_id"
   add_foreign_key "attributes", "resources"
   add_foreign_key "attributes", "resources", column: "parent_resource_id"
@@ -229,12 +292,17 @@ ActiveRecord::Schema.define(version: 20171114144052) do
   add_foreign_key "attributes_resource_representations", "resource_representations"
   add_foreign_key "attributes_resource_representations", "resource_representations", column: "parent_resource_representation_id"
   add_foreign_key "json_errors", "validations"
+  add_foreign_key "mock_pickers", "mock_profiles"
+  add_foreign_key "mock_pickers", "responses"
+  add_foreign_key "projects", "mock_profiles"
   add_foreign_key "query_parameters", "routes"
   add_foreign_key "reports", "projects"
   add_foreign_key "reports", "responses"
   add_foreign_key "reports", "routes"
+  add_foreign_key "resource_instances", "resources"
   add_foreign_key "resource_representations", "resources"
   add_foreign_key "resources", "projects"
+  add_foreign_key "responses", "api_errors"
   add_foreign_key "responses", "resource_representations"
   add_foreign_key "responses", "routes"
   add_foreign_key "routes", "resource_representations", column: "request_resource_representation_id"

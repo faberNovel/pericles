@@ -18,14 +18,4 @@ class RoutesHelperTest < ActionView::TestCase
     @route.update(http_method: :DELETE)
     assert_equal "label label-danger http-method-label", label_class_for_http_method(@route.http_method)
   end
-
-  test "schema_summary" do
-    assert_equal '', schema_summary("", nil, true)
-    assert_equal '', schema_summary("", '', true)
-
-    assert_equal '{ "user": UserDetailed }', schema_summary("user", 'UserDetailed', false)
-    assert_equal '{ "user": [ UserDetailed ] }', schema_summary("user", 'UserDetailed', true)
-    assert_equal '{ UserDetailed }', schema_summary("", 'UserDetailed', false)
-    assert_equal '[ UserDetailed ]', schema_summary("", 'UserDetailed', true)
-  end
 end

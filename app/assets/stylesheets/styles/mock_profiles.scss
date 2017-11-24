@@ -1,0 +1,63 @@
+#mock_profile_form {
+  .url span {
+    margin-right: 8px;
+  }
+
+  .status-code {
+    padding: 10px 15px;
+    font-size: 14px;
+  }
+
+  .response {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .matchers {
+      width: 75%;
+
+      pre.regex {
+        background-color: transparent;
+      }
+    }
+
+    .fields {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .form-group {
+        flex: 1;
+        margin: 0 8px;
+      }
+    }
+
+    .constraints {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .form-group {
+        margin: 8px;
+      }
+    }
+
+    padding: 8px;
+
+    .chosen-container {
+      display: block;
+    }
+  }
+
+  .chosen-choices {
+    height: 30px;
+    width: auto;
+  }
+
+}
+
+#mock-profiles {
+  a.name {
+    width: 10%;
+  }
+}

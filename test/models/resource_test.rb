@@ -21,7 +21,6 @@ class ResourceTest < ActiveSupport::TestCase
 
   test "After a resource is created, it should have an associated default resource representation" do
     resource = create(:resource)
-    default_resource_representation = resource.resource_representations.find_by_name("default_representation")
-    assert default_resource_representation
+    assert resource.resource_representations.any?
   end
 end

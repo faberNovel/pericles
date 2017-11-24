@@ -28,3 +28,4 @@ csv/*
 csv_test/*
 
 .byebug_history
+node_modules/

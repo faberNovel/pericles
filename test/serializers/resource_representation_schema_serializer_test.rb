@@ -94,29 +94,39 @@ class ResourceRepresentationSchemaSerializerTest < ActiveSupport::TestCase
     create(:attributes_resource_representation, parent_resource_representation: resource_representation_manager,
      resource_attribute: name_attribute)
     json_schema = {
-      type: 'object',
-      title: "User - user",
-      description: 'A user',
-      properties: {
-        user: {
-          type: 'object',
-          properties: {
-            name: { type: 'string', description: 'name of the user'},
-            manager: {
-              type: 'object',
-              description: 'manager of the user',
-              title: 'User',
-              properties: {
-                name: { type: 'string', description: 'name of the user'}
-              },
-              additionalProperties: false
+      "title": "User - user",
+      "type": "object",
+      "definitions": {
+        "manager_#{resource_representation_manager.id}": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "description": "name of the user",
+              "type": "string"
             }
           },
-          additionalProperties: false
+          "additionalProperties": false
         }
       },
-      additionalProperties: false,
-      required: ['user']
+      "properties": {
+        "user": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "description": "name of the user",
+              "type": "string"
+            },
+            "manager": {
+              "type": "object",
+              "$ref": "#/definitions/manager_#{resource_representation_manager.id}"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "required": ["user"],
+      "description": "A user",
+      "additionalProperties": false
     }
 
     json = ResourceRepresentationSchemaSerializer.new(
