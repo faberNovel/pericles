@@ -18,6 +18,7 @@ gem 'kaminari'
 gem 'rollbar', '~> 2.15', '>= 2.15.4'
 gem 'chosen-rails'
 gem "cocaine"
+gem 'regex_field', '~> 0.1.0'
 
 # Recommended for admin interface
 # gem 'activeadmin', github: 'activeadmin' # There is no Rails 4 version just yet
