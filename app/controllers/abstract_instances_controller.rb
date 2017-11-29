@@ -9,7 +9,8 @@ class AbstractInstancesController < AuthenticatedController
 
   def new
     default_body = GenerateJsonInstanceService.new(@model.json_schema).execute
-    @model_instance = model_instance_class.new({model_name.to_sym => @model, body: default_body})
+    default_name = "#{@model.name.camelize} #{model_instance_class.all.count + 1}"
+    @model_instance = model_instance_class.new({model_name.to_sym => @model, body: default_body, name: default_name})
   end
 
   def create
