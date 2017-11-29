@@ -19,6 +19,10 @@
           %dl
             %dt Resource representations
             %dd= route.resource_representations.uniq.map(&:name).join(", ")
+        - else
+          %dl
+            %dt Resource
+            %dd= route.resource.name
       - if resource = local_assigns[:resource]
         .col-xs-1
           = link_to 'Show', resource_route_path(resource, route), class: "btn btn-default btn-md"
