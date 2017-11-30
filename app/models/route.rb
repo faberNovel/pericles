@@ -35,4 +35,8 @@ class Route < ApplicationRecord
       root_key: request_root_key
     ).as_json if request_resource_representation
   end
+
+  def mock_path
+    url.sub(/^\//, '').gsub(/:[^\/]+/, '1')
+  end
 end
