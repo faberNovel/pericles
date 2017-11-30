@@ -15,13 +15,14 @@
   - if params[:section] == "base" || @route.new_record?
     .row
       .col-xs-6
-        = f.text_field :name
+        = f.text_field :url, placeholder: "/#{@resource.name.pluralize.underscore}"
 
         = f.text_area :description, placeholder: t('.description_placeholder')
 
         = f.select :http_method, Route.http_methods.keys.to_a
 
-        = f.text_field :url
+
+        = f.text_field :name, placeholder: 'List of, Creation of...'
 
   %h3 Request
 
