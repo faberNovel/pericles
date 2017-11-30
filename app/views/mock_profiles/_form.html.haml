@@ -1,3 +1,6 @@
+- content_for :page_scripts do
+  = javascript_include_tag("mock_profiles/form.js")
+
 #mock_profile_form
   = bootstrap_form_for(@mock_profile) do |f|
     = f.text_field :name

@@ -14,7 +14,8 @@
     align-items: center;
 
     .matchers {
-      width: 75%;
+      flex: 1;
+      margin-left: 32px;
 
       pre.regex {
         background-color: transparent;
@@ -25,10 +26,24 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      margin: 16px 0;
 
       .form-group {
-        flex: 1;
+        flex: 3;
         margin: 0 8px;
+      }
+
+      .link {
+        margin: 0 8px;
+      }
+    }
+
+    .advanced-fields {
+      margin-top: 16px;
+      padding: 0 8px;
+
+      pre {
+        margin: 11px 0px;
       }
     }
 
