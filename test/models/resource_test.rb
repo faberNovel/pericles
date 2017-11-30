@@ -45,4 +45,28 @@ class ResourceTest < ActiveSupport::TestCase
     assert_equal resource.resource_attributes.where(primitive_type: :boolean, is_array: false).count, 1
     assert_equal resource.resource_attributes.where(primitive_type: :string, is_array: false).count, 1
   end
+
+  test "Can create attributes from json array" do
+    resource = create(:resource)
+    assert_difference 'Attribute.where(is_array: true).count', 5 do
+      resource.try_create_attributes_from_json(
+        '
+        {
+          "id": [1],
+          "number": [2],
+          "float": [2.1],
+          "boolean": [true],
+          "string": ["cool"],
+          "empty": [],
+          "multiple": ["string", 1, 1.2]
+        }
+        '
+      )
+    end
+
+    assert_equal resource.resource_attributes.where(primitive_type: :integer, is_array: true).count, 2
+    assert_equal resource.resource_attributes.where(primitive_type: :number, is_array: true).count, 1
+    assert_equal resource.resource_attributes.where(primitive_type: :boolean, is_array: true).count, 1
+    assert_equal resource.resource_attributes.where(primitive_type: :string, is_array: true).count, 1
+  end
 end

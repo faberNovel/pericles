@@ -48,18 +48,27 @@ class Resource < ApplicationRecord
 
   def create_attributes_from_json_hash(hash)
     hash.each do |key, value|
-      c = value.class
-      case
-      when c <= Integer
-        resource_attributes.create(name: key, primitive_type: :integer)
-      when c <= String
-        resource_attributes.create(name: key, primitive_type: :string)
-      when c <= TrueClass, c <= FalseClass
-        resource_attributes.create(name: key, primitive_type: :boolean)
-      when c <= Float
-        resource_attributes.create(name: key, primitive_type: :number)
-      # TODO Clément Villain 30/11/17 handle array and object
+      if value.class <= Array
+        next if value.map(&:class).uniq.count != 1
+        primitive_class = value.first.class
+        create_attribute_from_primitive_class(key, primitive_class, is_array: true)
+      else
+        create_attribute_from_primitive_class(key, value.class)
       end
+      # TODO Clément Villain 30/11/17 handle object and array of object
+    end
+  end
+
+  def create_attribute_from_primitive_class(key, primitive_class, is_array=false)
+    case
+    when primitive_class <= Integer
+      resource_attributes.create(name: key, primitive_type: :integer, is_array: is_array)
+    when primitive_class <= String
+      resource_attributes.create(name: key, primitive_type: :string, is_array: is_array)
+    when primitive_class <= TrueClass, primitive_class <= FalseClass
+      resource_attributes.create(name: key, primitive_type: :boolean, is_array: is_array)
+    when primitive_class <= Float
+      resource_attributes.create(name: key, primitive_type: :number, is_array: is_array)
     end
   end
 
