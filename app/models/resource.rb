@@ -30,6 +30,10 @@ class Resource < ApplicationRecord
     resource_instances.any? { |mock| !mock.valid? }
   end
 
+  def default_representation
+    resource_representations.order(:created_at).first
+  end
+
   private
 
   def create_default_resource_representation
