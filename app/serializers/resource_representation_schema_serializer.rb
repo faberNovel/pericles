@@ -119,6 +119,8 @@ class ResourceRepresentationSchemaSerializer < ActiveModel::Serializer
   end
 
   def hash_from_attributes_resource_representation(association)
+    return { type: 'null' } if association.is_null
+
     attribute = association.resource_attribute
     attribute_hash = {}
     array_of_attribute_hash = nil

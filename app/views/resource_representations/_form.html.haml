@@ -25,6 +25,7 @@
             %th Type
             %th Resource Representation
             %th Required ?
+            %th Is Null ?
             %th
         %tbody
           = f.fields_for :attributes_resource_representations, @attributes_resource_representations_ordered_by_attribute_name do |fields|
@@ -45,6 +46,8 @@
                   hide_label: true if type_resource
               %td
                 = fields.check_box :is_required
+              %td
+                = fields.check_box :is_null
               %td
                 = fields.hidden_field :attribute_id
 

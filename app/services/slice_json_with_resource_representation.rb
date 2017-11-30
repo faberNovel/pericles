@@ -11,6 +11,11 @@ class SliceJSONWithResourceRepresentation
       key = attr_res_rep.resource_attribute.name.to_sym
 
       next unless @json.key? key
+      if attr_res_rep.is_null
+        sliced_json[key] = nil
+        next
+      end
+
       if attr_res_rep.resource_representation
         if attr_res_rep.resource_attribute.is_array
           sliced_json[key] = @json[key].map { |e| SliceJSONWithResourceRepresentation.new(e, attr_res_rep.resource_representation).execute }

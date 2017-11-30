@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171116161642) do
+ActiveRecord::Schema.define(version: 20171130154438) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -75,6 +75,7 @@ ActiveRecord::Schema.define(version: 20171116161642) do
     t.datetime "created_at",                                        null: false
     t.datetime "updated_at",                                        null: false
     t.integer  "resource_representation_id"
+    t.boolean  "is_null",                           default: false, null: false
     t.index ["attribute_id"], name: "index_attributes_resource_representations_on_attribute_id", using: :btree
     t.index ["parent_resource_representation_id"], name: "index_arr_on_parent_resource_representation_id", using: :btree
     t.index ["resource_representation_id"], name: "index_arr_on_resource_representation_id", using: :btree

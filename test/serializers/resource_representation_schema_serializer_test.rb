@@ -79,6 +79,19 @@ class ResourceRepresentationSchemaSerializerTest < ActiveSupport::TestCase
     assert_equal attribute.primitive_type, schema[:properties][attribute.name][:type]
   end
 
+  test 'attribute resource representation is null' do
+    attributes_resource_representation = build(:attributes_resource_representation, is_null: true)
+    representation = build(:resource_representation,
+      attributes_resource_representations: [attributes_resource_representation]
+    )
+    schema = ResourceRepresentationSchemaSerializer.new(
+      representation,
+      is_collection: false,
+      root_key: ''
+    ).as_json
+    assert_equal 'null', schema[:properties][attributes_resource_representation.resource_attribute.name][:type]
+  end
+
   test 'schema with nested resources is correct' do
     resource = create(:resource, name: 'User', description: 'A user')
     name_attribute = create(:attribute, parent_resource: resource, name: 'name', description: 'name of the user',
