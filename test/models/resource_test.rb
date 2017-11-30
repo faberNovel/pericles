@@ -23,4 +23,26 @@ class ResourceTest < ActiveSupport::TestCase
     resource = create(:resource)
     assert resource.resource_representations.any?
   end
+
+  test "Can create attributes from json" do
+    resource = create(:resource)
+    assert_difference 'Attribute.count', 5 do
+      resource.try_create_attributes_from_json(
+        '
+        {
+          "id": 1,
+          "number": 2,
+          "float": 2.1,
+          "boolean": true,
+          "string": "cool"
+        }
+        '
+      )
+    end
+
+    assert_equal resource.resource_attributes.where(primitive_type: :integer, is_array: false).count, 2
+    assert_equal resource.resource_attributes.where(primitive_type: :number, is_array: false).count, 1
+    assert_equal resource.resource_attributes.where(primitive_type: :boolean, is_array: false).count, 1
+    assert_equal resource.resource_attributes.where(primitive_type: :string, is_array: false).count, 1
+  end
 end

@@ -13,6 +13,11 @@
 
     = f.text_area :description
 
+    - unless @resource.persisted?
+      .form-group
+        %label.control-label From JSON (BETA)
+        = text_area_tag :json_instance, nil, class: 'form-control'
+
   - if @resource.persisted? && params[:section] != "base"
     %h3 Attributes
 

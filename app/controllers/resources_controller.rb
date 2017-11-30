@@ -22,6 +22,7 @@ class ResourcesController < AuthenticatedController
   def create
     @resource = @project.resources.build(resource_params)
     if @resource.save
+      @resource.try_create_attributes_from_json(params[:json_instance]) if params[:json_instance]
       redirect_to project_resource_path(@project, @resource)
     else
       setup_selectable_resources(@project, @resource)

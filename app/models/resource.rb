@@ -34,7 +34,34 @@ class Resource < ApplicationRecord
     resource_representations.order(:created_at).first
   end
 
+  def try_create_attributes_from_json(json_instance)
+    begin
+      parsed_json = JSON.parse(json_instance)
+    rescue JSON::ParserError
+      return
+    end
+
+    create_attributes_from_json_hash(parsed_json) if parsed_json.is_a? Hash
+  end
+
   private
+
+  def create_attributes_from_json_hash(hash)
+    hash.each do |key, value|
+      c = value.class
+      case
+      when c <= Integer
+        resource_attributes.create(name: key, primitive_type: :integer)
+      when c <= String
+        resource_attributes.create(name: key, primitive_type: :string)
+      when c <= TrueClass, c <= FalseClass
+        resource_attributes.create(name: key, primitive_type: :boolean)
+      when c <= Float
+        resource_attributes.create(name: key, primitive_type: :number)
+      # TODO Clément Villain 30/11/17 handle array and object
+      end
+    end
+  end
 
   def create_default_resource_representation
     build_default_resource_representation.save
