@@ -12,4 +12,12 @@
   dl, #all-attributes a, a:hover, a:focus {
     text-decoration: none;
   }
+
+  dd {
+    font-size: 16px;
+  }
+
+  .panel-body {
+    padding: 15px 15px 0 15px;
+  }
 }
