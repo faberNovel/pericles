@@ -18,4 +18,9 @@ class ProjectTest < ActiveSupport::TestCase
   test "Project should be valid with all attributes set correctly" do
     assert build(:project, title: "New Project", description: "Project description").valid?
   end
+
+  test "created projects have a mock profile" do
+    project = create(:project, title: "New Project", description: "Project description")
+    assert_equal project.mock_profiles.count, 1
+  end
 end

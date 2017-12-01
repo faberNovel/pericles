@@ -10,6 +10,8 @@ class Project < ApplicationRecord
 
   validates :title, presence: true, length: { in: 2..25 }, uniqueness: true
 
+  after_create :add_default_mock_profile
+
   def build_route_set
     routes = Route.of_project(self)
     route_set = ActionDispatch::Routing::RouteSet.new
@@ -21,4 +23,9 @@ class Project < ApplicationRecord
     route_set
   end
 
+  private
+
+  def add_default_mock_profile
+    mock_profiles.create(name: 'DefaultMockProfile')
+  end
 end

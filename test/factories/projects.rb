@@ -22,9 +22,5 @@ FactoryGirl.define do
         create(:header, http_message: response, name: 'X-Special-Header')
       end
     end
-
-    after(:create) do |project, _|
-      create(:mock_profile, project: project)
-    end
   end
 end
