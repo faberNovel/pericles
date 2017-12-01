@@ -35,42 +35,10 @@ class Resource < ApplicationRecord
   end
 
   def try_create_attributes_from_json(json_instance)
-    begin
-      parsed_json = JSON.parse(json_instance)
-    rescue JSON::ParserError
-      return
-    end
-
-    create_attributes_from_json_hash(parsed_json) if parsed_json.is_a? Hash
+    AttributesImporter.new(self).import_from_json_instance(json_instance)
   end
 
   private
-
-  def create_attributes_from_json_hash(hash)
-    hash.each do |key, value|
-      if value.class <= Array
-        next if value.map(&:class).uniq.count != 1
-        primitive_class = value.first.class
-        create_attribute_from_primitive_class(key, primitive_class, is_array: true)
-      else
-        create_attribute_from_primitive_class(key, value.class)
-      end
-      # TODO Clément Villain 30/11/17 handle object and array of object
-    end
-  end
-
-  def create_attribute_from_primitive_class(key, primitive_class, is_array=false)
-    case
-    when primitive_class <= Integer
-      resource_attributes.create(name: key, primitive_type: :integer, is_array: is_array)
-    when primitive_class <= String
-      resource_attributes.create(name: key, primitive_type: :string, is_array: is_array)
-    when primitive_class <= TrueClass, primitive_class <= FalseClass
-      resource_attributes.create(name: key, primitive_type: :boolean, is_array: is_array)
-    when primitive_class <= Float
-      resource_attributes.create(name: key, primitive_type: :number, is_array: is_array)
-    end
-  end
 
   def create_default_resource_representation
     build_default_resource_representation.save
