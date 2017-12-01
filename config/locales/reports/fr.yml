@@ -2,3 +2,4 @@ fr:
   reports:
     index:
       unknown: 'INCONNUES'
+      no_reports: Il n'y a pas de rapports, utilisez le proxy pour en générer

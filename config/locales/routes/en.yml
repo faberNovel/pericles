@@ -1,7 +1,7 @@
 en:
   routes:
     index:
-      no_route_placeholder: "No routes for this project."
+      no_route_placeholder: "No routes for this project, you can create one in resource detail"
     show:
       no_header_placeholder: "There are no headers for this HTTP message."
       no_query_parameter_placeholder: "There are no query parameters for this request."

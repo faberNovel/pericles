@@ -2,3 +2,4 @@ en:
   reports:
     index:
       unknown: 'UNKNOWN'
+      no_reports: 'There are no reports, please use the proxy to generate some'

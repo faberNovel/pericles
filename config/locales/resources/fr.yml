@@ -10,3 +10,5 @@ fr:
     show:
       no_route_placeholder: "Il n'y a pas de route associée à cette ressource"
       no_mocks_placeholder: "Il n'y a pas de mock pour cette réponse"
+    index:
+      no_resources: "Il n'y a pas de ressource, créez en une !"
