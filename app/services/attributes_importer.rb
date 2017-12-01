@@ -1,6 +1,7 @@
 class AttributesImporter
   def initialize(resource)
     @resource = resource
+    @resources = resource.project.resources
   end
 
   def import_from_json_instance(json)
@@ -15,16 +16,26 @@ class AttributesImporter
     hash.each do |key, value|
       if value.class <= Array
         next if value.map(&:class).uniq.count != 1
-        primitive_class = value.first.class
-        create_attribute_from_primitive_class(key, primitive_class, is_array: true)
+        cls = value.first.class
+        create_attribute_from_class(key, cls, true)
       else
-        create_attribute_from_primitive_class(key, value.class)
+        create_attribute_from_class(key, value.class, false)
       end
-      # TODO Clément Villain 30/11/17 handle object and array of object
     end
   end
 
-  def create_attribute_from_primitive_class(key, primitive_class, is_array=false)
+  def create_attribute_from_class(key, cls, is_array)
+    if cls <= Hash
+      resource = @resources.detect do |r|
+       r.name.camelize.pluralize == key.to_s.camelize.pluralize
+      end
+      @resource.resource_attributes.create(name: key, resource: resource, is_array: is_array)
+    else
+      create_attribute_from_primitive_class(key, cls, is_array)
+    end
+  end
+
+  def create_attribute_from_primitive_class(key, primitive_class, is_array)
     case
     when primitive_class <= Integer
       @resource.resource_attributes.create(
