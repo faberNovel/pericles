@@ -10,8 +10,11 @@
 
 - unless @project.proxy_url.blank?
 
-  %h4 Proxy Url
+  %h4 Proxied server
   %p= @project.proxy_url
+
+  %h4 Proxy url
+  %p= project_proxy_url(@project)
 
 %h4 Mock Url
 = link_to project_mocks_root_url(@project), project_mocks_root_url(@project)
