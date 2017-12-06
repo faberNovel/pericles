@@ -4,12 +4,6 @@
     = link_to "Delete", route_response_path(@route, response), method: :delete, data: { confirm: 'Are you sure ?' },
       class: "btn btn-default"
 
-.row.margin-top-element
-  - unless response.description.blank?
-    .col-xs-6
-      %dl
-        %dt Description
-        %dd= response.description
 %div
   / Response Nav tabs
   %ul.nav.nav-tabs{ role: "tablist" }

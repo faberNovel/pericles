@@ -49,7 +49,6 @@ class ResponsesController < AuthenticatedController
   def response_params
     params.require(:response).permit(
       :status_code,
-      :description,
       :resource_representation_id,
       :api_error_id,
       :is_collection,
