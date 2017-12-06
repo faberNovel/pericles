@@ -19,12 +19,6 @@
   .col-xs-12
     %h2 Request
 
-    .row
-      - unless @route.request_description.blank?
-        .col-xs-6
-          %dl
-            %dt Description
-            %dd= @route.request_description
     %div
       / Nav tabs
       %ul.nav.nav-tabs{ role: "tablist" }

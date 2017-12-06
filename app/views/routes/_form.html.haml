@@ -28,9 +28,6 @@
 
   .row
     .col-xs-10
-      - if params[:section] == "base" || @route.new_record?
-        = f.text_area :request_description, label: 'Description'
-
       - if params[:section] == "query_parameters" || @route.new_record?
         %h4 Query Parameters
 
