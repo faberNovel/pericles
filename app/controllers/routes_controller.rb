@@ -72,7 +72,7 @@ class RoutesController < AuthenticatedController
       :request_is_collection,
       :request_root_key,
       request_query_parameters_attributes: [:id, :name, :description, :primitive_type, :is_optional, :_destroy],
-      request_headers_attributes: [:id, :name, :description, :_destroy]
+      request_headers_attributes: [:id, :name, :_destroy]
     )
   end
 end

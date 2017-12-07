@@ -10,6 +10,6 @@ class HeaderTest < ActiveSupport::TestCase
   end
 
   test "Header should be valid with all attributes set correctly" do
-    assert build(:header, name: "Content-Type", description: "New test header").valid?
+    assert build(:header, name: "Content-Type").valid?
   end
 end
