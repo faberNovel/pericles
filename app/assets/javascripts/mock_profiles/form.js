@@ -8,4 +8,9 @@ $(document).ready(function() {
     var a = $(added_element[0]).children('a[href="#-advanced"]')[0];
     a['href'] = "#" + uniqid;
   })
+
+  $('#mock_profile_form').on('cocoon:before-remove', function(event, removed_element) {
+    var collapseId = removed_element.children('a[data-toggle="collapse"]')[0].href.split('#')[1];
+    $('#' + collapseId).remove();
+  })
 });
