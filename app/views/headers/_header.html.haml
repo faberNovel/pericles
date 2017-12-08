@@ -6,3 +6,9 @@
           %dt Name
           %dd
             %strong= header.name
+      - unless header.value.blank?
+        .col-xs-6
+          %dl
+            %dt Value
+            %dd
+              %strong= header.value
