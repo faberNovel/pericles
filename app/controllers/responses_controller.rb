@@ -5,6 +5,8 @@ class ResponsesController < AuthenticatedController
 
   def new
     @response = @route.responses.build
+    @response.headers.build(name: 'Authorization')
+    @response.headers.build(name: 'Content-Type', value: 'application/json')
   end
 
   def edit

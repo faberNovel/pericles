@@ -16,6 +16,8 @@ class RoutesController < AuthenticatedController
 
   def new
     @route = @resource.routes.build
+    @route.request_headers.build(name: 'Authorization')
+    @route.request_headers.build(name: 'Content-Type', value: 'application/json')
     render layout: 'generic'
   end
 
