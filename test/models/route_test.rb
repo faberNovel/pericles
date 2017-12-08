@@ -39,4 +39,17 @@ class RouteTest < ActiveSupport::TestCase
     assert_equal Route.of_project(other_resource.project).count, 1, "should have only one route for project"
     assert_equal Route.of_project(other_resource.project).first, other_route, "should be the correct route"
   end
+
+  test "request_can_have_body" do
+    route = create(:route)
+    [:POST, :PUT, :PATCH].each do |http_method|
+      route.update(http_method: http_method)
+      assert route.request_can_have_body
+    end
+
+    [:GET, :DELETE].each do |http_method|
+      route.update(http_method: http_method)
+      assert_not route.request_can_have_body
+    end
+  end
 end

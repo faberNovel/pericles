@@ -39,4 +39,8 @@ class Route < ApplicationRecord
   def mock_path
     url.sub(/^\//, '').gsub(/:[^\/]+/, '1')
   end
+
+  def request_can_have_body
+    self.POST? || self.PUT? || self.PATCH?
+  end
 end
