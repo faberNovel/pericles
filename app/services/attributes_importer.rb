@@ -27,7 +27,10 @@ class AttributesImporter
   def create_attribute_from_class(key, cls, is_array)
     if cls <= Hash
       resource = @resources.detect do |r|
-       r.name.camelize.pluralize == key.to_s.camelize.pluralize
+        key.to_s.camelize.pluralize == r.name.camelize.pluralize
+      end
+      resource ||= @resources.sort_by { |r| r.name.length }.reverse.detect do |r|
+        key.to_s.camelize.pluralize.include? r.name.camelize.pluralize
       end
       @resource.resource_attributes.create(name: key, resource: resource, is_array: is_array)
     else

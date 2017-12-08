@@ -75,17 +75,22 @@ class ResourceTest < ActiveSupport::TestCase
     resource = create(:resource, project: project)
     resource_object = create(:resource, project: project, name: "Object")
     resource_nice_object = create(:resource, project: project, name: "NiceObjects")
-    assert_difference 'Attribute.where.not(resource: nil).count', 2 do
+    gym = create(:resource, project: project, name: "Gym")
+    assert_difference 'Attribute.where.not(resource: nil).count', 4 do
       resource.try_create_attributes_from_json(
         '
         {
           "object": {"id": 1},
-          "nice_objects": [{"id": 1}]
+          "very_nice_object": {"id": 1},
+          "nice_objects": [{"id": 1}],
+          "subscription_gym": {"id": 1}
         }
         '
       )
     end
     assert_equal resource.resource_attributes.where(resource: resource_object, is_array: false).count, 1
+    assert_equal resource.resource_attributes.where(resource: resource_nice_object, is_array: false).count, 1
     assert_equal resource.resource_attributes.where(resource: resource_nice_object, is_array: true).count, 1
+    assert_equal resource.resource_attributes.where(resource: gym, is_array: false).count, 1
   end
 end
