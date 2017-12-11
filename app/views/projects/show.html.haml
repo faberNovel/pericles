@@ -2,7 +2,7 @@
 
 .flexcontainer.flexcontainer-justify-end
   .btn-group{ role: "group" }
-    = link_to 'Edit', edit_project_path(@project), class: "btn btn-default"
+    = link_to t('edit'), edit_project_path(@project), class: "btn btn-default"
 
 %h4 Description
 %p
@@ -19,5 +19,8 @@
 %h4 Mock Url
 = link_to project_mocks_root_url(@project), project_mocks_root_url(@project)
 
+%h4 JSON Schemas
+= link_to t('download'), project_path(@project, format: 'zip'), class: 'btn btn-default'
 
-= link_to 'Delete', project_path(@project), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-default", id: 'delete-button'
+
+= link_to t('delete'), project_path(@project), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-default", id: 'delete-button'

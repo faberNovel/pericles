@@ -23,6 +23,10 @@ class Project < ApplicationRecord
     route_set
   end
 
+  def json_schemas_zip_data
+    JSONSchemaZipBuilder.new(self).zip_data
+  end
+
   private
 
   def add_default_mock_profile

@@ -1,3 +1,7 @@
 fr:
   required: Requis
   optional: Optionnel
+  actions:
+    edit: Éditer
+    download: Télécharger
+    delete: Supprimer

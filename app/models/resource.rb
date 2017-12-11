@@ -5,6 +5,7 @@ class Resource < ApplicationRecord
 
   has_many :resource_attributes, inverse_of: :parent_resource, class_name: 'Attribute', foreign_key: 'parent_resource_id', dependent: :destroy
   has_many :routes, inverse_of: :resource, dependent: :destroy
+  has_many :responses, through: :routes
   has_many :resource_representations, inverse_of: :resource, dependent: :destroy
   has_many :reports, through: :routes
   has_many :resource_instances

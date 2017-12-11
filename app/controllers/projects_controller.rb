@@ -9,6 +9,12 @@ class ProjectsController < AuthenticatedController
   end
 
   def show
+    respond_to do |format|
+      format.html {}
+      format.zip do
+        send_data @project.json_schemas_zip_data, type: 'application/zip', filename: "#{@project.title}.zip"
+      end
+    end
   end
 
   def new
