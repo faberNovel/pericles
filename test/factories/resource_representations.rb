@@ -14,8 +14,11 @@ FactoryGirl.define do
 
       after(:build) do |resource_representation, _evaluator|
         resource_representation.resource.resource_attributes.each do |attribute|
-          resource_representation.attributes_resource_representations << build(:attributes_resource_representation, resource_attribute: attribute,
-            resource_representation: resource_representation)
+          resource_representation.attributes_resource_representations << build(
+            :attributes_resource_representation,
+            resource_attribute: attribute,
+            resource_representation: attribute&.resource&.resource_representations&.first
+          )
         end
       end
     end

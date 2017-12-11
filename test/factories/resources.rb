@@ -9,11 +9,8 @@ FactoryGirl.define do
     project
 
     factory :resource_with_attributes do
-      transient do
-        attribute_count 1
-      end
-      after(:create) do |resource, evaluator|
-        create_list(:attribute, evaluator.attribute_count, parent_resource: resource)
+      after(:create) do |resource, _|
+        resource.resource_attributes << create(:attribute) << create(:attribute_with_resource)
       end
     end
   end
