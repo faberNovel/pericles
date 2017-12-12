@@ -30,14 +30,10 @@ class MocksController < ApplicationController
   private
 
   def find_matching_mock_picker(mock_profile, route)
-    (mock_profile.ancestors.preload(:mock_pickers).ordered_by_ancestry.to_a << mock_profile).reverse.each do |profile|
-      mock_pickers_of_route = profile&.mock_pickers&.joins(:response)&.where(responses: { route: route })&.to_a
-      mock_picker = mock_pickers_of_route.detect do |picker|
-        picker.match(request_url, request.body.read)
-      end
-      return mock_picker if mock_picker
+    mock_pickers_of_route = mock_profile&.inherited_and_self_mock_pickers_of(route)
+    mock_pickers_of_route.detect do |picker|
+      picker.match(request_url, request.body.read)
     end
-    nil
   end
 
   def request_url

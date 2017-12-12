@@ -6,7 +6,7 @@ class MockProfilesControllerTest < ControllerWithAuthenticationTest
     @resource = create(:resource, project: @project)
     @resource.resource_attributes.create(primitive_type: :integer, name: 'id')
     @route = create(:route, resource: @resource, url: "/mock_route")
-    @resource_instance = create(:resource_instance, resource: @resource, body: '{"id":1}', name: 'old name')
+    @resource_instance = create(:resource_instance, resource: @resource, body: {id: 1}.to_json)
     @mock_profile = create(:mock_profile, project: @project)
   end
 
@@ -86,7 +86,7 @@ class MockProfilesControllerTest < ControllerWithAuthenticationTest
 
     mock_picker_child = create(:mock_picker, response: r)
     mock_profile_child.mock_pickers << mock_picker_child
-    resource_instance = create(:resource_instance, resource: @resource, body: '{"id":2}', name: 'old name')
+    resource_instance = create(:resource_instance, resource: @resource, body: {id: 2}.to_json)
     mock_picker_child.resource_instances << resource_instance
 
     get "/projects/#{@project.id}/mock_profiles/#{mock_profile_child.id}/mocks#{@route.url}"
