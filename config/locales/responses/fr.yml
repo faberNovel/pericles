@@ -1,0 +1,5 @@
+fr:
+  responses:
+    header_fields:
+      name_placeholder: Content-Type
+      value_placeholder: application/json

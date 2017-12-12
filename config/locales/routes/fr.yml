@@ -15,3 +15,9 @@ fr:
         Si oui :
         - Réfléchir à la durée de vie de chaque réponse (réquêtes GET)
         - Définir des headers de cache en conséquence
+    request_query_parameter_fields:
+      name_placeholder: arg1
+      description_placeholder: "Avec ce champ vous pouvez... (exemple: séléctionner le numéro de la page)"
+    header_fields:
+      name_placeholder: Content-Type
+      value_placeholder: application/json

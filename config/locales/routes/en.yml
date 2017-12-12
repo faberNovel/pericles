@@ -15,3 +15,9 @@ en:
         If yes:
         - Think about the lifetime of the data (GET requests)
         - Define cache headers accordingly
+    request_query_parameter_fields:
+      name_placeholder: arg1
+      description_placeholder: "With this field you can... (example: select the page number)"
+    header_fields:
+      name_placeholder: Content-Type
+      value_placeholder: application/json

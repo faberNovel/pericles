@@ -29,19 +29,21 @@
   .row
     .col-xs-10
       - if params[:section] == "query_parameters" || @route.new_record?
-        %h4 Query Parameters
+        %h4
+          Query Parameters
+          %span.query-example ?arg1=val1&arg2=val2
 
         %table{class: "table table-striped", id: "table_request_query_parameters"}
           %thead
             %tr
               %th Name
-              %th Description
               %th Type
               %th Optional ?
+              %th Description
               %th
           %tbody
             = f.fields_for :request_query_parameters, wrapper: false do |query_parameter_fields|
-              = render 'request_query_parameters_fields', f: query_parameter_fields
+              = render 'request_query_parameter_fields', f: query_parameter_fields
 
 
         = link_to_add_association "Add a Query Parameter", f, :request_query_parameters,
