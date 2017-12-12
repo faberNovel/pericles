@@ -46,6 +46,7 @@ class MockProfilesController < MocksController
   def mock_profile_params
     params.require(:mock_profile).permit(
       :name,
+      :parent_id,
       mock_pickers_attributes: [
         :id,
         :body_pattern,

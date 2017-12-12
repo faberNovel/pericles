@@ -15,14 +15,26 @@ class MockProfilesControllerTest < ControllerWithAuthenticationTest
   end
 
   test "mock profile update" do
-    patch "/mock_profiles/#{@mock_profile.id}", params: { mock_profile: { name: 'nice name', body: '{}'} }
+    patch "/mock_profiles/#{@mock_profile.id}", params: { mock_profile: { name: 'nice name' } }
     assert_equal 'nice name', @mock_profile.reload.name
     assert_redirected_to edit_mock_profile_path(@mock_profile)
   end
 
+  test "mock profile add parent" do
+    parent = create(:mock_profile)
+    patch "/mock_profiles/#{@mock_profile.id}", params: { mock_profile: { name: 'nice name', parent_id: parent.id} }
+    assert_equal @mock_profile.reload.parent, parent
+    assert_redirected_to edit_mock_profile_path(@mock_profile)
+  end
+
+  test "mock profile cannot add cyclic dependency" do
+    patch "/mock_profiles/#{@mock_profile.id}", params: { mock_profile: { name: 'nice name', parent_id: @mock_profile.id} }
+    assert_response 422
+  end
+
   test "mock profile create" do
     assert_difference 'MockProfile.count' do
-      post "/projects/#{@project.id}/mock_profiles", params: { mock_profile: { name: 'nice name', body: '{}'} }
+      post "/projects/#{@project.id}/mock_profiles", params: { mock_profile: { name: 'nice name' } }
     end
     assert_redirected_to edit_mock_profile_path(MockProfile.order(:id).last)
   end
