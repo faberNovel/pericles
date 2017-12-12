@@ -21,11 +21,13 @@ class ResourcesController < AuthenticatedController
 
   def create
     @resource = @project.resources.build(resource_params)
-    if @resource.save
+    check_valid_json_object_param(params[:json_instance]) unless params[:json_instance].blank?
+    if @json_instance_error.blank? && @resource.save
       @resource.try_create_attributes_from_json(params[:json_instance]) if params[:json_instance]
       redirect_to project_resource_path(@project, @resource)
     else
       setup_selectable_resources(@project, @resource)
+      @json_instance = params[:json_instance]
       render 'new', status: :unprocessable_entity
     end
   end
@@ -64,6 +66,17 @@ class ResourcesController < AuthenticatedController
   def setup_selectable_resources(project, resource)
     @selectable_resources = project.resources.to_a
     @selectable_resources = @selectable_resources - [resource]
+  end
+
+  def check_valid_json_object_param(json_string)
+    begin
+      parsed_json = JSON.parse(json_string)
+    rescue JSON::ParserError
+      @json_instance_error = 'could not parse JSON'
+      return
+    end
+
+    @json_instance_error = 'JSON is not an object' unless parsed_json.is_a? Hash
   end
 
   def resource_params

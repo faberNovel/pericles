@@ -1,11 +1,13 @@
 = bootstrap_form_for([@project, @resource]) do |f|
-  - if @resource.errors.any?
+  - if @resource.errors.any? || !@json_instance_error.blank?
     #error_explanation
       %h2
-        = "#{pluralize(@resource.errors.count, "error")} prohibited this resource from being saved:"
+        = "#{pluralize(@resource.errors.count + (@json_instance_error.blank? ? 0 : 1), "error")} prohibited this resource from being saved:"
       %ul
         - @resource.errors.full_messages.each do |msg|
           %li= msg
+        - unless @json_instance_error.blank?
+          %li= @json_instance_error
 
   - unless params[:section] == "all_attributes"
 
@@ -14,9 +16,11 @@
     = f.text_area :description
 
     - unless @resource.persisted?
-      .form-group
+      .form-group{class: @json_instance_error.blank? ? '' : 'has-error'}
         %label.control-label From JSON (BETA)
-        = text_area_tag :json_instance, nil, class: 'form-control'
+        = text_area_tag :json_instance, @json_instance, class: 'form-control'
+        - unless @json_instance_error.blank?
+          %span.help-block= @json_instance_error
 
   - if @resource.persisted? && params[:section] != "base"
     %h3 Attributes
