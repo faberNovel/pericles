@@ -13,9 +13,8 @@
         %a{class: 'route-row', href: resource_route_path(route.resource, route)}
           %div{style: 'width: 10%'}
             %span{ class: label_class_for_http_method(route.http_method) }= route.http_method
-          %div{style: 'width: 25%'}= route.url
-          %div{style: 'width: 30%', scope: 'row'}= route.name
-          %div{style: 'width: 25%'}= route.resource_representations.uniq.map(&:name).join(", ")
+          %div{style: 'width: 35%'}= route.url
+          %div{style: 'width: 35%'}= route.resource_representations.uniq.map(&:name).join(", ")
 - else
   %p
     %i= t('.no_route_placeholder')

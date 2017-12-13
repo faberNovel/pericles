@@ -65,16 +65,6 @@ class RoutesControllerTest < ControllerWithAuthenticationTest
     assert_redirected_to resource_route_path(resource, route)
   end
 
-  test "should not create route without a name" do
-    route = build(:route)
-    resource = route.resource
-    route.name = ''
-    assert_no_difference('Route.count') do
-      post resource_routes_path(resource), params: { route: route.attributes }
-    end
-    assert_response :unprocessable_entity
-  end
-
   test "should not create route (not authenticated)" do
     sign_out :user
     route = build(:route)
@@ -88,30 +78,30 @@ class RoutesControllerTest < ControllerWithAuthenticationTest
   test "should update route" do
     route = create(:route)
     resource = route.resource
-    put resource_route_path(resource, route), params: { route: { name: 'List users' } }
+    put resource_route_path(resource, route), params: { route: { url: '/new_url' } }
     assert_redirected_to resource_route_path(resource, route)
     route.reload
-    assert_equal 'List users', route.name
+    assert_equal '/new_url', route.url
   end
 
   test "should not update route" do
     route = create(:route)
     resource = route.resource
-    name = route.name
-    put resource_route_path(resource, route), params: { route: { name: '' } }
+    url = route.url
+    put resource_route_path(resource, route), params: { route: { url: '' } }
     assert_response :unprocessable_entity
     route.reload
-    assert_equal name, route.name
+    assert_equal url, route.url
   end
 
   test "should not update route (not authenticated)" do
     sign_out :user
     route = create(:route)
+    route_original_url = route.url
     resource = route.resource
-    route_original_name = route.name
-    put resource_route_path(resource, route), params: { route: { name: 'List users' } }
+    put resource_route_path(resource, route), params: { route: { url: '/new_url' } }
     route.reload
-    assert_equal route_original_name, route.name
+    assert_equal route_original_url, route.url
     assert_redirected_to new_user_session_path
   end
 

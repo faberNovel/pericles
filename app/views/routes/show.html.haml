@@ -7,7 +7,7 @@
   .col-xs-12
     .page-header
       %h1
-        !="#{@route.url} <small> #{@route.name} </small>"
+        = @route.url
         = render partial: "shared/last_edit", locals: {last_audit: @route.last_audit}
         .pull-right
           .btn-group{ role: "group" }

@@ -1,15 +1,6 @@
 require 'test_helper'
 
 class RouteTest < ActiveSupport::TestCase
-  test "shouldn't exist without a name" do
-    assert_not build(:route, name: nil).valid?
-  end
-
-  test "Two routes within the same resource shouldn't have the same name" do
-    route = create(:route)
-    assert_not build(:route, name: route.name, resource: route.resource).valid?
-  end
-
   test "shouldn't exist without a http_method" do
     assert_not build(:route, http_method: nil).valid?
   end
@@ -28,7 +19,7 @@ class RouteTest < ActiveSupport::TestCase
   end
 
   test "Route should be valid with all attributes set correctly" do
-    assert build(:route, name: "New route", description: "New test route", http_method: :POST, url: "/tests").valid?
+    assert build(:route, description: "New test route", http_method: :POST, url: "/tests").valid?
   end
 
   test "routes of project" do

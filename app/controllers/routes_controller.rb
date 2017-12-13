@@ -66,7 +66,6 @@ class RoutesController < AuthenticatedController
 
   def route_params
     params.require(:route).permit(
-      :name,
       :description,
       :http_method,
       :url,
