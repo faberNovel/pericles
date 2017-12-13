@@ -21,64 +21,66 @@
 
         = f.select :http_method, Route.http_methods.keys.to_a
 
-  %h3 Request
+  - if @route.persisted?
 
-  .row
-    .col-xs-10
-      - if params[:section] == "query_parameters" || @route.new_record?
-        %h4
-          Query Parameters
-          %span.query-example ?arg1=val1&arg2=val2
+    %h3 Request
 
-        %table{class: "table table-striped", id: "table_request_query_parameters"}
-          %thead
-            %tr
-              %th Name
-              %th Type
-              %th Optional ?
-              %th Description
-              %th
-          %tbody
-            = f.fields_for :request_query_parameters, wrapper: false do |query_parameter_fields|
-              = render 'request_query_parameter_fields', f: query_parameter_fields
-
-
-        = link_to_add_association "Add a Query Parameter", f, :request_query_parameters,
-          { 'data-association-insertion-node' => "#table_request_query_parameters tbody", 'data-association-insertion-method' => 'append' }
-
-      - if params[:section] == "request_headers" || @route.new_record?
-        %h4 Headers
-
-        %table{class: "table table-striped", id: "table_request_headers"}
-          %thead
-            %tr
-              %th Name
-              %th Value
-              %th
-          %tbody
-            = f.fields_for :request_headers, wrapper: false do |header_fields|
-              = render 'request_header_fields', f: header_fields
-
-
-
-        = link_to_add_association "Add a Header", f, :request_headers,
-          { 'data-association-insertion-node' => "#table_request_headers tbody", 'data-association-insertion-method' => 'append' }
-
-  - if params[:section] == "request_body" || @route.new_record?
     .row
-      .col-xs-6
+      .col-xs-10
+        - if params[:section] == "query_parameters"
+          %h4
+            Query Parameters
+            %span.query-example ?arg1=val1&arg2=val2
 
-        %h4 Body
+          %table{class: "table table-striped", id: "table_request_query_parameters"}
+            %thead
+              %tr
+                %th Name
+                %th Type
+                %th Optional ?
+                %th Description
+                %th
+            %tbody
+              = f.fields_for :request_query_parameters, wrapper: false do |query_parameter_fields|
+                = render 'request_query_parameter_fields', f: query_parameter_fields
 
-        = f.select :request_resource_representation_id, @resource.resource_representations.pluck(:name, :id), include_blank: true
 
-        %h5 JSON Schema
-        = button_tag("Generate Schema from Resource Representation", type: 'button', resource_id: "#{@resource.id}", id: 'generate-schema', style: "display: none;",
-          onclick: "generate_schema_from_resource_representation(this)")
+          = link_to_add_association "Add a Query Parameter", f, :request_query_parameters,
+            { 'data-association-insertion-node' => "#table_request_query_parameters tbody", 'data-association-insertion-method' => 'append' }
 
-        = f.check_box :request_is_collection
-        = f.text_field :request_root_key, class: 'root-key'
-        = f.text_area :request_json_schema, size: "60x20", label: 'Body JSON schema', readonly: true, value: format_json(@route.request_json_schema)
+        - if params[:section] == "request_headers"
+          %h4 Headers
+
+          %table{class: "table table-striped", id: "table_request_headers"}
+            %thead
+              %tr
+                %th Name
+                %th Value
+                %th
+            %tbody
+              = f.fields_for :request_headers, wrapper: false do |header_fields|
+                = render 'request_header_fields', f: header_fields
+
+
+
+          = link_to_add_association "Add a Header", f, :request_headers,
+            { 'data-association-insertion-node' => "#table_request_headers tbody", 'data-association-insertion-method' => 'append' }
+
+    - if params[:section] == "request_body"
+      .row
+        .col-xs-6
+
+          %h4 Body
+
+          = f.select :request_resource_representation_id, @resource.resource_representations.pluck(:name, :id), include_blank: true
+
+          %h5 JSON Schema
+          = button_tag("Generate Schema from Resource Representation", type: 'button', resource_id: "#{@resource.id}", id: 'generate-schema', style: "display: none;",
+            onclick: "generate_schema_from_resource_representation(this)")
+
+          = f.check_box :request_is_collection
+          = f.text_field :request_root_key, class: 'root-key'
+          = f.text_area :request_json_schema, size: "60x20", label: 'Body JSON schema', readonly: true, value: format_json(@route.request_json_schema)
 
   %p
     = f.submit
