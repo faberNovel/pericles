@@ -29,9 +29,10 @@
         %li{ role: "presentation", class: ('active' unless @route.request_can_have_body) }
           %a{ "aria-controls" => "request headers", "data-toggle" => "tab", href: "#request-headers", role: "tab" }
             = "Headers"
-        %li{ role: "presentation" }
-          %a{ "aria-controls" => "query parameters", "data-toggle" => "tab", href: "#query-parameters", role: "tab" }
-            = "Query Parameters"
+        - if @route.can_have_query_params
+          %li{ role: "presentation" }
+            %a{ "aria-controls" => "query parameters", "data-toggle" => "tab", href: "#query-parameters", role: "tab" }
+              = "Query Parameters"
 
 
       / Tab panes
@@ -80,19 +81,20 @@
               - else
                 %p
                   %i= t('.no_header_placeholder')
-        #query-parameters.tab-pane{ role: "tabpanel" }
-          .panel.panel-default
-            .panel-heading
-              .flexcontainer.flexcontainer-justify-end
-                = link_to 'Edit', edit_resource_route_path(@resource, @route, section: "query_parameters"),
-                 class: "btn btn-default"
-            .panel-body
-              - if @route.request_query_parameters.any?
-                - @route.request_query_parameters.each do |query_parameter|
-                  = render query_parameter
-              - else
-                %p
-                  %i= t('.no_query_parameter_placeholder')
+        - if @route.can_have_query_params
+          #query-parameters.tab-pane{ role: "tabpanel" }
+            .panel.panel-default
+              .panel-heading
+                .flexcontainer.flexcontainer-justify-end
+                  = link_to 'Edit', edit_resource_route_path(@resource, @route, section: "query_parameters"),
+                   class: "btn btn-default"
+              .panel-body
+                - if @route.request_query_parameters.any?
+                  - @route.request_query_parameters.each do |query_parameter|
+                    = render query_parameter
+                - else
+                  %p
+                    %i= t('.no_query_parameter_placeholder')
 
 .row
   .col-xs-12

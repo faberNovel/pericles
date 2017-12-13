@@ -43,4 +43,15 @@ class RouteTest < ActiveSupport::TestCase
       assert_not route.request_can_have_body
     end
   end
+
+  test "can_have_query_params" do
+    route = create(:route)
+    [:POST, :PUT, :PATCH, :DELETE].each do |http_method|
+      route.update(http_method: http_method)
+      assert_not route.can_have_query_params
+    end
+
+    route.update(http_method: :GET)
+    assert route.can_have_query_params
+  end
 end

@@ -42,4 +42,8 @@ class Route < ApplicationRecord
   def request_can_have_body
     self.POST? || self.PUT? || self.PATCH?
   end
+
+  def can_have_query_params
+    self.GET?
+  end
 end
