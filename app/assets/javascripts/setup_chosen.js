@@ -1,6 +1,6 @@
 $(document).ready(function () {
-  $("select").chosen();
+  $("select").chosen({allow_single_deselect: true});
   $(document).on('cocoon:after-insert', function () {
-    $("select").chosen();
+    $("select").chosen({allow_single_deselect: true});
   });
 });
