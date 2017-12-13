@@ -22,6 +22,7 @@ class Route < ApplicationRecord
   audited
   has_associated_audits
 
+  before_save :remove_obsolete_fields
 
   def request_json_instance
     GenerateJsonInstanceService.new(request_json_schema).execute if request_json_schema
@@ -45,5 +46,16 @@ class Route < ApplicationRecord
 
   def can_have_query_params
     self.GET?
+  end
+
+  private
+
+  def remove_obsolete_fields
+    request_query_parameters.destroy_all unless can_have_query_params
+    unless request_can_have_body
+      self.request_resource_representation_id = nil
+      self.request_is_collection = false
+      self.request_root_key = ''
+    end
   end
 end
