@@ -13,8 +13,12 @@
         %a{class: 'route-row', href: resource_route_path(route.resource, route)}
           %div{style: 'width: 10%'}
             %span{ class: label_class_for_http_method(route.http_method) }= route.http_method
-          %div{style: 'width: 35%'}= route.url
-          %div{style: 'width: 35%'}= route.resource_representations.uniq.map(&:name).join(", ")
+          %div{style: 'flex: 1'}= route.url
+          %div{style: 'width: 25%'}= route.resource_representations.uniq.map(&:name).join(", ")
+          - if route.responses.empty?
+            %div.tooltip{style: 'width: 25%', 'data-toggle' => "tooltip", 'data-placement' => "top", title: "No responses"}
+              \/!\
+
 - else
   %p
     %i= t('.no_route_placeholder')

@@ -17,4 +17,5 @@
 //= require bootstrap-sprockets
 //= require chosen-jquery
 //= require setup_chosen
+//= require setup_tooltip
 //= require regex_field
