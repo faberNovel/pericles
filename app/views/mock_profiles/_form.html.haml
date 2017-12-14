@@ -3,13 +3,7 @@
 
 #mock_profile_form
   = bootstrap_form_for(@mock_profile) do |f|
-    - if @mock_profile.errors.any?
-      #error_explanation
-        %h2
-          = "#{pluralize(@mock_profile.errors.count, "error")} prohibited this mock profile from being saved:"
-        %ul
-          - @mock_profile.errors.full_messages.each do |msg|
-            %li= msg
+    = render 'shared/errors', object: @mock_profile
 
     = f.text_field :name
 

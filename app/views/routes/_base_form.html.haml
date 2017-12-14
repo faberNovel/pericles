@@ -1,12 +1,5 @@
 = bootstrap_form_for([@project, @route]) do |f|
-  - if @route.errors.any?
-    #error_explanation
-      %h2
-        = pluralize(@route.errors.count, "error")
-        prohibited this route from being saved:
-      %ul
-        - @route.errors.full_messages.each do |msg|
-          %li= msg
+  = render 'shared/errors', object: @route
 
   .row
     .col-xs-6

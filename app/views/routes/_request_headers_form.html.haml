@@ -2,44 +2,28 @@
   = javascript_include_tag("header_autocomplete")
 
 = bootstrap_form_for([@project, @route]) do |f|
-  - if @route.errors.any?
-    #error_explanation
-      %h2
-        = pluralize(@route.errors.count, "error")
-        prohibited this route from being saved:
-      %ul
-        - @route.errors.full_messages.each do |msg|
-          %li= msg
+  = render 'shared/errors', object: @route
 
-  - if params[:section] == "base" || @route.new_record?
-    .row
-      .col-xs-6
-        = f.text_field :url, placeholder: "/#{@route.resource.name.pluralize.underscore}"
-        = f.select :http_method, Route.http_methods.keys.to_a
-        = f.text_area :description, placeholder: t('.description_placeholder')
+  %h3 Request
 
-  - if @route.persisted?
+  .row
+    .col-xs-10
+      %h4 Headers
 
-    %h3 Request
-
-    .row
-      .col-xs-10
-        %h4 Headers
-
-        %table{class: "table table-striped", id: "table_request_headers"}
-          %thead
-            %tr
-              %th Name
-              %th Value
-              %th
-          %tbody
-            = f.fields_for :request_headers, wrapper: false do |header_fields|
-              = render 'request_header_fields', f: header_fields
+      %table{class: "table table-striped", id: "table_request_headers"}
+        %thead
+          %tr
+            %th Name
+            %th Value
+            %th
+        %tbody
+          = f.fields_for :request_headers, wrapper: false do |header_fields|
+            = render 'request_header_fields', f: header_fields
 
 
 
-        = link_to_add_association "Add a Header", f, :request_headers,
-          { 'data-association-insertion-node' => "#table_request_headers tbody", 'data-association-insertion-method' => 'append' }
+      = link_to_add_association "Add a Header", f, :request_headers,
+        { 'data-association-insertion-node' => "#table_request_headers tbody", 'data-association-insertion-method' => 'append' }
 
   %p
     = f.submit

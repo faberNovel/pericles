@@ -1,12 +1,5 @@
 = bootstrap_form_for([@resource, @representation]) do |f|
-  - if @representation.errors.any?
-    #error_explanation
-      %h2
-        = pluralize(@representation.errors.count, "error")
-        prohibited this resource_representation from being saved:
-      %ul
-        - @representation.errors.full_messages.each do |msg|
-          %li= msg
+  = render 'shared/errors', object: @representation
 
   .row
     .col-xs-6
