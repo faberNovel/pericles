@@ -10,14 +10,14 @@ class Route < ApplicationRecord
   belongs_to :resource, inverse_of: :routes
   belongs_to :request_resource_representation, class_name: "ResourceRepresentation"
 
+  delegate :project, to: :resource
+
   accepts_nested_attributes_for :request_headers, allow_destroy: true, reject_if: :all_blank
   accepts_nested_attributes_for :request_query_parameters, allow_destroy: true, reject_if: :all_blank
 
   validates :http_method, presence: true
   validates :url, presence: true
   validates :resource, presence: true, uniqueness: { scope: [:http_method, :url]}
-
-  scope :of_project, ->(project) { joins(:resource).where(resources: { project_id: project.id }) }
 
   audited
   has_associated_audits

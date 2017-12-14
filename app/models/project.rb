@@ -13,8 +13,8 @@ class Project < ApplicationRecord
   after_create :add_default_mock_profile
 
   def build_route_set
-    routes = Route.of_project(self)
     route_set = ActionDispatch::Routing::RouteSet.new
+    routes = self.routes
     route_set.draw do
       routes.map do |route|
         match route.url, to: '', via: [route.http_method.downcase.to_sym], controller: 'mocks', action: '', name: route.id

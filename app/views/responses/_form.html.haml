@@ -35,8 +35,8 @@
         { 'data-association-insertion-node' => "#headers tbody", 'data-association-insertion-method' => 'append' }
 
     .col-xs-6{class: @response.can_have_resource_representation ? 'resource-representation' : 'api-error'}
-      = f.select :resource_representation_id, @resource.resource_representations.pluck(:name, :id), include_blank: true
-      = f.select :api_error_id, @project.api_errors.pluck(:name, :id), include_blank: true
+      = f.select :resource_representation_id, @resource.resource_representations.pluck(:name, :id), include_blank: false
+      = f.select :api_error_id, @project.api_errors.pluck(:name, :id), include_blank: false
 
 
       %h5 JSON Schema

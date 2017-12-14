@@ -27,8 +27,8 @@ class RouteTest < ActiveSupport::TestCase
     create(:route, resource: route.resource)
     other_resource = create(:resource)
     other_route = create(:route, resource: other_resource)
-    assert_equal Route.of_project(other_resource.project).count, 1, "should have only one route for project"
-    assert_equal Route.of_project(other_resource.project).first, other_route, "should be the correct route"
+    assert_equal other_resource.project.routes.count, 1, "should have only one route for project"
+    assert_equal other_resource.project.routes.first, other_route, "should be the correct route"
   end
 
   test "request_can_have_body" do

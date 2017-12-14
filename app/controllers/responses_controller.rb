@@ -15,7 +15,7 @@ class ResponsesController < AuthenticatedController
   def create
     @response = @route.responses.build(response_params)
     if @response.save
-      redirect_to resource_route_path(@resource, @route)
+      redirect_to project_route_path(@project, @route)
     else
       render 'new', status: :unprocessable_entity
     end
@@ -23,7 +23,7 @@ class ResponsesController < AuthenticatedController
 
   def update
     if @response.update(response_params)
-      redirect_to resource_route_path(@resource, @route)
+      redirect_to project_route_path(@project, @route)
     else
       render 'edit', status: :unprocessable_entity
     end
@@ -32,7 +32,7 @@ class ResponsesController < AuthenticatedController
   def destroy
     @response.destroy
 
-    redirect_to resource_route_path(@resource, @route)
+    redirect_to project_route_path(@project, @route)
   end
 
   private

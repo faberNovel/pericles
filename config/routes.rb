@@ -3,8 +3,8 @@ Rails.application.routes.draw do
   devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
   resources :projects do
     resources :resources
+    resources :routes
     resources :api_errors
-    resources :routes, only: [:index]
     resources :reports, only: [:index, :show]
     resources :mock_profiles, only: [:index, :new, :create]
     match 'mocks', to: "mocks#compute_mock", via: :all, as: 'mocks_root'
@@ -18,7 +18,6 @@ Rails.application.routes.draw do
   end
   resources :resources, only: [] do
     resources :resource_representations, except: [:index]
-    resources :routes, except: [:index]
     resources :resource_instances, only: [:new, :create]
   end
   resources :routes, only: [] do
