@@ -10,7 +10,7 @@
       .flexcontainer.flexcontainer-space-between
         .name
           = resource.name
-        .error
-          - if resource.has_invalid_mocks?
-            INVALID MOCKS !
-
+        - if resource.has_invalid_mocks?
+          .error
+            .tool-tip{'data-toggle' => "tooltip", 'data-placement' => "top", title: "Invalid mocks !"}
+              \/!\

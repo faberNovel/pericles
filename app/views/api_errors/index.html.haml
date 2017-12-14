@@ -10,9 +10,10 @@
       .flexcontainer.flexcontainer-space-between
         .name
           = api_error.name
-        .error
-          - if api_error.has_invalid_mocks?
-            INVALID MOCKS !
+        - if api_error.has_invalid_mocks?
+          .error
+            .tool-tip{'data-toggle' => "tooltip", 'data-placement' => "top", title: "Invalid mocks !"}
+              \/!\
 
 - if @api_errors.empty?
   %p= t('.no_errors')
