@@ -1,10 +1,13 @@
 .fields.nested-fields
   .main
-    = f.text_field :name, hide_label: true, placeholder: t('.name_placeholder')
+    .flex
+      = f.text_field :name, hide_label: true, placeholder: t('.name_placeholder')
     = f.check_box :is_array, hide_label: true
-    = f.select :type, @selectable_resources.collect { |r| [ r.name, r.id ] } + Attribute.primitive_types.keys.to_a, hide_label: true, required: true
+    .flex
+      = f.select :type, @selectable_resources.collect { |r| [ r.name, r.id ] } + Attribute.primitive_types.keys.to_a, hide_label: true, required: true
     = f.check_box :nullable, hide_label: true
-    = f.text_area :description, hide_label: true, placeholder: t('.description_placeholder')
+    .flex
+      = f.text_area :description, hide_label: true, placeholder: t('.description_placeholder'), rows: (f.object.description&.count("\n") || 0) + 1
     = link_to_remove_association image_tag('delete.svg'), f
   .constraints
     = f.text_field :enum, hide_label: false, placeholder: '1, 2, 3, ...'
