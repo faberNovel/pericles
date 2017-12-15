@@ -1,15 +1,15 @@
 .fields.nested-fields
   .main
-    = f.text_field :name, hide_label: true
+    = f.text_field :name, hide_label: true, placeholder: t('.name_placeholder')
     = f.check_box :is_array, hide_label: true
     = f.select :type, @selectable_resources.collect { |r| [ r.name, r.id ] } + Attribute.primitive_types.keys.to_a, hide_label: true, required: true
     = f.check_box :nullable, hide_label: true
-    = f.text_area :description, hide_label: true
+    = f.text_area :description, hide_label: true, placeholder: t('.description_placeholder')
     = link_to_remove_association image_tag('delete.svg'), f
   .constraints
-    = f.text_field :enum, hide_label: true
-    = f.collection_select(:scheme_id, Scheme.all, :id, :name, include_blank: true, hide_label: true)
-    = f.number_field :minimum, hide_label: true
-    = f.number_field :maximum, hide_label: true
-    = f.number_field :min_items, hide_label: true
-    = f.number_field :max_items, hide_label: true
+    = f.text_field :enum, hide_label: false, placeholder: '1, 2, 3, ...'
+    = f.collection_select(:scheme_id, Scheme.all, :id, :name, include_blank: true, hide_label: false)
+    = f.number_field :minimum, hide_label: false, placeholder: 0
+    = f.number_field :maximum, hide_label: false, placeholder: 100
+    = f.number_field :min_items, hide_label: false, placeholder: 0
+    = f.number_field :max_items, hide_label: false, placeholder: 100
