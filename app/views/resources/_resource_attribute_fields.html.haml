@@ -2,8 +2,7 @@
   .main
     = f.text_field :name, hide_label: true
     = f.check_box :is_array, hide_label: true
-    = f.select :primitive_type, Attribute.primitive_types.keys.to_a, include_blank: true, hide_label: true
-    = f.select :resource_id, @selectable_resources.collect { |r| [ r.name, r.id ] }, include_blank: true, hide_label: true
+    = f.select :type, @selectable_resources.collect { |r| [ r.name, r.id ] } + Attribute.primitive_types.keys.to_a, hide_label: true, required: true
     = f.check_box :nullable, hide_label: true
     = f.text_area :description, hide_label: true
     = link_to_remove_association "Remove", f

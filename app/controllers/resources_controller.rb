@@ -80,15 +80,16 @@ class ResourcesController < AuthenticatedController
   end
 
   def resource_params
-    params.require(:resource).permit(
+    return @resource_params if @resource_params
+
+    @resource_params = params.require(:resource).permit(
       :name,
       :description,
       resource_attributes_attributes: [
         :id,
         :name,
         :description,
-        :primitive_type,
-        :resource_id,
+        :type,
         :is_array,
         :enum,
         :scheme_id,
@@ -109,5 +110,12 @@ class ResourcesController < AuthenticatedController
         :_destroy
       ]
     )
+    @resource_params[:resource_attributes_attributes]&.each do |_, attribute|
+      type = attribute.delete(:type)
+      type_as_int = type.to_i.positive? ? type.to_i : nil
+      attribute[:resource_id] = type_as_int
+      attribute[:primitive_type] = type_as_int ? nil : type
+    end
+    @resource_params
   end
 end
