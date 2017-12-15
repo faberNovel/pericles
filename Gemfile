@@ -8,7 +8,6 @@ gem 'sass-rails'
 gem 'uglifier'
 gem 'coffee-rails'
 gem 'jquery-rails'
-gem 'turbolinks'
 gem 'json_schema-faker'
 gem  'execjs'
 gem 'devise', '~> 4.3'
@@ -17,6 +16,9 @@ gem "audited", "~> 4.5"
 gem 'http'
 gem 'kaminari'
 gem 'rollbar', '~> 2.15', '>= 2.15.4'
+gem 'chosen-rails'
+gem "cocaine"
+gem 'regex_field', '~> 0.1.0'
 
 # Recommended for admin interface
 # gem 'activeadmin', github: 'activeadmin' # There is no Rails 4 version just yet
@@ -68,7 +70,7 @@ gem 'rails-controller-testing'
 gem 'json-schema', '~> 2.8'
 gem 'json', '~> 2.0.2'
 
-gem "nested_form"
+gem "cocoon", '~> 1.2'
 gem 'bootstrap_form'
 gem 'rails-erd', '~> 1.5'
 

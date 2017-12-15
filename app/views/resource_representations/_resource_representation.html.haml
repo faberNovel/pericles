@@ -1,4 +1,4 @@
-.panel.panel-default
+.panel.panel-default#resource-representation
   .panel-heading
     %p
       .flexcontainer.flexcontainer-justify-end
@@ -26,14 +26,20 @@
               %dl
                 %dt Type
                 %dd
-                  %strong= format_type(attribute.primitive_type, attribute.resource_id, attribute.is_array)
-            - if resource_representation_for_attr
-              .col-xs-2
+                  - if attribute.resource_id
+                    %a{href: project_resource_path(@project, attribute.resource_id)}
+                      %strong= format_type(attribute.primitive_type, attribute.resource_id, attribute.is_array, attr_resource_rep.is_null)
+                  - else
+                    %strong= format_type(attribute.primitive_type, attribute.resource_id, attribute.is_array, attr_resource_rep.is_null)
+            .col-xs-3
+              - if resource_representation_for_attr
                 %dl
                   %dt Resource Representation
-                  %dd= resource_representation_for_attr.name
-          .row
+                  %dd
+                    %a{href: project_resource_path(@project, attribute.resource_id) + "#res-#{resource_representation_for_attr.id}"}
+                      =resource_representation_for_attr.name
             .col-xs-3
               %dl
                 %dt Required ?
                 %dd= attr_resource_rep.is_required ? t('required') : t('optional')
+

@@ -1,0 +1,15 @@
+.fields.nested-fields
+  - if response.can_have_resource_representation
+    = f.select :resource_instance_ids, response.resource_instances.pluck(:name, :id),
+        { include_blank: true, label: 'Mock Instance'.pluralize(response.is_collection ? 2 : 1) }, multiple: response.is_collection
+  - if response.can_have_api_error
+    = f.select :api_error_instance_ids, response.api_error_instances.pluck(:name, :id),
+        { include_blank: true, label: 'Mock Instance'.pluralize(response.is_collection ? 2 : 1) }, multiple: response.is_collection
+  %a{"data-toggle" => "collapse", href: "##{f.object.id}-advanced",  "aria-expanded" => false}
+    .link
+      Advanced options
+  = link_to_remove_association "Remove", f
+  = f.hidden_field :response_id, value: response.id
+.collapse.advanced-fields{id: "#{f.object.id}-advanced"}
+  = f.regex_field :url_pattern, label: 'URL pattern (Optional)'
+  = f.regex_field :body_pattern, label: 'Body pattern (Optional)'

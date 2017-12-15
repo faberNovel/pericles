@@ -30,13 +30,13 @@ class ResponsesControllerTest < ControllerWithAuthenticationTest
   test "should create response" do
     response = build(:response)
     route = response.route
-    resource = route.resource
+    project = route.resource.project
     assert_difference('Response.count') do
       post route_responses_path(route), params: { response: response.attributes }
     end
     response = assigns(:response)
     assert_not_nil response, "should create response"
-    assert_redirected_to resource_route_path(resource, route)
+    assert_redirected_to project_route_path(project, route)
   end
 
   test "should not create response without a status code" do
@@ -62,9 +62,9 @@ class ResponsesControllerTest < ControllerWithAuthenticationTest
   test "should update response" do
     response = create(:response)
     route = response.route
-    resource = route.resource
+    project = route.resource.project
     put route_response_path(route, response), params: { response: { status_code: 400 } }
-    assert_redirected_to resource_route_path(resource, route)
+    assert_redirected_to project_route_path(project, route)
     response.reload
     assert_equal 400, response.status_code
   end
@@ -93,11 +93,11 @@ class ResponsesControllerTest < ControllerWithAuthenticationTest
   test "should delete response" do
     response = create(:response)
     route = response.route
-    resource = route.resource
+    project = route.resource.project
     assert_difference('Response.count', -1) do
       delete route_response_path(route, response)
     end
-    assert_redirected_to resource_route_path(resource, route)
+    assert_redirected_to project_route_path(project, route)
   end
 
   test "should not delete response (not authenticated)" do

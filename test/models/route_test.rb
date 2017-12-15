@@ -1,29 +1,12 @@
 require 'test_helper'
 
 class RouteTest < ActiveSupport::TestCase
-  test "shouldn't exist without a name" do
-    assert_not build(:route, name: nil).valid?
-  end
-
-  test "Two routes within the same resource shouldn't have the same name" do
-    route = create(:route)
-    assert_not build(:route, name: route.name, resource: route.resource).valid?
-  end
-
   test "shouldn't exist without a http_method" do
     assert_not build(:route, http_method: nil).valid?
   end
 
   test "shouldn't exist without a url" do
     assert_not build(:route, url: nil).valid?
-  end
-
-  test "json_schemas must be a valid JSON text" do
-    assert_not build(:route, request_body_schema: "{ invalid }").valid?
-  end
-
-  test "json_schemas must conform to the JSON Schema spec" do
-    assert_not build(:route, request_body_schema: '{ "type": "invalid" }').valid?
   end
 
   test "shouldn't exist without a resource" do
@@ -36,13 +19,7 @@ class RouteTest < ActiveSupport::TestCase
   end
 
   test "Route should be valid with all attributes set correctly" do
-    assert build(:route, name: "New route", description: "New test route", http_method: :POST, url: "/tests", request_body_schema: "").valid?
-  end
-
-  test 'Route is collection' do
-    resource = create(:resource, name: 'Movie')
-    route = create(:route, resource: resource, url: '/movies', http_method: :GET)
-    assert route.is_restful_collection?, 'route should be a restful collection'
+    assert build(:route, description: "New test route", http_method: :POST, url: "/tests").valid?
   end
 
   test "routes of project" do
@@ -50,7 +27,31 @@ class RouteTest < ActiveSupport::TestCase
     create(:route, resource: route.resource)
     other_resource = create(:resource)
     other_route = create(:route, resource: other_resource)
-    assert_equal Route.of_project(other_resource.project).count, 1, "should have only one route for project"
-    assert_equal Route.of_project(other_resource.project).first, other_route, "should be the correct route"
+    assert_equal other_resource.project.routes.count, 1, "should have only one route for project"
+    assert_equal other_resource.project.routes.first, other_route, "should be the correct route"
+  end
+
+  test "request_can_have_body" do
+    route = create(:route)
+    [:POST, :PUT, :PATCH].each do |http_method|
+      route.update(http_method: http_method)
+      assert route.request_can_have_body
+    end
+
+    [:GET, :DELETE].each do |http_method|
+      route.update(http_method: http_method)
+      assert_not route.request_can_have_body
+    end
+  end
+
+  test "can_have_query_params" do
+    route = create(:route)
+    [:POST, :PUT, :PATCH, :DELETE].each do |http_method|
+      route.update(http_method: http_method)
+      assert_not route.can_have_query_params
+    end
+
+    route.update(http_method: :GET)
+    assert route.can_have_query_params
   end
 end

@@ -1,5 +1,5 @@
 $(document).ready(function() {
-  $("input[class~='validate-json-instance']").on("click", function() {
+  $("input[class~='validate-json-instance']").off('click').on("click", function() {
     var json_schema = $(this).attr("json_schema");
     var json_instance = $(this).parents(".panel-heading").
     siblings(".panel-body").find("textarea[class~='generated-json-instance-or-to-validate']").val();
@@ -8,7 +8,7 @@ $(document).ready(function() {
     validate_json_instance(json_schema, json_instance, display_result_element);
   });
 
-  $("input[class~='generate-json-instance']").on("click", function() {
+  $("input[class~='generate-json-instance']").off('click').on("click", function() {
     var json_schema = $(this).attr("json_schema");
     var display_result_element = $(this).parents(".panel-heading").
     siblings(".panel-body").find("textarea[class~='generated-json-instance-or-to-validate']");

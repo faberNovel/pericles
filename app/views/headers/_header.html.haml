@@ -6,9 +6,9 @@
           %dt Name
           %dd
             %strong= header.name
-      - unless header.description.blank?
+      - unless header.value.blank?
         .col-xs-6
           %dl
-            %dt Description
+            %dt Value
             %dd
-              %strong= header.description
+              %strong= header.value

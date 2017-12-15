@@ -1,0 +1,13 @@
+= bootstrap_form_for([@project, @route]) do |f|
+  = render 'shared/errors', object: @route
+
+  .row
+    .col-xs-6
+      - if @route.new_record?
+        = f.select :resource_id, @project.resources.collect { |r| [ r.name, r.id ] }, include_blank: false
+      = f.text_field :url, placeholder: "/my_resources"
+      = f.select :http_method, Route.http_methods.keys.to_a
+      = f.text_area :description, placeholder: t('.description_placeholder')
+
+  %p
+    = f.submit

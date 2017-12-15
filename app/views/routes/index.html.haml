@@ -1,22 +1,24 @@
-
-%h1 Routes
+.flexspace-and-center
+  %h1 Routes
+  = link_to 'New Route', new_project_route_path(@project), class: "btn btn-default btn-lg"
 
 - if @routes_by_resource.any?
   - @resources.each do |resource|
     .routes-container
       %a{href: project_resource_path(@project, resource)}
         %h4= resource.name
-      = link_to 'New Route', new_resource_route_path(resource), class: "btn btn-default btn-lg"
 
-    %div
+    .routes-sub-container
       - @routes_by_resource[resource].each do |route|
-        .route-row
+        %a{class: 'route-row', href: project_route_path(@project, route)}
           %div{style: 'width: 10%'}
             %span{ class: label_class_for_http_method(route.http_method) }= route.http_method
-          %div{style: 'width: 25%'}= route.url
-          %div{style: 'width: 25%', scope: 'row'}= route.name
+          %div{style: 'flex: 1'}= route.url
           %div{style: 'width: 25%'}= route.resource_representations.uniq.map(&:name).join(", ")
-          %div= link_to "Show", resource_route_path(route.resource, route)
+          - if route.responses.empty?
+            %div.tooltip{style: 'width: 25%', 'data-toggle' => "tooltip", 'data-placement' => "top", title: "No responses"}
+              \/!\
+
 - else
   %p
     %i= t('.no_route_placeholder')

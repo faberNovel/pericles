@@ -10,3 +10,7 @@
       = link_to 'Routes', project_routes_path(@project)
     %li{class: active_class(ReportsController)}
       = link_to 'Reports', project_reports_path(@project)
+    %li{class: active_class(MockProfilesController)}
+      = link_to 'Mock Profiles', project_mock_profiles_path(@project)
+    %li{class: active_class(ApiErrorsController)}
+      = link_to 'Errors', project_api_errors_path(@project)

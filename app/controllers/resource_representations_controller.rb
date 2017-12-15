@@ -84,6 +84,7 @@ class ResourceRepresentationsController < AuthenticatedController
         :id,
         :resource_representation_id,
         :is_required,
+        :is_null,
         :attribute_id,
         :_destroy
       ]

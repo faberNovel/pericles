@@ -1,9 +1,5 @@
 en:
-  activerecord:
-    errors:
-      models:
-        response:
-          attributes:
-            body_schema:
-              schema_must_be_valid_json: "The input JSON Schema is not a valid JSON text (RFC 7159)"
-              schema_must_respect_json_schema_spec: "The input JSON Schema does not conform to JSON Schema Draft 4. Error: %{error}"
+  responses:
+    header_fields:
+      name_placeholder: Content-Type
+      value_placeholder: application/json

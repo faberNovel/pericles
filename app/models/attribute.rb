@@ -10,17 +10,19 @@ class Attribute < ApplicationRecord
   has_many :attributes_resource_representations, inverse_of: :resource_attribute, dependent: :destroy
   has_many :resource_representations, through: :attributes_resource_representations
 
-  validates :name, presence: true, uniqueness: { scope: [:parent_resource], case_sensitive: false }
+  validates :name, presence: true, uniqueness: { scope: [:parent_resource], case_sensitive: true }
   validates :parent_resource, presence: true
   validates :primitive_type, presence: true, if: "resource.nil?"
   validates :resource, presence: true, if: "primitive_type.nil?"
   validate :type_cannot_be_primitive_type_and_resource
   validates :enum, absence: true, unless: :is_enumerable?
   validates :scheme, absence: true, unless: :string?
-  validates :min_length, absence: true, unless: :string?
-  validates :max_length, absence: true, unless: :string?
-  validates :minimum, absence: true, unless: "self.integer? && enum.blank?"
-  validates :maximum, absence: true, unless: "self.integer? && enum.blank?"
+  validates :minimum, absence: true, if: :cannot_have_min_max
+  validates :maximum, absence: true, if: :cannot_have_min_max
+  validates :min_items, absence: true, unless: :is_array
+  validates :max_items, absence: true, unless: :is_array
+
+  after_create :add_attribute_to_default_representation
 
   scope :sorted_by_name, -> { order(:name) }
 
@@ -36,5 +38,20 @@ class Attribute < ApplicationRecord
     unless primitive_type.nil? || resource.nil?
       errors.add(:base, :type_cannot_be_primitive_type_and_resource)
     end
+  end
+
+  def cannot_have_min_max
+    resource || boolean? || null?
+  end
+
+  def add_attribute_to_default_representation
+    representation = parent_resource.default_representation
+    return unless representation
+
+    representation.attributes_resource_representations.create(
+      resource_attribute: self,
+      is_required: true,
+      resource_representation: resource&.default_representation
+    )
   end
 end

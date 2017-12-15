@@ -1,21 +1,16 @@
 - content_for :page_scripts do
   = javascript_include_tag("header_autocomplete")
   = javascript_include_tag("generate_schema")
+  = javascript_include_tag("responses/form.js")
 
-= bootstrap_nested_form_for([@route, @response]) do |f|
-  - if @response.errors.any?
-    #error_explanation
-      %h2
-        = pluralize(@response.errors.count, "error")
-        prohibited this response from being saved:
-      %ul
-        - @response.errors.full_messages.each do |msg|
-          %li= msg
+= hidden_field_tag 'project_id', @route.resource.project.id
+
+= bootstrap_form_for([@route, @response]) do |f|
+  = render 'shared/errors', object: @response
 
   .row
     .col-xs-6
       = f.text_field :status_code
-      = f.text_area :description
 
       %h5 Headers
 
@@ -23,31 +18,27 @@
         %thead
           %tr
             %th Name
-            %th Description
+            %th Value
             %th
         %tbody
           = f.fields_for :headers, wrapper: false do |response_header_fields|
-            %tr.fields
-              %td
-                = response_header_fields.text_field :name, hide_label: true
-              %td
-                = response_header_fields.text_area :description, hide_label: true
-              %td
-                = response_header_fields.link_to_remove "Remove"
+            = render 'header_fields', f: response_header_fields
 
-      = f.link_to_add "Add a Header", :headers, data: { target: "#headers" }
+      = link_to_add_association "Add a Header", f, :headers,
+        { 'data-association-insertion-node' => "#headers tbody", 'data-association-insertion-method' => 'append' }
 
-    .col-xs-6
-      = f.select :resource_representation_id, @resource.resource_representations.pluck(:name, :id), include_blank: true
+    .col-xs-6{class: @response.can_have_resource_representation ? 'resource-representation' : 'api-error'}
+      = f.select :resource_representation_id, @resource.resource_representations.pluck(:name, :id), include_blank: false
+      = f.select :api_error_id, @project.api_errors.pluck(:name, :id), include_blank: false
+
 
       %h5 JSON Schema
-      = button_tag("Generate Schema from Resource Representation", type: 'button', resource_id: "#{@resource.id}",
+      = button_tag("Generate Schema from Resource Representation", type: 'button', resource_id: "#{@resource.id}", id: 'generate-schema', style: "display: none;",
         onclick: "generate_schema_from_resource_representation(this)")
 
       = f.check_box :is_collection
       = f.text_field :root_key, class: 'root-key'
 
-      = f.text_area :body_schema, size: "60x20", label: 'Body JSON schema'
-
+      = f.text_area :json_schema, size: "60x20", label: 'Body JSON schema', readonly: true, value: format_json(@response.json_schema)
   %p
     = f.submit

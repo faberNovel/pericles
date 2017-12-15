@@ -23,3 +23,7 @@ en:
   hello: "Hello world"
   required: Required
   optional: Optional
+  actions:
+    edit: Edit
+    download: Download
+    delete: Delete

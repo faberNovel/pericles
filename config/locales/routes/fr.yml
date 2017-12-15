@@ -1,20 +1,12 @@
 fr:
-  activerecord:
-    errors:
-      models:
-        route:
-          attributes:
-            request_body_schema:
-              schema_must_be_valid_json: "Le JSON Schema entré n'est pas un JSON text valide (RFC 7159)"
-              schema_must_respect_json_schema_spec: "Le JSON Schema entré n'est pas conforme au JSON Schema Draft 4. Erreur: %{error}"
   routes:
     index:
-      no_route_placeholder: "Il n'y a pas de routes pour ce projet."
+      no_route_placeholder: "Il n'y a pas de routes pour ce projet, il faut aller dans le détail d'une ressource pour en créer une"
     show:
       no_header_placeholder: "Il n'y a pas de headers pour ce message HTTP."
       no_query_parameter_placeholder: "Il n'y a pas de query parameters pour cette requête."
       no_body_placeholder: "Il n'y a pas de description pour le body de ce message HTTP."
-    form:
+    base_form:
       description_placeholder: |
         Que décrit cette route ?
         Nécessite t'elle une authentification spécifique pour y accéder ?
@@ -23,3 +15,9 @@ fr:
         Si oui :
         - Réfléchir à la durée de vie de chaque réponse (réquêtes GET)
         - Définir des headers de cache en conséquence
+    request_query_parameter_fields:
+      name_placeholder: arg1
+      description_placeholder: "Avec ce champ vous pouvez... (exemple: séléctionner le numéro de la page)"
+    header_fields:
+      name_placeholder: Content-Type
+      value_placeholder: application/json

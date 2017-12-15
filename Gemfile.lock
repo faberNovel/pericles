@@ -73,6 +73,14 @@ GEM
     case_transform (0.2)
       activesupport
     choice (0.2.0)
+    chosen-rails (1.5.2)
+      coffee-rails (>= 3.2)
+      railties (>= 3.0)
+      sass-rails (>= 3.2)
+    climate_control (0.1.0)
+    cocaine (0.5.8)
+      climate_control (>= 0.0.3, < 1.0)
+    cocoon (1.2.11)
     coffee-rails (4.2.2)
       coffee-script (>= 2.2.0)
       railties (>= 4.0.0)
@@ -180,7 +188,6 @@ GEM
     multi_json (1.12.2)
     multi_xml (0.6.0)
     multipart-post (2.0.0)
-    nested_form (0.3.2)
     newrelic_rpm (4.4.0.336)
     nio4r (2.1.0)
     nokogiri (1.8.1)
@@ -258,6 +265,8 @@ GEM
     rb-fsevent (0.10.2)
     rb-inotify (0.9.10)
       ffi (>= 0.5.0, < 2)
+    regex_field (0.1.0)
+      rails (>= 4.2.0, < 5.2)
     responders (2.4.0)
       actionpack (>= 4.2.0, < 5.3)
       railties (>= 4.2.0, < 5.3)
@@ -306,9 +315,6 @@ GEM
     thor (0.20.0)
     thread_safe (0.3.6)
     tilt (2.0.8)
-    turbolinks (5.0.1)
-      turbolinks-source (~> 5)
-    turbolinks-source (5.0.3)
     tzinfo (1.2.3)
       thread_safe (~> 0.1)
     uglifier (3.2.0)
@@ -338,6 +344,9 @@ DEPENDENCIES
   bootstrap-sass (~> 3.3.6)
   bootstrap_form
   byebug
+  chosen-rails
+  cocaine
+  cocoon (~> 1.2)
   coffee-rails
   devise (~> 4.3)
   execjs
@@ -352,7 +361,6 @@ DEPENDENCIES
   json_schema-faker
   kaminari
   minitest-reporters
-  nested_form
   newrelic_rpm
   omniauth-google-oauth2 (~> 0.5.2)
   passenger
@@ -362,6 +370,7 @@ DEPENDENCIES
   rails-controller-testing
   rails-erd (~> 1.5)
   ransack!
+  regex_field (~> 0.1.0)
   rollbar (~> 2.15, >= 2.15.4)
   rubocop
   rubyzip
@@ -369,7 +378,6 @@ DEPENDENCIES
   simplecov
   spring
   stackprof
-  turbolinks
   uglifier
   vcr
   webmock

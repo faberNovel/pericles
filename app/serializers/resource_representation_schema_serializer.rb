@@ -1,5 +1,5 @@
 class ResourceRepresentationSchemaSerializer < ActiveModel::Serializer
-  attributes :title, :type
+  attributes :title, :type, :definitions
   attribute :properties, if: :properties?
   attribute :items, if: :items?
   attribute :required, if: :required?
@@ -9,7 +9,6 @@ class ResourceRepresentationSchemaSerializer < ActiveModel::Serializer
   def initialize(object, options = {})
     @resource_representation = object
     @resource = object.resource
-    @all_resource_representations = [@resource_representation.id]
     @is_collection = options[:is_collection]
     @root_key = options[:root_key]
     super
@@ -61,16 +60,24 @@ class ResourceRepresentationSchemaSerializer < ActiveModel::Serializer
   end
 
   def items
-    build_resource_hash
+    build_resource_hash(@resource_representation)
   end
 
   def title
     "#{@resource.name} - #{@resource_representation.name}"
   end
 
+  def definitions
+    hash = {}
+    all_resource_representations.each do |resource_representation|
+      hash[uid(resource_representation)] = build_resource_hash(resource_representation)
+    end
+    hash
+  end
+
   private
   def root_key_properties
-    resource_hash = build_resource_hash
+    resource_hash = build_resource_hash(@resource_representation)
     properties_hash = {}
     if @is_collection
       array_of_attribute_hash = {}
@@ -83,12 +90,12 @@ class ResourceRepresentationSchemaSerializer < ActiveModel::Serializer
     properties_hash
   end
 
-  def build_resource_hash
+  def build_resource_hash(resource_representation)
     resource_hash = {}
     resource_hash[:type] = 'object'
-    resource_hash[:properties] = properties_from_resource_representation(@resource_representation)
+    resource_hash[:properties] = properties_from_resource_representation(resource_representation)
     resource_hash[:additionalProperties] = false
-    add_required_if_not_empty(resource_hash, @resource_representation)
+    add_required_if_not_empty(resource_hash, resource_representation)
     resource_hash
   end
 
@@ -112,17 +119,14 @@ class ResourceRepresentationSchemaSerializer < ActiveModel::Serializer
   end
 
   def hash_from_attributes_resource_representation(association)
+    return { type: 'null' } if association.is_null
+
     attribute = association.resource_attribute
     attribute_hash = {}
     array_of_attribute_hash = nil
     if attribute.resource.present?
       resource_representation = association.resource_representation
-      if cycle_detected(resource_representation)
-        attribute_hash = set_main_fields_from_attribute(attribute)
-      else
-        @all_resource_representations << resource_representation.id
-        attribute_hash = hash_from_attributes_resource_representation_with_child_resource_representation(association)
-      end
+      attribute_hash = {type: 'object', "$ref": ref(resource_representation)}
     else
       attribute_hash = hash_from_primitive_attributes_resource_representation(association)
     end
@@ -133,6 +137,7 @@ class ResourceRepresentationSchemaSerializer < ActiveModel::Serializer
       array_of_attribute_hash = {}
       array_of_attribute_hash[:type] = 'array'
       array_of_attribute_hash[:items] = attribute_hash
+      add_array_minmax_constraints(array_of_attribute_hash, attribute)
     end
 
     hash_for_non_nullable_attribute = array_of_attribute_hash ? array_of_attribute_hash : attribute_hash
@@ -161,11 +166,7 @@ class ResourceRepresentationSchemaSerializer < ActiveModel::Serializer
       attribute_hash[:enum] = enum.split(", ")
       attribute_hash[:enum] = cast_enum_elements(attribute_hash[:enum], attribute_hash[:type]).uniq
     end
-    [:min_length, :max_length, :minimum, :maximum].each do |attribute_name|
-      unless attribute.send(attribute_name).blank?
-        attribute_hash[attribute_name.to_s.camelize(:lower)] = attribute.send(attribute_name)
-      end
-    end
+    add_primitive_minmax_constraints(attribute_hash, attribute)
     return attribute_hash
   end
 
@@ -173,10 +174,6 @@ class ResourceRepresentationSchemaSerializer < ActiveModel::Serializer
     scheme = association.resource_attribute.scheme
     attribute_hash[:format] = scheme.name if scheme&.format?
     attribute_hash[:pattern] = scheme.regexp if scheme&.pattern?
-  end
-
-  def cycle_detected(resource_representation)
-    return resource_representation.id.in?(@all_resource_representations)
   end
 
   def set_main_fields_from_attribute(attribute)
@@ -205,5 +202,47 @@ class ResourceRepresentationSchemaSerializer < ActiveModel::Serializer
     if attribute.faker_id?
       attribute_hash[:faker] = attribute.faker.name
     end
+  end
+
+  def add_array_minmax_constraints(hash, attribute)
+    [:min_items, :max_items].each do |attribute_name|
+      constraint_value = attribute.send(attribute_name)
+      next if constraint_value.blank?
+
+      key = attribute_name.to_s.camelize(:lower)
+      hash[key] = constraint_value
+    end
+  end
+
+  def add_primitive_minmax_constraints(hash, attribute)
+    [:minimum, :maximum].each do |attribute_name|
+      constraint_value = attribute.send(attribute_name)
+      next if constraint_value.blank?
+
+      key = minmax_key_name(attribute_name, attribute)
+      hash[key] = constraint_value
+    end
+  end
+
+  def minmax_key_name(minmax_name, attribute)
+    if attribute.string?
+      minmax_name[0..2] + 'Length'
+    else
+      minmax_name
+    end
+  end
+
+  def uid(model)
+    name = model.name.gsub(' ', '_')
+    id = model.id || model.hash
+    "#{name}_#{id}"
+  end
+
+  def ref(representation)
+    "#/definitions/#{uid(representation)}"
+  end
+
+  def all_resource_representations
+    @all_resource_representations ||= @resource_representation.resource_representation_dependencies
   end
 end

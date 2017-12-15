@@ -9,6 +9,12 @@ class ProjectsController < AuthenticatedController
   end
 
   def show
+    respond_to do |format|
+      format.html {}
+      format.zip do
+        send_data @project.json_schemas_zip_data, type: 'application/zip', filename: "#{@project.title}.zip"
+      end
+    end
   end
 
   def new
@@ -31,7 +37,10 @@ class ProjectsController < AuthenticatedController
 
   def update
     if @project.update(project_params)
-      redirect_to @project
+      respond_to do |format|
+        format.html {redirect_to @project}
+        format.js { render js: 'Turbolinks.clearCache()'}
+      end
     else
       render 'edit', layout: 'full_width_column', status: :unprocessable_entity
     end
@@ -50,7 +59,12 @@ class ProjectsController < AuthenticatedController
   end
 
   def project_params
-    params.require(:project).permit(:title, :description, :proxy_url)
+    params.require(:project).permit(
+      :title,
+      :description,
+      :proxy_url,
+      :mock_profile_id,
+    )
   end
 
 end

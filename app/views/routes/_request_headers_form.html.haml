@@ -1,0 +1,29 @@
+- content_for :page_scripts do
+  = javascript_include_tag("header_autocomplete")
+
+= bootstrap_form_for([@project, @route]) do |f|
+  = render 'shared/errors', object: @route
+
+  %h3 Request
+
+  .row
+    .col-xs-10
+      %h4 Headers
+
+      %table{class: "table table-striped", id: "table_request_headers"}
+        %thead
+          %tr
+            %th Name
+            %th Value
+            %th
+        %tbody
+          = f.fields_for :request_headers, wrapper: false do |header_fields|
+            = render 'request_header_fields', f: header_fields
+
+
+
+      = link_to_add_association "Add a Header", f, :request_headers,
+        { 'data-association-insertion-node' => "#table_request_headers tbody", 'data-association-insertion-method' => 'append' }
+
+  %p
+    = f.submit

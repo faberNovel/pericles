@@ -7,3 +7,25 @@
 .http-method-column {
   margin-top: 10px;
 }
+
+#all-attributes {
+  dl, #all-attributes a, a:hover, a:focus {
+    text-decoration: none;
+  }
+
+  dd {
+    font-size: 16px;
+  }
+
+  .panel-body {
+    padding: 15px 15px 0 15px;
+  }
+}
+
+#new_resource #json_instance {
+  height: 400px;
+}
+
+#new_resource > p {
+  margin-top: 32px;
+}

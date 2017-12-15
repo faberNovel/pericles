@@ -112,4 +112,11 @@ class ProjectsControllerTest < ControllerWithAuthenticationTest
     assert_redirected_to new_user_session_path
   end
 
+  test "should get zip file with all json schemas" do
+    project = create(:full_project)
+    get project_path(project, format: 'zip')
+    assert_response :success
+    assert_equal response.headers['Content-Type'], 'application/zip'
+  end
+
 end

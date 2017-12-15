@@ -1,17 +1,28 @@
-= bootstrap_nested_form_for([@project, @resource]) do |f|
-  - if @resource.errors.any?
+= bootstrap_form_for([@project, @resource]) do |f|
+  - if @resource.errors.any? || !@json_instance_error.blank?
     #error_explanation
       %h2
-        = "#{pluralize(@resource.errors.count, "error")} prohibited this resource from being saved:"
+        = "#{pluralize(@resource.errors.count + (@json_instance_error.blank? ? 0 : 1), "error")} prohibited this resource from being saved:"
       %ul
         - @resource.errors.full_messages.each do |msg|
           %li= msg
+        - unless @json_instance_error.blank?
+          %li= @json_instance_error
 
   - unless params[:section] == "all_attributes"
 
-    = f.text_field :name
+    = f.text_field :name, placeholder: 'MyResource'
 
     = f.text_area :description
+
+    - unless @resource.persisted?
+      .alert.alert-warning= t('.json_instance_explanation')
+
+      .form-group{class: @json_instance_error.blank? ? '' : 'has-error'}
+        %label.control-label From JSON (BETA)
+        = text_area_tag :json_instance, @json_instance, class: 'form-control', placeholder: format_json({username: 'John Do', email: 'jd@fabernovel.com', first_name: 'John', last_name: 'Do', manager: nil}.to_json)
+        - unless @json_instance_error.blank?
+          %span.help-block= @json_instance_error
 
   - if @resource.persisted? && params[:section] != "base"
     %h3 Attributes
@@ -29,46 +40,16 @@
           %th Scheme
           %th Minimum
           %th Maximum
-          %th Minimum length
-          %th Maximum length
-          %th Example
+          %th Min Items
+          %th Max Items
           %th Faker
           %th
       %tbody
         = f.fields_for :resource_attributes, @resource.resource_attributes.sorted_by_name, wrapper: false do |attribute_fields|
-          %tr.fields
-            %td
-              = attribute_fields.text_field :name, hide_label: true
-            %td
-              = attribute_fields.text_area :description, hide_label: true
-            %td
-              = attribute_fields.select :primitive_type, Attribute.primitive_types.keys.to_a, include_blank: true, hide_label: true
-            %td
-              = attribute_fields.select :resource_id, @selectable_resources.collect { |r| [ r.name, r.id ] }, include_blank: true, hide_label: true
-            %td
-              = attribute_fields.check_box :is_array, hide_label: true
-            %td
-              = attribute_fields.check_box :nullable, hide_label: true
-            %td
-              = attribute_fields.text_field :enum, hide_label: true
-            %td
-              = attribute_fields.collection_select(:scheme_id, Scheme.all, :id, :name, include_blank: true, hide_label: true)
-            %td
-              = attribute_fields.number_field :minimum, hide_label: true
-            %td
-              = attribute_fields.number_field :maximum, hide_label: true
-            %td
-              = attribute_fields.number_field :min_length, hide_label: true, min: 0
-            %td
-              = attribute_fields.number_field :max_length, hide_label: true, min: 0
-            %td
-              = attribute_fields.text_area :example, hide_label: true
-            %td
-              = attribute_fields.collection_select :faker_id, AttributeFaker.all, :id, :name, include_blank: true, hide_label: true
-            %td
-              = attribute_fields.link_to_remove "Remove"
+          = render 'resource_attribute_fields', f: attribute_fields
     %p
-      = f.link_to_add "Add an Attribute", :resource_attributes, data: { target: "#table_attributes" }
+      = link_to_add_association "Add an Attribute", f, :resource_attributes,
+        { 'data-association-insertion-node' => "#table_attributes tbody", 'data-association-insertion-method' => 'append' }
 
   - if @resource.persisted?
     = link_to 'Add scheme', new_scheme_path,  :target => '_blank'

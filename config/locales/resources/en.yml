@@ -9,3 +9,13 @@ en:
   resources:
     show:
       no_route_placeholder: "No routes for this resource"
+      no_mocks_placeholder: "There are no mocks for this response"
+    index:
+      no_resources: "There are no resources, create one !"
+    form:
+      json_instance_explanation: |
+        If you already have a JSON example for this resource, Pericles can
+        try to pre-fill the attributes from it. The JSON must
+        directly contain the resource: it must not contain a root key
+        and must not be an array. Nested resources are found using key names.
+        With a key "user" or "users" Pericles will look for a User resource.

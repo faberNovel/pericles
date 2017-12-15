@@ -1,0 +1,4 @@
+fr:
+  api_errors:
+    index:
+      no_errors: Aucune erreur n'est spécifiée, il faut définir ici la forme des erreurs que l'API renvoie

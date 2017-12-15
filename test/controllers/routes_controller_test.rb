@@ -16,121 +16,101 @@ class RoutesControllerTest < ControllerWithAuthenticationTest
   end
 
   test "should show route" do
-    route = create(:route, request_body_schema: "{}")
-    get resource_route_path(route.resource, route)
+    route = create(:route)
+    get project_route_path(route.project, route)
     assert_response :success
   end
 
   test "should not show route (not authenticated)" do
     sign_out :user
     route = create(:route)
-    get resource_route_path(route.resource, route)
+    get project_route_path(route.project, route)
     assert_redirected_to new_user_session_path
   end
 
   test "should get new" do
-    resource = create(:resource)
-    get new_resource_route_path(resource)
+    get new_project_route_path(create(:project))
     assert_response :success
   end
 
   test "should not get new (not authenticated)" do
     sign_out :user
-    resource = create(:resource)
-    get new_resource_route_path(resource)
+    get new_project_route_path(create(:project))
     assert_redirected_to new_user_session_path
   end
 
   test "should get edit" do
     route = create(:route)
-    get edit_resource_route_path(route.resource, route)
+    get edit_project_route_path(route.project, route)
     assert_response :success
   end
 
   test "should not get edit (not authenticated)" do
     sign_out :user
     route = create(:route)
-    get edit_resource_route_path(route.resource, route)
+    get edit_project_route_path(route.project, route)
     assert_redirected_to new_user_session_path
   end
 
   test "should create route" do
     route = build(:route)
-    resource = route.resource
     assert_difference('Route.count') do
-      post resource_routes_path(resource), params: { route: route.attributes }
+      post project_routes_path(route.project), params: { route: route.attributes }
     end
     route = assigns(:route)
     assert_not_nil route, "should create route"
-    assert_redirected_to resource_route_path(resource, route)
-  end
-
-  test "should not create route without a name" do
-    route = build(:route)
-    resource = route.resource
-    route.name = ''
-    assert_no_difference('Route.count') do
-      post resource_routes_path(resource), params: { route: route.attributes }
-    end
-    assert_response :unprocessable_entity
+    assert_redirected_to project_route_path(route.project, route)
   end
 
   test "should not create route (not authenticated)" do
     sign_out :user
     route = build(:route)
-    resource = route.resource
     assert_no_difference('Route.count') do
-      post resource_routes_path(resource), params: { route: route.attributes }
+      post project_routes_path(create(:project)), params: { route: route.attributes }
     end
     assert_redirected_to new_user_session_path
   end
 
   test "should update route" do
     route = create(:route)
-    resource = route.resource
-    put resource_route_path(resource, route), params: { route: { name: 'List users' } }
-    assert_redirected_to resource_route_path(resource, route)
+    put project_route_path(route.project, route), params: { route: { url: '/new_url' } }
+    assert_redirected_to project_route_path(route.project, route)
     route.reload
-    assert_equal 'List users', route.name
+    assert_equal '/new_url', route.url
   end
 
   test "should not update route" do
     route = create(:route)
-    resource = route.resource
-    name = route.name
-    put resource_route_path(resource, route), params: { route: { name: '' } }
+    url = route.url
+    put project_route_path(route.project, route), params: { route: { url: '' } }
     assert_response :unprocessable_entity
     route.reload
-    assert_equal name, route.name
+    assert_equal url, route.url
   end
 
   test "should not update route (not authenticated)" do
     sign_out :user
     route = create(:route)
-    resource = route.resource
-    route_original_name = route.name
-    put resource_route_path(resource, route), params: { route: { name: 'List users' } }
+    route_original_url = route.url
+    put project_route_path(route.project, route), params: { route: { url: '/new_url' } }
     route.reload
-    assert_equal route_original_name, route.name
+    assert_equal route_original_url, route.url
     assert_redirected_to new_user_session_path
   end
 
   test "should delete route" do
     route = create(:route)
-    project = route.resource.project
-    resource = route.resource
     assert_difference 'Route.count', -1 do
-      delete resource_route_path(resource, route)
+      delete project_route_path(route.project, route)
     end
-    assert_redirected_to project_resource_path(project, resource)
+    assert_redirected_to project_resource_path(route.project, route.resource)
   end
 
   test "should not delete route (not authenticated)" do
     sign_out :user
     route = create(:route)
-    resource = route.resource
     assert_no_difference 'Route.count' do
-      delete resource_route_path(resource, route)
+      delete project_route_path(route.project, route)
     end
     assert_redirected_to new_user_session_path
   end

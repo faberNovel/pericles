@@ -9,3 +9,14 @@ fr:
   resources:
     show:
       no_route_placeholder: "Il n'y a pas de route associée à cette ressource"
+      no_mocks_placeholder: "Il n'y a pas de mock pour cette réponse"
+    index:
+      no_resources: "Il n'y a pas de ressource, créez en une !"
+    form:
+      json_instance_explanation: |
+        Si vous avez déjà un exemple de JSON pour cette ressource, Pericles peut
+        essayer de pré-remplir les attributs à partir de ce dernier. Le JSON doit
+        contenir directement la ressource: il ne doit pas contenir de clé racine
+        et ne doit pas être un tableau. Les ressources imbriquées sont trouvée en
+        utilisant la clé du json. Avec une clé "user" ou "users" Pericles
+        cherchera une ressource User.

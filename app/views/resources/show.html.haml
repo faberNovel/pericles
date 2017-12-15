@@ -1,3 +1,6 @@
+- content_for :page_scripts do
+  = javascript_include_tag("resources/show.js")
+
 - if flash[:error]
   %div{class: "alert alert-danger"}
     =flash[:error]
@@ -53,10 +56,20 @@
             .tab-pane{ role: "tabpanel", id: "res-#{resource_rep.id}", class: ('active' if index.zero?) }
               = render resource_rep
 
-%h3 Routes
+%h3 Resource instances
 
 .flexcontainer.flexcontainer-justify-end
-  = link_to 'New Route', new_resource_route_path(@resource), class: "btn btn-default btn-lg"
+  = link_to 'New Mock', new_resource_resource_instance_path(@resource), class: "btn btn-default btn-lg"
+
+.margin-top-element
+  - if @resource.resource_instances.any?
+    - @resource.resource_instances.each do |instance|
+      = render instance
+  - else
+    %p
+      %i= t('.no_mocks_placeholder')
+
+%h3 Routes
 
 .margin-top-element
   - if @resource.routes.any?

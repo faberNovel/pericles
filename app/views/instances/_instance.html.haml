@@ -1,0 +1,10 @@
+.row
+  .col-xs-6
+    %div
+      %strong= instance.name
+    %textarea.mock_instance_text_area{disabled: 'true', class: ('invalid-instance' unless instance.valid?)}=format_json(instance.body)
+  .col-xs-6
+    .flexcontainer.flexcontainer-justify-end
+      .btn-group{ role: "group" }
+        = link_to 'Edit', edit_polymorphic_path(instance), class: "btn btn-default"
+        = link_to 'Delete', polymorphic_path(instance), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-default"

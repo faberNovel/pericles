@@ -5,6 +5,8 @@ class ResponsesController < AuthenticatedController
 
   def new
     @response = @route.responses.build
+    @response.headers.build(name: 'Authorization')
+    @response.headers.build(name: 'Content-Type', value: 'application/json')
   end
 
   def edit
@@ -13,7 +15,7 @@ class ResponsesController < AuthenticatedController
   def create
     @response = @route.responses.build(response_params)
     if @response.save
-      redirect_to resource_route_path(@resource, @route)
+      redirect_to project_route_path(@project, @route)
     else
       render 'new', status: :unprocessable_entity
     end
@@ -21,7 +23,7 @@ class ResponsesController < AuthenticatedController
 
   def update
     if @response.update(response_params)
-      redirect_to resource_route_path(@resource, @route)
+      redirect_to project_route_path(@project, @route)
     else
       render 'edit', status: :unprocessable_entity
     end
@@ -30,7 +32,7 @@ class ResponsesController < AuthenticatedController
   def destroy
     @response.destroy
 
-    redirect_to resource_route_path(@resource, @route)
+    redirect_to project_route_path(@project, @route)
   end
 
   private
@@ -47,7 +49,13 @@ class ResponsesController < AuthenticatedController
   end
 
   def response_params
-    params.require(:response).permit(:status_code, :description, :body_schema, :resource_representation_id, :is_collection,
-     :root_key, headers_attributes: [:id, :name, :description, :_destroy])
+    params.require(:response).permit(
+      :status_code,
+      :resource_representation_id,
+      :api_error_id,
+      :is_collection,
+      :root_key,
+      headers_attributes: [:id, :name, :value, :_destroy]
+    )
   end
 end

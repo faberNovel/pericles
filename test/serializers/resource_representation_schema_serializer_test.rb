@@ -79,6 +79,19 @@ class ResourceRepresentationSchemaSerializerTest < ActiveSupport::TestCase
     assert_equal attribute.primitive_type, schema[:properties][attribute.name][:type]
   end
 
+  test 'attribute resource representation is null' do
+    attributes_resource_representation = build(:attributes_resource_representation, is_null: true)
+    representation = build(:resource_representation,
+      attributes_resource_representations: [attributes_resource_representation]
+    )
+    schema = ResourceRepresentationSchemaSerializer.new(
+      representation,
+      is_collection: false,
+      root_key: ''
+    ).as_json
+    assert_equal 'null', schema[:properties][attributes_resource_representation.resource_attribute.name][:type]
+  end
+
   test 'schema with nested resources is correct' do
     resource = create(:resource, name: 'User', description: 'A user')
     name_attribute = create(:attribute, parent_resource: resource, name: 'name', description: 'name of the user',
@@ -94,29 +107,39 @@ class ResourceRepresentationSchemaSerializerTest < ActiveSupport::TestCase
     create(:attributes_resource_representation, parent_resource_representation: resource_representation_manager,
      resource_attribute: name_attribute)
     json_schema = {
-      type: 'object',
-      title: "User - user",
-      description: 'A user',
-      properties: {
-        user: {
-          type: 'object',
-          properties: {
-            name: { type: 'string', description: 'name of the user'},
-            manager: {
-              type: 'object',
-              description: 'manager of the user',
-              title: 'User',
-              properties: {
-                name: { type: 'string', description: 'name of the user'}
-              },
-              additionalProperties: false
+      "title": "User - user",
+      "type": "object",
+      "definitions": {
+        "manager_#{resource_representation_manager.id}": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "description": "name of the user",
+              "type": "string"
             }
           },
-          additionalProperties: false
+          "additionalProperties": false
         }
       },
-      additionalProperties: false,
-      required: ['user']
+      "properties": {
+        "user": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "description": "name of the user",
+              "type": "string"
+            },
+            "manager": {
+              "type": "object",
+              "$ref": "#/definitions/manager_#{resource_representation_manager.id}"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "required": ["user"],
+      "description": "A user",
+      "additionalProperties": false
     }
 
     json = ResourceRepresentationSchemaSerializer.new(

@@ -44,4 +44,8 @@ class ResourceRepresentationTest < ActiveSupport::TestCase
     expected_result = [parent_resource_representation, grand_parent_resource_representation]
     assert_equal expected_result, resource_representation.find_parent_resource_representations
    end
+
+  test "resource_representation_with_attributes_resource_reps has attributes_resource_representations" do
+    assert_operator build(:resource_representation_with_attributes_resource_reps).attributes_resource_representations.length, :>, 0
+  end
 end

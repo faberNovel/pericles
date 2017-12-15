@@ -3,9 +3,8 @@
   %head
     %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
     %title Pericles
-    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
-    = javascript_include_tag 'application', 'data-turbolinks-track' => true
-    = yield :page_scripts
+    = stylesheet_link_tag    'application', media: 'all'
+    = javascript_include_tag 'application'
     = csrf_meta_tags
   %body
     = render 'shared/navigation'
@@ -14,3 +13,4 @@
       #page-content-wrapper
         .container-fluid
           = content_for?(:full_width_column_content) ? yield(:full_width_column_content) : yield
+    = yield :page_scripts

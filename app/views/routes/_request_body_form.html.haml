@@ -1,0 +1,26 @@
+- content_for :page_scripts do
+  = javascript_include_tag("generate_schema")
+
+= bootstrap_form_for([@project, @route]) do |f|
+  = render 'shared/errors', object: @route
+
+  %h3 Request
+
+  .row
+    .col-xs-10
+      .col-xs-6
+
+        %h4 Body
+
+        = f.select :request_resource_representation_id, @route.resource.resource_representations.pluck(:name, :id), include_blank: true
+
+        %h5 JSON Schema
+        = button_tag("Generate Schema from Resource Representation", type: 'button', resource_id: "#{@route.resource.id}", id: 'generate-schema', style: "display: none;",
+          onclick: "generate_schema_from_resource_representation(this)")
+
+        = f.check_box :request_is_collection
+        = f.text_field :request_root_key, class: 'root-key'
+        = f.text_area :request_json_schema, size: "60x20", label: 'Body JSON schema', readonly: true, value: format_json(@route.request_json_schema)
+
+  %p
+    = f.submit

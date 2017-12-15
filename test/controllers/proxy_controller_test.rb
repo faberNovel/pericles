@@ -76,7 +76,6 @@ class ProxyControllerTest < ActionDispatch::IntegrationTest
 
   test "should not validate missing header" do
     project = create(:full_project)
-
     VCR.use_cassette('missing_header_full_project') do
       get "/projects/#{project.id}/proxy/users/1"
     end
