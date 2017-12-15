@@ -5,7 +5,7 @@
     = f.select :type, @selectable_resources.collect { |r| [ r.name, r.id ] } + Attribute.primitive_types.keys.to_a, hide_label: true, required: true
     = f.check_box :nullable, hide_label: true
     = f.text_area :description, hide_label: true
-    = link_to_remove_association "Remove", f
+    = link_to_remove_association image_tag('delete.svg'), f
   .constraints
     = f.text_field :enum, hide_label: true
     = f.collection_select(:scheme_id, Scheme.all, :id, :name, include_blank: true, hide_label: true)
