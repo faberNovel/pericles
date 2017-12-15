@@ -1,3 +1,6 @@
+- content_for :page_scripts do
+  = javascript_include_tag("resources/form.js")
+
 = bootstrap_form_for([@project, @resource]) do |f|
   - if @resource.errors.any? || !@json_instance_error.blank?
     #error_explanation
