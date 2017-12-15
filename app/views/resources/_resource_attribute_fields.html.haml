@@ -1,29 +1,16 @@
-%tr.fields.nested-fields
-  %td
+.fields.nested-fields
+  .main
     = f.text_field :name, hide_label: true
-  %td
-    = f.text_area :description, hide_label: true
-  %td
-    = f.select :primitive_type, Attribute.primitive_types.keys.to_a, include_blank: true, hide_label: true
-  %td
-    = f.select :resource_id, @selectable_resources.collect { |r| [ r.name, r.id ] }, include_blank: true, hide_label: true
-  %td
     = f.check_box :is_array, hide_label: true
-  %td
+    = f.select :primitive_type, Attribute.primitive_types.keys.to_a, include_blank: true, hide_label: true
+    = f.select :resource_id, @selectable_resources.collect { |r| [ r.name, r.id ] }, include_blank: true, hide_label: true
     = f.check_box :nullable, hide_label: true
-  %td
-    = f.text_field :enum, hide_label: true
-  %td
-    = f.collection_select(:scheme_id, Scheme.all, :id, :name, include_blank: true, hide_label: true)
-  %td
-    = f.number_field :minimum, hide_label: true
-  %td
-    = f.number_field :maximum, hide_label: true
-  %td
-    = f.number_field :min_items, hide_label: true
-  %td
-    = f.number_field :max_items, hide_label: true
-  %td
-    = f.collection_select :faker_id, AttributeFaker.all, :id, :name, include_blank: true, hide_label: true
-  %td
+    = f.text_area :description, hide_label: true
     = link_to_remove_association "Remove", f
+  .constraints
+    = f.text_field :enum, hide_label: true
+    = f.collection_select(:scheme_id, Scheme.all, :id, :name, include_blank: true, hide_label: true)
+    = f.number_field :minimum, hide_label: true
+    = f.number_field :maximum, hide_label: true
+    = f.number_field :min_items, hide_label: true
+    = f.number_field :max_items, hide_label: true

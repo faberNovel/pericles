@@ -27,13 +27,12 @@
   - if @resource.persisted? && params[:section] != "base"
     %h3 Attributes
 
-    %table{class: "table table-striped", id: "table_attributes"}
-      %tbody
-        = f.fields_for :resource_attributes, @resource.resource_attributes.sorted_by_name, wrapper: false do |attribute_fields|
-          = render 'resource_attribute_fields', f: attribute_fields
+    .attributes
+      = f.fields_for :resource_attributes, @resource.resource_attributes.sorted_by_name, wrapper: false do |attribute_fields|
+        = render 'resource_attribute_fields', f: attribute_fields
     %p
       = link_to_add_association "Add an Attribute", f, :resource_attributes,
-        { 'data-association-insertion-node' => "#table_attributes tbody", 'data-association-insertion-method' => 'append' }
+        { 'data-association-insertion-node' => "form .attributes", 'data-association-insertion-method' => 'append' }
 
   %p
     = f.submit

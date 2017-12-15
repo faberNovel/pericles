@@ -34,5 +34,22 @@
   .main,.constraints {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+  }
+
+  .attributes {
+    box-shadow: 0 -1px 0 0 #eceeef;
+  }
+
+  .fields {
+    &:nth-of-type(2n) {
+      background-color: #f9f9f9;
+    }
+    background-color: white;
+    border-top: 1px solid #ddd;
+  }
+
+  .form-group {
+    margin-bottom: 0;
   }
 }
