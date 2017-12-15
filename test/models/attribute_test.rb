@@ -12,7 +12,7 @@ class AttributeTest < ActiveSupport::TestCase
   test "Two Attributes within the same parent_resource shouldn't have the same name" do
     attribute = create(:attribute)
     assert_not build(:attribute, name: attribute.name, parent_resource: attribute.parent_resource).valid?
-    assert_not build(:attribute, name: attribute.name.upcase, parent_resource: attribute.parent_resource).valid?
+    assert build(:attribute, name: attribute.name.upcase, parent_resource: attribute.parent_resource).valid?
   end
 
   test "An attribute's type needs to be defined as a primitive_type or a resource" do

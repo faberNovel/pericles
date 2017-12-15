@@ -10,7 +10,7 @@ class Attribute < ApplicationRecord
   has_many :attributes_resource_representations, inverse_of: :resource_attribute, dependent: :destroy
   has_many :resource_representations, through: :attributes_resource_representations
 
-  validates :name, presence: true, uniqueness: { scope: [:parent_resource], case_sensitive: false }
+  validates :name, presence: true, uniqueness: { scope: [:parent_resource], case_sensitive: true }
   validates :parent_resource, presence: true
   validates :primitive_type, presence: true, if: "resource.nil?"
   validates :resource, presence: true, if: "primitive_type.nil?"

@@ -2,6 +2,21 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.2.0 - 2017-12-15
+
+* JSON schema is now automaticaly generated
+* Add minItems and maxItems constraints for array
+* Create Mock Profiles
+* Create API errors
+* Create Resources and API Instances
+* Remove unused description fields
+* Create matchers to bind Mock profile with instances. Matching is done on url and body using regexp
+* Add download button to download all JSON Schemas of a project
+* Resource can be created from JSON. Nested resource must be created first and are found using JSON key name
+* Route can be created from a global new Route button. A select is used to find the related Resource
+* Minors UX/UI improvements
+
+
 ## 0.1.4 - 2017-10-23
 
 ## Changed
