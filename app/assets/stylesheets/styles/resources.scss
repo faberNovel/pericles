@@ -29,3 +29,10 @@
 #new_resource > p {
   margin-top: 32px;
 }
+
+.edit_resource {
+  .main,.constraints {
+    display: flex;
+    justify-content: space-between;
+  }
+}

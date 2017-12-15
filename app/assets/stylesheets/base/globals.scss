@@ -1,3 +1,7 @@
+* {
+  font-family: 'Open Sans', sans-serif;
+}
+
 .margin-top-element {
   margin-top: 20px;
 }
@@ -38,4 +42,21 @@ textarea.invalid-instance {
 .flexcontainer .error {
   width: 15%;
   text-align: center;
+}
+
+.breadcrumb {
+  background-color: transparent;
+  padding-left: 0;
+
+  li:last-child {
+    font-weight: normal;
+    color: #adadad;
+  }
+}
+
+input[type=submit] {
+  float: right;
+  font-size: 14px;
+  padding: 8px 16px;
+  line-height: 1.5;
 }
