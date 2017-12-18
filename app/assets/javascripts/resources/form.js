@@ -17,6 +17,8 @@ function onSelectChanged(option) {
 
   if (option.value === 'string') {
     scheme.show();
+    scheme.find('.chosen-container').removeAttr('style');
+    scheme.find('select').chosen({allow_single_deselect: true})
     enum_.show();
   } else {
     scheme.hide();
@@ -35,7 +37,7 @@ function onIsArrayChanged(input) {
     minItems.show();
     maxItems.show();
     fields.find(".main option").each(function() {
-      $(this).text('Array of ' + $(this).text());
+      $(this).text('Array of ' + $(this).text().replace('Array of ', ''));
     });
     fields.find('select').trigger("chosen:updated");
   } else {
@@ -50,8 +52,7 @@ function onIsArrayChanged(input) {
   }
 }
 
-
-$(document).ready(function () {
+function init() {
   $('.fields .main select option:selected').each(function() {
     onSelectChanged(this);
   });
@@ -60,12 +61,19 @@ $(document).ready(function () {
     onIsArrayChanged(this);
   });
 
-  $(".fields .main input[id$='is_array']").on('click', function() {
+  $(".fields .main input[id$='is_array']").off('click').on('click', function() {
     onIsArrayChanged(this);
   });
 
-  $('.fields .main select').change(function () {
+  $('.fields .main select').off('change').change(function () {
     onSelectChanged($(this).children('option:selected')[0]);
   });
 
-});
+}
+
+$(document).ready(init);
+$(document).ready(function () {
+  $('form').on('cocoon:after-insert', function() {
+    init();
+  });
+})
