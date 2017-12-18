@@ -22,11 +22,41 @@ function onSelectChanged(option) {
   }
 }
 
+function onIsArrayChanged(input) {
+  var fields = $(input).parents('.fields');
+  var minItems = fields.find(".constraints input[id$='min_items']").parents('.form-group');
+  var maxItems = fields.find(".constraints input[id$='max_items']").parents('.form-group');
+
+  if ($(input).is(':checked')) {
+    minItems.show();
+    maxItems.show();
+    fields.find(".main option").each(function() {
+      $(this).text('Array of ' + $(this).text());
+    });
+    fields.find('select').trigger("chosen:updated");
+  } else {
+    minItems.hide();
+    maxItems.hide();
+    fields.find(".main option").each(function() {
+      $(this).text($(this).text().replace('Array of ', ''));
+    });
+    fields.find('select').trigger("chosen:updated");
+  }
+}
+
 
 $(document).ready(function () {
   $('.fields .main select option:selected').each(function() {
     onSelectChanged(this);
-  })
+  });
+
+  $(".fields .main input[id$='is_array']").each(function() {
+    onIsArrayChanged(this);
+  });
+
+  $(".fields .main input[id$='is_array']").on('click', function() {
+    onIsArrayChanged(this);
+  });
 
   $('.fields .main select').change(function () {
     onSelectChanged($(this).children('option:selected')[0]);
