@@ -10,7 +10,9 @@ function onSelectChanged(option) {
     maximum.show();
   } else {
     minimum.hide();
+    minimum.find('input').val('');
     maximum.hide();
+    maximum.find('input').val('');
   }
 
   if (option.value === 'string') {
@@ -18,7 +20,9 @@ function onSelectChanged(option) {
     enum_.show();
   } else {
     scheme.hide();
+    scheme.find('select').val([]);
     enum_.hide();
+    enum_.find('input').val('');
   }
 }
 
@@ -36,7 +40,9 @@ function onIsArrayChanged(input) {
     fields.find('select').trigger("chosen:updated");
   } else {
     minItems.hide();
+    minItems.find('input').val('');
     maxItems.hide();
+    maxItems.find('input').val('');
     fields.find(".main option").each(function() {
       $(this).text($(this).text().replace('Array of ', ''));
     });
