@@ -5,7 +5,7 @@ function onSelectChanged(option) {
   var scheme = fields.find(".constraints select[id$='scheme_id']").parents('.form-group');
   var enum_ = fields.find(".constraints input[id$='enum']").parents('.form-group');
 
-  if (option.value === 'integer' || option.value == 'string') {
+  if (option.value === 'integer' || option.value == 'string' || option.value == 'number') {
     minimum.show();
     maximum.show();
   } else {
