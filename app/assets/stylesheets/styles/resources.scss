@@ -42,11 +42,18 @@
   }
 
   .constraints {
-    margin-top: 8px;
+    margin-top: 16px;
+    justify-content: flex-start;
+
+    label {
+      font-weight: normal;
+      font-size: small;
+    }
   }
 
   .attributes {
     box-shadow: 0 -1px 0 0 #eceeef;
+    margin-bottom: 16px;
   }
 
   .fields {
@@ -69,7 +76,12 @@
   .collapse {
     display: none;
   }
+
   .collapse.in {
     display: flex;
+  }
+
+  .add-attribute {
+    border: dashed 2px #dddddd;
   }
 }
