@@ -69,11 +69,26 @@ function init() {
     onSelectChanged($(this).children('option:selected')[0]);
   });
 
+  $(".fields .main a[href^='#attr-collapse-']").off('click').on('click', function() {
+    if($(this).parents('.fields').find('.constraints.collapse.in').length > 0) {
+      $(this).text('Hide constraints');
+    } else {
+      $(this).text('Show constraints');
+    }
+  });
 }
 
 $(document).ready(init);
 $(document).ready(function () {
-  $('form').on('cocoon:after-insert', function() {
+  $('form').on('cocoon:after-insert', function(event, addedElement) {
     init();
+
+    var randLetter = String.fromCharCode(65 + Math.floor(Math.random() * 26));
+    var uniqid = randLetter + Date.now();
+
+    var div = addedElement.find('.constraints')[0];
+    div['id'] = uniqid;
+    var a = addedElement.find('a[href="#attr-collapse-"]')[0];
+    a['href'] = "#" + uniqid;
   });
 })
