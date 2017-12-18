@@ -1,8 +1,9 @@
 function onSelectChanged(option) {
-  var minimum = $(option).parents('.fields').find(".constraints input[id$='minimum']").parents('.form-group');
-  var maximum = $(option).parents('.fields').find(".constraints input[id$='maximum']").parents('.form-group');
-  var scheme = $(option).parents('.fields').find(".constraints select[id$='scheme_id']").parents('.form-group');
-  var enum_ = $(option).parents('.fields').find(".constraints input[id$='enum']").parents('.form-group');
+  var fields = $(option).parents('.fields');
+  var minimum = fields.find(".constraints input[id$='minimum']").parents('.form-group');
+  var maximum = fields.find(".constraints input[id$='maximum']").parents('.form-group');
+  var scheme = fields.find(".constraints select[id$='scheme_id']").parents('.form-group');
+  var enum_ = fields.find(".constraints input[id$='enum']").parents('.form-group');
 
   if (option.value === 'integer' || option.value == 'string') {
     minimum.show();
