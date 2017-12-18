@@ -46,13 +46,17 @@
 
   .constraints {
     margin-top: 16px;
-    margin-left: -16px;
-    margin-right: -16px;
+    margin-left: -24px;
+    margin-right: -24px;
     justify-content: flex-start;
 
     label {
       font-weight: normal;
       font-size: small;
+    }
+
+    > * {
+      margin: 0 16px;
     }
   }
 
@@ -67,7 +71,7 @@
     }
     background-color: white;
     border-top: 1px solid #ddd;
-    padding: 16px 24px;
+    padding: 24px 24px;
   }
 
   .form-group {
@@ -102,5 +106,9 @@
 
   .bottom {
     margin: 25px 0 0 0;
+  }
+
+  .hide-show-link {
+    margin: 0 16px;
   }
 }
