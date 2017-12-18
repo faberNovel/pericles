@@ -69,9 +69,9 @@ function init() {
 
   $(".fields .main a[href^='#attr-collapse-']").off('click').on('click', function() {
     if($(this).parents('.fields').find('.constraints.collapse.in').length > 0) {
-      $(this).text('Hide constraints');
+      $(this).html('Hide constraints <span class="rotate">▾</span>');
     } else {
-      $(this).text('Show constraints');
+      $(this).text('Show constraints ▾');
     }
   });
 }

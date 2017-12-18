@@ -9,7 +9,7 @@
     .flex
       = f.text_area :description, hide_label: true, placeholder: t('.description_placeholder'), rows: (f.object.description&.count("\n") || 0) + 1
     %a{"data-toggle"=> "collapse", href: "#attr-collapse-#{f.object.id}", class: "hide-show-link"}
-      Show constraints
+      Show constraints ▾
     = link_to_remove_association image_tag('delete.svg'), f
   .constraints.collapse{id: "attr-collapse-#{f.object.id}"}
     .flex-row

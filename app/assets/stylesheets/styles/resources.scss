@@ -111,4 +111,11 @@
   .hide-show-link {
     margin: 0 16px;
   }
+
+  .rotate {
+    display: inline-block;
+    line-height: 0.5;
+    padding-bottom: 3px;
+    transform: rotate(180deg);
+  }
 }
