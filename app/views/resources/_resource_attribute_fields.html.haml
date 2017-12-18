@@ -12,9 +12,14 @@
       Show constraints
     = link_to_remove_association image_tag('delete.svg'), f
   .constraints.collapse{id: "attr-collapse-#{f.object.id}"}
-    = f.text_field :enum, hide_label: false, placeholder: '1, 2, 3, ...'
-    = f.collection_select(:scheme_id, Scheme.all, :id, :name, include_blank: true, hide_label: false)
-    = f.number_field :minimum, hide_label: false, placeholder: 0
-    = f.number_field :maximum, hide_label: false, placeholder: 100
-    = f.number_field :min_items, hide_label: false, placeholder: 0
-    = f.number_field :max_items, hide_label: false, placeholder: 100
+    .flex-row
+      = f.text_field :enum, hide_label: false, placeholder: '1, 2, 3, ...'
+      .bottom
+        or
+      = f.collection_select(:scheme_id, Scheme.all, :id, :name, include_blank: true, hide_label: false)
+    .flex-row
+      = f.number_field :minimum, hide_label: false, placeholder: 0
+      = f.number_field :maximum, hide_label: false, placeholder: 100
+    .flex-row
+      = f.number_field :min_items, hide_label: false, placeholder: 0
+      = f.number_field :max_items, hide_label: false, placeholder: 100

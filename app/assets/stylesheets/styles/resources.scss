@@ -36,6 +36,9 @@
     justify-content: space-between;
     align-items: center;
 
+    margin-left: -8px;
+    margin-right: -8px;
+
     > * {
       margin: 0 8px;
     }
@@ -43,6 +46,8 @@
 
   .constraints {
     margin-top: 16px;
+    margin-left: -16px;
+    margin-right: -16px;
     justify-content: flex-start;
 
     label {
@@ -83,5 +88,19 @@
 
   .add-attribute {
     border: dashed 2px #dddddd;
+  }
+
+  .flex-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    > * {
+      margin: 0 8px;
+    }
+  }
+
+  .bottom {
+    margin: 25px 0 0 0;
   }
 }

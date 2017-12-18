@@ -2,48 +2,46 @@ function onSelectChanged(option) {
   var fields = $(option).parents('.fields');
   var minimum = fields.find(".constraints input[id$='minimum']").parents('.form-group');
   var maximum = fields.find(".constraints input[id$='maximum']").parents('.form-group');
+  var min_max = fields.find(".constraints input[id$='maximum']").parents('.flex-row');
+
+  var scheme_enum = fields.find(".constraints input[id$='enum']").parents('.flex-row');
   var scheme = fields.find(".constraints select[id$='scheme_id']").parents('.form-group');
   var enum_ = fields.find(".constraints input[id$='enum']").parents('.form-group');
 
   if (option.value === 'integer' || option.value == 'string' || option.value == 'number') {
-    minimum.show();
-    maximum.show();
+    min_max.show();
   } else {
-    minimum.hide();
     minimum.find('input').val('');
-    maximum.hide();
     maximum.find('input').val('');
+    min_max.hide();
   }
 
   if (option.value === 'string') {
-    scheme.show();
     scheme.find('.chosen-container').removeAttr('style');
     scheme.find('select').chosen({allow_single_deselect: true})
-    enum_.show();
+    scheme_enum.show();
   } else {
-    scheme.hide();
     scheme.find('select').val([]);
-    enum_.hide();
     enum_.find('input').val('');
+    scheme_enum.hide();
   }
 }
 
 function onIsArrayChanged(input) {
   var fields = $(input).parents('.fields');
+  var min_max = fields.find(".constraints input[id$='min_items']").parents('.flex-row');
   var minItems = fields.find(".constraints input[id$='min_items']").parents('.form-group');
   var maxItems = fields.find(".constraints input[id$='max_items']").parents('.form-group');
 
   if ($(input).is(':checked')) {
-    minItems.show();
-    maxItems.show();
+    min_max.show();
     fields.find(".main option").each(function() {
       $(this).text('Array of ' + $(this).text().replace('Array of ', ''));
     });
     fields.find('select').trigger("chosen:updated");
   } else {
-    minItems.hide();
+    min_max.hide();
     minItems.find('input').val('');
-    maxItems.hide();
     maxItems.find('input').val('');
     fields.find(".main option").each(function() {
       $(this).text($(this).text().replace('Array of ', ''));
