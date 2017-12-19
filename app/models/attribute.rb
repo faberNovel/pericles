@@ -30,7 +30,7 @@ class Attribute < ApplicationRecord
   audited associated_with: :parent_resource
 
   def type
-    resource || primitive_type
+    resource_id || primitive_type
   end
 
   private

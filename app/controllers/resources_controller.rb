@@ -12,11 +12,11 @@ class ResourcesController < AuthenticatedController
 
   def new
     @resource = @project.resources.build
-    setup_selectable_resources(@project, @resource)
+    setup_types
   end
 
   def edit
-    @selectable_resources = @project.resources.to_a
+    setup_types
   end
 
   def create
@@ -26,7 +26,7 @@ class ResourcesController < AuthenticatedController
       @resource.try_create_attributes_from_json(params[:json_instance]) if params[:json_instance]
       redirect_to project_resource_path(@project, @resource)
     else
-      setup_selectable_resources(@project, @resource)
+      setup_types
       @json_instance = params[:json_instance]
       render 'new', status: :unprocessable_entity
     end
@@ -36,7 +36,7 @@ class ResourcesController < AuthenticatedController
     if @resource.update(resource_params)
       redirect_to project_resource_path(@project, @resource)
     else
-      @selectable_resources = @project.resources.to_a
+      setup_types
       render 'edit', status: :unprocessable_entity
     end
   end
@@ -61,11 +61,6 @@ class ResourcesController < AuthenticatedController
     setup_project
     @resource = @project.resources.find(params[:id])
     @resource_representations = @resource.resource_representations.order(:name)
-  end
-
-  def setup_selectable_resources(project, resource)
-    @selectable_resources = project.resources.to_a
-    @selectable_resources = @selectable_resources - [resource]
   end
 
   def check_valid_json_object_param(json_string)
@@ -117,5 +112,12 @@ class ResourcesController < AuthenticatedController
       attribute[:primitive_type] = type_as_int ? nil : type
     end
     @resource_params
+  end
+
+  def setup_types
+    selectable_resources = @project.resources.select(&:persisted?)
+    primitive_types = Attribute.primitive_types.keys.to_a.map { |k| [k.capitalize, k]}
+    resource_types = selectable_resources.sort_by(&:name).collect { |r| [ r.name, r.id ] }
+    @types = primitive_types + resource_types
   end
 end

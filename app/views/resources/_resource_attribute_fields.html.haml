@@ -4,7 +4,7 @@
       = f.text_field :name, hide_label: true, placeholder: t('.name_placeholder')
     = f.check_box :is_array, hide_label: true
     .flex
-      = f.select :type, Attribute.primitive_types.keys.to_a.map { |k| [k.capitalize, k]} + @selectable_resources.sort_by(&:name).collect { |r| [ r.name, r.id ] }, hide_label: true, required: true
+      = f.select :type, @types, hide_label: true, required: true
     = f.check_box :nullable, hide_label: true
     .flex
       = f.text_area :description, hide_label: true, placeholder: t('.description_placeholder'), rows: (f.object.description&.count("\n") || 0) + 1
