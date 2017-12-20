@@ -10,13 +10,8 @@ class MocksController < ApplicationController
     end
 
     route = Route.find_by_id(main_route[:name])
-
     profile = pick_profile
-
-    mock_pickers_of_route = profile&.mock_pickers&.joins(:response)&.where(responses: { route: route })&.to_a
-    mock_picker = mock_pickers_of_route.detect do |picker|
-      picker.match(request_url, request.body.read)
-    end
+    mock_picker = find_matching_mock_picker(profile, route)
     response = mock_picker&.response || route.responses.find {|r| r.status_code == 200} || route.responses.first
 
     if mock_picker
@@ -33,6 +28,13 @@ class MocksController < ApplicationController
   end
 
   private
+
+  def find_matching_mock_picker(mock_profile, route)
+    mock_pickers_of_route = mock_profile&.inherited_and_self_mock_pickers_of(route)
+    mock_pickers_of_route.detect do |picker|
+      picker.match(request_url, request.body.read)
+    end
+  end
 
   def request_url
     '/' + (request.url.split('mocks/')[-1] || '')

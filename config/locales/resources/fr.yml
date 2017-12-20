@@ -20,3 +20,6 @@ fr:
         et ne doit pas être un tableau. Les ressources imbriquées sont trouvée en
         utilisant la clé du json. Avec une clé "user" ou "users" Pericles
         cherchera une ressource User.
+    resource_attribute_fields:
+      name_placeholder: nom
+      description_placeholder: Description

@@ -19,3 +19,6 @@ en:
         directly contain the resource: it must not contain a root key
         and must not be an array. Nested resources are found using key names.
         With a key "user" or "users" Pericles will look for a User resource.
+    resource_attribute_fields:
+      name_placeholder: name
+      description_placeholder: Description

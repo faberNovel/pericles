@@ -36,7 +36,6 @@ class ResourcesControllerTest < ControllerWithAuthenticationTest
     project = create(:project)
     get new_project_resource_path(project)
     assert_response :success
-    assert_not assigns[:selectable_resources].include?(assigns[:resource])
   end
 
   test "should not get new (not authenticated)" do

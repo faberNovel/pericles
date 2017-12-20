@@ -16,7 +16,7 @@
           %div{style: 'flex: 1'}= route.url
           %div{style: 'width: 25%'}= route.resource_representations.uniq.map(&:name).join(", ")
           - if route.responses.empty?
-            %div.tooltip{style: 'width: 25%', 'data-toggle' => "tooltip", 'data-placement' => "top", title: "No responses"}
+            %div.tool-tip{style: 'width: 25%', 'data-toggle' => "tooltip", 'data-placement' => "top", title: "No responses"}
               \/!\
 
 - else
