@@ -163,7 +163,7 @@ class ResourceRepresentationSchemaSerializer < ActiveModel::Serializer
     add_scheme_validation(attribute_hash, association)
     unless attribute.enum.blank?
       enum = attribute.enum
-      attribute_hash[:enum] = enum.split(", ")
+      attribute_hash[:enum] = enum.split(',').map(&:strip)
       attribute_hash[:enum] = cast_enum_elements(attribute_hash[:enum], attribute_hash[:type]).uniq
     end
     add_primitive_minmax_constraints(attribute_hash, attribute)

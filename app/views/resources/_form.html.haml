@@ -1,3 +1,6 @@
+- content_for :page_scripts do
+  = javascript_include_tag("resources/form.js")
+
 = bootstrap_form_for([@project, @resource]) do |f|
   - if @resource.errors.any? || !@json_instance_error.blank?
     #error_explanation
@@ -27,32 +30,12 @@
   - if @resource.persisted? && params[:section] != "base"
     %h3 Attributes
 
-    %table{class: "table table-striped", id: "table_attributes"}
-      %thead
-        %tr
-          %th Name
-          %th Description
-          %th Primitive type
-          %th Resource type
-          %th Array ?
-          %th Nullable ?
-          %th Enum
-          %th Scheme
-          %th Minimum
-          %th Maximum
-          %th Min Items
-          %th Max Items
-          %th Faker
-          %th
-      %tbody
-        = f.fields_for :resource_attributes, @resource.resource_attributes.sorted_by_name, wrapper: false do |attribute_fields|
-          = render 'resource_attribute_fields', f: attribute_fields
-    %p
-      = link_to_add_association "Add an Attribute", f, :resource_attributes,
-        { 'data-association-insertion-node' => "#table_attributes tbody", 'data-association-insertion-method' => 'append' }
-
-  - if @resource.persisted?
-    = link_to 'Add scheme', new_scheme_path,  :target => '_blank'
+    .attributes
+      = f.fields_for :resource_attributes, @resource.resource_attributes.sorted_by_name, wrapper: false do |attribute_fields|
+        = render 'resource_attribute_fields', f: attribute_fields
+      .add-attribute.fields
+        = link_to_add_association "+ Add an Attribute", f, :resource_attributes,
+          { 'data-association-insertion-node' => "form .add-attribute", 'data-association-insertion-method' => 'before' }
 
   %p
     = f.submit

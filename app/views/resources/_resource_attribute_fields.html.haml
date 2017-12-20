@@ -1,29 +1,25 @@
-%tr.fields.nested-fields
-  %td
-    = f.text_field :name, hide_label: true
-  %td
-    = f.text_area :description, hide_label: true
-  %td
-    = f.select :primitive_type, Attribute.primitive_types.keys.to_a, include_blank: true, hide_label: true
-  %td
-    = f.select :resource_id, @selectable_resources.collect { |r| [ r.name, r.id ] }, include_blank: true, hide_label: true
-  %td
+.fields.nested-fields
+  .main
+    .flex
+      = f.text_field :name, hide_label: true, placeholder: t('.name_placeholder')
     = f.check_box :is_array, hide_label: true
-  %td
+    .flex
+      = f.select :type, @types, hide_label: true, required: true
     = f.check_box :nullable, hide_label: true
-  %td
-    = f.text_field :enum, hide_label: true
-  %td
-    = f.collection_select(:scheme_id, Scheme.all, :id, :name, include_blank: true, hide_label: true)
-  %td
-    = f.number_field :minimum, hide_label: true
-  %td
-    = f.number_field :maximum, hide_label: true
-  %td
-    = f.number_field :min_items, hide_label: true
-  %td
-    = f.number_field :max_items, hide_label: true
-  %td
-    = f.collection_select :faker_id, AttributeFaker.all, :id, :name, include_blank: true, hide_label: true
-  %td
-    = link_to_remove_association "Remove", f
+    .flex
+      = f.text_area :description, hide_label: true, placeholder: t('.description_placeholder'), rows: (f.object.description&.count("\n") || 0) + 1
+    %a{"data-toggle"=> "collapse", href: "#attr-collapse-#{f.object.id}", class: "hide-show-link"}
+      Show constraints ▾
+    = link_to_remove_association image_tag('delete.svg'), f
+  .constraints.collapse{id: "attr-collapse-#{f.object.id}"}
+    .flex-row
+      = f.text_field :enum, hide_label: false, placeholder: '1, 2, 3, ...'
+      .bottom
+        or
+      = f.collection_select(:scheme_id, Scheme.all, :id, :name, include_blank: true, hide_label: false)
+    .flex-row
+      = f.number_field :minimum, hide_label: false, placeholder: 0
+      = f.number_field :maximum, hide_label: false, placeholder: 100
+    .flex-row
+      = f.number_field :min_items, hide_label: false, placeholder: 0
+      = f.number_field :max_items, hide_label: false, placeholder: 100

@@ -23,10 +23,15 @@ class Attribute < ApplicationRecord
   validates :max_items, absence: true, unless: :is_array
 
   after_create :add_attribute_to_default_representation
+  after_save :remove_no_longer_used_resource_representations
 
   scope :sorted_by_name, -> { order(:name) }
 
   audited associated_with: :parent_resource
+
+  def type
+    resource_id || primitive_type
+  end
 
   private
 
@@ -53,5 +58,10 @@ class Attribute < ApplicationRecord
       is_required: true,
       resource_representation: resource&.default_representation
     )
+  end
+
+  def remove_no_longer_used_resource_representations
+    return if !resource_id_changed? || resource
+    attributes_resource_representations.update(resource_representation: nil)
   end
 end

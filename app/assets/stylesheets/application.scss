@@ -16,6 +16,8 @@
  *= require jquery-ui/autocomplete
  */
 
-@import "bootstrap-sprockets"
-@import "bootstrap"
-@import "chosen"
+@import "variables";
+
+@import "bootstrap-sprockets";
+@import "bootstrap";
+@import "chosen";
