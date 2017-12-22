@@ -2,7 +2,7 @@ class AttributeDecorator < Draper::Decorator
   delegate_all
 
   def variable_name
-    name.camelcase(:lower)
+    name.parameterize(separator: '_').camelcase(:lower)
   end
 
   def kotlin_type

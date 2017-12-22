@@ -2,7 +2,7 @@ class ResourceDecorator < Draper::Decorator
   delegate_all
 
   def rest_name
-    "Rest#{name.camelcase}"
+    "Rest#{name.parameterize(separator: '_').camelcase}"
   end
 
   def should_import_nullable_annotation
