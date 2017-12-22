@@ -12,6 +12,13 @@ class AttributeDecorator < Draper::Decorator
     type
   end
 
+  def java_type
+    type = base_java_type
+    type = "List<#{type}>" if is_array
+    type = "@Nullable #{type}" if nullable
+    type
+  end
+
   def base_kotlin_type
     case primitive_type&.to_sym
     when :number
@@ -25,5 +32,9 @@ class AttributeDecorator < Draper::Decorator
     when nil
       resource.decorate.rest_name
     end
+  end
+
+  def base_java_type
+    base_kotlin_type.gsub(/^Int$/, 'Integer')
   end
 end
