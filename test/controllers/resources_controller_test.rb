@@ -141,4 +141,23 @@ class ResourcesControllerTest < ControllerWithAuthenticationTest
     end
     assert_redirected_to new_user_session_path
   end
+
+
+  test "should get kotlin code" do
+    resource = create(:resource, name: 'Pokemon', project: create(:project, title: 'PokeApi'))
+    resource.resource_attributes << create(:attribute, name: 'id', primitive_type: :integer)
+    resource.resource_attributes << create(:attribute, name: 'weight', primitive_type: :number, nullable: true)
+    resource.resource_attributes << create(:attribute_with_resource, name: 'weakness_list', resource: create(:resource, name: 'nature'), is_array: true)
+
+    file = "package com.applidium.pokeapi.android.data.net.retrofit.model\n"
+    file += "\n"
+    file += "data class RestPokemon(\n"
+    file += "    val id: Int,\n"
+    file += "    val weaknessList: List<RestNature>,\n"
+    file += "    val weight: Double?\n"
+    file += ")\n"
+
+    get project_resource_path(resource.project, resource, format: 'kotlin')
+    assert_equal(response.body, file)
+  end
 end
