@@ -64,3 +64,10 @@ input[type=submit] {
 .flex {
   flex: 1;
 }
+
+.btn-default {
+  border-color: transparent;
+  &:hover {
+    border-color: transparent;
+  }
+}
