@@ -185,4 +185,20 @@ class ResourcesControllerTest < ControllerWithAuthenticationTest
     get project_resource_path(resource.project, resource, format: 'java')
     assert_equal(response.body, file)
   end
+
+  test "should get swift code" do
+    resource = create(:resource, name: 'Pokemon', project: create(:project, title: 'PokeApi'))
+    resource.resource_attributes << create(:attribute, name: 'id', primitive_type: :integer)
+    resource.resource_attributes << create(:attribute, name: 'weight', primitive_type: :number, nullable: true)
+    resource.resource_attributes << create(:attribute_with_resource, name: 'weakness_list', resource: create(:resource, name: 'nature'), is_array: true)
+
+    file = "struct RestPokemon {\n"
+    file += "    let id: Int\n"
+    file += "    let weaknessList: [RestNature]\n"
+    file += "    let weight: Double?\n"
+    file += "}\n"
+
+    get project_resource_path(resource.project, resource, format: 'swift')
+    assert_equal(response.body, file)
+  end
 end

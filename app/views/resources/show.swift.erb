@@ -1,0 +1,6 @@
+struct <%= @resource.decorate.rest_name =%> {
+<% @resource.resource_attributes.order(:name).decorate.each do |attribute| %>
+    let <%= attribute.variable_name =%>: <%= attribute.swift_type =%>
+
+<% end %>
+}

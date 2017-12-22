@@ -19,6 +19,13 @@ class AttributeDecorator < Draper::Decorator
     type
   end
 
+  def swift_type
+    type = base_swift_type
+    type = "[#{type}]" if is_array
+    type = "#{type}?" if nullable
+    type
+  end
+
   def base_kotlin_type
     case primitive_type&.to_sym
     when :number
@@ -36,5 +43,9 @@ class AttributeDecorator < Draper::Decorator
 
   def base_java_type
     base_kotlin_type.gsub(/^Int$/, 'Integer')
+  end
+
+  def base_swift_type
+    base_kotlin_type
   end
 end
