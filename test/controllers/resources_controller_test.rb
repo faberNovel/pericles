@@ -201,4 +201,51 @@ class ResourcesControllerTest < ControllerWithAuthenticationTest
     get project_resource_path(resource.project, resource, format: 'swift')
     assert_equal(response.body, file)
   end
+
+  test 'non member external user should not access project resources' do
+    external_user = create(:user, email: 'michel@external.com')
+    sign_in external_user
+
+    resource = create(:resource)
+    project = resource.project
+
+    get project_resources_path(project)
+    assert_response :forbidden
+
+    get new_project_resource_path(project)
+    assert_response :forbidden
+
+    get project_resource_path(project, resource)
+    assert_response :forbidden
+
+    get edit_project_resource_path(project, resource)
+    assert_response :forbidden
+
+    delete project_resource_path(project, resource)
+    assert_response :forbidden
+  end
+
+  test 'member external user should access project resources' do
+    external_user = create(:user, email: 'michel@external.com')
+    sign_in external_user
+
+    resource = create(:resource)
+    project = resource.project
+    create(:member, project: project, user: external_user)
+
+    get project_resources_path(project)
+    assert_response :success
+
+    get new_project_resource_path(project)
+    assert_response :success
+
+    get project_resource_path(project, resource)
+    assert_response :success
+
+    get edit_project_resource_path(project, resource)
+    assert_response :success
+
+    delete project_resource_path(project, resource)
+    assert_redirected_to project_resources_path(project)
+  end
 end

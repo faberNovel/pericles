@@ -55,6 +55,7 @@ class ResourcesController < AuthenticatedController
 
   def setup_project
     @project = Project.find(params[:project_id])
+    authorize @project, :show?
   end
 
   def setup_project_and_resource
