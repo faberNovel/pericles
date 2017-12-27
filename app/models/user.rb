@@ -3,6 +3,8 @@ class User < ApplicationRecord
 
   validates :email, presence: true
 
+  scope :external, -> { where.not('email LIKE ?', '%@fabernovel.com') }
+
   def self.from_omniauth(access_token)
     data = access_token.info
     return unless /.+@fabernovel\.com/ =~ data['email']

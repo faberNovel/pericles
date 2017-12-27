@@ -3,6 +3,7 @@ require 'zip'
 class ProjectsController < AuthenticatedController
   layout 'full_width_column', only: [:show, :edit]
   before_action :setup_project, except: [:index, :new, :create]
+  decorates_assigned :project
 
   def index
     @projects = policy_scope(Project).all
@@ -67,6 +68,7 @@ class ProjectsController < AuthenticatedController
       :description,
       :proxy_url,
       :mock_profile_id,
+      user_ids: []
     )
   end
 

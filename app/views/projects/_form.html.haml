@@ -2,6 +2,7 @@
   = render 'shared/errors', object: @project
 
   = f.text_field :title
+  = f.collection_select :user_ids, User.external, :id, :email, { label: t('.external_members') }, { multiple: true }
 
   - if @project.persisted?
     .form-group

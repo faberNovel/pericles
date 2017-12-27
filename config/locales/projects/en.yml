@@ -1,6 +1,7 @@
 en:
   projects:
     form:
+      external_members: External members
       description_default: |
         URL
         ** Please fill URL PROD if it exists or any other urls relative to this project

@@ -8,6 +8,8 @@ class Project < ApplicationRecord
   has_many :reports
   has_many :mock_profiles
   has_many :api_errors
+  has_many :members
+  has_many :users, through: :members
 
   validates :title, presence: true, length: { in: 2..25 }, uniqueness: true
 
