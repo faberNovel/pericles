@@ -19,9 +19,10 @@
             %th Resource Representation
             %th Required ?
             %th Is Null ?
+            %th Key name
             %th
         %tbody
-          = f.fields_for :attributes_resource_representations, @attributes_resource_representations_ordered_by_attribute_name do |fields|
+          = f.fields_for :attributes_resource_representations, @all_attributes_resource_representations do |fields|
             - attributes_resource_representation = fields.object
             - attribute = attributes_resource_representation.resource_attribute
             - type_resource = attribute.resource
@@ -41,6 +42,8 @@
                 = fields.check_box :is_required
               %td
                 = fields.check_box :is_null
+              %td
+                = fields.text_field :key_name, hide_label: true, placeholder: attribute.default_key_name
               %td
                 = fields.hidden_field :attribute_id
 

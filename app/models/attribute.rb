@@ -33,6 +33,10 @@ class Attribute < ApplicationRecord
     resource_id || primitive_type
   end
 
+  def default_key_name
+    name.parameterize(separator: '_')
+  end
+
   private
 
   def is_enumerable?
@@ -56,7 +60,8 @@ class Attribute < ApplicationRecord
     representation.attributes_resource_representations.create(
       resource_attribute: self,
       is_required: true,
-      resource_representation: resource&.default_representation
+      resource_representation: resource&.default_representation,
+      key_name: default_key_name
     )
   end
 
