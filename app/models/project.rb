@@ -15,6 +15,8 @@ class Project < ApplicationRecord
 
   after_create :add_default_mock_profile
 
+  scope :of_user, ->(user) { joins(:members).where(members: { user: user }) }
+
   def build_route_set
     route_set = ActionDispatch::Routing::RouteSet.new
     routes = self.routes

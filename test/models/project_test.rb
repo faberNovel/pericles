@@ -23,4 +23,18 @@ class ProjectTest < ActiveSupport::TestCase
     project = create(:project, title: "New Project", description: "Project description")
     assert_equal project.mock_profiles.count, 1
   end
+
+  test 'of user' do
+    user = create(:user)
+
+    his_project = create(:project)
+    create(:member, user: user, project: his_project)
+
+    not_his_project = create(:project)
+    create(:member, user: create(:user), project: not_his_project)
+
+    _no_one_project = create(:project)
+
+    assert_equal [his_project], Project.of_user(user)
+  end
 end
