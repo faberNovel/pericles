@@ -233,6 +233,8 @@ GEM
       activerecord (>= 3.0)
     powerpack (0.1.1)
     public_suffix (3.0.0)
+    pundit (1.1.0)
+      activesupport (>= 3.0.0)
     pxeger (0.1.0)
     rack (2.0.3)
     rack-mini-profiler (0.10.5)
@@ -380,6 +382,7 @@ DEPENDENCIES
   omniauth-google-oauth2 (~> 0.5.2)
   passenger
   pg
+  pundit (~> 1.1)
   rack-mini-profiler
   rails (~> 5.0.0)
   rails-controller-testing

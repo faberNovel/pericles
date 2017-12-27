@@ -27,7 +27,7 @@ gem 'draper', '~> 3.0'
 # gem 'devise'
 
 # Recommended to manage authorization
-# gem 'pundit'
+gem 'pundit', '~> 1.1'
 
 # Recommended to handle images
 # gem 'paperclip'

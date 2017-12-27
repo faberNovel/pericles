@@ -5,7 +5,7 @@ class ProjectsController < AuthenticatedController
   before_action :setup_project, except: [:index, :new, :create]
 
   def index
-    @projects = Project.all
+    @projects = policy_scope(Project).all
   end
 
   def show
@@ -19,6 +19,7 @@ class ProjectsController < AuthenticatedController
 
   def new
     @project = Project.new
+    authorize @project
   end
 
   def edit
@@ -26,6 +27,7 @@ class ProjectsController < AuthenticatedController
 
   def create
     @project = Project.new(project_params)
+    authorize @project
 
     if @project.save
       redirect_to @project
@@ -56,6 +58,7 @@ class ProjectsController < AuthenticatedController
 
   def setup_project
     @project = Project.find(params[:id])
+    authorize @project
   end
 
   def project_params
