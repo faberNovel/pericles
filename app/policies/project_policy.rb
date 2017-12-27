@@ -10,7 +10,7 @@ class ProjectPolicy < ApplicationPolicy
   end
 
   def create?
-    true
+    user.internal?
   end
 
   def update?
