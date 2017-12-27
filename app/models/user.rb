@@ -1,13 +1,15 @@
 class User < ApplicationRecord
+  INTERNAL_EMAIL_DOMAIN = '@fabernovel.com'
+
   devise :database_authenticatable, :omniauthable, :trackable, :validatable, omniauth_providers: [:google_oauth2]
 
   validates :email, presence: true
 
-  scope :external, -> { where.not('email LIKE ?', '%@fabernovel.com') }
+  scope :external, -> { where.not('email LIKE ?', "%#{INTERNAL_EMAIL_DOMAIN}") }
 
   def self.from_omniauth(access_token)
     data = access_token.info
-    return unless /.+@fabernovel\.com/ =~ data['email']
+    return unless /.+#{Regexp.quote(INTERNAL_EMAIL_DOMAIN)}/ =~ data['email']
 
     User.find_or_create_by(email: data['email']) do |user|
       user.first_name = data['first_name']
@@ -19,5 +21,9 @@ class User < ApplicationRecord
 
   def name
     "#{first_name} #{last_name}"
+  end
+
+  def internal?
+    email.ends_with? INTERNAL_EMAIL_DOMAIN
   end
 end

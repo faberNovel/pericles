@@ -1,8 +1,7 @@
 class ProjectPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
-      # TODO: Scope when project role dev
-      scope.all
+      user.internal? ? scope.all : scope.of_user(user)
     end
   end
 
