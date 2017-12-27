@@ -17,6 +17,8 @@
             %span.sr-only (current)
         %li{class: top_nav_active_class(new_validation_path)}
           = link_to 'JSON Validation', new_validation_path
+        %li{class: top_nav_active_class(schemes_path)}
+          = link_to 'Schemes', schemes_path
       - if user_signed_in?
         %ul.nav.navbar-nav.navbar-right
           %li
