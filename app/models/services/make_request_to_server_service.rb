@@ -11,7 +11,7 @@ class MakeRequestToServerService
     url = URI.join(@proxy_url, relative_url)
     url = URI.join(url.to_s, '?' + @request.query_string) unless @request.query_string.blank?
 
-    HTTP.follow.use(:auto_inflate).send(@request.method.downcase, url, body: @request.body.read, headers: headers)
+    HTTP.follow.send(@request.method.downcase, url, body: @request.body.read, headers: headers)
   end
 
   def headers
