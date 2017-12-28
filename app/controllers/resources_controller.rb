@@ -12,6 +12,7 @@ class ResourcesController < AuthenticatedController
 
   def new
     @resource = @project.resources.build
+    authorize @resource
     setup_types
   end
 
@@ -21,6 +22,7 @@ class ResourcesController < AuthenticatedController
 
   def create
     @resource = @project.resources.build(resource_params)
+    authorize @resource
     check_valid_json_object_param(params[:json_instance]) unless params[:json_instance].blank?
     if @json_instance_error.blank? && @resource.save
       @resource.try_create_attributes_from_json(params[:json_instance]) if params[:json_instance]
@@ -61,6 +63,7 @@ class ResourcesController < AuthenticatedController
   def setup_project_and_resource
     setup_project
     @resource = @project.resources.find(params[:id])
+    authorize @resource
     @resource_representations = @resource.resource_representations.order(:name)
   end
 
