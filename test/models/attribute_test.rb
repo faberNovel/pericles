@@ -78,11 +78,15 @@ class AttributeTest < ActiveSupport::TestCase
 
   test 'Representation is updated with the attribute' do
     attribute = create(:attribute_with_resource)
+    resource = attribute.resource
     representation = attribute.parent_resource.default_representation
     attributes_resource_representation = representation.attributes_resource_representations.first
 
     assert attributes_resource_representation.resource_representation_id
     attribute.update(resource_id: nil, primitive_type: :integer)
     assert_not attributes_resource_representation.reload.resource_representation_id
+
+    attribute.update(resource_id: resource.id, primitive_type: nil)
+    assert attributes_resource_representation.reload.resource_representation_id
   end
 end
