@@ -23,7 +23,7 @@ class Attribute < ApplicationRecord
   validates :max_items, absence: true, unless: :is_array
 
   after_create :add_attribute_to_default_representation
-  after_save :remove_no_longer_used_resource_representations
+  after_save :update_if_needed_resource_representation_of_attributes_resource_representations
 
   scope :sorted_by_name, -> { order(:name) }
 
@@ -65,8 +65,8 @@ class Attribute < ApplicationRecord
     )
   end
 
-  def remove_no_longer_used_resource_representations
-    return if !resource_id_changed? || resource
-    attributes_resource_representations.update(resource_representation: nil)
+  def update_if_needed_resource_representation_of_attributes_resource_representations
+    return unless resource_id_changed?
+    attributes_resource_representations.update(resource_representation: resource&.default_representation)
   end
 end
