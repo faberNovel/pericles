@@ -150,4 +150,20 @@ class ProxyControllerTest < ActionDispatch::IntegrationTest
       end
     end
   end
+
+  test "should proxy gzip compression" do
+    project = create(:full_project, proxy_url: 'https://pokeapi.co/api/v2/')
+    route = project.routes.first
+    route.update(url: '/berry/')
+
+    VCR.use_cassette('gzip_content_encoding') do
+      get "/projects/#{project.id}/proxy/berry/", headers: { "Accept-Encoding" => "gzip" }
+    end
+
+    report = Report.order(created_at: :desc).first
+    assert_match '"count"', report.response_body
+    assert_equal 'gzip', report.response_headers['Content-Encoding']
+    assert_no_match '"count"', response.body
+    assert_equal 'gzip', response.headers['Content-Encoding']
+  end
 end

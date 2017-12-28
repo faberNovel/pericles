@@ -19,8 +19,21 @@ class SchemesControllerTest < ControllerWithAuthenticationTest
     assert_redirected_to schemes_path
   end
 
+  test "should get edit scheme form" do
+    scheme = create(:scheme)
+    get edit_scheme_path(scheme)
+    assert_response :success
+  end
+
+  test "should update scheme" do
+    scheme = create(:scheme, name: 'a')
+    patch scheme_path(scheme), params: { scheme: { name: 'b' } }
+    assert_redirected_to schemes_path
+    assert_equal scheme.reload.name, 'b'
+  end
+
   test "should delete scheme" do
-    scheme = Scheme.create(name: 'nice name', regexp: '[a-z]+')
+    scheme = create(:scheme)
     assert_difference('Scheme.count', -1) do
       delete scheme_path(scheme)
     end

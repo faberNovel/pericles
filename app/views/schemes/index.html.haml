@@ -1,5 +1,9 @@
 %h1 Schemes
 
+.flexcontainer.flexcontainer-justify-end
+  = link_to 'New Scheme', new_scheme_path, class: "btn btn-default btn-lg"
+
+
 - if @schemes.any?
   %table{class: "table table-striped"}
     %thead
@@ -7,9 +11,11 @@
         %th Name
         %th Regexp
         %th
+        %th
     %tbody
       - @schemes.each do |scheme|
         %tr
           %td= scheme.name
           %td= scheme.regexp
+          %td= link_to 'Edit', edit_scheme_path(scheme)
           %td= link_to 'Delete', scheme_path(scheme), method: :delete, data: { confirm: 'Are you sure?' }

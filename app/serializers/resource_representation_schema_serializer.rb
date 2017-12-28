@@ -106,14 +106,14 @@ class ResourceRepresentationSchemaSerializer < ActiveModel::Serializer
 
   def required_from_resource_representation(resource_representation)
     resource_representation.attributes_resource_representations.select(&:is_required).map do |attr_resource_rep|
-        attr_resource_rep.resource_attribute.name
+        attr_resource_rep.key_name
     end.uniq
   end
 
   def properties_from_resource_representation(resource_representation)
     properties = {}
     resource_representation.attributes_resource_representations.each do |association|
-      properties[association.resource_attribute.name] = hash_from_attributes_resource_representation(association)
+      properties[association.key_name] = hash_from_attributes_resource_representation(association)
     end
     return properties
   end

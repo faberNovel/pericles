@@ -141,4 +141,64 @@ class ResourcesControllerTest < ControllerWithAuthenticationTest
     end
     assert_redirected_to new_user_session_path
   end
+
+
+  test "should get kotlin code" do
+    resource = create(:resource, name: 'Pokemon', project: create(:project, title: 'PokeApi'))
+    resource.resource_attributes << create(:attribute, name: 'id', primitive_type: :integer)
+    resource.resource_attributes << create(:attribute, name: 'weight', primitive_type: :number, nullable: true)
+    resource.resource_attributes << create(:attribute_with_resource, name: 'weakness_list', resource: create(:resource, name: 'nature'), is_array: true)
+
+    file = "package com.applidium.pokeapi.android.data.net.retrofit.model\n"
+    file += "\n"
+    file += "data class RestPokemon(\n"
+    file += "    val id: Int,\n"
+    file += "    val weaknessList: List<RestNature>,\n"
+    file += "    val weight: Double?\n"
+    file += ")\n"
+
+    get project_resource_path(resource.project, resource, format: 'kotlin')
+    assert_equal(response.body, file)
+  end
+
+  test "should get java code" do
+    resource = create(:resource, name: 'Pokemon', project: create(:project, title: 'PokeApi'))
+    resource.resource_attributes << create(:attribute, name: 'id', primitive_type: :integer)
+    resource.resource_attributes << create(:attribute, name: 'weight', primitive_type: :number, nullable: true)
+    resource.resource_attributes << create(:attribute_with_resource, name: 'weakness_list', resource: create(:resource, name: 'nature'), is_array: true)
+
+    file = "package com.applidium.pokeapi.android.data.net.retrofit.model\n"
+    file += "\n"
+    file += "import android.support.annotation.Nullable;\n"
+    file += "\n"
+    file += "import java.util.List;\n"
+    file += "\n"
+    file += "import io.norberg.automatter.AutoMatter;\n"
+    file += "\n"
+    file += "@AutoMatter\n"
+    file += "public interface RestPokemon {\n"
+    file += "    Integer id();\n"
+    file += "    List<RestNature> weaknessList();\n"
+    file += "    @Nullable Double weight();\n"
+    file += "}\n"
+
+    get project_resource_path(resource.project, resource, format: 'java')
+    assert_equal(response.body, file)
+  end
+
+  test "should get swift code" do
+    resource = create(:resource, name: 'Pokemon', project: create(:project, title: 'PokeApi'))
+    resource.resource_attributes << create(:attribute, name: 'id', primitive_type: :integer)
+    resource.resource_attributes << create(:attribute, name: 'weight', primitive_type: :number, nullable: true)
+    resource.resource_attributes << create(:attribute_with_resource, name: 'weakness_list', resource: create(:resource, name: 'nature'), is_array: true)
+
+    file = "struct RestPokemon {\n"
+    file += "    let id: Int\n"
+    file += "    let weaknessList: [RestNature]\n"
+    file += "    let weight: Double?\n"
+    file += "}\n"
+
+    get project_resource_path(resource.project, resource, format: 'swift')
+    assert_equal(response.body, file)
+  end
 end

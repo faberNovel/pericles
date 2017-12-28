@@ -64,15 +64,10 @@ class ResourceRepresentationsController < AuthenticatedController
   end
 
   def build_missing_attributes_resource_representations(resource_representation)
-    @attributes_resource_representations_ordered_by_attribute_name = []
-    @resource.resource_attributes.sorted_by_name.each do |attribute|
-      attributes_resource_representation = resource_representation.attributes_resource_representations.detect {
-       |arr| arr.attribute_id == attribute.id }
-      unless attributes_resource_representation
-        attributes_resource_representation = resource_representation.attributes_resource_representations
-        .build(resource_attribute: attribute)
-      end
-      @attributes_resource_representations_ordered_by_attribute_name << attributes_resource_representation
+    @all_attributes_resource_representations = @resource.resource_attributes.sorted_by_name.map do |attribute|
+      resource_representation.attributes_resource_representations.detect do |arr|
+        arr.attribute_id == attribute.id
+      end || resource_representation.attributes_resource_representations.build(resource_attribute: attribute, key_name: attribute.default_key_name)
     end
   end
 
@@ -83,6 +78,7 @@ class ResourceRepresentationsController < AuthenticatedController
       attributes_resource_representations_attributes: [
         :id,
         :resource_representation_id,
+        :key_name,
         :is_required,
         :is_null,
         :attribute_id,

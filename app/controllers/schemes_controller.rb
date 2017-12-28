@@ -7,6 +7,20 @@ class SchemesController < AuthenticatedController
     @scheme = Scheme.new
   end
 
+  def edit
+    @scheme = Scheme.find(params[:id])
+  end
+
+  def update
+    @scheme = Scheme.find(params[:id])
+
+    if @scheme.update(scheme_params)
+      redirect_to schemes_path
+    else
+      render 'edit', status: :unprocessable_entity
+    end
+  end
+
   def create
     @scheme = Scheme.new(scheme_params)
 

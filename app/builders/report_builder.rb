@@ -1,7 +1,7 @@
 class ReportBuilder
   def initialize(project, http_response, request)
     @project = project
-    @http_response = http_response
+    @http_response = HTTP::ResponseDecorator.new(http_response)
     @request = request
   end
 

@@ -70,13 +70,13 @@ class ResourceRepresentationSchemaSerializerTest < ActiveSupport::TestCase
   end
 
   test 'attribute name is in properties' do
-    assert_includes generate_schema(false, '')[:properties], attributes_resource_rep.resource_attribute.name
+    assert_includes generate_schema(false, '')[:properties], attributes_resource_rep.resource_attribute.default_key_name
   end
 
   test 'attribute primitive type is set' do
     schema = generate_schema(false, '')
     attribute = attributes_resource_rep.resource_attribute
-    assert_equal attribute.primitive_type, schema[:properties][attribute.name][:type]
+    assert_equal attribute.primitive_type, schema[:properties][attribute.default_key_name][:type]
   end
 
   test 'attribute resource representation is null' do
@@ -89,7 +89,7 @@ class ResourceRepresentationSchemaSerializerTest < ActiveSupport::TestCase
       is_collection: false,
       root_key: ''
     ).as_json
-    assert_equal 'null', schema[:properties][attributes_resource_representation.resource_attribute.name][:type]
+    assert_equal 'null', schema[:properties][attributes_resource_representation.resource_attribute.default_key_name][:type]
   end
 
   test 'schema with nested resources is correct' do
