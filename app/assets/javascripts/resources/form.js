@@ -18,7 +18,7 @@ function onSelectChanged(option) {
 
   if (option.value === 'string') {
     scheme.find('.chosen-container').removeAttr('style');
-    scheme.find('select').chosen({allow_single_deselect: true})
+    scheme.find('select').chosen({allow_single_deselect: true, search_contains: true})
     scheme_enum.show();
   } else {
     scheme.find('select').val([]);
