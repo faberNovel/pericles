@@ -2,6 +2,15 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.2.2 - 2017-12-28
+
+* Select a String by default for new attribute
+* Proxy now works for gzip encoding
+* Add Schemes to navbar
+* Request body is not bounded to the route's resource
+* Add custom key name to representation
+* Add 3 buttons to generate code (java, swift and kotlin) from resource
+
 ## 0.2.1 - 2017-12-20
 
 * Rewriting of attributes form
