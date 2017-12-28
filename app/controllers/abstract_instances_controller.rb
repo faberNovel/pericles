@@ -11,10 +11,12 @@ class AbstractInstancesController < AuthenticatedController
     default_body = GenerateJsonInstanceService.new(@model.json_schema).execute
     default_name = "#{@model.name.camelize} #{model_instance_class.all.count + 1}"
     @model_instance = model_instance_class.new({model_name.to_sym => @model, body: default_body, name: default_name})
+    authorize @model_instance
   end
 
   def create
     @model_instance = @model.send("#{model_name}_instances").build(model_instance_params)
+    authorize @model_instance
     if @model_instance.save
       redirect_to_model
     else
@@ -26,7 +28,6 @@ class AbstractInstancesController < AuthenticatedController
   end
 
   def update
-    @model_instance = model_instance_class.find(params[:id])
     if @model_instance.update(model_instance_params)
       redirect_to_model
     else
@@ -35,22 +36,27 @@ class AbstractInstancesController < AuthenticatedController
   end
 
   def destroy
-    @model_instance = model_instance_class.find(params[:id])
     @model_instance.destroy
     redirect_to_model
   end
 
   private
 
+  def setup_project
+    @project = @model.project
+    authorize @project, :show?
+  end
+
   def setup_model_instance
     @model_instance = model_instance_class.find(params[:id])
+    authorize @model_instance
     @model = @model_instance.send(model_name)
-    @project = @model.project
+    setup_project
   end
 
   def setup_model_and_project
     @model = model_class.find(params["#{model_name}_id".to_sym])
-    @project = @model.project
+    setup_project
   end
 
   def redirect_to_model
