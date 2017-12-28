@@ -8,11 +8,14 @@ class AttributesResourceRepresentation < ApplicationRecord
   scope :ordered_by_attribute_name, -> { joins(:resource_attribute).order('attributes.name') }
 
   validates :parent_resource_representation, presence: true
-  validates :key_name, presence: true
   validates :resource_attribute, presence: true, uniqueness: { scope: [:parent_resource_representation] }
   validates :resource_representation, presence: true, if: "resource_attribute.resource"
 
   audited associated_with: :parent_resource_representation
+
+  def key_name
+    custom_key_name.blank? ? resource_attribute.default_key_name : custom_key_name
+  end
 
   private
 

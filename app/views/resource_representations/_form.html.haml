@@ -22,7 +22,7 @@
             %th Key name
             %th
         %tbody
-          = f.fields_for :attributes_resource_representations, @all_attributes_resource_representations do |fields|
+          = f.fields_for :attributes_resource_representations, all_attributes_resource_representations do |fields|
             - attributes_resource_representation = fields.object
             - attribute = attributes_resource_representation.resource_attribute
             - type_resource = attribute.resource
@@ -43,7 +43,7 @@
               %td
                 = fields.check_box :is_null
               %td
-                = fields.text_field :key_name, hide_label: true, placeholder: attribute.default_key_name
+                = fields.text_field :custom_key_name, hide_label: true, placeholder: attribute.key_name_placeholder
               %td
                 = fields.hidden_field :attribute_id
 
