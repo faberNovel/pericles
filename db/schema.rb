@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171228165935) do
+ActiveRecord::Schema.define(version: 20171229133209) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -112,15 +112,6 @@ ActiveRecord::Schema.define(version: 20171228165935) do
     t.datetime "updated_at",        null: false
     t.string   "value"
     t.index ["http_message_type", "http_message_id"], name: "index_headers_on_http_message_type_and_http_message_id", using: :btree
-  end
-
-  create_table "json_errors", force: :cascade do |t|
-    t.text     "description"
-    t.string   "type"
-    t.integer  "validation_id"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
-    t.index ["validation_id"], name: "index_json_errors_on_validation_id", using: :btree
   end
 
   create_table "mock_pickers", force: :cascade do |t|
@@ -278,8 +269,8 @@ ActiveRecord::Schema.define(version: 20171228165935) do
   end
 
   create_table "validations", force: :cascade do |t|
-    t.text     "json_schema"
-    t.text     "json_instance"
+    t.json     "json_schema"
+    t.json     "json_instance"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
   end
@@ -292,7 +283,6 @@ ActiveRecord::Schema.define(version: 20171228165935) do
   add_foreign_key "attributes_resource_representations", "attributes"
   add_foreign_key "attributes_resource_representations", "resource_representations"
   add_foreign_key "attributes_resource_representations", "resource_representations", column: "parent_resource_representation_id"
-  add_foreign_key "json_errors", "validations"
   add_foreign_key "mock_pickers", "mock_profiles"
   add_foreign_key "mock_pickers", "responses"
   add_foreign_key "projects", "mock_profiles"

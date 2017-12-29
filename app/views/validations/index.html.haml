@@ -19,7 +19,7 @@
         %p
           %ul
             - json_errors.each do |json_error|
-              %li= json_error.description
+              %li= json_error[:description]
 
   .row
     .col-xs-6
@@ -32,3 +32,5 @@
       %pre.pre-scrollable
         %code
           = format_json_text(validation.json_instance)
+
+= paginate @validations
