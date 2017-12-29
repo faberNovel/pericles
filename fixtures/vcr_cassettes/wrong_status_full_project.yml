@@ -37,7 +37,7 @@ http_interactions:
       Cache-Control:
       - max-age=604800
       Content-Type:
-      - text/html
+      - application/json
       Date:
       - Fri, 29 Sep 2017 16:25:57 GMT
       Etag:

@@ -6,8 +6,11 @@ class ProxyController < ApplicationController
     @project = Project.find(params[:project_id])
     @request_service = MakeRequestToServerService.new(@project.proxy_url, request)
     proxy_response = @request_service.execute
-    report = ReportBuilder.new(@project, proxy_response, request).build
-    add_validation_header(report)
+
+    if proxy_response.headers['Content-Type'] == 'application/json'
+      report = ReportBuilder.new(@project, proxy_response, request).build
+      add_validation_header(report)
+    end
 
     set_headers(proxy_response.headers.to_h)
     render body: proxy_response.body, status: proxy_response.status.code
