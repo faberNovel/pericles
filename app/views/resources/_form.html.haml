@@ -1,13 +1,13 @@
 - content_for :page_scripts do
   = javascript_include_tag("resources/form.js")
 
-= bootstrap_form_for([@project, @resource]) do |f|
-  - if @resource.errors.any? || !@json_instance_error.blank?
+= bootstrap_form_for([@project, resource]) do |f|
+  - if resource.errors.any? || !@json_instance_error.blank?
     #error_explanation
       %h2
-        = "#{pluralize(@resource.errors.count + (@json_instance_error.blank? ? 0 : 1), "error")} prohibited this resource from being saved:"
+        = "#{pluralize(resource.errors.count + (@json_instance_error.blank? ? 0 : 1), "error")} prohibited this resource from being saved:"
       %ul
-        - @resource.errors.full_messages.each do |msg|
+        - resource.errors.full_messages.each do |msg|
           %li= msg
         - unless @json_instance_error.blank?
           %li= @json_instance_error
@@ -18,7 +18,7 @@
 
     = f.text_area :description
 
-    - unless @resource.persisted?
+    - unless resource.persisted?
       .alert.alert-warning= t('.json_instance_explanation')
 
       .form-group{class: @json_instance_error.blank? ? '' : 'has-error'}
@@ -27,11 +27,11 @@
         - unless @json_instance_error.blank?
           %span.help-block= @json_instance_error
 
-  - if @resource.persisted? && params[:section] != "base"
+  - if resource.persisted? && params[:section] != "base"
     %h3 Attributes
 
     .attributes
-      = f.fields_for :resource_attributes, @resource.resource_attributes.sorted_by_name, wrapper: false do |attribute_fields|
+      = f.fields_for :resource_attributes, resource.resource_attributes_by_name, wrapper: false do |attribute_fields|
         = render 'resource_attribute_fields', f: attribute_fields
       .add-attribute.fields
         = link_to_add_association "+ Add an Attribute", f, :resource_attributes,
