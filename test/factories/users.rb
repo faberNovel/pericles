@@ -1,7 +1,7 @@
 FactoryGirl.define do
 
   sequence :email do |n|
-    "person#{n}@example.com"
+    "person#{n}#{User::INTERNAL_EMAIL_DOMAIN}"
   end
 
   factory :user do

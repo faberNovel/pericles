@@ -114,6 +114,15 @@ ActiveRecord::Schema.define(version: 20171229133209) do
     t.index ["http_message_type", "http_message_id"], name: "index_headers_on_http_message_type_and_http_message_id", using: :btree
   end
 
+  create_table "members", force: :cascade do |t|
+    t.integer  "project_id"
+    t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["project_id"], name: "index_members_on_project_id", using: :btree
+    t.index ["user_id"], name: "index_members_on_user_id", using: :btree
+  end
+
   create_table "mock_pickers", force: :cascade do |t|
     t.integer "mock_profile_id"
     t.integer "response_id"
@@ -283,6 +292,8 @@ ActiveRecord::Schema.define(version: 20171229133209) do
   add_foreign_key "attributes_resource_representations", "attributes"
   add_foreign_key "attributes_resource_representations", "resource_representations"
   add_foreign_key "attributes_resource_representations", "resource_representations", column: "parent_resource_representation_id"
+  add_foreign_key "members", "projects"
+  add_foreign_key "members", "users"
   add_foreign_key "mock_pickers", "mock_profiles"
   add_foreign_key "mock_pickers", "responses"
   add_foreign_key "projects", "mock_profiles"

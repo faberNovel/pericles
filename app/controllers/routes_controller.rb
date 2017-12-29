@@ -3,7 +3,7 @@ class RoutesController < AuthenticatedController
   before_action :setup_route, except: [:index, :new, :create]
 
   def index
-    @routes_by_resource = @project.routes.includes(:resource, :resource_representations, :responses)
+    @routes_by_resource = policy_scope(@project.routes).includes(:resource, :resource_representations, :responses)
       .group_by(&:resource)
     @resources = @routes_by_resource.keys.sort_by {|r| r.name.downcase}
     render layout: 'full_width_column'
@@ -14,8 +14,13 @@ class RoutesController < AuthenticatedController
   end
 
   def new
-    @route = @project.routes.build
-    render layout: 'generic'
+    if @project.resources.empty?
+      redirect_to project_resources_path(@project), alert: t('.resource_required')
+    else
+      @route = @project.resources.first.routes.build
+      authorize @route
+      render layout: 'generic'
+    end
   end
 
   def edit
@@ -24,6 +29,7 @@ class RoutesController < AuthenticatedController
 
   def create
     @route = Route.new(route_params)
+    authorize @route
     @route.request_headers.build(name: 'Authorization')
     @route.request_headers.build(name: 'Content-Type', value: 'application/json')
     if @route.save
@@ -52,10 +58,12 @@ class RoutesController < AuthenticatedController
 
   def setup_project
     @project = Project.find(params[:project_id])
+    authorize @project, :show?
   end
 
   def setup_route
-    @route = Route.find(params[:id])
+    @route = @project.routes.find(params[:id])
+    authorize @route
     @responses = @route.responses.order(:status_code)
   end
 

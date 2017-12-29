@@ -1,26 +1,29 @@
-%h1= @project.title
+%h1= project.title
 
 .flexcontainer.flexcontainer-justify-end
   .btn-group{ role: "group" }
-    = link_to t('actions.edit'), edit_project_path(@project), class: "btn btn-default"
+    = link_to t('actions.edit'), edit_project_path(project), class: "btn btn-default"
+
+%h4 Members
+%p= project.member_list
 
 %h4 Description
 %p
-  = simple_format(@project.description)
+  = simple_format(project.description)
 
-- unless @project.proxy_url.blank?
+- unless project.proxy_url.blank?
 
   %h4 Proxied server
-  %p= @project.proxy_url
+  %p= project.proxy_url
 
   %h4 Proxy url
-  %p= project_proxy_url(@project)
+  %p= project_proxy_url(project)
 
 %h4 Mock Url
-= link_to project_mocks_root_url(@project), project_mocks_root_url(@project)
+= link_to project_mocks_root_url(project), project_mocks_root_url(project)
 
 %h4 JSON Schemas
-= link_to t('actions.download'), project_path(@project, format: 'zip'), class: 'btn btn-default'
+= link_to t('actions.download'), project_path(project, format: 'zip'), class: 'btn btn-default'
 
 
-= link_to t('actions.delete'), project_path(@project), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-default", id: 'delete-button'
+= link_to t('actions.delete'), project_path(project), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-default", id: 'delete-button'

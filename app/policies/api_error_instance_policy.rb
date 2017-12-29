@@ -1,0 +1,2 @@
+class ApiErrorInstancePolicy < ProjectRelatedPolicy
+end

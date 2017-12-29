@@ -6,6 +6,8 @@ fr:
       no_header_placeholder: "Il n'y a pas de headers pour ce message HTTP."
       no_query_parameter_placeholder: "Il n'y a pas de query parameters pour cette requête."
       no_body_placeholder: "Il n'y a pas de description pour le body de ce message HTTP."
+    new:
+      resource_required: Les routes sont basées sur les ressources, commencez donc par en créer
     base_form:
       description_placeholder: |
         Que décrit cette route ?

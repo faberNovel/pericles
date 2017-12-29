@@ -119,4 +119,19 @@ class ProjectsControllerTest < ControllerWithAuthenticationTest
     assert_equal response.headers['Content-Type'], 'application/zip'
   end
 
+  test 'external user should not show project' do
+    external_user = create(:user, email: 'michel@external.com')
+    sign_in external_user
+
+    get project_path(@project)
+    assert_response :forbidden
+  end
+
+  test 'external user should not create' do
+    external_user = create(:user, email: 'michel@external.com')
+    sign_in external_user
+
+    post projects_path, params: { project: { description: 'My description', title: 'My Project' }}
+    assert_response :forbidden
+  end
 end

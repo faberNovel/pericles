@@ -1,0 +1,2 @@
+class RoutePolicy < ProjectRelatedPolicy
+end

@@ -28,9 +28,17 @@ class RoutesControllerTest < ControllerWithAuthenticationTest
     assert_redirected_to new_user_session_path
   end
 
-  test "should get new" do
-    get new_project_route_path(create(:project))
+  test 'should get new when project has resource' do
+    resource = create(:resource)
+    project = resource.project
+    get new_project_route_path(project)
     assert_response :success
+  end
+
+  test 'should get redirected to resources when project has no resource' do
+    project = create(:project)
+    get new_project_route_path(project)
+    assert_redirected_to project_resources_path(project)
   end
 
   test "should not get new (not authenticated)" do
@@ -113,5 +121,52 @@ class RoutesControllerTest < ControllerWithAuthenticationTest
       delete project_route_path(route.project, route)
     end
     assert_redirected_to new_user_session_path
+  end
+
+  test 'non member external user should not access project routes' do
+    external_user = create(:user, email: 'michel@external.com')
+    sign_in external_user
+
+    route = create(:route)
+    project = route.project
+
+    get project_routes_path(project)
+    assert_response :forbidden
+
+    get new_project_route_path(project)
+    assert_response :forbidden
+
+    get project_route_path(project, route)
+    assert_response :forbidden
+
+    get edit_project_route_path(project, route)
+    assert_response :forbidden
+
+    delete project_route_path(project, route)
+    assert_response :forbidden
+  end
+
+  test 'member external user should access project routes' do
+    external_user = create(:user, email: 'michel@external.com')
+    sign_in external_user
+
+    route = create(:route)
+    project = route.project
+    create(:member, project: project, user: external_user)
+
+    get project_routes_path(project)
+    assert_response :success
+
+    get new_project_route_path(project)
+    assert_response :success
+
+    get project_route_path(project, route)
+    assert_response :success
+
+    get edit_project_route_path(project, route)
+    assert_response :success
+
+    delete project_route_path(project, route)
+    assert_redirected_to project_resource_path(route.project, route.resource)
   end
 end

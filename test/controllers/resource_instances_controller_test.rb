@@ -37,4 +37,28 @@ class ResourceInstancesControllerTest < ControllerWithAuthenticationTest
     end
     assert_redirected_to project_resource_path(@project, @resource)
   end
+
+  test 'member external user should access project resource instances' do
+    external_user = create(:user, email: 'michel@external.com')
+    sign_in external_user
+
+    create(:member, project: @project, user: external_user)
+
+    get new_resource_resource_instance_path(@resource)
+    assert_response :success
+
+    get edit_resource_instance_path(@resource_instance)
+    assert_response :success
+  end
+
+  test 'non member external user should not access project resource instances' do
+    external_user = create(:user, email: 'michel@external.com')
+    sign_in external_user
+
+    get new_resource_resource_instance_path(@resource)
+    assert_response :forbidden
+
+    get edit_resource_instance_path(@resource_instance)
+    assert_response :forbidden
+  end
 end

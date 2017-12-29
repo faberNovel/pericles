@@ -1,6 +1,7 @@
 fr:
   projects:
     form:
+      external_members: Membres externes
       description_default: |
         URL
         ** Renseigner l'URL PROD si elle existe  ou les autres URLs du projet

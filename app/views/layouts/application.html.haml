@@ -10,12 +10,7 @@
   %body
     = render 'shared/navigation'
     .container#main-container
-      .row
-        .col-xs-12
-          - if notice
-            %p.notice= notice
-          - if alert
-            %p.alert= alert
+      = render 'shared/alert'
       .row
         .col-xs-12
           = yield :page_title
