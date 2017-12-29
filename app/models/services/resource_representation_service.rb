@@ -20,8 +20,7 @@ class ResourceRepresentationService
       resource_representation.attributes_resource_representations.new(
         resource_attribute: attribute,
         is_required: true,
-        resource_representation: resource_referenced_by_attribute,
-        key_name: attribute.default_key_name
+        resource_representation: resource_referenced_by_attribute
       )
     end
 

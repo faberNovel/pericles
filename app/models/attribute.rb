@@ -34,7 +34,7 @@ class Attribute < ApplicationRecord
   end
 
   def default_key_name
-    name.parameterize(separator: '_')
+    name
   end
 
   private
@@ -60,8 +60,7 @@ class Attribute < ApplicationRecord
     representation.attributes_resource_representations.create(
       resource_attribute: self,
       is_required: true,
-      resource_representation: resource&.default_representation,
-      key_name: default_key_name
+      resource_representation: resource&.default_representation
     )
   end
 

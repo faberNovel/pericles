@@ -5,6 +5,10 @@ class AttributeDecorator < Draper::Decorator
     name.parameterize(separator: '_').camelcase(:lower)
   end
 
+  def key_name_placeholder
+    name.underscore.parameterize(separator: '_')
+  end
+
   def kotlin_type
     type = base_kotlin_type
     type = "List<#{type}>" if is_array

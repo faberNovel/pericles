@@ -5,6 +5,6 @@ FactoryGirl.define do
     is_null false
     association :parent_resource_representation, factory: :resource_representation
     association :resource_attribute, factory: :attribute
-    key_name { resource_attribute.default_key_name }
+    custom_key_name nil
   end
 end
