@@ -45,14 +45,17 @@ class Response < ApplicationRecord
   end
 
   def errors_for_body(http_response)
-    JSON::Validator.fully_validate(
+    errors = JSON::Validator.fully_validate(
       json_schema, http_response.body, json: true
-    ).map do |error_message|
+    )
+
+    errors.empty? ? [] :
+    [
       ValidationError.new(
         category: :body,
-        description: error_message
+        description: errors.join("\n")
       )
-    end
+    ]
   end
 
   def json_instance

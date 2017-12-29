@@ -1,14 +1,14 @@
 %h1 Report
 
-- if @report.route.blank?
+- if report.route.blank?
   You forgot to register this route :O
 - else
-  = render partial: 'routes/route_summary', locals: { route: @report.route, real_url: @report.url, should_display_representations: true }
+  = render partial: 'routes/route_summary', locals: { route: report.route, real_url: report.url, should_display_representations: true }
 
 %h4 Request
 
 .request-method
-  %span{ class: label_class_for_http_method(@report.request_method) }= @report.request_method
+  %span{ class: label_class_for_http_method(report.request_method) }= report.request_method
 
 / Response Nav tabs
 %ul.nav.nav-tabs{ role: "tablist" }
@@ -28,24 +28,24 @@
       .panel-body
         %pre.pre-scrollable
           %code
-            =format_json(@report.request_body)
+            =format_json(report.request_body)
   .tab-pane{ role: "tabpanel", id: "req-headers" }
     .panel.panel-default
       .panel-body
         %table{class: "table table-striped"}
           %tbody
-          - @report.request_headers.each_pair do |key, value|
+          - report.request_headers.each_pair do |key, value|
             %tr
               %td= key
               %td= value
 
 %h4 Response
 
-- if @report.response.blank?
+- if report.response.blank?
   We could not find any response for this route :O
 
 .status-code
-  %span.label.http-method-label{'class': @report.valid_status? ? 'label-success' : 'label-danger'}= @report.response_status_code
+  %span.label.http-method-label{'class': report.valid_status? ? 'label-success' : 'label-danger'}= report.response_status_code
 
 %div
   / Response Nav tabs
@@ -66,21 +66,21 @@
         .panel-body
           %pre.pre-scrollable
             %code
-              =format_json(@report.response_body)
+              =format_json(report.response_body)
           .body-errors
             %ul
-              - @report.body_errors.each do |e|
-                %li= e.description
+              - report.body_errors.each do |e|
+                %li= e
     .tab-pane{ role: "tabpanel", id: "resp-headers" }
       .panel.panel-default
         .panel-body
           %table{class: "table table-striped"}
             %tbody
-            - @report.response_headers.each_pair do |key, value|
+            - report.response_headers.each_pair do |key, value|
               %tr
                 %td= key
                 %td= value
-            - @report.header_errors.each do |e|
+            - report.header_errors.each do |e|
               %tr.header-error
                 %td= e.header_name
                 %td

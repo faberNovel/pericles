@@ -1,5 +1,6 @@
 class ReportsController < ApplicationController
   layout 'full_width_column'
+  decorates_assigned :report
 
   def index
     @project = project
