@@ -37,7 +37,7 @@
               %td
                 = fields.select :resource_representation_id,
                  type_resource.resource_representations.collect { |r| [ r.name, r.id ] }, include_blank: true,
-                  hide_label: true if type_resource
+                  hide_label: true, selected: fields.object.resource_representation_id || type_resource.resource_representations.first.id  if type_resource
               %td
                 = fields.check_box :is_required
               %td
