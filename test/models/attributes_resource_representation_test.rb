@@ -17,4 +17,25 @@ class AttributesResourceRepresentationTest < ActiveSupport::TestCase
     assert_not build(:attributes_resource_representation, resource_attribute: attribute_with_resource,
       parent_resource_representation: resource_representation).valid?
   end
+
+  test "An attributes_resource_representation with no key name has attribute default_key_name" do
+    attributes_resource_representation = create(:attributes_resource_representation)
+    assert_equal attributes_resource_representation.key_name, attributes_resource_representation.resource_attribute.default_key_name
+  end
+
+  test "overrided key name is kept if attribute name change" do
+    attributes_resource_representation = create(:attributes_resource_representation, custom_key_name: "NiceKeyName")
+    assert_equal attributes_resource_representation.key_name, "NiceKeyName"
+
+    attributes_resource_representation.resource_attribute.update(name: 'hi')
+    assert_equal attributes_resource_representation.key_name, "NiceKeyName"
+  end
+
+  test "default key name is updated if attribute name change" do
+    attributes_resource_representation = create(:attributes_resource_representation)
+    old_key_name = attributes_resource_representation.key_name
+
+    attributes_resource_representation.resource_attribute.update(name: 'hi')
+    assert_not_equal attributes_resource_representation.key_name, old_key_name
+  end
 end

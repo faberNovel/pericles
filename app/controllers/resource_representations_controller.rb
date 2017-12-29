@@ -1,6 +1,7 @@
 class ResourceRepresentationsController < AuthenticatedController
   before_action :setup_project_and_resource, except: [:index]
   before_action :setup_resource_representation, except: [:index, :new, :create]
+  decorates_assigned :all_attributes_resource_representations
 
   def show
     render(
@@ -67,7 +68,7 @@ class ResourceRepresentationsController < AuthenticatedController
     @all_attributes_resource_representations = @resource.resource_attributes.sorted_by_name.map do |attribute|
       resource_representation.attributes_resource_representations.detect do |arr|
         arr.attribute_id == attribute.id
-      end || resource_representation.attributes_resource_representations.build(resource_attribute: attribute, key_name: attribute.default_key_name)
+      end || resource_representation.attributes_resource_representations.build(resource_attribute: attribute)
     end
   end
 
@@ -78,7 +79,7 @@ class ResourceRepresentationsController < AuthenticatedController
       attributes_resource_representations_attributes: [
         :id,
         :resource_representation_id,
-        :key_name,
+        :custom_key_name,
         :is_required,
         :is_null,
         :attribute_id,
