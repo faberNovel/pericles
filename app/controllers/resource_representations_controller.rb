@@ -53,6 +53,15 @@ class ResourceRepresentationsController < AuthenticatedController
     redirect_to project_resource_path(@project, @resource)
   end
 
+  def clone
+    copy = @representation.dup
+    copy.name = "#{copy.name} (copy)"
+    copy.attributes_resource_representations = @representation.attributes_resource_representations.map(&:dup)
+    copy.save!
+
+    redirect_to project_resource_path(@project, @resource)
+  end
+
   private
 
   def setup_project_and_resource
@@ -61,7 +70,7 @@ class ResourceRepresentationsController < AuthenticatedController
   end
 
   def setup_resource_representation
-    @representation = ResourceRepresentation.find(params[:id])
+    @representation = ResourceRepresentation.find(params[:id] || params[:resource_representation_id])
   end
 
   def build_missing_attributes_resource_representations(resource_representation)

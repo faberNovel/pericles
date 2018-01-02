@@ -163,6 +163,27 @@ class ResourceRepresentationsControllerTest < ControllerWithAuthenticationTest
     assert_equal 'You need to sign in or sign up before continuing.', response.body
   end
 
+  test "clone should create new resource_representation" do
+    resource = create(:resource_with_attributes)
+    resource_representation = resource.default_representation
+    assert_difference 'ResourceRepresentation.count' do
+      post resource_resource_representation_clone_path(resource, resource_representation)
+    end
+  end
+
+  test "clone should create new attributes_resource_representation" do
+    resource = create(:resource_with_attributes)
+    resource_representation = resource.default_representation
+    attribute = resource.resource_attributes.first
+    resource_representation.attributes_resource_representations = [
+      create(:attributes_resource_representation, resource_attribute: attribute, resource_representation: attribute&.resource&.default_representation)
+    ]
+
+    assert_difference 'AttributesResourceRepresentation.count' do
+      post resource_resource_representation_clone_path(resource, resource_representation)
+    end
+  end
+
   private
 
   def create_representation_hash_with_associations_to_attributes(resource_representation)
