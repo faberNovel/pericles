@@ -6,7 +6,7 @@ class ProjectsController < AuthenticatedController
   decorates_assigned :project
 
   def index
-    @projects = policy_scope(Project).all
+    @projects = policy_scope(Project).all.order("lower(title)")
   end
 
   def show
