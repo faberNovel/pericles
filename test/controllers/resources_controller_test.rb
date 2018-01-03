@@ -148,14 +148,17 @@ class ResourcesControllerTest < ControllerWithAuthenticationTest
     resource.resource_attributes << create(:attribute, name: 'id', primitive_type: :integer)
     resource.resource_attributes << create(:attribute, name: 'weight', primitive_type: :number, nullable: true)
     resource.resource_attributes << create(:attribute_with_resource, name: 'weakness_list', resource: create(:resource, name: 'nature'), is_array: true)
+    resource.resource_attributes << create(:attribute, name: 'niceBoolean', primitive_type: :boolean)
 
-    file = "package com.applidium.pokeapi.android.data.net.retrofit.model\n"
-    file += "\n"
-    file += "data class RestPokemon(\n"
-    file += "    val id: Int,\n"
-    file += "    val weaknessList: List<RestNature>,\n"
-    file += "    val weight: Double?\n"
-    file += ")\n"
+    file = %{package com.applidium.pokeapi.android.data.net.retrofit.model
+
+    data class RestPokemon(
+        val id: Int,
+        val niceBoolean: Boolean,
+        val weaknessList: List<RestNature>,
+        val weight: Double?
+    )
+    }.gsub(/^    /, '')
 
     get project_resource_path(resource.project, resource, format: 'kotlin')
     assert_equal(response.body, file)
@@ -167,20 +170,21 @@ class ResourcesControllerTest < ControllerWithAuthenticationTest
     resource.resource_attributes << create(:attribute, name: 'weight', primitive_type: :number, nullable: true)
     resource.resource_attributes << create(:attribute_with_resource, name: 'weakness_list', resource: create(:resource, name: 'nature'), is_array: true)
 
-    file = "package com.applidium.pokeapi.android.data.net.retrofit.model\n"
-    file += "\n"
-    file += "import android.support.annotation.Nullable;\n"
-    file += "\n"
-    file += "import java.util.List;\n"
-    file += "\n"
-    file += "import io.norberg.automatter.AutoMatter;\n"
-    file += "\n"
-    file += "@AutoMatter\n"
-    file += "public interface RestPokemon {\n"
-    file += "    Integer id();\n"
-    file += "    List<RestNature> weaknessList();\n"
-    file += "    @Nullable Double weight();\n"
-    file += "}\n"
+    file = %{package com.applidium.pokeapi.android.data.net.retrofit.model
+
+    import android.support.annotation.Nullable;
+
+    import java.util.List;
+
+    import io.norberg.automatter.AutoMatter;
+
+    @AutoMatter
+    public interface RestPokemon {
+        Integer id();
+        List<RestNature> weaknessList();
+        @Nullable Double weight();
+    }
+    }.gsub(/^    /, '')
 
     get project_resource_path(resource.project, resource, format: 'java')
     assert_equal(response.body, file)
@@ -192,11 +196,32 @@ class ResourcesControllerTest < ControllerWithAuthenticationTest
     resource.resource_attributes << create(:attribute, name: 'weight', primitive_type: :number, nullable: true)
     resource.resource_attributes << create(:attribute_with_resource, name: 'weakness_list', resource: create(:resource, name: 'nature'), is_array: true)
 
-    file = "struct RestPokemon {\n"
-    file += "    let id: Int\n"
-    file += "    let weaknessList: [RestNature]\n"
-    file += "    let weight: Double?\n"
-    file += "}\n"
+    file = %{import Foundation
+
+    struct RestPokemon {
+        let id: Int
+        let weaknessList: [RestNature]
+        let weight: Double?
+    }
+
+
+    import Foundation
+    import SwiftyJSON
+
+    extension RestPokemon {
+
+        init?(json: JSON) {
+            guard
+                let id = json[\"id\"].int,
+                let weaknessList = json[\"weakness_list\"].arrayValue.flatMap { RestNature(json: $0) } else {
+                    return nil
+            }
+            self.id = id
+            self.weaknessList = weaknessList
+            self.weight = json[\"weight\"].doubleValue
+        }
+    }
+    }.gsub(/^    /, '')
 
     get project_resource_path(resource.project, resource, format: 'swift')
     assert_equal(response.body, file)

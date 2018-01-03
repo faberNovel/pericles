@@ -2,7 +2,7 @@ class AttributeDecorator < Draper::Decorator
   delegate_all
 
   def variable_name
-    name.parameterize(separator: '_').camelcase(:lower)
+    name.parameterize(separator: '_', preserve_case: true).camelcase(:lower)
   end
 
   def key_name_placeholder
@@ -30,6 +30,15 @@ class AttributeDecorator < Draper::Decorator
     type
   end
 
+  def swift_deserialize_code
+    json_value = "json[\"#{object.default_key_name}\"]"
+    if is_array
+      "#{json_value}.arrayValue.flatMap { #{base_swift_deserialize('$0')} }"
+    else
+      base_swift_deserialize(json_value)
+    end
+  end
+
   def base_kotlin_type
     case primitive_type&.to_sym
     when :number
@@ -51,5 +60,20 @@ class AttributeDecorator < Draper::Decorator
 
   def base_swift_type
     base_kotlin_type
+  end
+
+  def base_swift_deserialize(var)
+    return "#{resource.decorate.rest_name}(json: #{var})" if primitive_type.nil?
+
+    case primitive_type&.to_sym
+    when :number
+      "#{var}.double"
+    when :integer
+      "#{var}.int"
+    when :boolean
+      "#{var}.bool"
+    when :string
+      "#{var}.string"
+    end + (nullable ? 'Value' : '')
   end
 end
