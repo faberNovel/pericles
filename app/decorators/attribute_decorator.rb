@@ -53,6 +53,10 @@ class AttributeDecorator < Draper::Decorator
       'Boolean'
     when :string
       'String'
+    when :date
+      'String'
+    when :datetime
+      'String'
     when nil
       resource.decorate.rest_name
     end
@@ -63,11 +67,28 @@ class AttributeDecorator < Draper::Decorator
   end
 
   def base_swift_type
-    base_kotlin_type
+    case primitive_type&.to_sym
+    when :number
+      'Double'
+    when :integer
+      'Int'
+    when :boolean
+      'Boolean'
+    when :string
+      'String'
+    when :date
+      'Date'
+    when :datetime
+      'Date'
+    when nil
+      resource.decorate.rest_name
+    end
   end
 
   def base_swift_deserialize(var)
     return "#{resource.decorate.rest_name}(json: #{var})" if primitive_type.nil?
+    return "#{var}.string.flatMap { DateFormatter.iso8601DateShortDateFormatter.date(from: $0) }" if date?
+    return "#{var}.string.flatMap { DateFormatter.iso8601DateFullDateFormatter.date(from: $0) }" if datetime?
 
     case primitive_type&.to_sym
     when :number

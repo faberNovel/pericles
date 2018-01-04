@@ -197,10 +197,14 @@ class ResourcesControllerTest < ControllerWithAuthenticationTest
     create(:attribute, name: 'id', primitive_type: :integer, parent_resource: resource)
     create(:attribute, name: 'weight', primitive_type: :number, nullable: true, parent_resource: resource)
     create(:attribute_with_resource, name: 'weakness_list', resource: create(:resource, name: 'nature'), is_array: true, parent_resource: resource)
+    create(:attribute, name: 'date', primitive_type: :date, nullable: false, parent_resource: resource)
+    create(:attribute, name: 'date_time', primitive_type: :datetime, nullable: true, parent_resource: resource)
 
     file = %{import Foundation
 
     struct RestPokemon {
+        let date: Date
+        let dateTime: Date?
         let id: Int
         let weaknessList: [RestNature]
         let weight: Double?
@@ -214,12 +218,15 @@ class ResourcesControllerTest < ControllerWithAuthenticationTest
 
         init?(json: JSON) {
             guard
+                let date = json[\"date\"].string.flatMap { DateFormatter.iso8601DateShortDateFormatter.date(from: $0) },
                 let id = json[\"id\"].int,
                 let weaknessList = json[\"weakness_list\"].arrayValue.flatMap { RestNature(json: $0) } else {
                     return nil
             }
+            self.date = date
             self.id = id
             self.weaknessList = weaknessList
+            self.dateTime = json[\"date_time\"].string.flatMap { DateFormatter.iso8601DateFullDateFormatter.date(from: $0) }
             self.weight = json[\"weight\"].doubleValue
         }
     }
