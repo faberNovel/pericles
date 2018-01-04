@@ -1,3 +1,5 @@
+= content_for :title, "Resource #{@resource.name}"
+
 - content_for :page_scripts do
   = javascript_include_tag("resources/show.js")
 

@@ -2,7 +2,7 @@
 %html
   %head
     %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
-    %title Pericles
+    %title= "Pericles - " + yield(:title)
     = stylesheet_link_tag    'application', media: 'all'
     %link{href: "https://fonts.googleapis.com/css?family=Open+Sans:400,600", rel: "stylesheet"}
     = javascript_include_tag 'application'

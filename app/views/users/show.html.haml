@@ -1,3 +1,5 @@
+= content_for :title, "User #{current_user.name}"
+
 - content_for :page_title do
   -# br tag required otherwise navbar is over page content (cf media tag and margin-top) (Charles-Elie SIMON, 01/09/2017)
   %br
