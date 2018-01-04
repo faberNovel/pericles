@@ -21,10 +21,10 @@ class ResourceDecorator < Draper::Decorator
   end
 
   def nullable_attributes
-    @nullable_attributes ||= object.resource_attributes.where(nullable: true).decorate.sort_by(&:variable_name)
+    @nullable_attributes ||= object.resource_attributes.decorate.select(&:code_nullable).sort_by(&:variable_name)
   end
 
   def mandatory_attributes
-    @mandatory_attributes ||= object.resource_attributes.where.not(nullable: true).decorate.sort_by(&:variable_name)
+    @mandatory_attributes ||= object.resource_attributes.decorate.reject(&:code_nullable).sort_by(&:variable_name)
   end
 end

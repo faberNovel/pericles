@@ -12,22 +12,26 @@ class AttributeDecorator < Draper::Decorator
   def kotlin_type
     type = base_kotlin_type
     type = "List<#{type}>" if is_array
-    type = "#{type}?" if nullable
+    type = "#{type}?" if code_nullable
     type
   end
 
   def java_type
     type = base_java_type
     type = "List<#{type}>" if is_array
-    type = "@Nullable #{type}" if nullable
+    type = "@Nullable #{type}" if code_nullable
     type
   end
 
   def swift_type
     type = base_swift_type
     type = "[#{type}]" if is_array
-    type = "#{type}?" if nullable
+    type = "#{type}?" if code_nullable
     type
+  end
+
+  def code_nullable
+    @code_nullable ||= object.nullable || parent_resource.resource_representations.any? { |rep| !rep.attributes_resource_representations.any? { |a| a.attribute_id == id  }  }
   end
 
   def swift_deserialize_code
@@ -74,6 +78,6 @@ class AttributeDecorator < Draper::Decorator
       "#{var}.bool"
     when :string
       "#{var}.string"
-    end + (nullable ? 'Value' : '')
+    end + (code_nullable ? 'Value' : '')
   end
 end

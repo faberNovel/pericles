@@ -145,16 +145,18 @@ class ResourcesControllerTest < ControllerWithAuthenticationTest
 
   test "should get kotlin code" do
     resource = create(:resource, name: 'Pokemon', project: create(:project, title: 'PokeApi'))
-    resource.resource_attributes << create(:attribute, name: 'id', primitive_type: :integer)
-    resource.resource_attributes << create(:attribute, name: 'weight', primitive_type: :number, nullable: true)
-    resource.resource_attributes << create(:attribute_with_resource, name: 'weakness_list', resource: create(:resource, name: 'nature'), is_array: true)
+    create(:attribute, name: 'id', primitive_type: :integer, parent_resource: resource)
+    create(:attribute, name: 'weight', primitive_type: :number, nullable: true, parent_resource: resource)
+    create(:attribute_with_resource, name: 'weakness_list', resource: create(:resource, name: 'nature'), is_array: true, parent_resource: resource)
+
+    # This attribute is not nullable but is not in default representation
     resource.resource_attributes << create(:attribute, name: 'niceBoolean', primitive_type: :boolean)
 
     file = %{package com.applidium.pokeapi.android.data.net.retrofit.model
 
     data class RestPokemon(
         val id: Int,
-        val niceBoolean: Boolean,
+        val niceBoolean: Boolean?,
         val weaknessList: List<RestNature>,
         val weight: Double?
     )
@@ -166,9 +168,9 @@ class ResourcesControllerTest < ControllerWithAuthenticationTest
 
   test "should get java code" do
     resource = create(:resource, name: 'Pokemon', project: create(:project, title: 'PokeApi'))
-    resource.resource_attributes << create(:attribute, name: 'id', primitive_type: :integer)
-    resource.resource_attributes << create(:attribute, name: 'weight', primitive_type: :number, nullable: true)
-    resource.resource_attributes << create(:attribute_with_resource, name: 'weakness_list', resource: create(:resource, name: 'nature'), is_array: true)
+    create(:attribute, name: 'id', primitive_type: :integer, parent_resource: resource)
+    create(:attribute, name: 'weight', primitive_type: :number, nullable: true, parent_resource: resource)
+    create(:attribute_with_resource, name: 'weakness_list', resource: create(:resource, name: 'nature'), is_array: true, parent_resource: resource)
 
     file = %{package com.applidium.pokeapi.android.data.net.retrofit.model
 
@@ -192,9 +194,9 @@ class ResourcesControllerTest < ControllerWithAuthenticationTest
 
   test "should get swift code" do
     resource = create(:resource, name: 'Pokemon', project: create(:project, title: 'PokeApi'))
-    resource.resource_attributes << create(:attribute, name: 'id', primitive_type: :integer)
-    resource.resource_attributes << create(:attribute, name: 'weight', primitive_type: :number, nullable: true)
-    resource.resource_attributes << create(:attribute_with_resource, name: 'weakness_list', resource: create(:resource, name: 'nature'), is_array: true)
+    create(:attribute, name: 'id', primitive_type: :integer, parent_resource: resource)
+    create(:attribute, name: 'weight', primitive_type: :number, nullable: true, parent_resource: resource)
+    create(:attribute_with_resource, name: 'weakness_list', resource: create(:resource, name: 'nature'), is_array: true, parent_resource: resource)
 
     file = %{import Foundation
 
