@@ -21,6 +21,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "json-schema-faker": "0.5.0-rc11"
+    "json-schema-faker": "git+https://github.com/MrChoclate/json-schema-faker.git#f2c1740c551230847c6bad1cedca5ad3533e5e08"
   }
 }
