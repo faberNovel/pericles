@@ -178,4 +178,30 @@ class ProxyControllerTest < ActionDispatch::IntegrationTest
       end
     end
   end
+
+  test "should create report with error if no schema and body is not empty" do
+    project = create(:full_project)
+    response = project.routes.first.responses.first
+    response.update(resource_representation_id: nil)
+    assert_nil response.json_schema
+
+    VCR.use_cassette('correct_full_project') do
+      assert_difference 'Report.all.select(&:errors?).count' do
+        get "/projects/#{project.id}/proxy/users/1"
+      end
+    end
+  end
+
+  test "should not create report with error if no schema and body is empty" do
+    project = create(:full_project)
+    response = project.routes.first.responses.first
+    response.update(resource_representation_id: nil)
+    assert_nil response.json_schema
+
+    VCR.use_cassette('full_project_empty_body') do
+      assert_no_difference 'Report.all.select(&:errors?).count' do
+        get "/projects/#{project.id}/proxy/users/1"
+      end
+    end
+  end
 end

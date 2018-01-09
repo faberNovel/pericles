@@ -45,6 +45,12 @@ class Response < ApplicationRecord
   end
 
   def errors_for_body(http_response)
+    if json_schema.nil?
+      body_is_empty = http_response.body.to_s.length.zero?
+      return [] if body_is_empty
+      return [ValidationError.new(category: :body, description: 'Body must be empty')]
+    end
+
     errors = JSON::Validator.fully_validate(
       json_schema, http_response.body, json: true
     )
