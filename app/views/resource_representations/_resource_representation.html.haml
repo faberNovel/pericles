@@ -3,7 +3,7 @@
     %p
       .flexcontainer.flexcontainer-justify-end
         .btn-group{ role: "group" }
-          - if user.can_create? ResourceRepresentation, project: @project
+          - if user.can_create? ResourceRepresentation, project: project
             = link_to 'Clone', resource_resource_representation_clone_path(resource_representation.resource, resource_representation),
          method: :post, class: "btn btn-default btn-md", data: { confirm: 'Are you sure ?' }
           = link_to 'Edit', edit_resource_resource_representation_path(resource_representation.resource, resource_representation),
@@ -30,7 +30,7 @@
                 %dt Type
                 %dd
                   - if attribute.resource_id
-                    %a{href: project_resource_path(@project, attribute.resource_id)}
+                    %a{href: project_resource_path(project, attribute.resource_id)}
                       %strong= format_type(attribute.primitive_type, attribute.resource_id, attribute.is_array, attr_resource_rep.is_null)
                   - else
                     %strong= format_type(attribute.primitive_type, attribute.resource_id, attribute.is_array, attr_resource_rep.is_null)
@@ -39,7 +39,7 @@
                 %dl
                   %dt Resource Representation
                   %dd
-                    %a{href: project_resource_path(@project, attribute.resource_id) + "#res-#{resource_representation_for_attr.id}"}
+                    %a{href: project_resource_path(project, attribute.resource_id) + "#res-#{resource_representation_for_attr.id}"}
                       =resource_representation_for_attr.name
             .col-xs-3
               %dl

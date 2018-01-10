@@ -1,6 +1,5 @@
 class ReportsController < ApplicationController
   include ProjectRelated
-  include Authenticated
 
   layout 'full_width_column'
   decorates_assigned :report

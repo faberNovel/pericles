@@ -1,5 +1,4 @@
 class ApiErrorsController < ApplicationController
-  include Authenticated
   include ProjectRelated
 
   layout 'full_width_column'

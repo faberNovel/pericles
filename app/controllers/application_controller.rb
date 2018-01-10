@@ -9,6 +9,14 @@ class ApplicationController < ActionController::Base
     head :bad_request
   end
 
+  rescue_from Pundit::NotAuthorizedError do
+    if current_user
+      render file: 'public/403.html', status: :forbidden, layout: false
+    else
+      redirect_to new_user_session_path
+    end
+  end
+
   def user
     @user ||= UserDecorator.new(current_user)
   end

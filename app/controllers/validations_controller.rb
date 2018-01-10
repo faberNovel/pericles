@@ -1,5 +1,4 @@
 class ValidationsController < ApplicationController
-  include Authenticated
 
   def index
     @validations = Validation.order(created_at: 'desc').page(params[:page]).per(10)

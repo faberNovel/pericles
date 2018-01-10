@@ -1,5 +1,4 @@
 class RoutesController < ApplicationController
-  include Authenticated
   include ProjectRelated
 
   before_action :setup_route, except: [:index, :new, :create]

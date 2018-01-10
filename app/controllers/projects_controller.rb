@@ -1,8 +1,6 @@
 require 'zip'
 
 class ProjectsController < ApplicationController
-  include Authenticated
-
   layout 'full_width_column', only: [:show, :edit]
   before_action :setup_project, except: [:index, :new, :create]
   decorates_assigned :project

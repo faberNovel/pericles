@@ -1,5 +1,4 @@
 class SchemesController < ApplicationController
-  include Authenticated
 
   def index
     @schemes = policy_scope(Scheme).all

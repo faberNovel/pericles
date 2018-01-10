@@ -12,12 +12,6 @@ class ProjectsControllerTest < ControllerWithAuthenticationTest
     assert_response :success
   end
 
-  test "should not get index (not authenticated)" do
-    sign_out :user
-    get projects_path
-    assert_redirected_to new_user_session_path
-  end
-
   test "should show project" do
     get project_path(@project)
     assert_response :success
