@@ -63,4 +63,21 @@ class ProjectRelatedPolicyTest < ActiveSupport::TestCase
     assert ProjectRelatedPolicy.new(@user, @resource).edit?
     assert ProjectRelatedPolicy.new(@user, @resource).destroy?
   end
+
+  test "unauthenticated user does not have read permission" do
+    assert_not ProjectRelatedPolicy.new(nil, @resource).show?
+  end
+
+  test "unauthenticated user can see related records of public project" do
+    @project.update(is_public: true)
+    assert ProjectRelatedPolicy.new(nil, @resource).show?
+  end
+
+  test "unauthenticated user does not have write permission" do
+    assert_not ProjectRelatedPolicy.new(nil, @resource).create?
+    assert_not ProjectRelatedPolicy.new(nil, @resource).new?
+    assert_not ProjectRelatedPolicy.new(nil, @resource).update?
+    assert_not ProjectRelatedPolicy.new(nil, @resource).edit?
+    assert_not ProjectRelatedPolicy.new(nil, @resource).destroy?
+  end
 end

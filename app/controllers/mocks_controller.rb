@@ -1,5 +1,4 @@
 class MocksController < ApplicationController
-
   def compute_mock
     @project = Project.find(params[:project_id])
     routes = @project.build_route_set

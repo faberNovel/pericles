@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
   end
 
   def user
-    @user ||= current_user.decorate
+    @user ||= UserDecorator.new(current_user)
   end
   helper_method :user
 end
