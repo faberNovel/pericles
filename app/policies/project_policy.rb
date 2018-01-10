@@ -1,7 +1,7 @@
 class ProjectPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
-      user.internal? ? scope.all : scope.of_user(user)
+      user.internal? ? scope.all : scope.left_joins(:members).where("members.user_id = ? OR projects.is_public = true", user.id)
     end
   end
 
@@ -14,10 +14,10 @@ class ProjectPolicy < ApplicationPolicy
   end
 
   def update?
-    show?
+    show? && (user.internal? || Project.of_user(user).where(id: record.id).exists?)
   end
 
   def destroy?
-    show?
+    update?
   end
 end

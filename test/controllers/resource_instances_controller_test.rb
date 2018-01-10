@@ -61,4 +61,16 @@ class ResourceInstancesControllerTest < ControllerWithAuthenticationTest
     get edit_resource_instance_path(@resource_instance)
     assert_response :forbidden
   end
+
+  test 'non member external user should access public project resource instances with read-only permission' do
+    external_user = create(:user, email: 'michel@external.com')
+    @project.update(is_public: true)
+    sign_in external_user
+
+    get new_resource_resource_instance_path(@resource)
+    assert_response :forbidden
+
+    get edit_resource_instance_path(@resource_instance)
+    assert_response :forbidden
+  end
 end

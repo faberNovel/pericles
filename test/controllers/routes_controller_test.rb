@@ -169,4 +169,28 @@ class RoutesControllerTest < ControllerWithAuthenticationTest
     delete project_route_path(project, route)
     assert_redirected_to project_resource_path(route.project, route.resource)
   end
+
+  test 'non member external user should access public project routes with read-only permission' do
+    external_user = create(:user, email: 'michel@external.com')
+    sign_in external_user
+
+    route = create(:route)
+    project = route.project
+    project.update(is_public: true)
+
+    get project_routes_path(project)
+    assert_response :success
+
+    get new_project_route_path(project)
+    assert_response :forbidden
+
+    get project_route_path(project, route)
+    assert_response :success
+
+    get edit_project_route_path(project, route)
+    assert_response :forbidden
+
+    delete project_route_path(project, route)
+    assert_response :forbidden
+  end
 end

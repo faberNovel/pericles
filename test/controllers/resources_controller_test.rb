@@ -278,4 +278,28 @@ class ResourcesControllerTest < ControllerWithAuthenticationTest
     delete project_resource_path(project, resource)
     assert_redirected_to project_resources_path(project)
   end
+
+  test 'non member external user should access public project resources with read-only permission' do
+    external_user = create(:user, email: 'michel@external.com')
+    sign_in external_user
+
+    resource = create(:resource)
+    project = resource.project
+    project.update(is_public: true)
+
+    get project_resources_path(project)
+    assert_response :success
+
+    get new_project_resource_path(project)
+    assert_response :forbidden
+
+    get project_resource_path(project, resource)
+    assert_response :success
+
+    get edit_project_resource_path(project, resource)
+    assert_response :forbidden
+
+    delete project_resource_path(project, resource)
+    assert_response :forbidden
+  end
 end

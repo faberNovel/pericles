@@ -30,4 +30,16 @@ class ApiErrorInstancesControllerTest < ControllerWithAuthenticationTest
     get edit_api_error_instance_path(@api_error_instance)
     assert_response :forbidden
   end
+
+  test 'non member external user should not access project api error instances with read-only permission' do
+    external_user = create(:user, email: 'michel@external.com')
+    @project.update(is_public: true)
+    sign_in external_user
+
+    get new_api_error_api_error_instance_path(@api_error)
+    assert_response :forbidden
+
+    get edit_api_error_instance_path(@api_error_instance)
+    assert_response :forbidden
+  end
 end

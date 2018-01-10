@@ -155,4 +155,13 @@ class ProjectsControllerTest < ControllerWithAuthenticationTest
     post projects_path, params: { project: { description: 'My description', title: 'My Project' }}
     assert_response :forbidden
   end
+
+  test 'external user can see public project' do
+    external_user = create(:user, email: 'michel@external.com')
+    sign_in external_user
+    @project.update(is_public: true)
+
+    get project_path(@project)
+    assert_response :success
+  end
 end
