@@ -5,8 +5,8 @@
     = @api_error.name
     .pull-right
       .btn-group{ role: "group" }
-        = link_to 'Edit', edit_project_api_error_path(@project, @api_error), class: "btn btn-default" if user.can_edit? @api_error
-        = link_to "Delete", project_api_error_path(@project, @api_error), method: :delete, data: { confirm: 'Are you sure ?' },
+        = link_to 'Edit', edit_project_api_error_path(project, @api_error), class: "btn btn-default" if user.can_edit? @api_error
+        = link_to "Delete", project_api_error_path(project, @api_error), method: :delete, data: { confirm: 'Are you sure ?' },
        class: "btn btn-default" if user.can_delete? @api_error
 
   %h4 JSON Schema
