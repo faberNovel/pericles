@@ -1,18 +1,19 @@
 class MockProfilesController < MocksController
+  include ProjectRelated
+
   layout 'full_width_column'
   before_action :setup_mock_profile, only: [:edit, :update]
-  before_action :setup_project, only: [:index, :new, :create]
 
   def index
-    @mock_profiles = @project.mock_profiles
+    @mock_profiles = project.mock_profiles
   end
 
   def new
-    @mock_profile = @project.mock_profiles.new()
+    @mock_profile = project.mock_profiles.new
   end
 
   def create
-    @mock_profile = @project.mock_profiles.new(mock_profile_params)
+    @mock_profile = project.mock_profiles.new(mock_profile_params)
     if @mock_profile.save
       redirect_to_mock_profile
     else
@@ -60,11 +61,6 @@ class MockProfilesController < MocksController
         api_error_instance_ids: [],
       ]
     )
-  end
-
-  def setup_project
-    @project = Project.find(params[:project_id])
-    authorize @project, :show?
   end
 
   def redirect_to_mock_profile

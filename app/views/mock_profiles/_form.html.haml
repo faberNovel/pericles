@@ -6,9 +6,9 @@
     = render 'shared/errors', object: @mock_profile
 
     = f.text_field :name
-    = f.collection_select :parent_id, @project.mock_profiles.where.not(id: @mock_profile.id), :id, :name, include_blank: true
+    = f.collection_select :parent_id, project.mock_profiles.where.not(id: @mock_profile.id), :id, :name, include_blank: true
 
-    - @project.routes.includes(responses: [:resource_representation, :resource_instances, :api_error_instances]).order(:url).each do |route|
+    - project.routes.includes(responses: [:resource_representation, :resource_instances, :api_error_instances]).order(:url).each do |route|
       .route-container.panel.panel-default
         .panel-heading
           .panel-title
