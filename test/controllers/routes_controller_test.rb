@@ -124,7 +124,7 @@ class RoutesControllerTest < ControllerWithAuthenticationTest
   end
 
   test 'non member external user should not access project routes' do
-    external_user = create(:user, email: 'michel@external.com')
+    external_user = create(:user, :external)
     sign_in external_user
 
     route = create(:route)
@@ -147,7 +147,7 @@ class RoutesControllerTest < ControllerWithAuthenticationTest
   end
 
   test 'member external user should access project routes' do
-    external_user = create(:user, email: 'michel@external.com')
+    external_user = create(:user, :external)
     sign_in external_user
 
     route = create(:route)
@@ -171,7 +171,7 @@ class RoutesControllerTest < ControllerWithAuthenticationTest
   end
 
   test 'non member external user should access public project routes with read-only permission' do
-    external_user = create(:user, email: 'michel@external.com')
+    external_user = create(:user, :external)
     sign_in external_user
 
     route = create(:route)

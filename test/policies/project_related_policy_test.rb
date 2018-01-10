@@ -21,18 +21,18 @@ class ProjectRelatedPolicyTest < ActiveSupport::TestCase
   end
 
   test "non-member external user cannot see related records" do
-    @user.update(email: 'user@external.com')
+    @user = create(:user, :external)
     assert_not ProjectRelatedPolicy.new(@user, @resource).show?
   end
 
   test "member external user can see related records" do
-    @user.update(email: 'user@external.com')
+    @user = create(:user, :external)
     create(:member, project: @project, user: @user)
     assert ProjectRelatedPolicy.new(@user, @resource).show?
   end
 
   test "external user can see related records of public project" do
-    @user.update(email: 'user@external.com')
+    @user = create(:user, :external)
     @project.update(is_public: true)
     assert ProjectRelatedPolicy.new(@user, @resource).show?
   end
@@ -46,7 +46,7 @@ class ProjectRelatedPolicyTest < ActiveSupport::TestCase
   end
 
   test "non-member external user does not have write permission" do
-    @user.update(email: 'user@external.com')
+    @user = create(:user, :external)
     assert_not ProjectRelatedPolicy.new(@user, @resource).create?
     assert_not ProjectRelatedPolicy.new(@user, @resource).new?
     assert_not ProjectRelatedPolicy.new(@user, @resource).update?
@@ -55,7 +55,7 @@ class ProjectRelatedPolicyTest < ActiveSupport::TestCase
   end
 
   test "member external user have write permission" do
-    @user.update(email: 'user@external.com')
+    @user = create(:user, :external)
     create(:member, project: @project, user: @user)
     assert ProjectRelatedPolicy.new(@user, @resource).create?
     assert ProjectRelatedPolicy.new(@user, @resource).new?

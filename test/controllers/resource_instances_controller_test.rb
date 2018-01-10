@@ -39,7 +39,7 @@ class ResourceInstancesControllerTest < ControllerWithAuthenticationTest
   end
 
   test 'member external user should access project resource instances' do
-    external_user = create(:user, email: 'michel@external.com')
+    external_user = create(:user, :external)
     sign_in external_user
 
     create(:member, project: @project, user: external_user)
@@ -52,7 +52,7 @@ class ResourceInstancesControllerTest < ControllerWithAuthenticationTest
   end
 
   test 'non member external user should not access project resource instances' do
-    external_user = create(:user, email: 'michel@external.com')
+    external_user = create(:user, :external)
     sign_in external_user
 
     get new_resource_resource_instance_path(@resource)
@@ -63,7 +63,7 @@ class ResourceInstancesControllerTest < ControllerWithAuthenticationTest
   end
 
   test 'non member external user should access public project resource instances with read-only permission' do
-    external_user = create(:user, email: 'michel@external.com')
+    external_user = create(:user, :external)
     @project.update(is_public: true)
     sign_in external_user
 

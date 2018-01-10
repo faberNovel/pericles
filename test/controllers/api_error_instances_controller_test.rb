@@ -8,7 +8,7 @@ class ApiErrorInstancesControllerTest < ControllerWithAuthenticationTest
   end
 
   test 'member external user should access project resource instances' do
-    external_user = create(:user, email: 'michel@external.com')
+    external_user = create(:user, :external)
     sign_in external_user
 
     create(:member, project: @project, user: external_user)
@@ -21,7 +21,7 @@ class ApiErrorInstancesControllerTest < ControllerWithAuthenticationTest
   end
 
   test 'non member external user should not access project api error instances' do
-    external_user = create(:user, email: 'michel@external.com')
+    external_user = create(:user, :external)
     sign_in external_user
 
     get new_api_error_api_error_instance_path(@api_error)
@@ -32,7 +32,7 @@ class ApiErrorInstancesControllerTest < ControllerWithAuthenticationTest
   end
 
   test 'non member external user should not access project api error instances with read-only permission' do
-    external_user = create(:user, email: 'michel@external.com')
+    external_user = create(:user, :external)
     @project.update(is_public: true)
     sign_in external_user
 

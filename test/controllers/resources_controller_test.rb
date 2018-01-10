@@ -233,7 +233,7 @@ class ResourcesControllerTest < ControllerWithAuthenticationTest
   end
 
   test 'non member external user should not access project resources' do
-    external_user = create(:user, email: 'michel@external.com')
+    external_user = create(:user, :external)
     sign_in external_user
 
     resource = create(:resource)
@@ -256,7 +256,7 @@ class ResourcesControllerTest < ControllerWithAuthenticationTest
   end
 
   test 'member external user should access project resources' do
-    external_user = create(:user, email: 'michel@external.com')
+    external_user = create(:user, :external)
     sign_in external_user
 
     resource = create(:resource)
@@ -280,7 +280,7 @@ class ResourcesControllerTest < ControllerWithAuthenticationTest
   end
 
   test 'non member external user should access public project resources with read-only permission' do
-    external_user = create(:user, email: 'michel@external.com')
+    external_user = create(:user, :external)
     sign_in external_user
 
     resource = create(:resource)

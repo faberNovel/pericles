@@ -141,7 +141,7 @@ class ProjectsControllerTest < ControllerWithAuthenticationTest
   end
 
   test 'external user should not show project' do
-    external_user = create(:user, email: 'michel@external.com')
+    external_user = create(:user, :external)
     sign_in external_user
 
     get project_path(@project)
@@ -149,7 +149,7 @@ class ProjectsControllerTest < ControllerWithAuthenticationTest
   end
 
   test 'external user should not create' do
-    external_user = create(:user, email: 'michel@external.com')
+    external_user = create(:user, :external)
     sign_in external_user
 
     post projects_path, params: { project: { description: 'My description', title: 'My Project' }}
@@ -157,7 +157,7 @@ class ProjectsControllerTest < ControllerWithAuthenticationTest
   end
 
   test 'external user can see public project' do
-    external_user = create(:user, email: 'michel@external.com')
+    external_user = create(:user, :external)
     sign_in external_user
     @project.update(is_public: true)
 
