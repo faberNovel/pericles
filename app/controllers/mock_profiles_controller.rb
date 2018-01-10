@@ -39,6 +39,7 @@ class MockProfilesController < MocksController
 
   def setup_mock_profile
     @mock_profile = MockProfile.includes(:mock_pickers).find(params[:id])
+    authorize @mock_profile
     @mock_pickers_by_response_id = @mock_profile.mock_pickers.includes(:resource_instances, :api_error_instances).group_by(&:response_id)
     @project = @mock_profile.project
   end
@@ -63,6 +64,7 @@ class MockProfilesController < MocksController
 
   def setup_project
     @project = Project.find(params[:project_id])
+    authorize @project, :show?
   end
 
   def redirect_to_mock_profile
