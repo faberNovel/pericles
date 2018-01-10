@@ -2,9 +2,11 @@
 
 %h1 Mock Profiles
 
-.row.margin-top-element
-  .col-xs-12.flexcontainer.flexcontainer-justify-end
-    = link_to 'New Profile', new_project_mock_profile_path(@project), class: "btn btn-default btn-lg"
+- if user.can_create? MockProfile.new(project: @project)
+  .row.margin-top-element
+    .col-xs-12.flexcontainer.flexcontainer-justify-end
+      = link_to 'New Profile', new_project_mock_profile_path(@project), class: "btn btn-default btn-lg"
+
 .row.margin-top-element#mock-profiles
   .col-xs-12
     .list-group

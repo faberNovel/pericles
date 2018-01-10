@@ -1,8 +1,8 @@
 .flexcontainer.flexcontainer-justify-end
   .btn-group{ role: "group" }
-    = link_to 'Edit', edit_route_response_path(@route, response), class: "btn btn-default"
+    = link_to 'Edit', edit_route_response_path(@route, response), class: "btn btn-default" if user.can_edit? response
     = link_to "Delete", route_response_path(@route, response), method: :delete, data: { confirm: 'Are you sure ?' },
-      class: "btn btn-default"
+      class: "btn btn-default" if user.can_delete? response
 
 %div
   / Response Nav tabs

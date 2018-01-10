@@ -13,9 +13,9 @@
         = render partial: "shared/last_edit", locals: {last_audit: @route.last_audit}
         .pull-right
           .btn-group{ role: "group" }
-            = link_to 'Edit', edit_project_route_path(@project, @route, section: "base"), class: "btn btn-default"
+            = link_to 'Edit', edit_project_route_path(@project, @route, section: "base"), class: "btn btn-default" if user.can_edit? @route
             = link_to "Delete", project_route_path(@project, @route), method: :delete, data: { confirm: 'Are you sure ?' },
-             class: "btn btn-default"
+             class: "btn btn-default" if user.can_delete? @route
     = render partial: 'routes/route_summary', locals: { route: @route, should_display_representations: false }
 .row
   .col-xs-12
@@ -51,7 +51,7 @@
                       = submit_tag("Generate JSON", class: "btn btn-default generate-json-instance",
                         json_schema: format_json(@route.request_json_schema))
                     = link_to 'Edit', edit_project_route_path(@project, @route, section: "request_body"),
-                   class: "btn btn-default"
+                   class: "btn btn-default" if user.can_edit? @route
               .panel-body
                 - unless @route.request_json_schema.blank?
                   .row
@@ -75,7 +75,7 @@
             .panel-heading
               .flexcontainer.flexcontainer-justify-end
                 = link_to 'Edit', edit_project_route_path(@project, @route, section: "request_headers"),
-                 class: "btn btn-default"
+                 class: "btn btn-default" if user.can_edit? @route
             .panel-body
               - if @route.request_headers.any?
                 - @route.request_headers.each do |header|
@@ -89,7 +89,7 @@
               .panel-heading
                 .flexcontainer.flexcontainer-justify-end
                   = link_to 'Edit', edit_project_route_path(@project, @route, section: "query_parameters"),
-                   class: "btn btn-default"
+                   class: "btn btn-default" if user.can_edit? @route
               .panel-body
                 - if @route.request_query_parameters.any?
                   - @route.request_query_parameters.each do |query_parameter|
@@ -102,8 +102,9 @@
   .col-xs-12
     %h2 Responses
 
-    .flexcontainer.flexcontainer-justify-end
-      = link_to 'New Response', new_route_response_path(@route), class: "btn btn-default"
+    - if user.can_create? @route.responses.build
+      .flexcontainer.flexcontainer-justify-end
+        = link_to 'New Response', new_route_response_path(@route), class: "btn btn-default"
 
     %div
       / Nav tabs with status codes for all responses

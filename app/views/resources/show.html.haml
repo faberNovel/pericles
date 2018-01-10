@@ -15,9 +15,9 @@
         = link_to 'Swift', project_resource_path(@project, @resource, format: "swift"), class: "btn btn-default"
         = link_to 'Java', project_resource_path(@project, @resource, format: "java"), class: "btn btn-default"
         = link_to 'Kotlin', project_resource_path(@project, @resource, format: "kotlin"), class: "btn btn-default"
-        = link_to 'Edit', edit_project_resource_path(@project, @resource, section: "base"), class: "btn btn-default"
+        = link_to 'Edit', edit_project_resource_path(@project, @resource, section: "base"), class: "btn btn-default" if user.can_edit? @resource
         = link_to "Delete", project_resource_path(@project, @resource), method: :delete, data: { confirm: 'Are you sure ?' },
-       class: "btn btn-default"
+       class: "btn btn-default" if user.can_delete? @resource
 
 %p
   = @resource.description
@@ -41,7 +41,7 @@
       .panel.panel-default
         .panel-heading
           .flexcontainer.flexcontainer-justify-end
-            = link_to 'Edit', edit_project_resource_path(@project, @resource, section: "all_attributes"), class: "btn btn-default"
+            = link_to 'Edit', edit_project_resource_path(@project, @resource, section: "all_attributes"), class: "btn btn-default" if user.can_edit? @resource
         .panel-body
           - @resource.resource_attributes.sorted_by_name.each do |attribute|
             = render attribute
@@ -53,8 +53,9 @@
             %li{ role: "presentation", class: ('active' if index.zero?) }
               %a{ "aria-controls" => "#{resource_rep.name}", "data-toggle" => "tab", href: "#res-#{resource_rep.id}", role: "tab" }
                 = resource_rep.name
-          %li{ role: "presentation" }
-            = link_to '+', new_resource_resource_representation_path(@resource)
+          - if user.can_create? ResourceRepresentation.new(resource: @resource)
+            %li{ role: "presentation" }
+              = link_to '+', new_resource_resource_representation_path(@resource)
         / Tab panes for Resource Representations
         .tab-content
           - @resource_representations.each_with_index do |resource_rep, index|
@@ -63,8 +64,9 @@
 
 %h3 Resource instances
 
-.flexcontainer.flexcontainer-justify-end
-  = link_to 'New Mock', new_resource_resource_instance_path(@resource), class: "btn btn-default btn-lg"
+- if user.can_create? ResourceInstance.new(resource: @resource)
+  .flexcontainer.flexcontainer-justify-end
+    = link_to 'New Mock', new_resource_resource_instance_path(@resource), class: "btn btn-default btn-lg"
 
 .margin-top-element
   - if @resource.resource_instances.any?

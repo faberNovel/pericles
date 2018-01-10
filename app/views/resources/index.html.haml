@@ -1,7 +1,8 @@
 = content_for :title, "Resources"
 
-.flexcontainer.flexcontainer-justify-end
-  = link_to 'New Resource', new_project_resource_path(@project), class: "btn btn-default btn-lg"
+- if user.can_create? @project.resources.build
+  .flexcontainer.flexcontainer-justify-end
+    = link_to 'New Resource', new_project_resource_path(@project), class: "btn btn-default btn-lg"
 
 .list-group.margin-top-element
   - if @resources.empty?

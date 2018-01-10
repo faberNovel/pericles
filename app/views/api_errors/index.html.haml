@@ -3,8 +3,9 @@
 %h1 Errors
 
 
-.flexcontainer.flexcontainer-justify-end
-  = link_to 'New Error', new_project_api_error_path(@project), class: "btn btn-default btn-lg"
+- if user.can_create? @project.api_errors.build
+  .flexcontainer.flexcontainer-justify-end
+    = link_to 'New Error', new_project_api_error_path(@project), class: "btn btn-default btn-lg"
 
 .list-group.margin-top-element
   - @api_errors.each do |api_error|

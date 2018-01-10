@@ -27,5 +27,8 @@
               = link_to_add_association "Add Matcher", f, :mock_pickers,
                 { 'data-association-insertion-node' => "#matchers-#{response.id}", 'data-association-insertion-method' => 'append', render_options: { locals: { response: response } } }
 
-    %p
-      = f.submit
+    / TODO Clément Villain 10/01/18
+    / Remove this when we have a mock_profile show
+    - if user.can_update? @mock_profile
+      %p
+        = f.submit

@@ -3,12 +3,13 @@
     %p
       .flexcontainer.flexcontainer-justify-end
         .btn-group{ role: "group" }
-          = link_to 'Clone', resource_resource_representation_clone_path(resource_representation.resource, resource_representation),
+          - if user.can_create? resource_representation.resource.resource_representations.build
+            = link_to 'Clone', resource_resource_representation_clone_path(resource_representation.resource, resource_representation),
          method: :post, class: "btn btn-default btn-md", data: { confirm: 'Are you sure ?' }
           = link_to 'Edit', edit_resource_resource_representation_path(resource_representation.resource, resource_representation),
-         class: "btn btn-default btn-md"
+         class: "btn btn-default btn-md" if user.can_edit? resource_representation
           = link_to "Delete", resource_resource_representation_path(resource_representation.resource, resource_representation),
-         method: :delete, data: { confirm: 'Are you sure ?' }, class: "btn btn-default btn-md"
+         method: :delete, data: { confirm: 'Are you sure ?' }, class: "btn btn-default btn-md" if user.can_delete? resource_representation
     %p
       = resource_representation.description
       = render partial: "shared/last_edit", locals: {last_audit: resource_representation.last_audit}

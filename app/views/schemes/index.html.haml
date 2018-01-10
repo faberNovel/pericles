@@ -19,5 +19,5 @@
         %tr
           %td= scheme.name
           %td= scheme.regexp
-          %td= link_to 'Edit', edit_scheme_path(scheme)
-          %td= link_to 'Delete', scheme_path(scheme), method: :delete, data: { confirm: 'Are you sure?' }
+          %td= link_to 'Edit', edit_scheme_path(scheme) if user.can_edit? @scheme
+          %td= link_to 'Delete', scheme_path(scheme), method: :delete, data: { confirm: 'Are you sure?' } if user.can_delete? @scheme
