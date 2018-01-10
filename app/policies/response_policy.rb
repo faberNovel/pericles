@@ -1,0 +1,2 @@
+class ResponsePolicy < ProjectRelatedPolicy
+end

@@ -1,0 +1,2 @@
+class ResourceRepresentationPolicy < ProjectRelatedPolicy
+end
