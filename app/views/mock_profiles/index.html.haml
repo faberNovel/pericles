@@ -2,7 +2,7 @@
 
 %h1 Mock Profiles
 
-- if user.can_create? MockProfile.new(project: project)
+- if user.can_create? MockProfile, project: project
   .row.margin-top-element
     .col-xs-12.flexcontainer.flexcontainer-justify-end
       = link_to 'New Profile', new_project_mock_profile_path(project), class: "btn btn-default btn-lg"

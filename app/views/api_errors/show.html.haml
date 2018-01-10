@@ -17,7 +17,7 @@
 
 %h3 Error instances
 
-- if user.can_create? ApiErrorInstance.new(api_error: @api_error)
+- if user.can_create? ApiErrorInstance, project: project
   .flexcontainer.flexcontainer-justify-end
     = link_to 'New Mock', new_api_error_api_error_instance_path(@api_error), class: "btn btn-default btn-lg"
 

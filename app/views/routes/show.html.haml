@@ -102,7 +102,7 @@
   .col-xs-12
     %h2 Responses
 
-    - if user.can_create? @route.responses.build
+    - if user.can_create? Response, project: project
       .flexcontainer.flexcontainer-justify-end
         = link_to 'New Response', new_route_response_path(@route), class: "btn btn-default"
 
