@@ -12,11 +12,11 @@
     = @resource.name
     .pull-right
       .btn-group{ role: "group" }
-        = link_to 'Swift', project_resource_path(@project, @resource, format: "swift"), class: "btn btn-default"
-        = link_to 'Java', project_resource_path(@project, @resource, format: "java"), class: "btn btn-default"
-        = link_to 'Kotlin', project_resource_path(@project, @resource, format: "kotlin"), class: "btn btn-default"
-        = link_to 'Edit', edit_project_resource_path(@project, @resource, section: "base"), class: "btn btn-default" if user.can_edit? @resource
-        = link_to "Delete", project_resource_path(@project, @resource), method: :delete, data: { confirm: 'Are you sure ?' },
+        = link_to 'Swift', project_resource_path(project, @resource, format: "swift"), class: "btn btn-default"
+        = link_to 'Java', project_resource_path(project, @resource, format: "java"), class: "btn btn-default"
+        = link_to 'Kotlin', project_resource_path(project, @resource, format: "kotlin"), class: "btn btn-default"
+        = link_to 'Edit', edit_project_resource_path(project, @resource, section: "base"), class: "btn btn-default" if user.can_edit? @resource
+        = link_to "Delete", project_resource_path(project, @resource), method: :delete, data: { confirm: 'Are you sure ?' },
        class: "btn btn-default" if user.can_delete? @resource
 
 %p
@@ -41,7 +41,7 @@
       .panel.panel-default
         .panel-heading
           .flexcontainer.flexcontainer-justify-end
-            = link_to 'Edit', edit_project_resource_path(@project, @resource, section: "all_attributes"), class: "btn btn-default" if user.can_edit? @resource
+            = link_to 'Edit', edit_project_resource_path(project, @resource, section: "all_attributes"), class: "btn btn-default" if user.can_edit? @resource
         .panel-body
           - @resource.resource_attributes.sorted_by_name.each do |attribute|
             = render attribute

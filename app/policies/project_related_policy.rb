@@ -12,7 +12,6 @@ class ProjectRelatedPolicy < ApplicationPolicy
   private
 
   def project
-    return @project if defined? @project
-    @project = record.respond_to?(:project) ? record.project : nil
+    super || (record.respond_to?(:project) ? record.project : nil)
   end
 end

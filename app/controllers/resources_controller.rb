@@ -1,14 +1,12 @@
 class ResourcesController < AuthenticatedController
+  include ProjectRelated
+
   layout 'full_width_column'
-  before_action :setup_project, only: [:index, :new, :create]
-  before_action :setup_project_and_resource, except: [:index, :new, :create]
+  before_action :setup_resource, except: [:index, :new, :create]
   decorates_assigned :resource
 
-  # Delete me when feature/readOnly is merged
-  decorates_assigned :project
-
   def index
-    @resources = @project.resources.sort_by { |resource| resource.name.downcase }
+    @resources = project.resources.sort_by { |resource| resource.name.downcase }
   end
 
   def show
@@ -23,7 +21,7 @@ class ResourcesController < AuthenticatedController
   end
 
   def new
-    @resource = @project.resources.build
+    @resource = project.resources.build
     authorize @resource
     setup_types
   end
@@ -33,12 +31,12 @@ class ResourcesController < AuthenticatedController
   end
 
   def create
-    @resource = @project.resources.build(resource_params)
+    @resource = project.resources.build(resource_params)
     authorize @resource
     check_valid_json_object_param(params[:json_instance]) unless params[:json_instance].blank?
     if @json_instance_error.blank? && @resource.save
       @resource.try_create_attributes_from_json(params[:json_instance]) if params[:json_instance]
-      redirect_to project_resource_path(@project, @resource)
+      redirect_to project_resource_path(project, @resource)
     else
       setup_types
       @json_instance = params[:json_instance]
@@ -48,7 +46,7 @@ class ResourcesController < AuthenticatedController
 
   def update
     if @resource.update(resource_params)
-      redirect_to project_resource_path(@project, @resource)
+      redirect_to project_resource_path(project, @resource)
     else
       setup_types
       render 'edit', status: :unprocessable_entity
@@ -58,7 +56,7 @@ class ResourcesController < AuthenticatedController
   def destroy
     begin
       @resource.destroy
-      redirect_to project_resources_path(@project)
+      redirect_to project_resources_path(project)
     rescue ActiveRecord::InvalidForeignKey
       flash.now[:error] = t('activerecord.errors.models.resource.attributes.base.destroy_failed_foreign_key')
       render 'show', status: :conflict
@@ -67,14 +65,8 @@ class ResourcesController < AuthenticatedController
 
   private
 
-  def setup_project
-    @project = Project.find(params[:project_id])
-    authorize @project, :show?
-  end
-
-  def setup_project_and_resource
-    setup_project
-    @resource = @project.resources.find(params[:id])
+  def setup_resource
+    @resource = project.resources.find(params[:id])
     authorize @resource
     @resource_representations = @resource.resource_representations.order(:name)
   end
@@ -131,7 +123,7 @@ class ResourcesController < AuthenticatedController
   end
 
   def setup_types
-    selectable_resources = @project.resources.select(&:persisted?)
+    selectable_resources = project.resources.select(&:persisted?)
     primitive_types = Attribute.primitive_types.keys.to_a.map { |k| [k.capitalize, k]}
     resource_types = selectable_resources.sort_by(&:name).collect { |r| [ r.name, r.id ] }
     @types = primitive_types + resource_types

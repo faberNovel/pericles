@@ -4,11 +4,11 @@
   %li
     = link_to 'Projects', projects_path
   %li
-    = link_to "#{@project.title}", project_path(@project)
+    = link_to "#{project.title}", project_path(project)
   %li
-    = link_to 'Resources', project_resources_path(@project)
+    = link_to 'Resources', project_resources_path(project)
   %li
-    = link_to "#{@resource.name}", project_resource_path(@project, @resource)
+    = link_to "#{@resource.name}", project_resource_path(project, @resource)
   %li
     Attributes
 

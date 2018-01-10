@@ -1,15 +1,15 @@
 = content_for :title, "Resources"
 
-- if user.can_create? @project.resources.build
+- if user.can_create? project.resources.build
   .flexcontainer.flexcontainer-justify-end
-    = link_to 'New Resource', new_project_resource_path(@project), class: "btn btn-default btn-lg"
+    = link_to 'New Resource', new_project_resource_path(project), class: "btn btn-default btn-lg"
 
 .list-group.margin-top-element
   - if @resources.empty?
     %p= t('.no_resources')
 
   - @resources.each do |resource|
-    %a{class: "list-group-item", href: project_resource_path(@project, resource)}
+    %a{class: "list-group-item", href: project_resource_path(project, resource)}
       .flexcontainer.flexcontainer-space-between
         .name
           = resource.name
