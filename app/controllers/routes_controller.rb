@@ -1,11 +1,11 @@
 class RoutesController < ApplicationController
   include Authenticated
+  include ProjectRelated
 
-  before_action :setup_project
   before_action :setup_route, except: [:index, :new, :create]
 
   def index
-    @routes_by_resource = policy_scope(@project.routes).includes(:resource, :resource_representations, :responses)
+    @routes_by_resource = policy_scope(project.routes).includes(:resource, :resource_representations, :responses)
       .group_by(&:resource)
     @resources = @routes_by_resource.keys.sort_by {|r| r.name.downcase}
     render layout: 'full_width_column'
@@ -16,10 +16,10 @@ class RoutesController < ApplicationController
   end
 
   def new
-    if @project.resources.empty?
-      redirect_to project_resources_path(@project), alert: t('.resource_required')
+    if project.resources.empty?
+      redirect_to project_resources_path(project), alert: t('.resource_required')
     else
-      @route = @project.resources.first.routes.build
+      @route = project.resources.first.routes.build
       authorize @route
       render layout: 'generic'
     end
@@ -35,7 +35,7 @@ class RoutesController < ApplicationController
     @route.request_headers.build(name: 'Authorization')
     @route.request_headers.build(name: 'Content-Type', value: 'application/json')
     if @route.save
-      redirect_to project_route_path(@project, @route)
+      redirect_to project_route_path(project, @route)
     else
       render 'new', layout: 'full_width_column', status: :unprocessable_entity
     end
@@ -43,7 +43,7 @@ class RoutesController < ApplicationController
 
   def update
     if @route.update(route_params)
-      redirect_to project_route_path(@project, @route)
+      redirect_to project_route_path(project, @route)
     else
       render 'edit', layout: 'full_width_column', status: :unprocessable_entity
     end
@@ -53,18 +53,13 @@ class RoutesController < ApplicationController
     resource = @route.resource
     @route.destroy
 
-    redirect_to project_resource_path(@project, resource)
+    redirect_to project_resource_path(project, resource)
   end
 
   private
 
-  def setup_project
-    @project = Project.find(params[:project_id])
-    authorize @project, :show?
-  end
-
   def setup_route
-    @route = @project.routes.find(params[:id])
+    @route = project.routes.find(params[:id])
     authorize @route
     @responses = @route.responses.order(:status_code)
   end

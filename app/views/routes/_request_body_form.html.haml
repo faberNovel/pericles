@@ -1,7 +1,7 @@
 - content_for :page_scripts do
   = javascript_include_tag("generate_schema")
 
-= bootstrap_form_for([@project, @route]) do |f|
+= bootstrap_form_for([project, @route]) do |f|
   = render 'shared/errors', object: @route
 
   %h3 Request
@@ -12,7 +12,7 @@
 
         %h4 Body
 
-        = f.select :request_resource_representation_id, @project.resource_representations.pluck(:name, :id), include_blank: true
+        = f.select :request_resource_representation_id, project.resource_representations.pluck(:name, :id), include_blank: true
 
         %h5 JSON Schema
         = button_tag("Generate Schema from Resource Representation", type: 'button', resource_id: "#{@route.resource.id}", id: 'generate-schema', style: "display: none;",

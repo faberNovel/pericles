@@ -13,8 +13,8 @@
         = render partial: "shared/last_edit", locals: {last_audit: @route.last_audit}
         .pull-right
           .btn-group{ role: "group" }
-            = link_to 'Edit', edit_project_route_path(@project, @route, section: "base"), class: "btn btn-default" if user.can_edit? @route
-            = link_to "Delete", project_route_path(@project, @route), method: :delete, data: { confirm: 'Are you sure ?' },
+            = link_to 'Edit', edit_project_route_path(project, @route, section: "base"), class: "btn btn-default" if user.can_edit? @route
+            = link_to "Delete", project_route_path(project, @route), method: :delete, data: { confirm: 'Are you sure ?' },
              class: "btn btn-default" if user.can_delete? @route
     = render partial: 'routes/route_summary', locals: { route: @route, should_display_representations: false }
 .row
@@ -50,7 +50,7 @@
                         json_schema: format_json(@route.request_json_schema))
                       = submit_tag("Generate JSON", class: "btn btn-default generate-json-instance",
                         json_schema: format_json(@route.request_json_schema))
-                    = link_to 'Edit', edit_project_route_path(@project, @route, section: "request_body"),
+                    = link_to 'Edit', edit_project_route_path(project, @route, section: "request_body"),
                    class: "btn btn-default" if user.can_edit? @route
               .panel-body
                 - unless @route.request_json_schema.blank?
@@ -74,7 +74,7 @@
           .panel.panel-default
             .panel-heading
               .flexcontainer.flexcontainer-justify-end
-                = link_to 'Edit', edit_project_route_path(@project, @route, section: "request_headers"),
+                = link_to 'Edit', edit_project_route_path(project, @route, section: "request_headers"),
                  class: "btn btn-default" if user.can_edit? @route
             .panel-body
               - if @route.request_headers.any?
@@ -88,7 +88,7 @@
             .panel.panel-default
               .panel-heading
                 .flexcontainer.flexcontainer-justify-end
-                  = link_to 'Edit', edit_project_route_path(@project, @route, section: "query_parameters"),
+                  = link_to 'Edit', edit_project_route_path(project, @route, section: "query_parameters"),
                    class: "btn btn-default" if user.can_edit? @route
               .panel-body
                 - if @route.request_query_parameters.any?
