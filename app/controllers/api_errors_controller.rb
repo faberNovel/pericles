@@ -1,4 +1,6 @@
-class ApiErrorsController < AuthenticatedController
+class ApiErrorsController < ApplicationController
+  include Authenticated
+
   layout 'full_width_column'
   before_action :setup_project
 

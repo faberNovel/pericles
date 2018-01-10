@@ -1,4 +1,6 @@
-class ResponsesController < AuthenticatedController
+class ResponsesController < ApplicationController
+  include Authenticated
+
   layout 'generic'
   before_action :setup_route_resource_and_project, only: [:new, :create]
   before_action :setup_route_resource_project_and_response, except: [:new, :create]

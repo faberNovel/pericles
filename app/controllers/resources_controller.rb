@@ -1,4 +1,5 @@
-class ResourcesController < AuthenticatedController
+class ResourcesController < ApplicationController
+  include Authenticated
   include ProjectRelated
 
   layout 'full_width_column'

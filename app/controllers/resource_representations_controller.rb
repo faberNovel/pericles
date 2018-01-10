@@ -1,4 +1,6 @@
-class ResourceRepresentationsController < AuthenticatedController
+class ResourceRepresentationsController < ApplicationController
+  include Authenticated
+
   before_action :setup_project_and_resource, except: [:index]
   before_action :setup_resource_representation, except: [:index, :new, :create]
   decorates_assigned :all_attributes_resource_representations

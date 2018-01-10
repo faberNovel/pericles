@@ -1,4 +1,6 @@
-class AbstractInstancesController < AuthenticatedController
+class AbstractInstancesController < ApplicationController
+  include Authenticated
+
   layout 'full_width_column'
   before_action :setup_model_and_project, only: [:new, :create]
   before_action :setup_model_instance, only: [:edit, :update, :destroy]
