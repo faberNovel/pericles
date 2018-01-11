@@ -1,6 +1,7 @@
 require 'test_helper'
 
 class ResourcesControllerTest < ControllerWithAuthenticationTest
+  include AndroidCodeGenHelper
 
   test "should get index with resources sorted in alphabetical order" do
     project = create(:project)
@@ -152,7 +153,7 @@ class ResourcesControllerTest < ControllerWithAuthenticationTest
     # This attribute is not nullable but is not in default representation
     resource.resource_attributes << create(:attribute, name: 'niceBoolean', primitive_type: :boolean)
 
-    file = %{package com.applidium.pokeapi.android.data.net.retrofit.model
+    file = %{package #{android_company_domain_name}.pokeapi.android.data.net.retrofit.model
 
     data class RestPokemon(
         val id: Int,
@@ -172,7 +173,7 @@ class ResourcesControllerTest < ControllerWithAuthenticationTest
     create(:attribute, name: 'weight', primitive_type: :number, nullable: true, parent_resource: resource)
     create(:attribute_with_resource, name: 'weakness_list', resource: create(:resource, name: 'nature'), is_array: true, parent_resource: resource)
 
-    file = %{package com.applidium.pokeapi.android.data.net.retrofit.model
+    file = %{package #{android_company_domain_name}.pokeapi.android.data.net.retrofit.model
 
     import android.support.annotation.Nullable;
 

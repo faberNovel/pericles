@@ -1,4 +1,4 @@
-package com.applidium.<%= @project.title.parameterize(separator: '.') =%>.android.data.net.retrofit.model
+package <%= android_company_domain_name =%>.<%= @project.title.parameterize(separator: '.') =%>.android.data.net.retrofit.model
 
 <% if @resource.decorate.should_import_nullable_annotation %>
 import android.support.annotation.Nullable;
