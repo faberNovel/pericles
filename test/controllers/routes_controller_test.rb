@@ -193,4 +193,27 @@ class RoutesControllerTest < ControllerWithAuthenticationTest
     delete project_route_path(project, route)
     assert_response :forbidden
   end
+
+  test 'unauthenticated user should access public project routes with read-only permission' do
+    sign_out :user
+
+    route = create(:route)
+    project = route.project
+    project.update(is_public: true)
+
+    get project_routes_path(project)
+    assert_response :success
+
+    get new_project_route_path(project)
+    assert_redirected_to new_user_session_path
+
+    get project_route_path(project, route)
+    assert_response :success
+
+    get edit_project_route_path(project, route)
+    assert_redirected_to new_user_session_path
+
+    delete project_route_path(project, route)
+    assert_redirected_to new_user_session_path
+  end
 end
