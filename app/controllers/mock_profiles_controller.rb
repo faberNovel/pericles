@@ -10,10 +10,12 @@ class MockProfilesController < MocksController
 
   def new
     @mock_profile = project.mock_profiles.new
+    authorize @mock_profile
   end
 
   def create
     @mock_profile = project.mock_profiles.new(mock_profile_params)
+    authorize @mock_profile
     if @mock_profile.save
       redirect_to_mock_profile
     else
