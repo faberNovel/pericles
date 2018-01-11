@@ -29,3 +29,5 @@ fr:
         ** Définir les erreurs et les messages associés
         ** Définir les headers pour chaque route public/private
         ** Définir la logique d’expiration des tokens
+    show:
+      internal_members: Membres internes
