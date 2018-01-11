@@ -73,4 +73,15 @@ class ResourceInstancesControllerTest < ControllerWithAuthenticationTest
     get edit_resource_instance_path(@resource_instance)
     assert_response :forbidden
   end
+
+  test 'unauthenticated user should access public project resource instances with read-only permission' do
+    @project.update(is_public: true)
+    sign_out :user
+
+    get new_resource_resource_instance_path(@resource)
+    assert_redirected_to new_user_session_path
+
+    get edit_resource_instance_path(@resource_instance)
+    assert_redirected_to new_user_session_path
+  end
 end
