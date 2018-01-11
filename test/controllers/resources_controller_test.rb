@@ -302,4 +302,27 @@ class ResourcesControllerTest < ControllerWithAuthenticationTest
     delete project_resource_path(project, resource)
     assert_response :forbidden
   end
+
+  test 'unauthenticated user should access public project resources with read-only permission' do
+    sign_out :user
+
+    resource = create(:resource)
+    project = resource.project
+    project.update(is_public: true)
+
+    get project_resources_path(project)
+    assert_response :success
+
+    get new_project_resource_path(project)
+    assert_redirected_to new_user_session_path
+
+    get project_resource_path(project, resource)
+    assert_response :success
+
+    get edit_project_resource_path(project, resource)
+    assert_redirected_to new_user_session_path
+
+    delete project_resource_path(project, resource)
+    assert_redirected_to new_user_session_path
+  end
 end
