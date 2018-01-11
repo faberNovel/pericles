@@ -45,7 +45,7 @@ class ResourceRepresentationsController < ApplicationController
   end
 
   def update
-    if resource_representation.update(resource_rep_params)
+    if resource_representation.update(permitted_attributes(resource_representation))
       redirect_to project_resource_path(project, resource)
     else
       build_missing_attributes_resource_representations
@@ -87,7 +87,7 @@ class ResourceRepresentationsController < ApplicationController
     return @resource_representation if defined? @resource_representation
     @resource_representation = begin
       resource_representation = ResourceRepresentation.find_by(id: params[:id] || params[:resource_representation_id])
-      resource_representation ||= resource.resource_representations.build(resource_rep_params) if params.has_key? :resource_representation
+      resource_representation ||= resource.resource_representations.build(permitted_attributes(ResourceRepresentation)) if params.has_key? :resource_representation
       resource_representation ||= resource.resource_representations.build
       authorize resource_representation
       resource_representation
@@ -101,21 +101,5 @@ class ResourceRepresentationsController < ApplicationController
         arr.attribute_id == attribute.id
       end || resource_representation.attributes_resource_representations.build(resource_attribute: attribute)
     end
-  end
-
-  def resource_rep_params
-    params.require(:resource_representation).permit(
-      :name,
-      :description,
-      attributes_resource_representations_attributes: [
-        :id,
-        :resource_representation_id,
-        :custom_key_name,
-        :is_required,
-        :is_null,
-        :attribute_id,
-        :_destroy
-      ]
-    )
   end
 end
