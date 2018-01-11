@@ -16,15 +16,50 @@ class ReportsControllerTest < ControllerWithAuthenticationTest
     assert_response :success
   end
 
-  test "user must be logged in to get index" do
-    sign_out :user
+
+  test 'member external user should access project reports' do
+    external_user = create(:user, :external)
+    create(:member, project: @project, user: external_user)
+    sign_in external_user
+
     get project_reports_path(@project)
-    assert_redirected_to new_user_session_path
+    assert_response :success
+
+    get project_report_path(@project, @report)
+    assert_response :success
   end
 
-  test "user must be logged in to get show" do
-    sign_out :user
+  test 'non member external user should not access project reports' do
+    external_user = create(:user, :external)
+    sign_in external_user
+
+    get project_reports_path(@project)
+    assert_response :forbidden
+
     get project_report_path(@project, @report)
-    assert_redirected_to new_user_session_path
+    assert_response :forbidden
+  end
+
+  test 'non member external user should access public project reports with read-only permission' do
+    external_user = create(:user, :external)
+    @project.update(is_public: true)
+    sign_in external_user
+
+    get project_reports_path(@project)
+    assert_response :success
+
+    get project_report_path(@project, @report)
+    assert_response :success
+  end
+
+  test 'unauthenticated user should access public project reports with read-only permission' do
+    @project.update(is_public: true)
+    sign_out :user
+
+    get project_reports_path(@project)
+    assert_response :success
+
+    get project_report_path(@project, @report)
+    assert_response :success
   end
 end
