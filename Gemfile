@@ -44,6 +44,7 @@ group :development, :test do
   gem 'stackprof'
   gem 'rubocop'
   gem 'dotenv-rails', '~> 2.1', '>= 2.1.1'
+  gem 'letter_opener', '~> 1.6'
 end
 
 group :test do
