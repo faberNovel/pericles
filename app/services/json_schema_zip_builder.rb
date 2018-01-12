@@ -1,3 +1,5 @@
+require 'zip'
+
 class JSONSchemaZipBuilder
   def initialize(project)
     @project = project

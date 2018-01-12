@@ -21,4 +21,14 @@ class ProjectPolicy < ApplicationPolicy
   def destroy?
     update?
   end
+
+  def permitted_attributes
+    [
+      :title,
+      :description,
+      :proxy_url,
+      :mock_profile_id,
+      user_ids: []
+    ]
+  end
 end

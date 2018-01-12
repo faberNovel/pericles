@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   include Pundit
+  include Lazy
 
   rescue_from ActiveRecord::RecordNotFound do
     render file: 'public/404.html', status: :not_found, layout: false
