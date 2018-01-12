@@ -72,6 +72,10 @@ To get the project up and running, proceed as follows (within the app's director
    `GOOGLE_APP_ID` | Client ID of your OAuth client ID in the Google Developers Console. See part 5 of this section. | n/a
    `GOOGLE_APP_SECRET` | Client secret of your OAuth client ID in the Google Developers Console. See part 5 of this section. | n/a
    `INTERNAL_EMAIL_DOMAIN` | Email domain used for authentication purposes. See part 5 of this section. | `@fabernovel.com`
+   `MAIL_DEFAULT_URL` | URL used to generate absolute links in emails | `pericles.fabernovel.com`
+   `MAIL_SMTP_DOMAIN` | Domain of the from field in your email | `pericles.fabernovel.com`
+   `MAIL_SMTP_PASSWORD` | Password to connect to your SMTP server | n/a
+   `MAIL_SMTP_USERNAME` | Username to connect to your SMTP server | n/a
    `SECRET_KEY_BASE` | You can use `bundle exec rake secret` in the app's directory to generate this key. | n/a
 
 7. You should now be able to run the project smoothly on your machine:
