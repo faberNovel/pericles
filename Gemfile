@@ -43,6 +43,7 @@ group :development, :test do
   gem 'flamegraph'
   gem 'stackprof'
   gem 'rubocop'
+  gem 'dotenv-rails', '~> 2.1', '>= 2.1.1'
 end
 
 group :test do

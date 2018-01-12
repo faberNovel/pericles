@@ -107,6 +107,10 @@ GEM
     docile (1.1.5)
     domain_name (0.5.20170404)
       unf (>= 0.0.5, < 1.0.0)
+    dotenv (2.2.1)
+    dotenv-rails (2.2.1)
+      dotenv (= 2.2.1)
+      railties (>= 3.2, < 5.2)
     draper (3.0.1)
       actionpack (~> 5.0)
       activemodel (~> 5.0)
@@ -365,6 +369,7 @@ DEPENDENCIES
   cocoon (~> 1.2)
   coffee-rails
   devise (~> 4.3)
+  dotenv-rails (~> 2.1, >= 2.1.1)
   draper (~> 3.0)
   execjs
   factory_girl_rails

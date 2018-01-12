@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-  INTERNAL_EMAIL_DOMAIN = '@fabernovel.com'
+  INTERNAL_EMAIL_DOMAIN = ENV['INTERNAL_EMAIL_DOMAIN']
 
   devise :database_authenticatable, :omniauthable, :trackable, :validatable, omniauth_providers: [:google_oauth2]
 

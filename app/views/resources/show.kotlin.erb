@@ -1,4 +1,4 @@
-package com.applidium.<%= @project.title.parameterize(separator: '.') =%>.android.data.net.retrofit.model
+package <%= android_company_domain_name =%>.<%= @project.title.parameterize(separator: '.') =%>.android.data.net.retrofit.model
 
 data class <%= @resource.decorate.rest_name =%>(
 <% @resource.resource_attributes.order(:name).decorate.each do |attribute| %>

@@ -16,7 +16,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "ssh://choclate@gerrit.applidium.net:29418/Pericles_GW"
+    "url": "https://github.com/applidium/pericles.git"
   },
   "author": "",
   "license": "ISC",
