@@ -48,4 +48,8 @@ class ResourceRepresentationTest < ActiveSupport::TestCase
   test "resource_representation_with_attributes_resource_reps has attributes_resource_representations" do
     assert_operator build(:resource_representation_with_attributes_resource_reps).attributes_resource_representations.length, :>, 0
   end
+
+  test "have a project" do
+    assert build(:resource_representation).project
+  end
 end

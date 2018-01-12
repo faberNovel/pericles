@@ -54,4 +54,8 @@ class RouteTest < ActiveSupport::TestCase
     route.update(http_method: :GET)
     assert route.can_have_query_params
   end
+
+  test "have a project" do
+    assert build(:route).project
+  end
 end
