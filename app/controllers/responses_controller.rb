@@ -3,6 +3,9 @@ class ResponsesController < ApplicationController
 
   layout 'generic'
 
+  # Avoid ApplicationController.response collision
+  lazy_controller_of :route_response, class_name: 'Response', helper_method: true
+
   def new
     route_response.headers.build(name: 'Authorization')
     route_response.headers.build(name: 'Content-Type', value: 'application/json')
@@ -20,7 +23,7 @@ class ResponsesController < ApplicationController
   end
 
   def update
-    if route_response.update(response_params)
+    if route_response.update(permitted_attributes(Response))
       redirect_to project_route_path(project, route)
     else
       render 'edit', status: :unprocessable_entity
@@ -49,27 +52,15 @@ class ResponsesController < ApplicationController
     resource.project
   end
 
-  # Avoid ApplicationController.response collision
-  def route_response
-    return @response if defined? @response
-    @response = begin
-      response = route.responses.find(params[:id]) if params.has_key? :id
-      response ||= route.responses.build(response_params) if params.has_key? :response
-      response || route.responses.build
-    end
-    authorize @response
-    @response
+  def find_route_response
+    route.responses.find(params[:id]) if params.has_key? :id
   end
-  helper_method :route_response
 
-  def response_params
-    params.require(:response).permit(
-      :status_code,
-      :resource_representation_id,
-      :api_error_id,
-      :is_collection,
-      :root_key,
-      headers_attributes: [:id, :name, :value, :_destroy]
-    )
+  def build_route_response_from_params
+    route.responses.build(permitted_attributes(Response)) if params.has_key? :response
+  end
+
+  def new_route_response
+    route.responses.build
   end
 end

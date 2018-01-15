@@ -2,8 +2,8 @@ module Lazy
   extend ActiveSupport::Concern
 
   module ClassMethods
-    def lazy_controller_of(model_name, options={})
-      class_name = model_name.to_s.camelize
+    def lazy_controller_of(model_name, options = {})
+      class_name = options[:class_name].nil? ? model_name.to_s.camelize : options[:class_name].to_s
       helper_method = options[:helper_method]
 
       class_eval <<-METHODS, __FILE__, __LINE__ + 1
