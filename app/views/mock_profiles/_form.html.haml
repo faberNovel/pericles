@@ -2,11 +2,11 @@
   = javascript_include_tag("mock_profiles/form.js")
 
 #mock_profile_form
-  = bootstrap_form_for(@mock_profile) do |f|
-    = render 'shared/errors', object: @mock_profile
+  = bootstrap_form_for(mock_profile) do |f|
+    = render 'shared/errors', object: mock_profile
 
     = f.text_field :name
-    = f.collection_select :parent_id, project.mock_profiles.where.not(id: @mock_profile.id), :id, :name, include_blank: true
+    = f.collection_select :parent_id, project.mock_profiles.where.not(id: mock_profile.id), :id, :name, include_blank: true
 
     - project.routes.includes(responses: [:resource_representation, :resource_instances, :api_error_instances]).order(:url).each do |route|
       .route-container.panel.panel-default
@@ -14,14 +14,14 @@
           .panel-title
             %h4.url
               %span{ class: label_class_for_http_method(route.http_method) }= route.http_method
-              = link_to route.url, project_mock_profile_mocks_path(@mock_profile.project, @mock_profile, path: route.mock_path), method: route.http_method == "GET" ? nil : route.http_method.downcase.to_sym, target: '_blank'
+              = link_to route.url, project_mock_profile_mocks_path(mock_profile.project, mock_profile, path: route.mock_path), method: route.http_method == "GET" ? nil : route.http_method.downcase.to_sym, target: '_blank'
         .responses.panel-body
           - route.responses.each do |response|
             .response{'data-response-id': response.id, class: response.can_have_resource_representation ? "resource-response" : "error-response"}
               %span.label.status-code{class: response_status_code_class(response.status_code)}=response.status_code
               - if response.representation
                 .matchers{id: "matchers-#{response.id}"}
-                  = f.fields_for :mock_pickers, @mock_pickers_by_response_id[response.id] || [] do |fields|
+                  = f.fields_for :mock_pickers, mock_pickers_by_response_id[response.id] || [] do |fields|
                     = render 'mock_picker_fields', f: fields, response: response
             - if response.representation
               = link_to_add_association "Add Matcher", f, :mock_pickers,
@@ -29,6 +29,6 @@
 
     / TODO Clément Villain 10/01/18
     / Remove this when we have a mock_profile show
-    - if user.can_update? @mock_profile
+    - if user.can_update? mock_profile
       %p
         = f.submit
