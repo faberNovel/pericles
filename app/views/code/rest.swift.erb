@@ -1,0 +1,14 @@
+import Foundation
+
+struct <%= resource.rest_name =%> : Decodable {
+<% resource.resource_attributes.each do |attribute| %>
+    let <%= attribute.variable_name =%>: <%= attribute.swift_type =%>
+
+<% end %>
+
+    enum CodingKeys : String, CodingKey {
+    <% resource.resource_attributes.each do |attribute| %>
+        case <%= attribute.variable_name =%> = "<%= attribute.key_name =%>"
+    <% end %>
+    }
+}

@@ -203,32 +203,19 @@ class ResourcesControllerTest < ControllerWithAuthenticationTest
 
     file = %{import Foundation
 
-    struct RestPokemon {
+    struct RestPokemon : Decodable {
         let date: Date
         let dateTime: Date?
         let id: Int
         let weaknessList: [RestNature]
         let weight: Double?
-    }
 
-
-    import Foundation
-    import SwiftyJSON
-
-    extension RestPokemon {
-
-        init?(json: JSON) {
-            guard
-                let date = json[\"date\"].string.flatMap { DateFormatter.iso8601DateShortDateFormatter.date(from: $0) },
-                let id = json[\"id\"].int,
-                let weaknessList = json[\"weakness_list\"].arrayValue.flatMap { RestNature(json: $0) } else {
-                    return nil
-            }
-            self.date = date
-            self.id = id
-            self.weaknessList = weaknessList
-            self.dateTime = json[\"date_time\"].string.flatMap { DateFormatter.iso8601DateFullDateFormatter.date(from: $0) }
-            self.weight = json[\"weight\"].doubleValue
+        enum CodingKeys : String, CodingKey {
+            case date = \"date\"
+            case dateTime = \"date_time\"
+            case id = \"id\"
+            case weaknessList = \"weakness_list\"
+            case weight = \"weight\"
         }
     }
     }.gsub(/^    /, '')

@@ -17,7 +17,7 @@ class CodeGenerator
 
   def generate
     ApplicationController.render(
-      template: "resources/show.#{@language}",
+      template: "code/rest.#{@language}",
       locals: { resource: @resource, project: @project }
     )
   end
