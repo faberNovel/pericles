@@ -12,8 +12,21 @@ class ProjectsController < AuthenticatedController
   def show
     respond_to do |format|
       format.html {}
-      format.zip do
-        send_data @project.json_schemas_zip_data, type: 'application/zip', filename: "#{@project.title}.zip"
+      format.json_schema do
+        send_data(
+          @project.json_schemas_zip_data,
+          type: 'application/zip',
+          filename: "#{@project.title}.json_schema.zip"
+        )
+      end
+      %i(swift java kotlin).each do |language|
+        format.send(language) do
+          send_data(
+            CodeZipBuilder.new(@project, language).zip_data,
+            type: 'application/zip',
+            filename: "#{@project.title}.#{language}.zip"
+          )
+        end
       end
     end
   end

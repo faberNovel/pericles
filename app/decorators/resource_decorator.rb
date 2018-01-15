@@ -5,6 +5,18 @@ class ResourceDecorator < Draper::Decorator
     "Rest#{name.parameterize(separator: '_', preserve_case: true).camelcase}"
   end
 
+  def kotlin_filename
+    "#{rest_name}.kt"
+  end
+
+  def java_filename
+    "#{rest_name}.java"
+  end
+
+  def swift_filename
+    "#{rest_name}.swift"
+  end
+
   def should_import_nullable_annotation
     resource_attributes.any?(&:nullable)
   end

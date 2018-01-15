@@ -114,7 +114,28 @@ class ProjectsControllerTest < ControllerWithAuthenticationTest
 
   test "should get zip file with all json schemas" do
     project = create(:full_project)
-    get project_path(project, format: 'zip')
+    get project_path(project, format: 'json_schema')
+    assert_response :success
+    assert_equal response.headers['Content-Type'], 'application/zip'
+  end
+
+  test "should get all swift files" do
+    project = create(:full_project)
+    get project_path(project, format: 'swift')
+    assert_response :success
+    assert_equal response.headers['Content-Type'], 'application/zip'
+  end
+
+  test "should get all java files" do
+    project = create(:full_project)
+    get project_path(project, format: 'java')
+    assert_response :success
+    assert_equal response.headers['Content-Type'], 'application/zip'
+  end
+
+  test "should get all kotlin files" do
+    project = create(:full_project)
+    get project_path(project, format: 'kotlin')
     assert_response :success
     assert_equal response.headers['Content-Type'], 'application/zip'
   end

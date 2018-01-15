@@ -1,7 +1,7 @@
 import Foundation
 
-struct <%= @resource.decorate.rest_name =%> {
-<% @resource.resource_attributes.order(:name).decorate.each do |attribute| %>
+struct <%= resource.rest_name =%> {
+<% resource.resource_attributes.order(:name).decorate.each do |attribute| %>
     let <%= attribute.variable_name =%>: <%= attribute.swift_type =%>
 
 <% end %>
@@ -11,7 +11,7 @@ struct <%= @resource.decorate.rest_name =%> {
 import Foundation
 import SwiftyJSON
 
-extension <%= @resource.decorate.rest_name =%> {
+extension <%= resource.rest_name =%> {
 
     init?(json: JSON) {
         guard

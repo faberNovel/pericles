@@ -25,7 +25,12 @@
 = link_to project_mocks_root_url(project), project_mocks_root_url(project)
 
 %h4 JSON Schemas
-= link_to t('actions.download'), project_path(project, format: 'zip'), class: 'btn btn-default'
+= link_to t('actions.download'), project_path(project, format: 'json_schema'), class: 'btn btn-default'
+
+%h4 Code Generation
+= link_to 'Swift', project_path(project, format: 'swift'), class: 'btn btn-default'
+= link_to 'Java', project_path(project, format: 'java'), class: 'btn btn-default'
+= link_to 'Kotlin', project_path(project, format: 'kotlin'), class: 'btn btn-default'
 
 
 = link_to t('actions.delete'), project_path(project), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-default", id: 'delete-button'

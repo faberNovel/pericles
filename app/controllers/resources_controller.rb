@@ -4,6 +4,9 @@ class ResourcesController < AuthenticatedController
   before_action :setup_project_and_resource, except: [:index, :new, :create]
   decorates_assigned :resource
 
+  # Delete me when feature/readOnly is merged
+  decorates_assigned :project
+
   def index
     @resources = @project.resources.sort_by { |resource| resource.name.downcase }
   end
