@@ -9,7 +9,6 @@ module ProjectRelated
     return @project if defined? @project
     @project = begin
       project = find_project
-      return unless project
 
       policy = ProjectPolicy.new(current_user, project)
       unless policy.show?
@@ -21,7 +20,7 @@ module ProjectRelated
   end
 
   def find_project
-    Project.find_by(id: params[:project_id])
+    Project.find(params[:project_id]) if params.has_key? :project_id
   end
 
   def pundit_user
