@@ -12,6 +12,14 @@ class ResourcesController < AuthenticatedController
   end
 
   def show
+    respond_to do |format|
+      format.html {}
+      %i(swift java kotlin).each do |language|
+        format.send(language) do
+          render body: CodeGenerator.new(language).from_resource(resource).generate
+        end
+      end
+    end
   end
 
   def new

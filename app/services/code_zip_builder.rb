@@ -20,20 +20,18 @@ class CodeZipBuilder
   private
 
   def filename(resource)
+    decorated_resource = Code::ResourceDecorator.new(resource)
     case @language
     when :kotlin
-      resource.kotlin_filename
+      decorated_resource.kotlin_filename
     when :java
-      resource.java_filename
+      decorated_resource.java_filename
     when :swift
-      resource.swift_filename
+      decorated_resource.swift_filename
     end
   end
 
   def file_content(resource)
-    ApplicationController.render(
-      template: "resources/show.#{@language}",
-      locals: { resource: resource, project: @project }
-    )
+    CodeGenerator.new(@language).from_resource(resource).generate
   end
 end
