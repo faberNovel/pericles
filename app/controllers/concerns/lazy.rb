@@ -2,8 +2,9 @@ module Lazy
   extend ActiveSupport::Concern
 
   module ClassMethods
-    def lazy_controller_of(model_name)
+    def lazy_controller_of(model_name, options={})
       class_name = model_name.to_s.camelize
+      helper_method = options[:helper_method]
 
       class_eval <<-METHODS, __FILE__, __LINE__ + 1
         def #{model_name}
@@ -33,6 +34,8 @@ module Lazy
         def new_#{model_name}
           #{class_name}.new
         end
+        #{helper_method ? "helper_method(:#{model_name})" : ''}
+
       METHODS
     end
 
@@ -41,7 +44,8 @@ module Lazy
 
       _helpers.class_eval <<-ruby_eval, __FILE__, __LINE__ + 1
         def #{model_name}
-          controller.send(:#{model_name}).decorate
+          return @_#{model_name} if defined? @_#{model_name}
+          @_#{model_name} = controller.send(:#{model_name}).decorate
         end
       ruby_eval
     end
