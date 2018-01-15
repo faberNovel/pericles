@@ -4,13 +4,23 @@ class ResourceRepresentationsController < AuthenticatedController
   decorates_assigned :all_attributes_resource_representations
 
   def show
-    render(
-      json: @representation,
-      serializer: ResourceRepresentationSchemaSerializer,
-      adapter: :attributes,
-      is_collection: ActiveModel::Type::Boolean.new.cast(params[:is_collection]),
-      root_key: params[:root_key]
-    )
+    respond_to do |format|
+      format.json_schema do
+        render(
+          json: @representation,
+          serializer: ResourceRepresentationSchemaSerializer,
+          adapter: :attributes,
+          is_collection: ActiveModel::Type::Boolean.new.cast(params[:is_collection]),
+          root_key: params[:root_key]
+        )
+      end
+      %i(swift java kotlin).each do |language|
+        format.send(language) do
+          render body: CodeGenerator.new(language).from_resource_representation(@representation).generate
+        end
+      end
+    end
+
   end
 
   def new

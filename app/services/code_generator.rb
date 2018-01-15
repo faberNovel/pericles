@@ -9,9 +9,10 @@ class CodeGenerator
     self
   end
 
-  def from_resource_representation(_resource_representation)
+  def from_resource_representation(resource_representation)
+    @resource = Code::ResourceRepresentationDecorator.new(resource_representation)
+    @project = @resource.resource.project
     self
-    # TODO Clément Villain 15/01/2018
   end
 
   def generate
