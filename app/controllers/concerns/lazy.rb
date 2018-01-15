@@ -39,7 +39,7 @@ module Lazy
       METHODS
     end
 
-    def lazy_decorates_assigned(model_name)
+    def decorates_method(model_name)
       self._helper_methods << model_name
 
       _helpers.class_eval <<-ruby_eval, __FILE__, __LINE__ + 1

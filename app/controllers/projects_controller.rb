@@ -1,7 +1,7 @@
 class ProjectsController < ApplicationController
   layout 'full_width_column', only: [:show, :edit]
   lazy_controller_of :project
-  lazy_decorates_assigned :project
+  decorates_method :project
 
   def index
     @projects = policy_scope(Project).all.order("lower(title)")

@@ -2,7 +2,7 @@ class RoutesController < ApplicationController
   include ProjectRelated
 
   lazy_controller_of :route
-  lazy_decorates_assigned :route
+  decorates_method :route
 
   def index
     @routes_by_resource = policy_scope(project.routes).includes(:resource, :resource_representations, :responses)

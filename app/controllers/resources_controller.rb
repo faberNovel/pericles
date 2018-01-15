@@ -2,7 +2,7 @@ class ResourcesController < ApplicationController
   include ProjectRelated
   layout 'full_width_column'
   lazy_controller_of :resource
-  lazy_decorates_assigned :resource
+  decorates_method :resource
 
   def index
     @resources = project.resources.sort_by { |resource| resource.name.downcase }
