@@ -1,8 +1,8 @@
 - content_for :page_scripts do
   = javascript_include_tag("header_autocomplete")
 
-= bootstrap_form_for([project, @route]) do |f|
-  = render 'shared/errors', object: @route
+= bootstrap_form_for([project, route]) do |f|
+  = render 'shared/errors', object: route
 
   %h3 Request
 

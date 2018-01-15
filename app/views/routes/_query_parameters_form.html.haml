@@ -1,15 +1,15 @@
-= bootstrap_form_for([project, @route]) do |f|
-  = render 'shared/errors', object: @route
+= bootstrap_form_for([project, route]) do |f|
+  = render 'shared/errors', object: route
 
 
-  - if params[:section] == "base" || @route.new_record?
+  - if params[:section] == "base" || route.new_record?
     .row
       .col-xs-6
-        = f.text_field :url, placeholder: "/#{@route.resource.name.pluralize.underscore}"
+        = f.text_field :url, placeholder: "/#{route.resource.name.pluralize.underscore}"
         = f.select :http_method, Route.http_methods.keys.to_a
         = f.text_area :description, placeholder: t('.description_placeholder')
 
-  - if @route.persisted?
+  - if route.persisted?
 
     %h3 Request
 

@@ -1,4 +1,4 @@
-= content_for :title, "Route #{@route.url}"
+= content_for :title, "Route #{route.url}"
 
 - content_for :page_scripts do
   = javascript_include_tag("validate_instance")
@@ -9,14 +9,14 @@
   .col-xs-12
     .page-header
       %h1
-        = @route.url
-        = render partial: "shared/last_edit", locals: {last_audit: @route.last_audit}
+        = route.url
+        = render partial: "shared/last_edit", locals: {last_audit: route.last_audit}
         .pull-right
           .btn-group{ role: "group" }
-            = link_to 'Edit', edit_project_route_path(project, @route, section: "base"), class: "btn btn-default" if user.can_edit? @route
-            = link_to "Delete", project_route_path(project, @route), method: :delete, data: { confirm: 'Are you sure ?' },
-             class: "btn btn-default" if user.can_delete? @route
-    = render partial: 'routes/route_summary', locals: { route: @route, should_display_representations: false }
+            = link_to 'Edit', edit_project_route_path(project, route, section: "base"), class: "btn btn-default" if user.can_edit? route
+            = link_to "Delete", project_route_path(project, route), method: :delete, data: { confirm: 'Are you sure ?' },
+             class: "btn btn-default" if user.can_delete? route
+    = render partial: 'routes/route_summary', locals: { route: route, should_display_representations: false }
 .row
   .col-xs-12
     %h2 Request
@@ -24,14 +24,14 @@
     %div
       / Nav tabs
       %ul.nav.nav-tabs{ role: "tablist" }
-        - if @route.request_can_have_body
+        - if route.request_can_have_body
           %li.active{ role: "presentation" }
             %a{ "aria-controls" => "request body", "data-toggle" => "tab", href: "#request-body", role: "tab" }
               = "Body"
-        %li{ role: "presentation", class: ('active' unless @route.request_can_have_body) }
+        %li{ role: "presentation", class: ('active' unless route.request_can_have_body) }
           %a{ "aria-controls" => "request headers", "data-toggle" => "tab", href: "#request-headers", role: "tab" }
             = "Headers"
-        - if @route.can_have_query_params
+        - if route.can_have_query_params
           %li{ role: "presentation" }
             %a{ "aria-controls" => "query parameters", "data-toggle" => "tab", href: "#query-parameters", role: "tab" }
               = "Query Parameters"
@@ -39,60 +39,60 @@
 
       / Tab panes
       .tab-content
-        - if @route.request_can_have_body
+        - if route.request_can_have_body
           #request-body.tab-pane.active{ role: "tabpanel" }
             .panel.panel-default
               .panel-heading
                 .flexcontainer.flexcontainer-justify-end
                   .btn-group{ role: "group" }
-                    - unless @route.request_json_schema.blank?
+                    - unless route.request_json_schema.blank?
                       = submit_tag("Validate JSON", class: "btn btn-default validate-json-instance",
-                        json_schema: format_json(@route.request_json_schema))
+                        json_schema: format_json(route.request_json_schema))
                       = submit_tag("Generate JSON", class: "btn btn-default generate-json-instance",
-                        json_schema: format_json(@route.request_json_schema))
-                    = link_to 'Edit', edit_project_route_path(project, @route, section: "request_body"),
-                   class: "btn btn-default" if user.can_edit? @route
+                        json_schema: format_json(route.request_json_schema))
+                    = link_to 'Edit', edit_project_route_path(project, route, section: "request_body"),
+                   class: "btn btn-default" if user.can_edit? route
               .panel-body
-                - unless @route.request_json_schema.blank?
+                - unless route.request_json_schema.blank?
                   .row
                     .col-xs-6
-                      %h4= "JSON Schema #{schema_summary(@route.request_root_key, @route.request_resource_representation&.name, @route.request_is_collection)}"
+                      %h4= "JSON Schema #{schema_summary(route.request_root_key, route.request_resource_representation&.name, route.request_is_collection)}"
                       %pre.pre-scrollable
                         %code
-                          =format_json(@route.request_json_schema)
+                          =format_json(route.request_json_schema)
 
                     .col-xs-6
                       %h4 JSON Instance
                       #request-json-validation-result
-                      = text_area_tag(:request_json_instance, format_json(@route.request_json_instance), size: "70x15",
+                      = text_area_tag(:request_json_instance, format_json(route.request_json_instance), size: "70x15",
                        class: "generated-json-instance-or-to-validate")
 
                 - else
                   %p
                     %i= t('.no_body_placeholder')
-        #request-headers.tab-pane{ role: "tabpanel", class: ('active' unless @route.request_can_have_body) }
+        #request-headers.tab-pane{ role: "tabpanel", class: ('active' unless route.request_can_have_body) }
           .panel.panel-default
             .panel-heading
               .flexcontainer.flexcontainer-justify-end
-                = link_to 'Edit', edit_project_route_path(project, @route, section: "request_headers"),
-                 class: "btn btn-default" if user.can_edit? @route
+                = link_to 'Edit', edit_project_route_path(project, route, section: "request_headers"),
+                 class: "btn btn-default" if user.can_edit? route
             .panel-body
-              - if @route.request_headers.any?
-                - @route.request_headers.each do |header|
+              - if route.request_headers.any?
+                - route.request_headers.each do |header|
                   = render header
               - else
                 %p
                   %i= t('.no_header_placeholder')
-        - if @route.can_have_query_params
+        - if route.can_have_query_params
           #query-parameters.tab-pane{ role: "tabpanel" }
             .panel.panel-default
               .panel-heading
                 .flexcontainer.flexcontainer-justify-end
-                  = link_to 'Edit', edit_project_route_path(project, @route, section: "query_parameters"),
-                   class: "btn btn-default" if user.can_edit? @route
+                  = link_to 'Edit', edit_project_route_path(project, route, section: "query_parameters"),
+                   class: "btn btn-default" if user.can_edit? route
               .panel-body
-                - if @route.request_query_parameters.any?
-                  - @route.request_query_parameters.each do |query_parameter|
+                - if route.request_query_parameters.any?
+                  - route.request_query_parameters.each do |query_parameter|
                     = render query_parameter
                 - else
                   %p
@@ -104,19 +104,19 @@
 
     - if user.can_create? Response, project: project
       .flexcontainer.flexcontainer-justify-end
-        = link_to 'New Response', new_route_response_path(@route), class: "btn btn-default"
+        = link_to 'New Response', new_route_response_path(route), class: "btn btn-default"
 
     %div
       / Nav tabs with status codes for all responses
       %ul.nav.nav-pills{ role: "tablist" }
-        - @responses.each_with_index do |response, index|
+        - route.responses.each_with_index do |response, index|
           %li{ role: "presentation", class: ('active' if index.zero?) }
             %a{ "aria-controls" => "response", "data-toggle" => "pill", href: "#resp-#{response.id}", role: "tab", class: response_status_code_class(response.status_code) }
               = response.status_code
 
       / Tab panes for all responses
       .tab-content
-        - @responses.each_with_index do |response, index|
+        - route.responses.each_with_index do |response, index|
           .tab-pane{ role: "tabpanel", id: "resp-#{response.id}", class: ('active' if index.zero?) }
             = render response
 

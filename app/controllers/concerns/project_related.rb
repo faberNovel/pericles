@@ -2,7 +2,7 @@ module ProjectRelated
   extend ActiveSupport::Concern
 
   included do
-    helper_method :project
+    lazy_decorates_assigned :project
   end
 
   def project
