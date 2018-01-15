@@ -17,7 +17,7 @@
             %dt Type
             %dd
               - if attribute.resource_id
-                %a{href: project_resource_path(@project, attribute.resource_id)}
+                %a{href: project_resource_path(project, attribute.resource_id)}
                   %strong= format_type(attribute.primitive_type, attribute.resource_id, attribute.is_array)
               - else
                 %strong= format_type(attribute.primitive_type, attribute.resource_id, attribute.is_array)

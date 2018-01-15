@@ -1,4 +1,4 @@
-= content_for :title, "Edit Resource #{@resource.name}"
+= content_for :title, "Edit Resource #{resource.name}"
 
 %ol.breadcrumb
   %li
@@ -8,7 +8,7 @@
   %li
     = link_to 'Resources', project_resources_path(project)
   %li
-    = link_to "#{@resource.name}", project_resource_path(project, @resource)
+    = link_to "#{resource.name}", project_resource_path(project, resource)
   %li
     Attributes
 

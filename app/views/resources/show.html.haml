@@ -1,4 +1,4 @@
-= content_for :title, "Resource #{@resource.name}"
+= content_for :title, "Resource #{resource.name}"
 
 - content_for :page_scripts do
   = javascript_include_tag("resources/show.js")
@@ -9,22 +9,22 @@
 
 .page-header
   %h1
-    = @resource.name
+    = resource.name
     .pull-right
       .btn-group{ role: "group" }
-        = link_to 'Swift', project_resource_path(project, @resource, format: "swift"), class: "btn btn-default"
-        = link_to 'Java', project_resource_path(project, @resource, format: "java"), class: "btn btn-default"
-        = link_to 'Kotlin', project_resource_path(project, @resource, format: "kotlin"), class: "btn btn-default"
-        = link_to 'Edit', edit_project_resource_path(project, @resource, section: "base"), class: "btn btn-default" if user.can_edit? @resource
-        = link_to "Delete", project_resource_path(project, @resource), method: :delete, data: { confirm: 'Are you sure ?' },
-       class: "btn btn-default" if user.can_delete? @resource
+        = link_to 'Swift', project_resource_path(project, resource, format: "swift"), class: "btn btn-default"
+        = link_to 'Java', project_resource_path(project, resource, format: "java"), class: "btn btn-default"
+        = link_to 'Kotlin', project_resource_path(project, resource, format: "kotlin"), class: "btn btn-default"
+        = link_to 'Edit', edit_project_resource_path(project, resource, section: "base"), class: "btn btn-default" if user.can_edit? resource
+        = link_to "Delete", project_resource_path(project, resource), method: :delete, data: { confirm: 'Are you sure ?' },
+       class: "btn btn-default" if user.can_delete? resource
 
 %p
-  = @resource.description
+  = resource.description
 
 %h3
   Attributes
-  = render partial: "shared/last_edit", locals: {last_audit: @resource.last_audit}
+  = render partial: "shared/last_edit", locals: {last_audit: resource.last_audit}
 
 %div
   / Global Nav tabs
@@ -41,24 +41,24 @@
       .panel.panel-default
         .panel-heading
           .flexcontainer.flexcontainer-justify-end
-            = link_to 'Edit', edit_project_resource_path(project, @resource, section: "all_attributes"), class: "btn btn-default" if user.can_edit? @resource
+            = link_to 'Edit', edit_project_resource_path(project, resource, section: "all_attributes"), class: "btn btn-default" if user.can_edit? resource
         .panel-body
-          - @resource.resource_attributes.sorted_by_name.each do |attribute|
+          - resource.resource_attributes.sorted_by_name.each do |attribute|
             = render attribute
     #resource-reps.tab-pane{ role: "tabpanel" }
       %div
         / Nav tabs for Resource Representations
         %ul.nav.nav-tabs{ role: "tablist" }
-          - @resource_representations.each_with_index do |resource_rep, index|
+          - resource.resource_representations.each_with_index do |resource_rep, index|
             %li{ role: "presentation", class: ('active' if index.zero?) }
               %a{ "aria-controls" => "#{resource_rep.name}", "data-toggle" => "tab", href: "#res-#{resource_rep.id}", role: "tab" }
                 = resource_rep.name
           - if user.can_create? ResourceRepresentation, project: project
             %li{ role: "presentation" }
-              = link_to '+', new_resource_resource_representation_path(@resource)
+              = link_to '+', new_resource_resource_representation_path(resource)
         / Tab panes for Resource Representations
         .tab-content
-          - @resource_representations.each_with_index do |resource_rep, index|
+          - resource.resource_representations.each_with_index do |resource_rep, index|
             .tab-pane{ role: "tabpanel", id: "res-#{resource_rep.id}", class: ('active' if index.zero?) }
               = render resource_rep
 
@@ -66,11 +66,11 @@
 
 - if user.can_create? ResourceInstance, project: project
   .flexcontainer.flexcontainer-justify-end
-    = link_to 'New Mock', new_resource_resource_instance_path(@resource), class: "btn btn-default btn-lg"
+    = link_to 'New Mock', new_resource_resource_instance_path(resource), class: "btn btn-default btn-lg"
 
 .margin-top-element
-  - if @resource.resource_instances.any?
-    - @resource.resource_instances.each do |instance|
+  - if resource.resource_instances.any?
+    - resource.resource_instances.each do |instance|
       = render instance
   - else
     %p
@@ -79,9 +79,9 @@
 %h3 Routes
 
 .margin-top-element
-  - if @resource.routes.any?
-    - @resource.routes.includes(:resource_representations).each do |route|
-      = render partial: 'routes/route_summary', locals: { resource: @resource, route: route, should_display_representations: true }
+  - if resource.routes.any?
+    - resource.routes.includes(:resource_representations).each do |route|
+      = render partial: 'routes/route_summary', locals: { resource: resource, route: route, should_display_representations: true }
   - else
     %p
       %i= t('.no_route_placeholder')

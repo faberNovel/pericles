@@ -1,0 +1,33 @@
+import Foundation
+
+struct <%= resource.decorate.rest_name =%> {
+<% resource.resource_attributes.order(:name).decorate.each do |attribute| %>
+    let <%= attribute.variable_name =%>: <%= attribute.swift_type =%>
+
+<% end %>
+}
+
+
+import Foundation
+import SwiftyJSON
+
+extension <%= resource.decorate.rest_name =%> {
+
+    init?(json: JSON) {
+        guard
+        <% resource.mandatory_attributes.each do |attribute| %>
+            let <%= attribute.variable_name =%> = <%= attribute.swift_deserialize_code =%><%= (attribute == resource.mandatory_attributes.last) ? ' else {' : ',' =%>
+
+        <% end %>
+                return nil
+        }
+        <% resource.mandatory_attributes.each do |attribute| %>
+        self.<%= attribute.variable_name =%> = <%= attribute.variable_name =%>
+
+        <% end %>
+        <% resource.nullable_attributes.each do |attribute| %>
+        self.<%= attribute.variable_name =%> = <%= attribute.swift_deserialize_code =%>
+
+        <% end %>
+    }
+}
