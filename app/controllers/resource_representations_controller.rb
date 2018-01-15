@@ -1,6 +1,7 @@
 class ResourceRepresentationsController < ApplicationController
   include ProjectRelated
 
+  lazy_controller_of :resource_representation, helper_method: true
   decorates_assigned :all_attributes_resource_representations
 
   def show
@@ -83,17 +84,13 @@ class ResourceRepresentationsController < ApplicationController
     resource.project
   end
 
-  def resource_representation
-    return @resource_representation if defined? @resource_representation
-    @resource_representation = begin
-      resource_representation = ResourceRepresentation.find_by(id: params[:id] || params[:resource_representation_id])
-      resource_representation ||= resource.resource_representations.build(permitted_attributes(ResourceRepresentation)) if params.has_key? :resource_representation
-      resource_representation ||= resource.resource_representations.build
-      authorize resource_representation
-      resource_representation
-    end
+  def build_resource_representation_from_params
+    resource.resource_representations.build(permitted_attributes(ResourceRepresentation)) if params.has_key? :resource_representation
   end
-  helper_method :resource_representation
+
+  def new_resource_representation
+    resource.resource_representations.build
+  end
 
   def build_missing_attributes_resource_representations
     @all_attributes_resource_representations = resource.resource_attributes.sorted_by_name.map do |attribute|
