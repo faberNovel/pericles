@@ -10,4 +10,8 @@ class SchemePolicy < ApplicationPolicy
   def destroy?
     user && user.internal?
   end
+
+  def permitted_attributes
+    [:name, :regexp]
+  end
 end
