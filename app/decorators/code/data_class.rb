@@ -19,7 +19,7 @@ module Code
     end
 
     def should_import_nullable_annotation
-      resource_attributes.any?(&:nullable)
+      resource_attributes.any?(&:code_nullable)
     end
 
     def should_import_java_list

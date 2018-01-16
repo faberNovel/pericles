@@ -4,7 +4,7 @@ class Code::AttributesResourceRepresentationDecorator < Draper::Decorator
   delegate :name, :is_array, :primitive_type, :date?, :datetime?, to: :resource_attribute
 
   def resource
-    ResourceRepresentationDecorator.new(resource_representation)
+    Code::ResourceRepresentationDecorator.new(resource_representation)
   end
 
   def code_nullable

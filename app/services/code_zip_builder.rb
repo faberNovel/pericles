@@ -8,9 +8,9 @@ class CodeZipBuilder
 
   def zip_data
     stringio = Zip::OutputStream.write_buffer do |zio|
-      @project.resources.decorate.each do |resource|
-        zio.put_next_entry(filename(resource))
-        zio.write file_content(resource)
+      @project.resource_representations.each do |resource_representation|
+        zio.put_next_entry(filename(resource_representation))
+        zio.write file_content(resource_representation)
       end
     end
     stringio.rewind
@@ -19,19 +19,21 @@ class CodeZipBuilder
 
   private
 
-  def filename(resource)
-    decorated_resource = Code::ResourceDecorator.new(resource)
+  def filename(resource_representation)
+    decorated_representation = Code::ResourceRepresentationDecorator.new(resource_representation)
     case @language
     when :kotlin
-      decorated_resource.kotlin_filename
+      decorated_representation.kotlin_filename
     when :java
-      decorated_resource.java_filename
+      decorated_representation.java_filename
     when :swift
-      decorated_resource.swift_filename
+      decorated_representation.swift_filename
     end
   end
 
-  def file_content(resource)
-    CodeGenerator.new(@language).from_resource(resource).generate
+  def file_content(resource_representation)
+    CodeGenerator.new(@language)
+      .from_resource_representation(resource_representation)
+      .generate
   end
 end
