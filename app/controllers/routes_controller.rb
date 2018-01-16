@@ -51,4 +51,10 @@ class RoutesController < ApplicationController
 
     redirect_to project_resource_path(project, resource)
   end
+
+  private
+
+  def new_route
+    project.resources.first.routes.build
+  end
 end

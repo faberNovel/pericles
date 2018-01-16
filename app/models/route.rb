@@ -18,6 +18,7 @@ class Route < ApplicationRecord
   validates :http_method, presence: true
   validates :url, presence: true
   validates :resource, presence: true, uniqueness: { scope: [:http_method, :url]}
+  validate :request_resource_representation_must_belongs_to_project
 
   audited
   has_associated_audits
@@ -57,5 +58,11 @@ class Route < ApplicationRecord
       self.request_is_collection = false
       self.request_root_key = ''
     end
+  end
+
+  def request_resource_representation_must_belongs_to_project
+    return unless request_resource_representation
+    return if request_resource_representation.project == project
+    errors.add(:request_resource_representation, :request_resource_representation_must_belongs_to_project)
   end
 end

@@ -14,4 +14,10 @@ class RoutePolicy < ProjectRelatedPolicy
       request_headers_attributes: [:id, :name, :value, :_destroy]
     ]
   end
+
+  def create?
+    return false unless super
+    return true if !record.is_a? Route
+    return project.resources.where(id: record.resource_id).exists?
+  end
 end
