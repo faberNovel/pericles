@@ -1,7 +1,7 @@
 class ResourcesController < ApplicationController
   include ProjectRelated
   layout 'full_width_column'
-  lazy_controller_of :resource
+  lazy_controller_of :resource, belongs_to: :project
   decorates_method :resource
 
   def index
@@ -55,18 +55,6 @@ class ResourcesController < ApplicationController
   end
 
   private
-
-  def find_resource
-    project.resources.find(params[:id]) if params.has_key? :id
-  end
-
-  def build_resource_from_params
-    project.resources.build(resource_params) if params.has_key? :resource
-  end
-
-  def new_resource
-    project.resources.build
-  end
 
   def check_valid_json_object_param(json_string)
     begin

@@ -1,7 +1,7 @@
 class RoutesController < ApplicationController
   include ProjectRelated
 
-  lazy_controller_of :route
+  lazy_controller_of :route, belongs_to: :project
   decorates_method :route
 
   def index
@@ -50,15 +50,5 @@ class RoutesController < ApplicationController
     route.destroy
 
     redirect_to project_resource_path(project, resource)
-  end
-
-  private
-
-  def find_route
-    project.routes.find(params[:id]) if params.has_key? :id
-  end
-
-  def new_route
-    project.resources.first.routes.build
   end
 end

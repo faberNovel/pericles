@@ -3,8 +3,15 @@ module Lazy
 
   module ClassMethods
     def lazy_controller_of(model_name, options = {})
-      class_name = options[:class_name].nil? ? model_name.to_s.camelize : options[:class_name].to_s
+      class_name = (options[:class_name] || model_name).to_s.camelize
       helper_method = options[:helper_method]
+      param_key = class_name.underscore.singularize
+      if (belongs_to = options[:belongs_to])
+        association = class_name.to_s.underscore.pluralize
+        new_prefix = "#{belongs_to}.#{association}"
+      else
+        new_prefix = class_name
+      end
 
       class_eval <<-METHODS, __FILE__, __LINE__ + 1
         def #{model_name}
@@ -25,14 +32,15 @@ module Lazy
         end
 
         def build_#{model_name}_from_params
-          return unless params.has_key? :#{model_name}
-          model = #{class_name}.new(permitted_attributes(#{class_name})) if respond_to?(:permitted_attributes)
-          model ||= #{class_name}.new(permitted_params) if respond_to?(:permitted_params)
+          return unless params.has_key? :#{param_key}
+          model = #{new_prefix}.new(#{model_name}_params) if respond_to?(:#{model_name}_params, true)
+          model ||= #{new_prefix}.new(permitted_params) if respond_to?(:permitted_params)
+          model ||= #{new_prefix}.new(permitted_attributes(#{class_name})) if respond_to?(:permitted_attributes)
           model
         end
 
         def new_#{model_name}
-          #{class_name}.new
+          #{new_prefix}.new
         end
         #{helper_method ? "helper_method(:#{model_name})" : ''}
 

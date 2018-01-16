@@ -2,7 +2,7 @@ class MockProfilesController < MocksController
   include ProjectRelated
 
   layout 'full_width_column'
-  lazy_controller_of :mock_profile, helper_method: true
+  lazy_controller_of :mock_profile, helper_method: true, belongs_to: :project
 
   def index
     @mock_profiles = project.mock_profiles
@@ -35,14 +35,6 @@ class MockProfilesController < MocksController
   def find_project
     # With find_mock_profile we avoid authorization process that create an infinite loop
     super || find_mock_profile.project
-  end
-
-  def build_mock_profile_from_params
-    project.mock_profiles.new(permitted_attributes(MockProfile)) if params.has_key? :mock_profile
-  end
-
-  def new_mock_profile
-    project.mock_profiles.new
   end
 
   def mock_pickers_by_response_id

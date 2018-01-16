@@ -2,7 +2,7 @@ class ApiErrorsController < ApplicationController
   include ProjectRelated
 
   layout 'full_width_column'
-  lazy_controller_of :api_error, helper_method: true
+  lazy_controller_of :api_error, helper_method: true, belongs_to: :project
 
   def index
     @api_errors = project.api_errors.sort_by { |api_error| api_error.name.downcase }
@@ -48,22 +48,5 @@ class ApiErrorsController < ApplicationController
   def destroy
     api_error.destroy
     redirect_to project_api_errors_path(project)
-  end
-
-  private
-
-  def new_api_error
-    project.api_errors.build
-  end
-
-  def build_api_error_from_params
-    project.api_errors.build(api_error_params) if params.has_key? :api_error
-  end
-
-  def api_error_params
-    params.require(:api_error).permit(
-      :name,
-      :json_schema
-    )
   end
 end

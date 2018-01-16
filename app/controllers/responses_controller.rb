@@ -4,7 +4,8 @@ class ResponsesController < ApplicationController
   layout 'generic'
 
   # Avoid ApplicationController.response collision
-  lazy_controller_of :route_response, class_name: 'Response', helper_method: true
+  lazy_controller_of :route_response,
+    class_name: 'Response', helper_method: true, belongs_to: :route
 
   def new
     route_response.headers.build(name: 'Authorization')
@@ -50,17 +51,5 @@ class ResponsesController < ApplicationController
 
   def find_project
     resource.project
-  end
-
-  def find_route_response
-    route.responses.find(params[:id]) if params.has_key? :id
-  end
-
-  def build_route_response_from_params
-    route.responses.build(permitted_attributes(Response)) if params.has_key? :response
-  end
-
-  def new_route_response
-    route.responses.build
   end
 end
