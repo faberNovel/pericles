@@ -6,5 +6,5 @@
   .col-xs-6
     .flexcontainer.flexcontainer-justify-end
       .btn-group{ role: "group" }
-        = link_to 'Edit', edit_polymorphic_path(instance), class: "btn btn-default"
-        = link_to 'Delete', polymorphic_path(instance), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-default"
+        = link_to 'Edit', edit_polymorphic_path(instance), class: "btn btn-default" if user.can_edit? instance
+        = link_to 'Delete', polymorphic_path(instance), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-default" if user.can_delete? instance

@@ -4,7 +4,7 @@
       = f.text_field :name, hide_label: true, placeholder: t('.name_placeholder')
     = f.check_box :is_array, hide_label: true
     .flex
-      = f.select :type, @types, hide_label: true, required: true, selected: f.object.type || :string
+      = f.select :type, available_types, hide_label: true, required: true, selected: f.object.type || :string
     = f.check_box :nullable, hide_label: true
     .flex
       = f.text_area :description, hide_label: true, placeholder: t('.description_placeholder'), rows: (f.object.description&.count("\n") || 0) + 1

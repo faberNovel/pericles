@@ -39,7 +39,7 @@ class ResourceInstancesControllerTest < ControllerWithAuthenticationTest
   end
 
   test 'member external user should access project resource instances' do
-    external_user = create(:user, email: 'michel@external.com')
+    external_user = create(:user, :external)
     sign_in external_user
 
     create(:member, project: @project, user: external_user)
@@ -49,10 +49,23 @@ class ResourceInstancesControllerTest < ControllerWithAuthenticationTest
 
     get edit_resource_instance_path(@resource_instance)
     assert_response :success
+
+    patch resource_instance_path(@resource_instance), params: {
+      resource_instance: { name: 'new name' }
+    }
+    assert_redirected_to project_resource_path(@project, @resource)
+
+    post resource_resource_instances_path(@resource), params: {
+      resource_instance: @resource_instance.attributes
+    }
+    assert_redirected_to project_resource_path(@project, @resource)
+
+    delete resource_instance_path(@resource_instance)
+    assert_redirected_to project_resource_path(@project, @resource)
   end
 
   test 'non member external user should not access project resource instances' do
-    external_user = create(:user, email: 'michel@external.com')
+    external_user = create(:user, :external)
     sign_in external_user
 
     get new_resource_resource_instance_path(@resource)
@@ -60,5 +73,67 @@ class ResourceInstancesControllerTest < ControllerWithAuthenticationTest
 
     get edit_resource_instance_path(@resource_instance)
     assert_response :forbidden
+
+    patch resource_instance_path(@resource_instance), params: {
+      resource_instance: { name: 'new name' }
+    }
+    assert_response :forbidden
+
+    post resource_resource_instances_path(@resource), params: {
+      resource_instance: @resource_instance.attributes
+    }
+    assert_response :forbidden
+
+    delete resource_instance_path(@resource_instance)
+    assert_response :forbidden
+  end
+
+  test 'non member external user should access public project resource instances with read-only permission' do
+    external_user = create(:user, :external)
+    @project.update(is_public: true)
+    sign_in external_user
+
+    get new_resource_resource_instance_path(@resource)
+    assert_response :forbidden
+
+    get edit_resource_instance_path(@resource_instance)
+    assert_response :forbidden
+
+    patch resource_instance_path(@resource_instance), params: {
+      resource_instance: { name: 'new name' }
+    }
+    assert_response :forbidden
+
+    post resource_resource_instances_path(@resource), params: {
+      resource_instance: @resource_instance.attributes
+    }
+    assert_response :forbidden
+
+    delete resource_instance_path(@resource_instance)
+    assert_response :forbidden
+  end
+
+  test 'unauthenticated user should access public project resource instances with read-only permission' do
+    @project.update(is_public: true)
+    sign_out :user
+
+    get new_resource_resource_instance_path(@resource)
+    assert_redirected_to new_user_session_path
+
+    get edit_resource_instance_path(@resource_instance)
+    assert_redirected_to new_user_session_path
+
+    patch resource_instance_path(@resource_instance), params: {
+      resource_instance: { name: 'new name' }
+    }
+    assert_redirected_to new_user_session_path
+
+    post resource_resource_instances_path(@resource), params: {
+      resource_instance: @resource_instance.attributes
+    }
+    assert_redirected_to new_user_session_path
+
+    delete resource_instance_path(@resource_instance)
+    assert_redirected_to new_user_session_path
   end
 end

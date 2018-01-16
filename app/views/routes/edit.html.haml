@@ -1,7 +1,7 @@
-= content_for :title, "Edit Route #{@route.url}"
+= content_for :title, "Edit Route #{route.url}"
 
 .page-header
   %h1
-    !="#{@route.resource.name} <small> Edit Route: #{@route.url} </small>"
+    !="#{route.resource.name} <small> Edit Route: #{route.url} </small>"
 
 = render 'form'

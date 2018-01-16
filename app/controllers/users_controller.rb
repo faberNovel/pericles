@@ -1,4 +1,6 @@
-class UsersController < AuthenticatedController
+class UsersController < ApplicationController
+  include Authenticated
+
   def show
   end
 end

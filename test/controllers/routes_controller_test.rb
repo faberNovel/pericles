@@ -74,9 +74,17 @@ class RoutesControllerTest < ControllerWithAuthenticationTest
     sign_out :user
     route = build(:route)
     assert_no_difference('Route.count') do
-      post project_routes_path(create(:project)), params: { route: route.attributes }
+      post project_routes_path(route.project), params: { route: route.attributes }
     end
     assert_redirected_to new_user_session_path
+  end
+
+  test "should not create route if resource is not related to project" do
+    route = build(:route)
+    assert_no_difference('Route.count') do
+      post project_routes_path(create(:project)), params: { route: route.attributes }
+    end
+    assert_response :forbidden
   end
 
   test "should update route" do
@@ -124,7 +132,7 @@ class RoutesControllerTest < ControllerWithAuthenticationTest
   end
 
   test 'non member external user should not access project routes' do
-    external_user = create(:user, email: 'michel@external.com')
+    external_user = create(:user, :external)
     sign_in external_user
 
     route = create(:route)
@@ -136,10 +144,16 @@ class RoutesControllerTest < ControllerWithAuthenticationTest
     get new_project_route_path(project)
     assert_response :forbidden
 
+    post project_routes_path(route.project), params: { route: build(:route, resource: route.resource).attributes }
+    assert_response :forbidden
+
     get project_route_path(project, route)
     assert_response :forbidden
 
     get edit_project_route_path(project, route)
+    assert_response :forbidden
+
+    put project_route_path(route.project, route), params: { route: { url: '/new_url' } }
     assert_response :forbidden
 
     delete project_route_path(project, route)
@@ -147,7 +161,7 @@ class RoutesControllerTest < ControllerWithAuthenticationTest
   end
 
   test 'member external user should access project routes' do
-    external_user = create(:user, email: 'michel@external.com')
+    external_user = create(:user, :external)
     sign_in external_user
 
     route = create(:route)
@@ -160,13 +174,79 @@ class RoutesControllerTest < ControllerWithAuthenticationTest
     get new_project_route_path(project)
     assert_response :success
 
+    post project_routes_path(route.project), params: { route: build(:route, resource: route.resource).attributes }
+    created = Route.order(:created_at).last
+    assert_redirected_to project_route_path(route.project, created)
+
     get project_route_path(project, route)
     assert_response :success
 
     get edit_project_route_path(project, route)
     assert_response :success
 
+    put project_route_path(route.project, route), params: { route: { url: '/new_url' } }
+    assert_redirected_to project_route_path(route.project, route)
+
     delete project_route_path(project, route)
     assert_redirected_to project_resource_path(route.project, route.resource)
+  end
+
+  test 'non member external user should access public project routes with read-only permission' do
+    external_user = create(:user, :external)
+    sign_in external_user
+
+    route = create(:route)
+    project = route.project
+    project.update(is_public: true)
+
+    get project_routes_path(project)
+    assert_response :success
+
+    get new_project_route_path(project)
+    assert_response :forbidden
+
+    post project_routes_path(route.project), params: { route: build(:route, resource: route.resource).attributes }
+    assert_response :forbidden
+
+    get project_route_path(project, route)
+    assert_response :success
+
+    get edit_project_route_path(project, route)
+    assert_response :forbidden
+
+    put project_route_path(route.project, route), params: { route: { url: '/new_url' } }
+    assert_response :forbidden
+
+    delete project_route_path(project, route)
+    assert_response :forbidden
+  end
+
+  test 'unauthenticated user should access public project routes with read-only permission' do
+    sign_out :user
+
+    route = create(:route)
+    project = route.project
+    project.update(is_public: true)
+
+    get project_routes_path(project)
+    assert_response :success
+
+    get new_project_route_path(project)
+    assert_redirected_to new_user_session_path
+
+    post project_routes_path(route.project), params: { route: build(:route, resource: route.resource).attributes }
+    assert_redirected_to new_user_session_path
+
+    get project_route_path(project, route)
+    assert_response :success
+
+    get edit_project_route_path(project, route)
+    assert_redirected_to new_user_session_path
+
+    put project_route_path(route.project, route), params: { route: { url: '/new_url' } }
+    assert_redirected_to new_user_session_path
+
+    delete project_route_path(project, route)
+    assert_redirected_to new_user_session_path
   end
 end

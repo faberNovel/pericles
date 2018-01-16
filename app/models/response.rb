@@ -9,15 +9,17 @@ class Response < ApplicationRecord
   has_many :api_error_instances, through: :api_error
   has_many :mock_pickers
 
+  delegate :project, to: :route
+
   accepts_nested_attributes_for :headers, allow_destroy: true, reject_if: :all_blank
 
   validates :status_code, presence: true
   validates :route, presence: true
+  validates :resource_representation, absence: true, unless: :can_have_resource_representation
+  validates :api_error, absence: true, unless: :can_have_api_error
 
   audited associated_with: :route
 
-  validates :resource_representation, absence: true, unless: :can_have_resource_representation
-  validates :api_error, absence: true, unless: :can_have_api_error
 
   def json_instance
     GenerateJsonInstanceService.new(json_schema).execute if json_schema

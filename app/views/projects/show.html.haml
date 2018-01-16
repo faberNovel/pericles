@@ -1,10 +1,10 @@
-= content_for :title, "Project #{@project.title}"
+= content_for :title, "Project #{project.title}"
 
 %h1= project.title
 
 .flexcontainer.flexcontainer-justify-end
   .btn-group{ role: "group" }
-    = link_to t('actions.edit'), edit_project_path(project), class: "btn btn-default"
+    = link_to t('actions.edit'), edit_project_path(project), class: "btn btn-default" if user.can_edit? project
 
 %h4 Members
 %p= project.member_list
@@ -33,4 +33,4 @@
 = link_to 'Kotlin', project_path(project, format: 'kotlin'), class: 'btn btn-default'
 
 
-= link_to t('actions.delete'), project_path(project), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-default", id: 'delete-button'
+= link_to t('actions.delete'), project_path(project), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-default", id: 'delete-button' if user.can_delete? project

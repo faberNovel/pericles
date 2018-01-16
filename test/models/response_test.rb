@@ -16,4 +16,8 @@ class ResponseTest < ActiveSupport::TestCase
   test "shoud have json_schema if response has resource_representation" do
     assert build(:response, resource_representation: build(:resource_representation)).json_schema
   end
+
+  test "have a project" do
+    assert build(:response).project
+  end
 end

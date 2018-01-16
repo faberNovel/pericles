@@ -1,5 +1,4 @@
 class MocksController < ApplicationController
-
   def compute_mock
     @project = Project.find(params[:project_id])
     routes = @project.build_route_set
@@ -10,7 +9,7 @@ class MocksController < ApplicationController
     end
 
     route = Route.find_by_id(main_route[:name])
-    profile = pick_profile
+    profile = find_mock_profile
     mock_picker = find_matching_mock_picker(profile, route)
     response = mock_picker&.response || route.responses.find {|r| r.status_code == 200} || route.responses.first
 
@@ -23,7 +22,7 @@ class MocksController < ApplicationController
     render json: mock_body, status: response.status_code
   end
 
-  def pick_profile
+  def find_mock_profile
     @project.active_mock_profile || @project.mock_profiles.first
   end
 

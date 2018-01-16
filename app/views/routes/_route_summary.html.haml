@@ -25,4 +25,4 @@
             %dd= route.resource.name
       - if resource = local_assigns[:resource]
         .col-xs-1
-          = link_to 'Show', project_route_path(@project, route), class: "btn btn-default btn-md"
+          = link_to 'Show', project_route_path(project, route), class: "btn btn-default btn-md"

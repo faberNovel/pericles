@@ -1,20 +1,18 @@
-class SchemesController < AuthenticatedController
+class SchemesController < ApplicationController
+  lazy_controller_of :scheme, helper_method: true
+
   def index
-    @schemes = Scheme.all
+    @schemes = policy_scope(Scheme).all
   end
 
   def new
-    @scheme = Scheme.new
   end
 
   def edit
-    @scheme = Scheme.find(params[:id])
   end
 
   def update
-    @scheme = Scheme.find(params[:id])
-
-    if @scheme.update(scheme_params)
+    if scheme.update(permitted_attributes(scheme))
       redirect_to schemes_path
     else
       render 'edit', status: :unprocessable_entity
@@ -22,9 +20,7 @@ class SchemesController < AuthenticatedController
   end
 
   def create
-    @scheme = Scheme.new(scheme_params)
-
-    if @scheme.save
+    if scheme.save
       redirect_to schemes_path
     else
       render 'new', status: :unprocessable_entity
@@ -32,13 +28,7 @@ class SchemesController < AuthenticatedController
   end
 
   def destroy
-    @scheme = Scheme.find_by(id: params[:id])
-    @scheme&.destroy
+    scheme.destroy
     redirect_to schemes_path
-  end
-
-  private
-  def scheme_params
-    params.require(:scheme).permit(:name, :regexp)
   end
 end

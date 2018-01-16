@@ -233,7 +233,7 @@ class ResourcesControllerTest < ControllerWithAuthenticationTest
   end
 
   test 'non member external user should not access project resources' do
-    external_user = create(:user, email: 'michel@external.com')
+    external_user = create(:user, :external)
     sign_in external_user
 
     resource = create(:resource)
@@ -245,10 +245,16 @@ class ResourcesControllerTest < ControllerWithAuthenticationTest
     get new_project_resource_path(project)
     assert_response :forbidden
 
+    post project_resources_path(resource.project), params: { resource: build(:resource).attributes }
+    assert_response :forbidden
+
     get project_resource_path(project, resource)
     assert_response :forbidden
 
     get edit_project_resource_path(project, resource)
+    assert_response :forbidden
+
+    put project_resource_path(resource.project, resource), params: { resource: { name: "New name" } }
     assert_response :forbidden
 
     delete project_resource_path(project, resource)
@@ -256,7 +262,7 @@ class ResourcesControllerTest < ControllerWithAuthenticationTest
   end
 
   test 'member external user should access project resources' do
-    external_user = create(:user, email: 'michel@external.com')
+    external_user = create(:user, :external)
     sign_in external_user
 
     resource = create(:resource)
@@ -269,13 +275,79 @@ class ResourcesControllerTest < ControllerWithAuthenticationTest
     get new_project_resource_path(project)
     assert_response :success
 
+    post project_resources_path(resource.project), params: { resource: build(:resource).attributes }
+    created = Resource.order(:created_at).last
+    assert_redirected_to project_resource_path(created.project, created)
+
     get project_resource_path(project, resource)
     assert_response :success
 
     get edit_project_resource_path(project, resource)
     assert_response :success
 
+    put project_resource_path(resource.project, resource), params: { resource: { name: "New name" } }
+    assert_redirected_to project_resource_path(resource.project, resource)
+
     delete project_resource_path(project, resource)
     assert_redirected_to project_resources_path(project)
+  end
+
+  test 'non member external user should access public project resources with read-only permission' do
+    external_user = create(:user, :external)
+    sign_in external_user
+
+    resource = create(:resource)
+    project = resource.project
+    project.update(is_public: true)
+
+    get project_resources_path(project)
+    assert_response :success
+
+    get new_project_resource_path(project)
+    assert_response :forbidden
+
+    post project_resources_path(resource.project), params: { resource: build(:resource).attributes }
+    assert_response :forbidden
+
+    get project_resource_path(project, resource)
+    assert_response :success
+
+    get edit_project_resource_path(project, resource)
+    assert_response :forbidden
+
+    put project_resource_path(resource.project, resource), params: { resource: { name: "New name" } }
+    assert_response :forbidden
+
+    delete project_resource_path(project, resource)
+    assert_response :forbidden
+  end
+
+  test 'unauthenticated user should access public project resources with read-only permission' do
+    sign_out :user
+
+    resource = create(:resource)
+    project = resource.project
+    project.update(is_public: true)
+
+    get project_resources_path(project)
+    assert_response :success
+
+    get new_project_resource_path(project)
+    assert_redirected_to new_user_session_path
+
+    post project_resources_path(resource.project), params: { resource: build(:resource).attributes }
+    assert_redirected_to new_user_session_path
+
+    get project_resource_path(project, resource)
+    assert_response :success
+
+    get edit_project_resource_path(project, resource)
+    assert_redirected_to new_user_session_path
+
+    put project_resource_path(resource.project, resource), params: { resource: { name: "New name" } }
+    assert_redirected_to new_user_session_path
+
+    delete project_resource_path(project, resource)
+    assert_redirected_to new_user_session_path
   end
 end

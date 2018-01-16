@@ -7,6 +7,8 @@ class ResourceRepresentation < ApplicationRecord
   has_many :responses, inverse_of: :resource_representation
   has_many :resource_instances, through: :resource
 
+  delegate :project, to: :resource
+
   accepts_nested_attributes_for :attributes_resource_representations, allow_destroy: true
 
   validates :name, presence: true, uniqueness: { scope: [:resource], case_sensitive: false }

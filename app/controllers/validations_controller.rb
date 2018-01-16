@@ -1,4 +1,5 @@
-class ValidationsController < AuthenticatedController
+class ValidationsController < ApplicationController
+
   def index
     @validations = Validation.order(created_at: 'desc').page(params[:page]).per(10)
   end

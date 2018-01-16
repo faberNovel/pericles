@@ -22,6 +22,10 @@ class RouteTest < ActiveSupport::TestCase
     assert build(:route, description: "New test route", http_method: :POST, url: "/tests").valid?
   end
 
+  test "route's request_resource_representation must belongs_to the project" do
+    assert_not build(:route, request_resource_representation: build(:resource_representation)).valid?
+  end
+
   test "routes of project" do
     route = create(:route)
     create(:route, resource: route.resource)
@@ -53,5 +57,9 @@ class RouteTest < ActiveSupport::TestCase
 
     route.update(http_method: :GET)
     assert route.can_have_query_params
+  end
+
+  test "have a project" do
+    assert build(:route).project
   end
 end
