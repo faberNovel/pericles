@@ -5,7 +5,7 @@
 
 - if user.can_create? ApiError, project: project
   .flexcontainer.flexcontainer-justify-end
-    = link_to 'New Error', new_project_api_error_path(project), class: "btn btn-default btn-lg"
+    = link_to 'New Error', new_project_api_error_path(project), class: "btn btn-primary btn-lg"
 
 .list-group.margin-top-element
   - @api_errors.each do |api_error|

@@ -65,7 +65,7 @@ input[type=submit] {
   flex: 1;
 }
 
-.btn-default {
+.btn.btn-primary {
   border-color: transparent;
   &:hover {
     border-color: transparent;
@@ -74,4 +74,13 @@ input[type=submit] {
 
 .navbar-fixed-top {
   min-height: 60px;
+}
+
+.btn.btn-default {
+  background-color: white;
+  color: $grey;
+  &:hover,&:active,&:focus {
+    color: darken($grey, 5%);
+    background-color: white;
+  }
 }
