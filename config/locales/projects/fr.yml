@@ -31,3 +31,5 @@ fr:
         ** Définir la logique d’expiration des tokens
     show:
       internal_members: Membres internes
+    index:
+      visitor_see_only_public: En tant que visiteur vous n'avez accès qu'aux projets publics. %{href} permet de bénéficier de l'expérience dans son intégralité.
