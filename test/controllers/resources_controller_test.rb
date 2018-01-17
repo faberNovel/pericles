@@ -1,6 +1,7 @@
 require 'test_helper'
 
 class ResourcesControllerTest < ControllerWithAuthenticationTest
+  include AndroidCodeGenHelper
 
   test "should get index with resources sorted in alphabetical order" do
     project = create(:project)
@@ -145,17 +146,22 @@ class ResourcesControllerTest < ControllerWithAuthenticationTest
 
   test "should get kotlin code" do
     resource = create(:resource, name: 'Pokemon', project: create(:project, title: 'PokeApi'))
-    resource.resource_attributes << create(:attribute, name: 'id', primitive_type: :integer)
-    resource.resource_attributes << create(:attribute, name: 'weight', primitive_type: :number, nullable: true)
-    resource.resource_attributes << create(:attribute_with_resource, name: 'weakness_list', resource: create(:resource, name: 'nature'), is_array: true)
+    create(:attribute, name: 'id', primitive_type: :integer, parent_resource: resource)
+    create(:attribute, name: 'weight', primitive_type: :number, nullable: true, parent_resource: resource)
+    create(:attribute_with_resource, name: 'weakness_list', resource: create(:resource, name: 'nature'), is_array: true, parent_resource: resource)
 
-    file = "package com.applidium.pokeapi.android.data.net.retrofit.model\n"
-    file += "\n"
-    file += "data class RestPokemon(\n"
-    file += "    val id: Int,\n"
-    file += "    val weaknessList: List<RestNature>,\n"
-    file += "    val weight: Double?\n"
-    file += ")\n"
+    # This attribute is not nullable but is not in default representation
+    resource.resource_attributes << create(:attribute, name: 'niceBoolean', primitive_type: :boolean)
+
+    file = %{package #{android_company_domain_name}.pokeapi.android.data.net.retrofit.model
+
+    data class RestPokemon(
+        val id: Int,
+        val niceBoolean: Boolean?,
+        val weaknessList: List<RestNature>,
+        val weight: Double?
+    )
+    }.gsub(/^    /, '')
 
     get project_resource_path(resource.project, resource, format: 'kotlin')
     assert_equal(response.body, file)
@@ -163,24 +169,25 @@ class ResourcesControllerTest < ControllerWithAuthenticationTest
 
   test "should get java code" do
     resource = create(:resource, name: 'Pokemon', project: create(:project, title: 'PokeApi'))
-    resource.resource_attributes << create(:attribute, name: 'id', primitive_type: :integer)
-    resource.resource_attributes << create(:attribute, name: 'weight', primitive_type: :number, nullable: true)
-    resource.resource_attributes << create(:attribute_with_resource, name: 'weakness_list', resource: create(:resource, name: 'nature'), is_array: true)
+    create(:attribute, name: 'id', primitive_type: :integer, parent_resource: resource)
+    create(:attribute, name: 'weight', primitive_type: :number, nullable: true, parent_resource: resource)
+    create(:attribute_with_resource, name: 'weakness_list', resource: create(:resource, name: 'nature'), is_array: true, parent_resource: resource)
 
-    file = "package com.applidium.pokeapi.android.data.net.retrofit.model\n"
-    file += "\n"
-    file += "import android.support.annotation.Nullable;\n"
-    file += "\n"
-    file += "import java.util.List;\n"
-    file += "\n"
-    file += "import io.norberg.automatter.AutoMatter;\n"
-    file += "\n"
-    file += "@AutoMatter\n"
-    file += "public interface RestPokemon {\n"
-    file += "    Integer id();\n"
-    file += "    List<RestNature> weaknessList();\n"
-    file += "    @Nullable Double weight();\n"
-    file += "}\n"
+    file = %{package #{android_company_domain_name}.pokeapi.android.data.net.retrofit.model
+
+    import android.support.annotation.Nullable;
+
+    import java.util.List;
+
+    import io.norberg.automatter.AutoMatter;
+
+    @AutoMatter
+    public interface RestPokemon {
+        Integer id();
+        List<RestNature> weaknessList();
+        @Nullable Double weight();
+    }
+    }.gsub(/^    /, '')
 
     get project_resource_path(resource.project, resource, format: 'java')
     assert_equal(response.body, file)
@@ -188,17 +195,159 @@ class ResourcesControllerTest < ControllerWithAuthenticationTest
 
   test "should get swift code" do
     resource = create(:resource, name: 'Pokemon', project: create(:project, title: 'PokeApi'))
-    resource.resource_attributes << create(:attribute, name: 'id', primitive_type: :integer)
-    resource.resource_attributes << create(:attribute, name: 'weight', primitive_type: :number, nullable: true)
-    resource.resource_attributes << create(:attribute_with_resource, name: 'weakness_list', resource: create(:resource, name: 'nature'), is_array: true)
+    create(:attribute, name: 'id', primitive_type: :integer, parent_resource: resource)
+    create(:attribute, name: 'weight', primitive_type: :number, nullable: true, parent_resource: resource)
+    create(:attribute_with_resource, name: 'weakness_list', resource: create(:resource, name: 'nature'), is_array: true, parent_resource: resource)
+    create(:attribute, name: 'date', primitive_type: :date, nullable: false, parent_resource: resource)
+    create(:attribute, name: 'date_time', primitive_type: :datetime, nullable: true, parent_resource: resource)
 
-    file = "struct RestPokemon {\n"
-    file += "    let id: Int\n"
-    file += "    let weaknessList: [RestNature]\n"
-    file += "    let weight: Double?\n"
-    file += "}\n"
+    file = %{//
+    //  RestPokemon.swift
+    //
+    //  Generated by Pericles on 01/12/2017
+    //
+    //
 
-    get project_resource_path(resource.project, resource, format: 'swift')
+    import Foundation
+
+    struct RestPokemon : Decodable {
+        let date: Date
+        let dateTime: Date?
+        let id: Int
+        let weaknessList: [RestNature]
+        let weight: Double?
+
+        enum CodingKeys : String, CodingKey {
+            case date = \"date\"
+            case dateTime = \"date_time\"
+            case id = \"id\"
+            case weaknessList = \"weakness_list\"
+            case weight = \"weight\"
+        }
+    }
+    }.gsub(/^    /, '')
+    travel_to Date.new(2017, 12, 1) do
+      get project_resource_path(resource.project, resource, format: 'swift')
+    end
     assert_equal(response.body, file)
+  end
+
+  test 'non member external user should not access project resources' do
+    external_user = create(:user, :external)
+    sign_in external_user
+
+    resource = create(:resource)
+    project = resource.project
+
+    get project_resources_path(project)
+    assert_response :forbidden
+
+    get new_project_resource_path(project)
+    assert_response :forbidden
+
+    post project_resources_path(resource.project), params: { resource: build(:resource).attributes }
+    assert_response :forbidden
+
+    get project_resource_path(project, resource)
+    assert_response :forbidden
+
+    get edit_project_resource_path(project, resource)
+    assert_response :forbidden
+
+    put project_resource_path(resource.project, resource), params: { resource: { name: "New name" } }
+    assert_response :forbidden
+
+    delete project_resource_path(project, resource)
+    assert_response :forbidden
+  end
+
+  test 'member external user should access project resources' do
+    external_user = create(:user, :external)
+    sign_in external_user
+
+    resource = create(:resource)
+    project = resource.project
+    create(:member, project: project, user: external_user)
+
+    get project_resources_path(project)
+    assert_response :success
+
+    get new_project_resource_path(project)
+    assert_response :success
+
+    post project_resources_path(resource.project), params: { resource: build(:resource).attributes }
+    created = Resource.order(:created_at).last
+    assert_redirected_to project_resource_path(created.project, created)
+
+    get project_resource_path(project, resource)
+    assert_response :success
+
+    get edit_project_resource_path(project, resource)
+    assert_response :success
+
+    put project_resource_path(resource.project, resource), params: { resource: { name: "New name" } }
+    assert_redirected_to project_resource_path(resource.project, resource)
+
+    delete project_resource_path(project, resource)
+    assert_redirected_to project_resources_path(project)
+  end
+
+  test 'non member external user should access public project resources with read-only permission' do
+    external_user = create(:user, :external)
+    sign_in external_user
+
+    resource = create(:resource)
+    project = resource.project
+    project.update(is_public: true)
+
+    get project_resources_path(project)
+    assert_response :success
+
+    get new_project_resource_path(project)
+    assert_response :forbidden
+
+    post project_resources_path(resource.project), params: { resource: build(:resource).attributes }
+    assert_response :forbidden
+
+    get project_resource_path(project, resource)
+    assert_response :success
+
+    get edit_project_resource_path(project, resource)
+    assert_response :forbidden
+
+    put project_resource_path(resource.project, resource), params: { resource: { name: "New name" } }
+    assert_response :forbidden
+
+    delete project_resource_path(project, resource)
+    assert_response :forbidden
+  end
+
+  test 'unauthenticated user should access public project resources with read-only permission' do
+    sign_out :user
+
+    resource = create(:resource)
+    project = resource.project
+    project.update(is_public: true)
+
+    get project_resources_path(project)
+    assert_response :success
+
+    get new_project_resource_path(project)
+    assert_redirected_to new_user_session_path
+
+    post project_resources_path(resource.project), params: { resource: build(:resource).attributes }
+    assert_redirected_to new_user_session_path
+
+    get project_resource_path(project, resource)
+    assert_response :success
+
+    get edit_project_resource_path(project, resource)
+    assert_redirected_to new_user_session_path
+
+    put project_resource_path(resource.project, resource), params: { resource: { name: "New name" } }
+    assert_redirected_to new_user_session_path
+
+    delete project_resource_path(project, resource)
+    assert_redirected_to new_user_session_path
   end
 end

@@ -1,4 +1,6 @@
-class HeadersController < AuthenticatedController
+class HeadersController < ApplicationController
+  include Authenticated
+
   def index
     term = params[:term] ? params[:term] : ""
     @found_headers = Header.ransack(name_cont: term).result(distinct: true).select(:name)

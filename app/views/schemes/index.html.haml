@@ -1,7 +1,10 @@
+= content_for :title, "Schemes"
+
 %h1 Schemes
 
-.flexcontainer.flexcontainer-justify-end
-  = link_to 'New Scheme', new_scheme_path, class: "btn btn-default btn-lg"
+- if user.can_create? Scheme
+  .flexcontainer.flexcontainer-justify-end
+    = link_to 'New Scheme', new_scheme_path, class: "btn btn-default btn-lg"
 
 
 - if @schemes.any?
@@ -17,5 +20,5 @@
         %tr
           %td= scheme.name
           %td= scheme.regexp
-          %td= link_to 'Edit', edit_scheme_path(scheme)
-          %td= link_to 'Delete', scheme_path(scheme), method: :delete, data: { confirm: 'Are you sure?' }
+          %td= link_to 'Edit', edit_scheme_path(scheme) if user.can_edit? scheme
+          %td= link_to 'Delete', scheme_path(scheme), method: :delete, data: { confirm: 'Are you sure?' } if user.can_delete? scheme

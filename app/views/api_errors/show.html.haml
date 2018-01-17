@@ -1,24 +1,27 @@
+= content_for :title, "API Error #{api_error.name}"
+
 .page-header
   %h4
-    = @api_error.name
+    = api_error.name
     .pull-right
       .btn-group{ role: "group" }
-        = link_to 'Edit', edit_project_api_error_path(@project, @api_error), class: "btn btn-default"
-        = link_to "Delete", project_api_error_path(@project, @api_error), method: :delete, data: { confirm: 'Are you sure ?' },
-       class: "btn btn-default"
+        = link_to 'Edit', edit_project_api_error_path(project, api_error), class: "btn btn-default" if user.can_edit? api_error
+        = link_to "Delete", project_api_error_path(project, api_error), method: :delete, data: { confirm: 'Are you sure ?' },
+       class: "btn btn-default" if user.can_delete? api_error
 
   %h4 JSON Schema
   %pre.pre-scrollable
     %code
-      =format_json(@api_error.json_schema)
+      =format_json(api_error.json_schema)
 
 
 %h3 Error instances
 
-.flexcontainer.flexcontainer-justify-end
-  = link_to 'New Mock', new_api_error_api_error_instance_path(@api_error), class: "btn btn-default btn-lg"
+- if user.can_create? ApiErrorInstance, project: project
+  .flexcontainer.flexcontainer-justify-end
+    = link_to 'New Mock', new_api_error_api_error_instance_path(api_error), class: "btn btn-default btn-lg"
 
 .margin-top-element
-  - if @api_error.api_error_instances.any?
-    - @api_error.api_error_instances.each do |instance|
+  - if api_error.api_error_instances.any?
+    - api_error.api_error_instances.each do |instance|
       = render instance

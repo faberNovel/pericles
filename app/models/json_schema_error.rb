@@ -1,2 +1,0 @@
-class JsonSchemaError < JsonError
-end

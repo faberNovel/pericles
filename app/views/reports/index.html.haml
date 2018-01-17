@@ -1,3 +1,5 @@
+= content_for :title, "Reports"
+
 %h1 Reports
 
 - if @reports.any?
@@ -20,7 +22,7 @@
           %td= report.response_status_code
           %td= time_ago_in_words(report.created_at) + ' ago'
           %td= report.response.blank? ? t('.unknown') : (report.correct? ? '☑' : '☐')
-          %td= link_to 'Detail', project_report_path(@project, report)
+          %td= link_to 'Detail', project_report_path(project, report)
 
   = paginate @reports
 

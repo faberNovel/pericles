@@ -1,4 +1,4 @@
-class InstancesController < AuthenticatedController
+class InstancesController < ApplicationController
 
   def create
     render json: GenerateJsonInstanceService.new(params[:schema]).execute

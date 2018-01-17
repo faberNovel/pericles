@@ -7,7 +7,7 @@ class ResourceRepresentationSchemaSerializer < ActiveModel::Serializer
   attribute :additionalProperties
 
   def initialize(object, options = {})
-    @resource_representation = object
+    @resource_representation = JSONSchema::ResourceRepresentationDecorator.new(object)
     @resource = object.resource
     @is_collection = options[:is_collection]
     @root_key = options[:root_key]

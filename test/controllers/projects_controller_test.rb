@@ -12,12 +12,6 @@ class ProjectsControllerTest < ControllerWithAuthenticationTest
     assert_response :success
   end
 
-  test "should not get index (not authenticated)" do
-    sign_out :user
-    get projects_path
-    assert_redirected_to new_user_session_path
-  end
-
   test "should show project" do
     get project_path(@project)
     assert_response :success
@@ -114,9 +108,54 @@ class ProjectsControllerTest < ControllerWithAuthenticationTest
 
   test "should get zip file with all json schemas" do
     project = create(:full_project)
-    get project_path(project, format: 'zip')
+    get project_path(project, format: 'json_schema')
     assert_response :success
     assert_equal response.headers['Content-Type'], 'application/zip'
   end
 
+  test "should get all swift files" do
+    project = create(:full_project)
+    get project_path(project, format: 'swift')
+    assert_response :success
+    assert_equal response.headers['Content-Type'], 'application/zip'
+  end
+
+  test "should get all java files" do
+    project = create(:full_project)
+    get project_path(project, format: 'java')
+    assert_response :success
+    assert_equal response.headers['Content-Type'], 'application/zip'
+  end
+
+  test "should get all kotlin files" do
+    project = create(:full_project)
+    get project_path(project, format: 'kotlin')
+    assert_response :success
+    assert_equal response.headers['Content-Type'], 'application/zip'
+  end
+
+  test 'external user should not show project' do
+    external_user = create(:user, :external)
+    sign_in external_user
+
+    get project_path(@project)
+    assert_response :forbidden
+  end
+
+  test 'external user should not create' do
+    external_user = create(:user, :external)
+    sign_in external_user
+
+    post projects_path, params: { project: { description: 'My description', title: 'My Project' }}
+    assert_response :forbidden
+  end
+
+  test 'external user can see public project' do
+    external_user = create(:user, :external)
+    sign_in external_user
+    @project.update(is_public: true)
+
+    get project_path(@project)
+    assert_response :success
+  end
 end

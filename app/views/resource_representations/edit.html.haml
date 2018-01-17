@@ -1,7 +1,9 @@
+= content_for :title, "Edit Representation #{resource_representation.name}"
+
 .page-header
   %h1
-    !="#{@resource.name} <small> Edit Representation: #{@representation.name} </small>"
+    !="#{resource.name} <small> Edit Representation: #{resource_representation.name} </small>"
 
 = render 'form'
 
-= link_to 'Back', project_resource_path(@project, @resource)
+= link_to 'Back', project_resource_path(project, resource)

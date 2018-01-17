@@ -1,61 +1,55 @@
-class ResponsesController < AuthenticatedController
+class ResponsesController < ApplicationController
+  include ProjectRelated
+
   layout 'generic'
-  before_action :setup_route_resource_and_project, only: [:new, :create]
-  before_action :setup_route_resource_project_and_response, except: [:new, :create]
+
+  # Avoid ApplicationController.response collision
+  lazy_controller_of :route_response,
+    class_name: 'Response', helper_method: true, belongs_to: :route
 
   def new
-    @response = @route.responses.build
-    @response.headers.build(name: 'Authorization')
-    @response.headers.build(name: 'Content-Type', value: 'application/json')
+    route_response.headers.build(name: 'Authorization')
+    route_response.headers.build(name: 'Content-Type', value: 'application/json')
   end
 
   def edit
   end
 
   def create
-    @response = @route.responses.build(response_params)
-    if @response.save
-      redirect_to project_route_path(@project, @route)
+    if route_response.save
+      redirect_to project_route_path(project, route)
     else
       render 'new', status: :unprocessable_entity
     end
   end
 
   def update
-    if @response.update(response_params)
-      redirect_to project_route_path(@project, @route)
+    if route_response.update(permitted_attributes(Response))
+      redirect_to project_route_path(project, route)
     else
       render 'edit', status: :unprocessable_entity
     end
   end
 
   def destroy
-    @response.destroy
+    route_response.destroy
 
-    redirect_to project_route_path(@project, @route)
+    redirect_to project_route_path(project, route)
   end
 
   private
 
-  def setup_route_resource_and_project
-    @route = Route.find(params[:route_id])
-    @resource = @route.resource
-    @project = @resource.project
+  def route
+    @route ||= Route.find(params[:route_id])
   end
+  helper_method :route
 
-  def setup_route_resource_project_and_response
-    setup_route_resource_and_project
-    @response = @route.responses.find(params[:id])
+  def resource
+    @resource ||= route.resource
   end
+  helper_method :resource
 
-  def response_params
-    params.require(:response).permit(
-      :status_code,
-      :resource_representation_id,
-      :api_error_id,
-      :is_collection,
-      :root_key,
-      headers_attributes: [:id, :name, :value, :_destroy]
-    )
+  def find_project
+    resource.project
   end
 end

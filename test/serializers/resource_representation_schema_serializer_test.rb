@@ -15,6 +15,20 @@ class ResourceRepresentationSchemaSerializerTest < ActiveSupport::TestCase
     ).as_json
   end
 
+  def schema_with_one_attribute(key_name, primitive_type)
+    attribute = build(:attribute, primitive_type: primitive_type)
+    representation = build(:resource_representation,
+      attributes_resource_representations: [
+        build(:attributes_resource_representation, resource_attribute: attribute, custom_key_name: key_name)
+      ]
+    )
+    ResourceRepresentationSchemaSerializer.new(
+      representation,
+      is_collection: false,
+      root_key: nil
+    ).as_json
+  end
+
   test "should produce a valid json schema" do
     schema = generate_schema(false, 'root_key').to_json
     assert JSON::Validator.fully_validate(META_SCHEMA, schema, json: true).empty?
@@ -77,6 +91,26 @@ class ResourceRepresentationSchemaSerializerTest < ActiveSupport::TestCase
     schema = generate_schema(false, '')
     attribute = attributes_resource_rep.resource_attribute
     assert_equal attribute.primitive_type, schema[:properties][attribute.default_key_name][:type]
+  end
+
+  test 'attribute date type is string' do
+    schema = schema_with_one_attribute('keyname', :date)
+    assert_equal :string, schema[:properties]['keyname'][:type]
+  end
+
+  test 'attribute date format is date' do
+    schema = schema_with_one_attribute('keyname', :date)
+    assert_equal 'date', schema[:properties]['keyname'][:format]
+  end
+
+  test 'attribute datetime type is string' do
+    schema = schema_with_one_attribute('keyname', :datetime)
+    assert_equal :string, schema[:properties]['keyname'][:type]
+  end
+
+  test 'attribute datetime format is datetime' do
+    schema = schema_with_one_attribute('keyname', :datetime)
+    assert_equal 'datetime', schema[:properties]['keyname'][:format]
   end
 
   test 'attribute resource representation is null' do

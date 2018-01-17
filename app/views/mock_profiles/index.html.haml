@@ -1,8 +1,12 @@
+= content_for :title, "Mock Profiles"
+
 %h1 Mock Profiles
 
-.row.margin-top-element
-  .col-xs-12.flexcontainer.flexcontainer-justify-end
-    = link_to 'New Profile', new_project_mock_profile_path(@project), class: "btn btn-default btn-lg"
+- if user.can_create? MockProfile, project: project
+  .row.margin-top-element
+    .col-xs-12.flexcontainer.flexcontainer-justify-end
+      = link_to 'New Profile', new_project_mock_profile_path(project), class: "btn btn-default btn-lg"
+
 .row.margin-top-element#mock-profiles
   .col-xs-12
     .list-group
@@ -11,7 +15,7 @@
           %a{href: edit_mock_profile_path(mock_profile), class: 'name'}
             = mock_profile.name
           .url
-            = project_mock_profile_mocks_root_url(@project, mock_profile)
+            = project_mock_profile_mocks_root_url(project, mock_profile)
           %label.active
-            = radio_button_tag 'selected', true, mock_profile.id == @project.active_mock_profile&.id, { label: 'Active', 'data-remote': true, 'data-url': project_path(@project), 'data-params': "project[mock_profile_id]=#{mock_profile.id}", 'data-method': 'patch', 'data-no-turboboost-redirect': true }
+            = radio_button_tag 'selected', true, mock_profile.id == project.active_mock_profile&.id, { label: 'Active', 'data-remote': true, 'data-url': project_path(project), 'data-params': "project[mock_profile_id]=#{mock_profile.id}", 'data-method': 'patch', 'data-no-turboboost-redirect': true }
             Active

@@ -1,6 +1,7 @@
 en:
   projects:
     form:
+      external_members: External members
       description_default: |
         URL
         ** Please fill URL PROD if it exists or any other urls relative to this project
@@ -28,3 +29,5 @@ en:
         ** Define errors and associated messages
         ** Define the headers for each public / private route
         ** Define the expiration logic of tokens
+    show:
+      internal_members: Internal members

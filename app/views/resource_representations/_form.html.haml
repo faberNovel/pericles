@@ -1,5 +1,5 @@
-= bootstrap_form_for([@resource, @representation]) do |f|
-  = render 'shared/errors', object: @representation
+= bootstrap_form_for([resource, resource_representation]) do |f|
+  = render 'shared/errors', object: resource_representation
 
   .row
     .col-xs-6
@@ -37,7 +37,7 @@
               %td
                 = fields.select :resource_representation_id,
                  type_resource.resource_representations.collect { |r| [ r.name, r.id ] }, include_blank: true,
-                  hide_label: true if type_resource
+                  hide_label: true, selected: fields.object.resource_representation_id || type_resource.resource_representations.first.id  if type_resource
               %td
                 = fields.check_box :is_required
               %td

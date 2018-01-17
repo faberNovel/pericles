@@ -1,17 +1,18 @@
-= bootstrap_form_for @project do |f|
-  = render 'shared/errors', object: @project
+= bootstrap_form_for project do |f|
+  = render 'shared/errors', object: project
 
   = f.text_field :title
+  = f.collection_select :user_ids, User.external, :id, :email, { label: t('.external_members') }, { multiple: true }
 
-  - if @project.persisted?
+  - if project.persisted?
     .form-group
       %label.control-label
         URL Mocks
-      %input.form-control{type: 'text', value: project_mocks_root_url(@project), disabled: 'true'}
+      %input.form-control{type: 'text', value: project_mocks_root_url(project), disabled: 'true'}
 
   = f.text_field :proxy_url
 
-  - @project.description ||= t('.description_default')
+  - project.description ||= t('.description_default')
   = f.text_area :description
 
 

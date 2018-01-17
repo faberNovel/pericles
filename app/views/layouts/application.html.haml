@@ -2,7 +2,7 @@
 %html
   %head
     %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
-    %title Pericles
+    %title= "Pericles - " + yield(:title)
     = stylesheet_link_tag    'application', media: 'all'
     %link{href: "https://fonts.googleapis.com/css?family=Open+Sans:400,600", rel: "stylesheet"}
     = javascript_include_tag 'application'
@@ -10,12 +10,7 @@
   %body
     = render 'shared/navigation'
     .container#main-container
-      .row
-        .col-xs-12
-          - if notice
-            %p.notice= notice
-          - if alert
-            %p.alert= alert
+      = render 'shared/alert'
       .row
         .col-xs-12
           = yield :page_title

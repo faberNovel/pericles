@@ -166,4 +166,42 @@ class ProxyControllerTest < ActionDispatch::IntegrationTest
     assert_no_match '"count"', response.body
     assert_equal 'gzip', response.headers['Content-Encoding']
   end
+
+  test "should create report only if Content-Type is application/json" do
+    project = create(:full_project, proxy_url: 'https://prismic-io.s3.amazonaws.com/fabernoveltechnologies')
+    route = project.routes.first
+    route.update(url: '/:path')
+
+    VCR.use_cassette('fabernovel_img') do
+      assert_no_difference 'Report.count' do
+        get "/projects/#{project.id}/proxy/07787ae5d8730f259c1f37ca2b6c601f68644ce2_logo.png"
+      end
+    end
+  end
+
+  test "should create report with error if no schema and body is not empty" do
+    project = create(:full_project)
+    response = project.routes.first.responses.first
+    response.update(resource_representation_id: nil)
+    assert_nil response.json_schema
+
+    VCR.use_cassette('correct_full_project') do
+      assert_difference 'Report.all.select(&:errors?).count' do
+        get "/projects/#{project.id}/proxy/users/1"
+      end
+    end
+  end
+
+  test "should not create report with error if no schema and body is empty" do
+    project = create(:full_project)
+    response = project.routes.first.responses.first
+    response.update(resource_representation_id: nil)
+    assert_nil response.json_schema
+
+    VCR.use_cassette('full_project_empty_body') do
+      assert_no_difference 'Report.all.select(&:errors?).count' do
+        get "/projects/#{project.id}/proxy/users/1"
+      end
+    end
+  end
 end

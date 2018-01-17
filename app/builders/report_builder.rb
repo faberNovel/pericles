@@ -26,7 +26,11 @@ class ReportBuilder
   private
 
   def route
-    @route ||= find_route
+    return @route if defined? @route
+    @route = begin
+      route = find_route
+      Proxy::RouteDecorator.new(route) if route
+    end
   end
 
   def find_route

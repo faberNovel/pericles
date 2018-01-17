@@ -1,18 +1,18 @@
-package com.applidium.<%= @project.title.parameterize(separator: '.') =%>.android.data.net.retrofit.model
+package com.applidium.<%= project.title.parameterize(separator: '.') =%>.android.data.net.retrofit.model
 
-<% if @resource.decorate.should_import_nullable_annotation %>
+<% if resource.decorate.should_import_nullable_annotation %>
 import android.support.annotation.Nullable;
 <% end %>
 
-<% if @resource.decorate.should_import_java_list %>
+<% if resource.decorate.should_import_java_list %>
 import java.util.List;
 <% end %>
 
 import io.norberg.automatter.AutoMatter;
 
 @AutoMatter
-public interface <%= @resource.decorate.rest_name =%> {
-<% @resource.resource_attributes.order(:name).decorate.each do |attribute| %>
+public interface <%= resource.decorate.rest_name =%> {
+<% resource.resource_attributes.order(:name).decorate.each do |attribute| %>
     <%= attribute.java_type =%> <%= attribute.variable_name =%>();
 <% end %>
 }

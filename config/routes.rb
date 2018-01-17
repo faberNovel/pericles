@@ -17,7 +17,9 @@ Rails.application.routes.draw do
     end
   end
   resources :resources, only: [] do
-    resources :resource_representations, except: [:index]
+    resources :resource_representations, except: [:index] do
+      match 'clone', via: [:post]
+    end
     resources :resource_instances, only: [:new, :create]
   end
   resources :routes, only: [] do

@@ -25,6 +25,9 @@ function onSelectChanged(option) {
     enum_.find('input').val('');
     scheme_enum.hide();
   }
+
+  fields.find(".constraints input[id$='minimum']").siblings('label').text(option.value === 'string' ? 'Length min.' : 'Minimum');
+  fields.find(".constraints input[id$='maximum']").siblings('label').text(option.value === 'string' ? 'Length max.' : 'Maximum');
 }
 
 function onIsArrayChanged(input) {

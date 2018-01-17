@@ -1,8 +1,7 @@
-require "json-schema"
+class ValidationsController < ApplicationController
 
-class ValidationsController < AuthenticatedController
   def index
-    @validations = Validation.includes(:json_instance_errors, :json_schema_errors).order("created_at desc").limit(10)
+    @validations = Validation.order(created_at: 'desc').page(params[:page]).per(10)
   end
 
   def new
@@ -10,17 +9,7 @@ class ValidationsController < AuthenticatedController
   end
 
   def create
-    permitted_validation_params = validation_params
-    schema = permitted_validation_params[:json_schema]
-    instance = permitted_validation_params[:json_instance]
-    instance_errors = []
-    schema_errors = validate_json_schema(schema)
-    if schema_errors.empty?
-      instance_errors += validate_json_instance(schema, instance)
-    end
-    validation = Validation.create(json_schema: schema, json_instance: instance)
-    schema_errors.each { |error| JsonSchemaError.create(description: error, validation: validation) }
-    instance_errors.each { |error| JsonInstanceError.create(description: error, validation: validation) }
+    validation = Validation.create(validation_params)
     render json: validation, status: :created
   end
 
@@ -28,23 +17,5 @@ class ValidationsController < AuthenticatedController
 
   def validation_params
     params.require(:validation).permit(:json_schema, :json_instance)
-  end
-
-  def validate_json_schema(schema)
-    return validate_json(META_SCHEMA, schema)
-  end
-
-  def validate_json_instance(schema, instance)
-    return validate_json(schema, instance)
-  end
-
-  def validate_json(schema, instance)
-    errors = []
-    begin
-      errors = JSON::Validator.fully_validate(schema, instance, json: true)
-    rescue JSON::Schema::JsonParseError, TypeError
-      errors << "parse_error"
-    end
-    errors
   end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171228165935) do
+ActiveRecord::Schema.define(version: 20180116160324) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -114,13 +114,13 @@ ActiveRecord::Schema.define(version: 20171228165935) do
     t.index ["http_message_type", "http_message_id"], name: "index_headers_on_http_message_type_and_http_message_id", using: :btree
   end
 
-  create_table "json_errors", force: :cascade do |t|
-    t.text     "description"
-    t.string   "type"
-    t.integer  "validation_id"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
-    t.index ["validation_id"], name: "index_json_errors_on_validation_id", using: :btree
+  create_table "members", force: :cascade do |t|
+    t.integer  "project_id"
+    t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["project_id"], name: "index_members_on_project_id", using: :btree
+    t.index ["user_id"], name: "index_members_on_user_id", using: :btree
   end
 
   create_table "mock_pickers", force: :cascade do |t|
@@ -152,10 +152,11 @@ ActiveRecord::Schema.define(version: 20171228165935) do
   create_table "projects", force: :cascade do |t|
     t.string   "title"
     t.text     "description"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
     t.string   "proxy_url"
     t.integer  "mock_profile_id"
+    t.boolean  "is_public",       default: false, null: false
     t.index ["mock_profile_id"], name: "index_projects_on_mock_profile_id", using: :btree
   end
 
@@ -253,24 +254,26 @@ ActiveRecord::Schema.define(version: 20171228165935) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string   "email",              default: "", null: false
-    t.string   "encrypted_password", default: "", null: false
-    t.integer  "sign_in_count",      default: 0,  null: false
+    t.string   "email",                  default: "", null: false
+    t.string   "encrypted_password",     default: "", null: false
+    t.integer  "sign_in_count",          default: 0,  null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.inet     "current_sign_in_ip"
     t.inet     "last_sign_in_ip"
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
     t.string   "first_name"
     t.string   "last_name"
     t.string   "avatar_url"
+    t.string   "reset_password_token"
+    t.datetime "reset_password_sent_at"
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
   end
 
   create_table "validation_errors", force: :cascade do |t|
     t.integer  "category"
-    t.string   "description"
+    t.text     "description"
     t.integer  "report_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
@@ -278,8 +281,8 @@ ActiveRecord::Schema.define(version: 20171228165935) do
   end
 
   create_table "validations", force: :cascade do |t|
-    t.text     "json_schema"
-    t.text     "json_instance"
+    t.json     "json_schema"
+    t.json     "json_instance"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
   end
@@ -292,7 +295,8 @@ ActiveRecord::Schema.define(version: 20171228165935) do
   add_foreign_key "attributes_resource_representations", "attributes"
   add_foreign_key "attributes_resource_representations", "resource_representations"
   add_foreign_key "attributes_resource_representations", "resource_representations", column: "parent_resource_representation_id"
-  add_foreign_key "json_errors", "validations"
+  add_foreign_key "members", "projects"
+  add_foreign_key "members", "users"
   add_foreign_key "mock_pickers", "mock_profiles"
   add_foreign_key "mock_pickers", "responses"
   add_foreign_key "projects", "mock_profiles"

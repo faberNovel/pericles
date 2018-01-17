@@ -27,7 +27,7 @@ gem 'draper', '~> 3.0'
 # gem 'devise'
 
 # Recommended to manage authorization
-# gem 'pundit'
+gem 'pundit', '~> 1.1'
 
 # Recommended to handle images
 # gem 'paperclip'
@@ -43,6 +43,8 @@ group :development, :test do
   gem 'flamegraph'
   gem 'stackprof'
   gem 'rubocop'
+  gem 'dotenv-rails', '~> 2.1', '>= 2.1.1'
+  gem 'letter_opener', '~> 1.6'
 end
 
 group :test do

@@ -1,0 +1,2 @@
+class ResourceInstancePolicy < ProjectRelatedPolicy
+end

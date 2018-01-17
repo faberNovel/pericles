@@ -107,6 +107,10 @@ GEM
     docile (1.1.5)
     domain_name (0.5.20170404)
       unf (>= 0.0.5, < 1.0.0)
+    dotenv (2.2.1)
+    dotenv-rails (2.2.1)
+      dotenv (= 2.2.1)
+      railties (>= 3.2, < 5.2)
     draper (3.0.1)
       actionpack (~> 5.0)
       activemodel (~> 5.0)
@@ -181,6 +185,10 @@ GEM
       activerecord
       kaminari-core (= 1.0.1)
     kaminari-core (1.0.1)
+    launchy (2.4.3)
+      addressable (~> 2.3)
+    letter_opener (1.6.0)
+      launchy (~> 2.2)
     loofah (2.1.1)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
@@ -233,6 +241,8 @@ GEM
       activerecord (>= 3.0)
     powerpack (0.1.1)
     public_suffix (3.0.0)
+    pundit (1.1.0)
+      activesupport (>= 3.0.0)
     pxeger (0.1.0)
     rack (2.0.3)
     rack-mini-profiler (0.10.5)
@@ -363,6 +373,7 @@ DEPENDENCIES
   cocoon (~> 1.2)
   coffee-rails
   devise (~> 4.3)
+  dotenv-rails (~> 2.1, >= 2.1.1)
   draper (~> 3.0)
   execjs
   factory_girl_rails
@@ -375,11 +386,13 @@ DEPENDENCIES
   json-schema (~> 2.8)
   json_schema-faker
   kaminari
+  letter_opener (~> 1.6)
   minitest-reporters
   newrelic_rpm
   omniauth-google-oauth2 (~> 0.5.2)
   passenger
   pg
+  pundit (~> 1.1)
   rack-mini-profiler
   rails (~> 5.0.0)
   rails-controller-testing

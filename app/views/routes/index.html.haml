@@ -1,16 +1,18 @@
+= content_for :title, "Routes"
+
 .flexspace-and-center
   %h1 Routes
-  = link_to 'New Route', new_project_route_path(@project), class: "btn btn-default btn-lg"
+  = link_to 'New Route', new_project_route_path(project), class: "btn btn-default btn-lg" if user.can_create? Route, project: project
 
 - if @routes_by_resource.any?
   - @resources.each do |resource|
     .routes-container
-      %a{href: project_resource_path(@project, resource)}
+      %a{href: project_resource_path(project, resource)}
         %h4= resource.name
 
     .routes-sub-container
       - @routes_by_resource[resource].each do |route|
-        %a{class: 'route-row', href: project_route_path(@project, route)}
+        %a{class: 'route-row', href: project_route_path(project, route)}
           %div{style: 'width: 10%'}
             %span{ class: label_class_for_http_method(route.http_method) }= route.http_method
           %div{style: 'flex: 1'}= route.url

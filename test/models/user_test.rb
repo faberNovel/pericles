@@ -6,14 +6,14 @@ class UserTest < ActiveSupport::TestCase
     assert_not user.valid?
   end
 
-  test "from_omniauth should return nil if user's email does not end with @fabernovel.com" do
+  test "from_omniauth should return nil if user's email does not end with INTERNAL_EMAIL_DOMAIN" do
     access_token = OmniAuth::AuthHash.new
 
     access_token.info = { email: 'test@example.com' }
     assert_nil User.from_omniauth(access_token)
   end
 
-  test "from_omniauth should not create user if user's email does not end with @fabernovel.com" do
+  test "from_omniauth should not create user if user's email does not end with INTERNAL_EMAIL_DOMAIN" do
     access_token = OmniAuth::AuthHash.new
 
     access_token.info = { email: 'test@example.com' }
@@ -22,49 +22,50 @@ class UserTest < ActiveSupport::TestCase
     end
   end
 
-  test "from_omniauth should return initialized user if user's email ends with @fabernovel.com (and user with same email
+  test "from_omniauth should return initialized user if user's email ends with INTERNAL_EMAIL_DOMAIN (and user with same email
    does not already exist)" do
     access_token = OmniAuth::AuthHash.new
 
-    access_token.info = { email: 'test@fabernovel.com', first_name: 'John', last_name: 'Smith',
+    access_token.info = { email: "test#{User::INTERNAL_EMAIL_DOMAIN}", first_name: 'John', last_name: 'Smith',
      image: 'http://example.com/img.jpg' }
     user =  User.from_omniauth(access_token)
     assert user.persisted?
-    assert_equal 'test@fabernovel.com', user.email
+    assert_equal "test#{User::INTERNAL_EMAIL_DOMAIN}", user.email
     assert_equal 'John', user.first_name
     assert_equal 'Smith', user.last_name
     assert_equal 'http://example.com/img.jpg', user.avatar_url
   end
 
-  test "from_omniauth should create user if user's email ends with @fabernovel.com (and user with same email
+  test "from_omniauth should create user if user's email ends with INTERNAL_EMAIL_DOMAIN (and user with same email
    does not already exist)" do
     access_token = OmniAuth::AuthHash.new
 
-    access_token.info = { email: 'test@fabernovel.com' }
+    access_token.info = { email: "test#{User::INTERNAL_EMAIL_DOMAIN}" }
     assert_difference('User.count') do
       User.from_omniauth(access_token)
     end
   end
 
-  test "from_omniauth should not create user if user's email ends with @fabernovel.com and user with same email already exists" do
+  test "from_omniauth should not create user if user's email ends with INTERNAL_EMAIL_DOMAIN and user with same email already
+   exists" do
     access_token = OmniAuth::AuthHash.new
-    create(:user, email: 'test@fabernovel.com')
+    create(:user, email: "test#{User::INTERNAL_EMAIL_DOMAIN}")
 
-    access_token.info = { email: 'test@fabernovel.com' }
+    access_token.info = { email: "test#{User::INTERNAL_EMAIL_DOMAIN}" }
     assert_no_difference('User.count') do
       User.from_omniauth(access_token)
     end
   end
 
-  test "from_omniauth should return existing user if user's email ends with @fabernovel.com and user
+  test "from_omniauth should return existing user if user's email ends with INTERNAL_EMAIL_DOMAIN and user
    with same email already exists" do
     access_token = OmniAuth::AuthHash.new
-    create(:user, email: 'test@fabernovel.com')
+    create(:user, email: "test#{User::INTERNAL_EMAIL_DOMAIN}")
 
-    access_token.info = { email: 'test@fabernovel.com', first_name: 'Chris', last_name: 'Bale' }
+    access_token.info = { email: "test#{User::INTERNAL_EMAIL_DOMAIN}", first_name: 'Chris', last_name: 'Bale' }
     user = User.from_omniauth(access_token)
     assert user.persisted?
-    assert_equal 'test@fabernovel.com', user.email
+    assert_equal "test#{User::INTERNAL_EMAIL_DOMAIN}", user.email
     assert_equal 'John', user.first_name
     assert_equal 'Smith', user.last_name
   end
