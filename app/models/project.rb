@@ -10,6 +10,7 @@ class Project < ApplicationRecord
   has_many :api_errors
   has_many :members
   has_many :users, through: :members
+  has_many :metadata
 
   validates :title, presence: true, length: { in: 2..25 }, uniqueness: true
 
