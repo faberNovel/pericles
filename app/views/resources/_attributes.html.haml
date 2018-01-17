@@ -1,4 +1,7 @@
-= render partial: "shared/last_edit", locals: {last_audit: resource.last_audit}
+.top
+  = render partial: "shared/last_edit", locals: {last_audit: resource.last_audit}
+  - if user.can_edit? resource
+    = link_to 'Edit', edit_project_resource_path(project, resource, section: "all_attributes"), class: "btn btn-primary"
 
 %div
   / Global Nav tabs
@@ -15,7 +18,7 @@
       .panel.panel-default
         .panel-heading
           .flexcontainer.flexcontainer-justify-end
-            = link_to 'Edit', edit_project_resource_path(project, resource, section: "all_attributes"), class: "btn btn-primary" if user.can_edit? resource
+
         .panel-body
           - resource.resource_attributes.sorted_by_name.each do |attribute|
             = render attribute

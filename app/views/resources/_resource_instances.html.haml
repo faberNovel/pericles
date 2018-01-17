@@ -1,6 +1,8 @@
 - if user.can_create? ResourceInstance, project: project
-  .flexcontainer.flexcontainer-justify-end
-    = link_to 'New Mock', new_resource_resource_instance_path(resource), class: "btn btn-primary btn-lg"
+  .top
+    %div
+    .pull-right
+      = link_to 'New Mock', new_resource_resource_instance_path(resource), class: "btn btn-primary"
 
 .margin-top-element
   - if resource.resource_instances.any?
