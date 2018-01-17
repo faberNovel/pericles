@@ -119,3 +119,12 @@
     transform: rotate(180deg);
   }
 }
+
+#resource-show {
+  .page-header {
+    h1 {
+      font-size: 24px;
+      font-weight: bold;
+    }
+  }
+}
