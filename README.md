@@ -66,6 +66,7 @@ To get the project up and running, proceed as follows (within the app's director
        OAuth2 are the users with an email address from the email domain you provided.
 
 6. Below, we list the different environment variables that you should set up in your .env file:
+
    Name | Description | Example
    --- | --- | ---
    `ANDROID_COMPANY_DOMAIN_NAME` | Pericles allows to generate code in Java and Kotlin. The environment variable corresponds to what you would enter under 'Company Domain' when creating a project in Android Studio. It is then used to generate package names. Defaults to `com.example`. | `com.applidium`
