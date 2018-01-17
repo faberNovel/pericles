@@ -12,9 +12,6 @@
     = resource.name
     .pull-right
       .btn-group{ role: "group" }
-        = link_to 'Swift', project_resource_path(project, resource, format: "swift"), class: "btn btn-default"
-        = link_to 'Java', project_resource_path(project, resource, format: "java"), class: "btn btn-default"
-        = link_to 'Kotlin', project_resource_path(project, resource, format: "kotlin"), class: "btn btn-default"
         = link_to 'Edit', edit_project_resource_path(project, resource, section: "base"), class: "btn btn-default" if user.can_edit? resource
         = link_to "Delete", project_resource_path(project, resource), method: :delete, data: { confirm: 'Are you sure ?' },
        class: "btn btn-default" if user.can_delete? resource
