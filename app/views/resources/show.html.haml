@@ -59,26 +59,5 @@
             .tab-pane{ role: "tabpanel", id: "res-#{resource_rep.id}", class: ('active' if index.zero?) }
               = render resource_rep
 
-%h3 Resource instances
-
-- if user.can_create? ResourceInstance, project: project
-  .flexcontainer.flexcontainer-justify-end
-    = link_to 'New Mock', new_resource_resource_instance_path(resource), class: "btn btn-default btn-lg"
-
-.margin-top-element
-  - if resource.resource_instances.any?
-    - resource.resource_instances.each do |instance|
-      = render instance
-  - else
-    %p
-      %i= t('.no_mocks_placeholder')
-
-%h3 Routes
-
-.margin-top-element
-  - if resource.routes.any?
-    - resource.routes.includes(:resource_representations).each do |route|
-      = render partial: 'routes/route_summary', locals: { resource: resource, route: route, should_display_representations: true }
-  - else
-    %p
-      %i= t('.no_route_placeholder')
+= render partial: 'resource_instances'
+= render partial: 'routes'
