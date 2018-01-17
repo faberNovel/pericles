@@ -125,4 +125,38 @@
     font-size: 24px;
     font-weight: bold;
   }
+
+  ul {
+    border-bottom: solid 0.5px #cccccc;
+  }
+
+  .nav-pills > .active > a,
+  .nav-pills > .active > a:hover,
+  .nav-pills > li > a:hover {
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 0px;
+    border-bottom-width: 4px;
+    border-bottom-style: solid;
+    border-bottom-color: $brand-primary;
+    color: #000;
+    background-color: transparent;
+  }
+  .nav-pills > li > a {
+    padding: 10px 0;
+    margin-right: 30px;
+    color: $grey;
+  }
+
+  .badge {
+    font-weight: normal;
+    margin-left: 4px;
+    background-color: #cccccc;
+    color: white;
+    font-size: 10px;
+
+    &.invalid-instances {
+      background-color: #c9302c;
+    }
+  }
 }

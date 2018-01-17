@@ -30,8 +30,25 @@
   %p
     = resource.description
 
+  %ul.nav.nav-pills{role: 'tablist'}
+    %li.active
+      %a{href: '#pills-attributes', 'data-toggle' => "pill", role: 'tab'}
+        Attributes
+        %span.badge=resource.resource_attributes.count
+    %li
+      %a{href: '#pills-resource-instances', 'data-toggle' => "pill", role: 'tab'}
+        Instances
+        %span.badge{class: resource.has_invalid_mocks? ? 'invalid-instances' : ''}
+          =resource.resource_instances.count
+    %li
+      %a{href: '#pills-routes', 'data-toggle' => "pill", role: 'tab'}
+        Routes
+        %span.badge=resource.routes.count
 
-
-  = render partial: 'attributes'
-  = render partial: 'resource_instances'
-  = render partial: 'routes'
+  .tab-content
+    #pills-attributes.tab-pane.fade.in.active{role: 'tabpanel'}
+      = render partial: 'attributes'
+    #pills-resource-instances.tab-pane.fade{role: 'tabpanel'}
+      = render partial: 'resource_instances'
+    #pills-routes.tab-pane.fade{role: 'tabpanel'}
+      = render partial: 'routes'
