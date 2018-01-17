@@ -2,6 +2,18 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.3.0 - 2018-01-17
+
+* Add date and datetime types
+* User can now register via web interface
+* Project can now be public and visible by everyone
+* Create 'external' member who can be added to a project
+* Generate Decodable swift code
+* Add buttons to download all the Rest class of a project (swift, kotlin and java)
+* Oauth domain is now configurable through env variables
+* Fix proxy issue with empty body
+* Added AGPL licence
+
 ## 0.2.2 - 2017-12-28
 
 * Select a String by default for new attribute
