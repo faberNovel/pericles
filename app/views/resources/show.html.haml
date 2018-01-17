@@ -3,9 +3,19 @@
 - content_for :page_scripts do
   = javascript_include_tag("resources/show.js")
 
+%ol.breadcrumb
+  %li
+    = link_to 'Projects', projects_path
+  %li
+    = link_to "#{project.title}", project_path(project)
+  %li
+    = link_to 'Resources', project_resources_path(project)
+  %li
+    = resource.name
+
 - if flash[:error]
-  %div{class: "alert alert-danger"}
-    =flash[:error]
+  .alert.alert-danger
+    = flash[:error]
 
 .page-header
   %h1
