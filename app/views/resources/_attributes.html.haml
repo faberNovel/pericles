@@ -1,0 +1,39 @@
+%h3
+  Attributes
+  = render partial: "shared/last_edit", locals: {last_audit: resource.last_audit}
+
+%div
+  / Global Nav tabs
+  %ul.nav.nav-tabs.nav-justified{ role: "tablist" }
+    %li.active{ role: "presentation" }
+      %a{ "aria-controls" => "all attributes", "data-toggle" => "tab", href: "#all-attributes", role: "tab" }
+        = "All Attributes"
+    %li{ role: "presentation" }
+      %a{ "aria-controls" => "resource representations", "data-toggle" => "tab", href: "#resource-reps", role: "tab" }
+        = "Resource Representations"
+  / Global Tab panes
+  .tab-content
+    #all-attributes.tab-pane.active{ role: "tabpanel" }
+      .panel.panel-default
+        .panel-heading
+          .flexcontainer.flexcontainer-justify-end
+            = link_to 'Edit', edit_project_resource_path(project, resource, section: "all_attributes"), class: "btn btn-primary" if user.can_edit? resource
+        .panel-body
+          - resource.resource_attributes.sorted_by_name.each do |attribute|
+            = render attribute
+    #resource-reps.tab-pane{ role: "tabpanel" }
+      %div
+        / Nav tabs for Resource Representations
+        %ul.nav.nav-tabs{ role: "tablist" }
+          - resource.resource_representations.each_with_index do |resource_rep, index|
+            %li{ role: "presentation", class: ('active' if index.zero?) }
+              %a{ "aria-controls" => "#{resource_rep.name}", "data-toggle" => "tab", href: "#res-#{resource_rep.id}", role: "tab" }
+                = resource_rep.name
+          - if user.can_create? ResourceRepresentation, project: project
+            %li{ role: "presentation" }
+              = link_to '+', new_resource_resource_representation_path(resource)
+        / Tab panes for Resource Representations
+        .tab-content
+          - resource.resource_representations.each_with_index do |resource_rep, index|
+            .tab-pane{ role: "tabpanel", id: "res-#{resource_rep.id}", class: ('active' if index.zero?) }
+              = render resource_rep
