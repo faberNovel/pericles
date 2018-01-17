@@ -84,3 +84,20 @@ input[type=submit] {
     background-color: white;
   }
 }
+
+.last-edit {
+  display: inline;
+  font-weight: normal;
+  font-size: 10px;
+  font-style: italic;
+  color: $grey;
+  &:before {
+    content: " ";
+  }
+  span {
+    font-weight: bold;
+    &:before,&:after {
+      content: " ";
+    }
+  }
+}
