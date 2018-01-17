@@ -388,6 +388,16 @@
       line-height: 1.75;
       border-width: 2px;
       border-color: darken(#f1f2f4, 5%);
+      .btn {
+        padding: 4px;
+        &:hover {
+          color: darken($grey, 15%);
+        }
+        &:active {
+          box-shadow: none;
+          color: darken($grey, 25%);
+        }
+      }
     }
 
     .contraints-row {
