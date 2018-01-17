@@ -11,3 +11,26 @@
     .btn.representation-btn#all All
     - resource.resource_representations_with_color.each do |representation, color_class|
       .btn.representation-btn{class: color_class}= representation.name
+
+%table.table
+  %thead
+    %tr
+      %th Name
+      %th Type
+      %th Nullable
+      %th Representations
+      %th Expand All
+  %tbody
+    - resource.resource_attributes_by_name.each do |attribute|
+      %tr
+        %th= attribute.name
+        %th= attribute.readable_type
+        %th= attribute.nullable
+        %th
+          - resource.resource_representations_with_color.each do |representation, color_class|
+            - if representation.resource_attributes.include?(attribute)
+              .selected.circle{class: color_class}
+            - else
+              .circle{class: color_class}
+        %th
+          %a{href: "#collapse-attribute-#{attribute.id}"}▾

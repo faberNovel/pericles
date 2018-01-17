@@ -176,6 +176,7 @@
     color: $grey;
     padding: 16px 16px 8px 16px;
     border: solid 1px #f1f2f4;
+    margin-bottom: 24px;
   }
 
   .representation-btn {
@@ -192,164 +193,201 @@
       border-color: darken(#f1f2f4, 15%);
     }
 
-    &.color-0 {
-      color: #0b6975;
-      border-color: #0b6975;
-      &.selected {
-        color: white;
-        background-color: #0b6975;
-        &:hover {
-          color: #f9f9f9;
-        }
-      }
+  }
+
+  .color-0 {
+    color: #0b6975;
+    border-color: #0b6975;
+    &.selected {
+      color: white;
+      background-color: #0b6975;
       &:hover {
-        color: darken(#0b6975, 15%);
-        border-color: darken(#0b6975, 15%);
+        color: #f9f9f9;
+      }
+    }
+    &:hover {
+      color: darken(#0b6975, 15%);
+      border-color: darken(#0b6975, 15%);
+    }
+  }
+
+  .color-1 {
+    color: #429867;
+    border-color: #429867;
+    &.selected {
+      color: white;
+      background-color: #429867;
+      &:hover {
+        color: #f9f9f9;
+      }
+    }
+    &:hover {
+      color: darken(#429867, 15%);
+      border-color: darken(#429867, 15%);
+    }
+  }
+
+  .color-2 {
+    color: #7db31b;
+    border-color: #7db31b;
+    &.selected {
+      color: white;
+      background-color: #7db31b;
+      &:hover {
+        color: #f9f9f9;
+      }
+    }
+    &:hover {
+      color: darken(#7db31b, 15%);
+      border-color: darken(#7db31b, 15%);
+    }
+  }
+
+  .color-3 {
+    color: #fab343;
+    border-color: #fab343;
+    &.selected {
+      color: white;
+      background-color: #fab343;
+      &:hover {
+        color: #f9f9f9;
+      }
+    }
+    &:hover {
+      color: darken(#fab343, 15%);
+      border-color: darken(#fab343, 15%);
+    }
+  }
+
+  .color-4 {
+    color: #ff6500;
+    border-color: #ff6500;
+    &.selected {
+      color: white;
+      background-color: #ff6500;
+      &:hover {
+        color: #f9f9f9;
+      }
+    }
+    &:hover {
+      color: darken(#ff6500, 15%);
+      border-color: darken(#ff6500, 15%);
+    }
+  }
+
+  .color-5 {
+    color: #e0222f;
+    border-color: #e0222f;
+    &.selected {
+      color: white;
+      background-color: #e0222f;
+      &:hover {
+        color: #f9f9f9;
+      }
+    }
+    &:hover {
+      color: darken(#e0222f, 15%);
+      border-color: darken(#e0222f, 15%);
+    }
+  }
+
+  .color-6 {
+    color: #e42592;
+    border-color: #e42592;
+    &.selected {
+      color: white;
+      background-color: #e42592;
+      &:hover {
+        color: #f9f9f9;
+      }
+    }
+    &:hover {
+      color: darken(#e42592, 15%);
+      border-color: darken(#e42592, 15%);
+    }
+  }
+
+  .color-7 {
+    color: #cd06e4;
+    border-color: #cd06e4;
+    &.selected {
+      color: white;
+      background-color: #cd06e4;
+      &:hover {
+        color: #f9f9f9;
+      }
+    }
+    &:hover {
+      color: darken(#cd06e4, 15%);
+      border-color: darken(#cd06e4, 15%);
+    }
+  }
+
+  .color-8 {
+    color: #050ff0;
+    border-color: #050ff0;
+    &.selected {
+      color: white;
+      background-color: #050ff0;
+      &:hover {
+        color: #f9f9f9;
+      }
+    }
+    &:hover {
+      color: darken(#050ff0, 15%);
+      border-color: darken(#050ff0, 15%);
+    }
+  }
+
+  .color-9 {
+    color: #2badbf;
+    border-color: #2badbf;
+    &.selected {
+      color: white;
+      background-color: #2badbf;
+      &:hover {
+        color: #f9f9f9;
+      }
+    }
+    &:hover {
+      color: darken(#2badbf, 15%);
+      border-color: darken(#2badbf, 15%);
+    }
+  }
+
+  table {
+    border: solid 1px #f1f2f4;
+    th {
+      padding: 12px 27px;
+      font-weight: normal;
+      border-bottom: solid 0.5px #eceeef;
+      &:last-child {
+        text-transform: none;
+        text-align: right;
       }
     }
 
-    &.color-1 {
-      color: #429867;
-      border-color: #429867;
-      &.selected {
-        color: white;
-        background-color: #429867;
-        &:hover {
-          color: #f9f9f9;
-        }
-      }
-      &:hover {
-        color: darken(#429867, 15%);
-        border-color: darken(#429867, 15%);
+    tr {
+      &:nth-child(2n) {
+        background-color: #f1f2f4;
       }
     }
+  }
 
-    &.color-2 {
-      color: #7db31b;
-      border-color: #7db31b;
-      &.selected {
-        color: white;
-        background-color: #7db31b;
-        &:hover {
-          color: #f9f9f9;
-        }
-      }
-      &:hover {
-        color: darken(#7db31b, 15%);
-        border-color: darken(#7db31b, 15%);
-      }
-    }
+  thead {
+    text-transform: uppercase;
+    color: $grey;
+    font-size: 12px;
+    line-height: 1.75;
+  }
 
-    &.color-3 {
-      color: #fab343;
-      border-color: #fab343;
-      &.selected {
-        color: white;
-        background-color: #fab343;
-        &:hover {
-          color: #f9f9f9;
-        }
-      }
-      &:hover {
-        color: darken(#fab343, 15%);
-        border-color: darken(#fab343, 15%);
-      }
-    }
-
-    &.color-4 {
-      color: #ff6500;
-      border-color: #ff6500;
-      &.selected {
-        color: white;
-        background-color: #ff6500;
-        &:hover {
-          color: #f9f9f9;
-        }
-      }
-      &:hover {
-        color: darken(#ff6500, 15%);
-        border-color: darken(#ff6500, 15%);
-      }
-    }
-
-    &.color-5 {
-      color: #e0222f;
-      border-color: #e0222f;
-      &.selected {
-        color: white;
-        background-color: #e0222f;
-        &:hover {
-          color: #f9f9f9;
-        }
-      }
-      &:hover {
-        color: darken(#e0222f, 15%);
-        border-color: darken(#e0222f, 15%);
-      }
-    }
-
-    &.color-6 {
-      color: #e42592;
-      border-color: #e42592;
-      &.selected {
-        color: white;
-        background-color: #e42592;
-        &:hover {
-          color: #f9f9f9;
-        }
-      }
-      &:hover {
-        color: darken(#e42592, 15%);
-        border-color: darken(#e42592, 15%);
-      }
-    }
-
-    &.color-7 {
-      color: #cd06e4;
-      border-color: #cd06e4;
-      &.selected {
-        color: white;
-        background-color: #cd06e4;
-        &:hover {
-          color: #f9f9f9;
-        }
-      }
-      &:hover {
-        color: darken(#cd06e4, 15%);
-        border-color: darken(#cd06e4, 15%);
-      }
-    }
-
-    &.color-8 {
-      color: #050ff0;
-      border-color: #050ff0;
-      &.selected {
-        color: white;
-        background-color: #050ff0;
-        &:hover {
-          color: #f9f9f9;
-        }
-      }
-      &:hover {
-        color: darken(#050ff0, 15%);
-        border-color: darken(#050ff0, 15%);
-      }
-    }
-
-    &.color-9 {
-      color: #2badbf;
-      border-color: #2badbf;
-      &.selected {
-        color: white;
-        background-color: #2badbf;
-        &:hover {
-          color: #f9f9f9;
-        }
-      }
-      &:hover {
-        color: darken(#2badbf, 15%);
-        border-color: darken(#2badbf, 15%);
-      }
-    }
+  .circle {
+    display: inline-block;
+    border-width: 0.5px;
+    border-style: solid;
+    border-radius: 6px;
+    width: 12px;
+    height: 12px;
+    margin-right: 4px;
   }
 }
