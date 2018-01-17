@@ -25,6 +25,11 @@
   align-items: center;
 }
 
+.flexwrap {
+  display: flex;
+  flex-wrap: wrap;
+}
+
 dl dt {
   font-size: 75%;
   font-weight: normal;

@@ -7,4 +7,10 @@ class ResourceDecorator < Draper::Decorator
     # because we want to keep non persited objects
     object.resource_attributes.sort_by(&:name)
   end
+
+  def resource_representations_with_color
+    resource_representations.order(:id).each_with_index.map do |r, i|
+      [r, "color-#{i}"]
+    end
+  end
 end
