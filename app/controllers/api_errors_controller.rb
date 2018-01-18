@@ -38,7 +38,7 @@ class ApiErrorsController < ApplicationController
   end
 
   def update
-    if api_error.update(api_error_params)
+    if api_error.update(permitted_attributes(api_error))
       redirect_to project_api_error_path(project, api_error)
     else
       render 'edit', status: :unprocessable_entity
