@@ -18,7 +18,7 @@
     .alert.alert-danger
       = flash[:error]
 
-  %h1
+  %h1{id: resource.id}
     = resource.name
     - if user.can_edit? resource
       = link_to(image_tag('edit.svg'), edit_project_resource_path(project, resource, section: 'base'))

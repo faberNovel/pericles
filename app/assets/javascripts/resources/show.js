@@ -78,7 +78,81 @@ function onCancelManage() {
 function onCircleClick() {
   if (window.STATE === 'MANAGE') {
     $(this).toggleClass('selected');
+    let representationIndice = $(this).index();
+    let attributeIndice = $(this).parent().parent().parent().index() - 1;
+    window.representations[representationIndice]
+      .attributes_resource_representations_attributes[attributeIndice]
+      ._destroy = !$(this).hasClass('selected');
   }
+}
+
+function updateResourceRepresentations() {
+  let resourceId = $('#resource-show > h1').attr('id');
+  let promises = window.representations.map(function(representation, representationIndice) {
+    let id = representation.id;
+
+    return $.ajax({
+      type: "PUT",
+      url: "/resources/" + resourceId + "/resource_representations/" + id,
+      data: JSON.stringify({resource_representation: representation}),
+      contentType: "application/json",
+      dataType: "json"
+    })
+    .then(function(data) {
+      attributesData = data.resource_representation.attributes_resource_representations;
+      attributesState = window.representations[representationIndice].attributes_resource_representations_attributes;
+      attributesStateValues = Object.values(attributesState);
+      attributesStateValues.forEach(function (attributeState, stateIndice) {
+        dataIndice = attributesData.findIndex(function (attributeData) {
+          return attributeData.attribute_id == attributeState.attribute_id;
+        });
+        if (dataIndice >= 0) {
+          attributesState[stateIndice] = attributesData[dataIndice];
+        } else {
+          attributesState[stateIndice].id = null;
+        }
+      });
+    })
+  });
+
+  Promise.all(promises).then(function() {
+    onCancelManage();
+  });
+}
+
+function initRepresentationsState() {
+  window.representations = $('.btn.representation-btn').slice(1).map(
+    function (indice, representationBtn) {
+      return {
+        id: representationBtn.id,
+        name: $(representationBtn).text(),
+        attributes_resource_representations_attributes: getAttrResRepProperties(indice)
+      };
+    }
+  ).toArray();
+}
+
+function getAttrResRepProperties(indice) {
+  let attributes = $('#table > .table-row.flexwrap').map(function (rowIndice, row) {
+    // The circle element contains all the data about the
+    // AttributesResourceRepresentation
+    let circle = $($(row).find('.cell.circles').children()[indice]);
+
+    return {
+      id: circle.attr('attributes-resource-representation-id'),
+      attribute_id: circle.attr('attribute-id'),
+      _destroy: !circle.attr('attributes-resource-representation-id')
+    }
+  }).toArray();
+
+  return convertArrayToRubyNestedHash(attributes);
+}
+
+function convertArrayToRubyNestedHash(array) {
+  return array.reduce(function(hash, obj, indice) {
+    hash[indice] = obj;
+    return hash;
+  }, {});
 }
 
 $(document).ready(function () {
@@ -89,4 +163,6 @@ $(document).ready(function () {
   $('#manage').on('click', onEnterManage);
   $('#cancel').on('click', onCancelManage);
   $('.circle').on('click', onCircleClick);
+  $('#update').on('click', updateResourceRepresentations);
+  initRepresentationsState();
 });

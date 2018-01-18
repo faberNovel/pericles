@@ -47,10 +47,18 @@ class ResourceRepresentationsController < ApplicationController
 
   def update
     if resource_representation.update(permitted_attributes(resource_representation))
-      redirect_to project_resource_path(project, resource)
+      respond_to do |format|
+        format.html { redirect_to project_resource_path(project, resource) }
+        format.json { render json: resource_representation, include: '**' }
+      end
     else
-      build_missing_attributes_resource_representations
-      render 'edit', layout: 'generic', status: :unprocessable_entity
+      respond_to do |format|
+        format.html do
+          build_missing_attributes_resource_representations
+          render 'edit', layout: 'generic', status: :unprocessable_entity
+        end
+        format.json { render json: resource_representation.errors }
+      end
     end
   end
 

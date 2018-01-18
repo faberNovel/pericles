@@ -10,7 +10,8 @@
   .flexwrap
     .btn.representation-btn#all All
     - resource.resource_representations_with_color.each do |representation, color_class|
-      .btn.representation-btn{class: color_class}= representation.name
+      .btn.representation-btn{id: representation.id, class: color_class}
+        = representation.name
   .flexcontainer-justify-end#buttons-row{style: 'display: none;'}
     .btn.btn-default#cancel Cancel
     .btn.btn-primary#update Update

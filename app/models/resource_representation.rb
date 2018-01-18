@@ -25,6 +25,10 @@ class ResourceRepresentation < ApplicationRecord
     ).as_json
   end
 
+  def attributes_resource_representation(attribute)
+    attributes_resource_representations.find_by(resource_attribute: attribute)
+  end
+
   def find_parent_resource_representations
     parent_resource_representations = []
     referencing_associations = AttributesResourceRepresentation.where(resource_representation_id: self.id)
