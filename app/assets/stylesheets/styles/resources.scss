@@ -201,11 +201,11 @@
     &.selected {
       color: white;
       background-color: #0b6975;
-      &:hover {
+      &.btn:hover {
         color: #f9f9f9;
       }
     }
-    &:hover {
+    &.btn:hover {
       color: darken(#0b6975, 15%);
       border-color: darken(#0b6975, 15%);
     }
@@ -217,11 +217,11 @@
     &.selected {
       color: white;
       background-color: #429867;
-      &:hover {
+      &.btn:hover {
         color: #f9f9f9;
       }
     }
-    &:hover {
+    &.btn:hover {
       color: darken(#429867, 15%);
       border-color: darken(#429867, 15%);
     }
@@ -233,11 +233,11 @@
     &.selected {
       color: white;
       background-color: #7db31b;
-      &:hover {
+      &.btn:hover {
         color: #f9f9f9;
       }
     }
-    &:hover {
+    &.btn:hover {
       color: darken(#7db31b, 15%);
       border-color: darken(#7db31b, 15%);
     }
@@ -249,11 +249,11 @@
     &.selected {
       color: white;
       background-color: #fab343;
-      &:hover {
+      &.btn:hover {
         color: #f9f9f9;
       }
     }
-    &:hover {
+    &.btn:hover {
       color: darken(#fab343, 15%);
       border-color: darken(#fab343, 15%);
     }
@@ -265,11 +265,11 @@
     &.selected {
       color: white;
       background-color: #ff6500;
-      &:hover {
+      &.btn:hover {
         color: #f9f9f9;
       }
     }
-    &:hover {
+    &.btn:hover {
       color: darken(#ff6500, 15%);
       border-color: darken(#ff6500, 15%);
     }
@@ -281,11 +281,11 @@
     &.selected {
       color: white;
       background-color: #e0222f;
-      &:hover {
+      &.btn:hover {
         color: #f9f9f9;
       }
     }
-    &:hover {
+    &.btn:hover {
       color: darken(#e0222f, 15%);
       border-color: darken(#e0222f, 15%);
     }
@@ -297,11 +297,11 @@
     &.selected {
       color: white;
       background-color: #e42592;
-      &:hover {
+      &.btn:hover {
         color: #f9f9f9;
       }
     }
-    &:hover {
+    &.btn:hover {
       color: darken(#e42592, 15%);
       border-color: darken(#e42592, 15%);
     }
@@ -313,11 +313,11 @@
     &.selected {
       color: white;
       background-color: #cd06e4;
-      &:hover {
+      &.btn:hover {
         color: #f9f9f9;
       }
     }
-    &:hover {
+    &.btn:hover {
       color: darken(#cd06e4, 15%);
       border-color: darken(#cd06e4, 15%);
     }
@@ -329,11 +329,11 @@
     &.selected {
       color: white;
       background-color: #050ff0;
-      &:hover {
+      &.btn:hover {
         color: #f9f9f9;
       }
     }
-    &:hover {
+    &.btn:hover {
       color: darken(#050ff0, 15%);
       border-color: darken(#050ff0, 15%);
     }
@@ -345,11 +345,11 @@
     &.selected {
       color: white;
       background-color: #2badbf;
-      &:hover {
+      &.btn:hover {
         color: #f9f9f9;
       }
     }
-    &:hover {
+    &.btn:hover {
       color: darken(#2badbf, 15%);
       border-color: darken(#2badbf, 15%);
     }
@@ -437,5 +437,10 @@
     width: 12px;
     height: 12px;
     margin-right: 4px;
+    opacity: 0.4;
+    &.selected {
+      opacity: 1;
+      display: inline-block;
+    }
   }
 }

@@ -3,7 +3,7 @@
     .cell= attribute.name
     .cell= attribute.displayed_type
     .cell= attribute.nullable
-    .cell
+    .cell.circles
       - resource.resource_representations_with_color.each do |representation, color_class|
         - if representation.resource_attributes.include?(attribute)
           .selected.circle{class: color_class}
