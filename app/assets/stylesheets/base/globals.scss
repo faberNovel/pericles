@@ -12,10 +12,12 @@
 }
 
 .flexcontainer-justify-end {
+  display: flex;
   justify-content: flex-end;
 }
 
 .flexcontainer-space-between {
+  display: flex;
   justify-content: space-between;
 }
 

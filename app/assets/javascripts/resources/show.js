@@ -52,8 +52,28 @@ function onExpandAllClick() {
   $('.contraints-row').collapse('show');
 }
 
+function onEnterManage() {
+  $('#manage').hide('fast');
+  $('#filter-text').text('Manage representations');
+  $('#buttons-row').animate({height: "show", opacity: "show"}, 300);
+  $('.circle').addClass('hoverable');
+  $('#all').animate({width: "hide", opacity: "hide", 'padding-left': 'hide', 'padding-right': 'hide'}, 300);
+  onAllClick();
+}
+
+function onCancelManage() {
+  $('#manage').show('fast');
+  $('#filter-text').text('Filter by representation :');
+  $('#buttons-row').animate({height: "hide", opacity: "hide"}, 300);
+  $('.circle').removeClass('hoverable');
+  $('#all').animate({width: "show", opacity: "show", 'padding-left': 'show', 'padding-right': 'show'}, 300);
+  onAllClick();
+}
+
 $(document).ready(function () {
   $('.btn.representation-btn').on('click', onRepresentationClick);
   $('.btn.representation-btn#all').on('click', onAllClick);
   $('#expandAll').on('click', onExpandAllClick);
+  $('#manage').on('click', onEnterManage);
+  $('#cancel').on('click', onCancelManage);
 });

@@ -5,12 +5,15 @@
 
 .filter
   .flexspace-and-center
-    %div Filter by representation :
-    .btn.btn-link Manage
+    %div#filter-text Filter by representation :
+    .btn.btn-link#manage Manage
   .flexwrap
     .btn.representation-btn#all All
     - resource.resource_representations_with_color.each do |representation, color_class|
       .btn.representation-btn{class: color_class}= representation.name
+  .flexcontainer-justify-end#buttons-row{style: 'display: none;'}
+    .btn.btn-default#cancel Cancel
+    .btn.btn-primary#update Update
 
 .flexcontainer.flexwrap#table
   .table-row
