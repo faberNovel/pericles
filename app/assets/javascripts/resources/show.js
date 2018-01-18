@@ -75,6 +75,12 @@ function onCancelManage() {
   window.STATE = 'SHOW';
 }
 
+function onCircleClick() {
+  if (window.STATE === 'MANAGE') {
+    $(this).toggleClass('selected');
+  }
+}
+
 $(document).ready(function () {
   window.STATE = 'SHOW';
   $('.btn.representation-btn').on('click', onRepresentationClick);
@@ -82,4 +88,5 @@ $(document).ready(function () {
   $('#expandAll').on('click', onExpandAllClick);
   $('#manage').on('click', onEnterManage);
   $('#cancel').on('click', onCancelManage);
+  $('.circle').on('click', onCircleClick);
 });
