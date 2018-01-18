@@ -1,4 +1,7 @@
 function onRepresentationClick() {
+  if (window.STATE === 'MANAGE') {
+    $('.btn.representation-btn').removeClass('selected');
+  }
   $(this).toggleClass('selected');
 
   updateRows();
@@ -59,6 +62,7 @@ function onEnterManage() {
   $('.circle').addClass('hoverable');
   $('#all').animate({width: "hide", opacity: "hide", 'padding-left': 'hide', 'padding-right': 'hide'}, 300);
   onAllClick();
+  window.STATE = 'MANAGE';
 }
 
 function onCancelManage() {
@@ -68,9 +72,11 @@ function onCancelManage() {
   $('.circle').removeClass('hoverable');
   $('#all').animate({width: "show", opacity: "show", 'padding-left': 'show', 'padding-right': 'show'}, 300);
   onAllClick();
+  window.STATE = 'SHOW';
 }
 
 $(document).ready(function () {
+  window.STATE = 'SHOW';
   $('.btn.representation-btn').on('click', onRepresentationClick);
   $('.btn.representation-btn#all').on('click', onAllClick);
   $('#expandAll').on('click', onExpandAllClick);
