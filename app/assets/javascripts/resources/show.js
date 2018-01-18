@@ -4,11 +4,18 @@ function onRepresentationClick() {
   }
   $(this).toggleClass('selected');
 
+  if ($('.btn.representation-btn.selected').length === 1) {
+    onEnterSelectOnlyOneRepresentation();
+  } else {
+    onExitSelectOnlyOneRepresentation();
+  }
+
   updateRows();
 }
 
 function onAllClick() {
   $('.btn.representation-btn').removeClass('selected');
+  onExitSelectOnlyOneRepresentation();
 
   updateRows();
 }
@@ -79,7 +86,7 @@ function onCircleClick() {
   if (window.STATE === 'MANAGE') {
     $(this).toggleClass('selected');
     let representationIndice = $(this).index();
-    let attributeIndice = $(this).parent().parent().parent().index() - 1;
+    let attributeIndice = attributeIndiceFromRow($(this).parent().parent().parent());
     window.representations[representationIndice]
       .attributes_resource_representations_attributes[attributeIndice]
       ._destroy = !$(this).hasClass('selected');
@@ -141,6 +148,7 @@ function getAttrResRepProperties(indice) {
     return {
       id: circle.attr('attributes-resource-representation-id'),
       attribute_id: circle.attr('attribute-id'),
+      resource_representation_id: circle.attr('resource-representation-id'),
       _destroy: !circle.attr('attributes-resource-representation-id')
     }
   }).toArray();
@@ -155,6 +163,51 @@ function convertArrayToRubyNestedHash(array) {
   }, {});
 }
 
+function onEnterSelectOnlyOneRepresentation() {
+  window.selectedRepresentationIndice = $('.btn.representation-btn.selected').index() - 1;
+  $('.type-select select').each(function(indice, select) {
+    let attributeIndice = attributeIndiceFromRow($(this).parent().parent().parent());
+    value = window.representations[selectedRepresentationIndice]
+      .attributes_resource_representations_attributes[attributeIndice]
+      .resource_representation_id;
+    $(select).val(value).trigger("chosen:updated");
+  });
+  if(window.STATE === 'MANAGE') {
+    $('.type-select').show();
+    $('.chosen-container').css('width', 'auto');
+    $('.type').hide();
+  }
+}
+function onExitSelectOnlyOneRepresentation() {
+  window.selectedRepresentationIndice = null;
+  if(window.STATE === 'MANAGE') {
+    $('.type-select').hide();
+    $('.type').show();
+  }
+}
+
+function onSelectChange() {
+  let resourceRepresentationId = this.value;
+  let representationIndice = window.selectedRepresentationIndice;
+  let attributeIndice = attributeIndiceFromRow($(this).parent().parent().parent());
+  window.representations[representationIndice]
+    .attributes_resource_representations_attributes[attributeIndice]
+    .resource_representation_id = resourceRepresentationId;
+}
+
+function attributeIndiceFromRow(row) {
+  let attributeId = $($(row).find('.circle')[0]).attr('attribute-id');
+  return attributeIndiceFromAttributeId(attributeId);
+}
+
+function attributeIndiceFromAttributeId(attributeId) {
+  return Object.values(
+    window.representations[0].attributes_resource_representations_attributes
+  ).findIndex(function (attribute) {
+    return attribute.attribute_id == attributeId;
+  });
+}
+
 $(document).ready(function () {
   window.STATE = 'SHOW';
   $('.btn.representation-btn').on('click', onRepresentationClick);
@@ -163,6 +216,7 @@ $(document).ready(function () {
   $('#manage').on('click', onEnterManage);
   $('#cancel').on('click', onCancelManage);
   $('.circle').on('click', onCircleClick);
+  $('.type-select select').on('change', onSelectChange);
   $('#update').on('click', updateResourceRepresentations);
   initRepresentationsState();
 });

@@ -1,13 +1,20 @@
 .table-row.flexwrap
   .table-row
     .cell= attribute.name
-    .cell= attribute.displayed_type
+    .cell.type= attribute.displayed_type
+    .cell.type-select{style: 'display: none;'}
+      - if attribute.resource
+        = select_tag('resource_representation_id',
+          options_for_select(attribute.resource.resource_representations.collect{ |r| [r.name, r.id] }))
+      - else
+        = attribute.displayed_type
     .cell= attribute.nullable
     .cell.circles
       - resource.resource_representations_with_color.each do |representation, color_class|
         - if attr_res_rep = representation.attributes_resource_representation(attribute)
           .selected.circle{'attribute-id': attribute.id, class: color_class,
-            'attributes-resource-representation-id': attr_res_rep.id}
+            'attributes-resource-representation-id': attr_res_rep.id,
+            'resource-representation-id': attr_res_rep.resource_representation_id}
         - else
           .circle{'attribute-id': attribute.id, class: color_class}
     .cell
