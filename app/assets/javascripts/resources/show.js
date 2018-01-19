@@ -178,6 +178,10 @@ function onEnterSelectOnlyOneRepresentation() {
     $('.type-select').show();
     $('.chosen-container').css('width', 'auto');
     $('.type').hide();
+    let representationId = window.representations[selectedRepresentationIndice].id;
+    let resourceId = $('#resource-show > h1').attr('id');
+    $('#old-edit').attr('href', '/resources/' + resourceId + '/resource_representations/' + representationId + '/edit');
+    $('#old-edit').show();
   }
 }
 function onExitSelectOnlyOneRepresentation() {
@@ -185,6 +189,7 @@ function onExitSelectOnlyOneRepresentation() {
   if(window.STATE === 'MANAGE') {
     $('.type-select').hide();
     $('.type').show();
+    $('#old-edit').hide();
   }
   updateTypeCellsToUseResource();
 }

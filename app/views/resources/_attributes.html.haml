@@ -13,6 +13,8 @@
       .btn.representation-btn{id: representation.id, class: color_class}
         = representation.name
   .flexcontainer-justify-end#buttons-row{style: 'display: none;'}
+    %a.btn.btn-default#old-edit{style: 'display: none;'} Edit (previous version)
+    = link_to 'New (previous version)', new_resource_resource_representation_path(resource), class: 'btn btn-default'
     .btn.btn-default#cancel Cancel
     .btn.btn-primary#update Update
 
