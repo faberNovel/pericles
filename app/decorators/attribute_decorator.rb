@@ -13,7 +13,11 @@ class AttributeDecorator < Draper::Decorator
   def displayed_type
     if resource_id
       project = attribute.resource.project
-      h.link_to(readable_type, h.project_resource_path(project, attribute.resource))
+      h.link_to(
+        readable_type,
+        h.project_resource_path(project, attribute.resource),
+        'resource-name': readable_type
+      )
     else
       readable_type
     end

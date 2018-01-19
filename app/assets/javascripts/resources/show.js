@@ -171,6 +171,8 @@ function onEnterSelectOnlyOneRepresentation() {
       .attributes_resource_representations_attributes[attributeIndice]
       .resource_representation_id;
     $(select).val(value).trigger("chosen:updated");
+    let typeCell = $(select).parent().parent().find('.cell.type')
+    updateTypeCellToUseRepresentation(typeCell, $(select).find('option:selected').text());
   });
   if(window.STATE === 'MANAGE') {
     $('.type-select').show();
@@ -184,6 +186,7 @@ function onExitSelectOnlyOneRepresentation() {
     $('.type-select').hide();
     $('.type').show();
   }
+  updateTypeCellsToUseResource();
 }
 
 function onSelectChange() {
@@ -208,9 +211,25 @@ function attributeIndiceFromAttributeId(attributeId) {
   });
 }
 
+function updateTypeCellsToUseResource() {
+  $('.cell.type a').each(function (indice, a) {
+   $(a).text($(a).attr('resource-name'));
+  })
+}
+
+function updateTypeCellToUseRepresentation(typeCell, representationName) {
+  let a =  typeCell.find('a');
+  if (a.text().indexOf('Array<') !== -1) {
+    a.text('Array<' + representationName + '>');
+  } else {
+    a.text(representationName);
+  }
+}
+
 $(document).ready(function () {
   window.STATE = 'SHOW';
   $('.btn.representation-btn').on('click', onRepresentationClick);
+  $('.btn.representation-btn#all').off('click');
   $('.btn.representation-btn#all').on('click', onAllClick);
   $('#expandAll').on('click', onExpandAllClick);
   $('#manage').on('click', onEnterManage);
