@@ -1,5 +1,5 @@
 class Metadatum < ApplicationRecord
-  enum primitive_type: [:integer, :string, :boolean, :number]
+  include HasPrimitiveType
 
   belongs_to :project
 
