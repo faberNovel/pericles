@@ -1,7 +1,12 @@
 = content_for :title, "Metadata"
 
-- if @metadata.empty?
-  %p= t('.no_metadata')
+- if user.can_create? Metadatum, project: project
+  .flexcontainer.flexcontainer-justify-end
+    = link_to 'New metadatum', new_project_metadatum_path(project), class: "btn btn-primary btn-lg"
 
-- @metadata.each do |metadatum|
-  = render metadatum
+.margin-top-element
+  - if @metadata.empty?
+    %p= t('.no_metadata')
+
+  - @metadata.each do |metadatum|
+    = render metadatum

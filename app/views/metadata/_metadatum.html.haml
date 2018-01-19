@@ -1,13 +1,11 @@
-.panel.panel-default
-  .panel-body
-    .row
-      .col-xs-3
-        %dl
-          %dt Name
-          %dd
-            %strong= metadatum.name
-      .col-xs-3
-        %dl
-          %dt Type
-          %dd
-            %strong= metadatum.primitive_type
+.flexspace-and-center
+  %dl.flex
+    %dt Name
+    %dd
+      %strong= metadatum.name
+  %dl.flex
+    %dt Type
+    %dd
+      %strong= metadatum.primitive_type
+  = link_to 'Edit', edit_metadatum_path(metadatum), class: 'btn btn-primary' if user.can_edit? metadatum
+  = link_to 'Delete', metadatum_path(metadatum), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-primary' if user.can_delete? metadatum

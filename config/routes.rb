@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     resources :api_errors
     resources :reports, only: [:index, :show]
     resources :mock_profiles, only: [:index, :new, :create]
+    resources :metadata, only: [:index, :new, :create]
     match 'mocks', to: "mocks#compute_mock", via: :all, as: 'mocks_root'
     match 'mocks/*path', to: "mocks#compute_mock", via: :all, as: 'mocks'
     match 'proxy', to: "proxy#compute_request", via: :all, format: false
@@ -15,7 +16,6 @@ Rails.application.routes.draw do
       match 'mocks', to: "mock_profiles#compute_mock", via: :all, as: 'mocks_root'
       match 'mocks/*path', to: "mock_profiles#compute_mock", via: :all, as: 'mocks'
     end
-    resources :metadata, only: [:index]
   end
   resources :resources, only: [] do
     resources :resource_representations, except: [:index] do
@@ -29,6 +29,7 @@ Rails.application.routes.draw do
   resources :api_error, only: [] do
     resources :api_error_instances, only: [:new, :create]
   end
+  resources :metadata, only: [:edit, :update, :destroy]
   resources :resource_instances, only: [:edit, :update, :destroy]
   resources :api_error_instances, only: [:edit, :update, :destroy]
   resources :mock_profiles, only: [:edit, :update, :show]
