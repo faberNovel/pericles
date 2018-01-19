@@ -373,6 +373,10 @@
         text-transform: none;
         text-align: right;
       }
+
+      &.type,&.type-select {
+        flex: 2;
+      }
     }
 
     .table-row {
@@ -405,6 +409,10 @@
           box-shadow: none;
           color: darken($grey, 25%);
         }
+      }
+
+      .cell:nth-child(2) {
+        flex: 2;
       }
     }
 
