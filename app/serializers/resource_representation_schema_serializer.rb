@@ -234,7 +234,7 @@ class ResourceRepresentationSchemaSerializer < ActiveModel::Serializer
 
   def uid(model)
     name = model.name.gsub(' ', '_')
-    id = model.id || model.hash
+    id = model.id || model.hash.abs
     "#{name}_#{id}"
   end
 
@@ -243,6 +243,10 @@ class ResourceRepresentationSchemaSerializer < ActiveModel::Serializer
   end
 
   def all_resource_representations
-    @all_resource_representations ||= @resource_representation.resource_representation_dependencies
+    return @all_resource_representations if defined? @all_resource_representations
+    representations = @resource_representation.resource_representation_dependencies
+    @all_resource_representations = representations.map do |r|
+      JSONSchema::ResourceRepresentationDecorator.new(r)
+    end
   end
 end
