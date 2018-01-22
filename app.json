@@ -3,5 +3,5 @@
   "description": "Pericles is a tool that makes API specification easier.",
   "repository": "https://github.com/applidium/pericles",
   "keywords": ["API", "specification", "RESTful", "JSON", "JSON schema", "resource", "route"],
-  "addons": ["heroku-postgresql"]
+  "addons": ["heroku-postgresql", "sendgrid"]
 }

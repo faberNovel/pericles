@@ -66,6 +66,7 @@ To get the project up and running, proceed as follows (within the app's director
        OAuth2 are the users with an email address from the email domain you provided.
 
 6. Below, we list the different environment variables that you should set up in your .env file:
+
    Name | Description | Example
    --- | --- | ---
    `ANDROID_COMPANY_DOMAIN_NAME` | Pericles allows to generate code in Java and Kotlin. The environment variable corresponds to what you would enter under 'Company Domain' when creating a project in Android Studio. It is then used to generate package names. Defaults to `com.example`. | `com.applidium`
@@ -85,8 +86,17 @@ To get the project up and running, proceed as follows (within the app's director
 
 ## Deployment on Heroku
 
-To make sure that your newly deployed instance of Pericles works correctly (in the production environment), you should set up the
- environment variables mentioned in part 6 of the **Installation** section on Heroku (under 'Settings', 'Config Variables').
+[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
+
+To make sure that your newly deployed instance of Pericles works correctly, you should set up the environment variables mentioned
+ in part 6 of the **Installation** section *on Heroku*.
+
+The other installation steps (than step 6, which requires step 5) presented in the aforementioned section are not necessary when
+ deploying on Heroku. The app will be deployed in the **production** environment, which means that in this context, anything
+ related to the development and test environments should be ignored.
+
+Finally, do not forget to replace `http://localhost:3000` by the URI (using https) of your newly deployed application when reading
+ the instructions.
 
 ## Tests
 

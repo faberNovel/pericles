@@ -2,6 +2,13 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.3.1 - 2018-01-22
+
+* Added deploy to Heroku button
+* Added sign in link on projects index if user not logged
+* Fix api errors controller issues
+* Fix json schema generation
+
 ## 0.3.0 - 2018-01-17
 
 * Add date and datetime types

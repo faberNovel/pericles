@@ -31,3 +31,5 @@ en:
         ** Define the expiration logic of tokens
     show:
       internal_members: Internal members
+    index:
+      visitor_see_only_public: As a visitor, you only have access to public projects. %{href} to enjoy the full experience.

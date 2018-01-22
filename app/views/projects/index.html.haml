@@ -10,3 +10,5 @@
       - @projects.each do |project|
         %a{class: "list-group-item", href: project_path(project)}
           = project.title
+    - if current_user.nil?
+      %p= t('.visitor_see_only_public', href: link_to(t('actions.sign_in'), new_user_session_path)).html_safe
