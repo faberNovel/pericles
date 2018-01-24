@@ -5,7 +5,7 @@ class ResourcesController < ApplicationController
   decorates_method :resource
 
   def index
-    @resources = project.resources.sort_by { |resource| resource.name.downcase }
+    @resources = project.resources.decorate.sort_by { |resource| resource.name.downcase }
   end
 
   def show

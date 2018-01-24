@@ -26,6 +26,7 @@ class Attribute < ApplicationRecord
   after_save :update_if_needed_resource_representation_of_attributes_resource_representations
 
   scope :sorted_by_name, -> { order(:name) }
+  scope :is_resource, -> { where.not(resource: nil) }
 
   audited associated_with: :parent_resource
 
