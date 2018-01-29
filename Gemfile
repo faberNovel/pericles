@@ -37,6 +37,9 @@ gem 'pundit', '~> 1.1'
 # Recommended for serializing models in json
 # gem 'active_model_serializers', '~> 0.10.0.rc3'
 
+gem 'webpacker', '~> 3.0'
+
+
 group :development, :test do
   gem 'byebug'
   gem 'rack-mini-profiler'
