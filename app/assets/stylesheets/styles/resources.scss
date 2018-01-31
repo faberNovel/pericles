@@ -364,6 +364,7 @@
   }
 
   #table {
+    margin-bottom: 60px; // Avoid select creating an overflow
     border: solid 1px #f1f2f4;
     .cell {
       flex: 1;
