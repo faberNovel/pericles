@@ -42,7 +42,6 @@ export default {
     },
     onCancelClick: function() {
       Store.restoreState();
-      Store.setManageMode(false);
     },
     onUpdateClick: function() {
       Store.updateResourceRepresentations();

@@ -11,7 +11,7 @@ export default {
     activeRepresentation: null
   },
   fetchResource: function() {
-    $.ajax({
+    return $.ajax({
       type: "GET",
       url: document.location.href + '.json',
       contentType: "application/json",
@@ -100,6 +100,8 @@ export default {
   },
   restoreState: function() {
     Object.assign(this.state.resource, JSON.parse(JSON.stringify(this.state.originalResource)));
+    this.setManageMode(false);
+    this.updateStateAfterSelectionChanged();
   },
   toggleBelongingAttribute: function(attributeId, representationId) {
     let attribute = this.state.resource.attributes.find((a) => a.id === attributeId);
@@ -192,8 +194,15 @@ export default {
 
     // TODO: catch error
     Promise.all(promises).finally(() => {
-      this.fetchResource();
-      this.state.manageMode = false;
+      let activeRepresentationId = this.state.activeRepresentation && this.state.activeRepresentation.id;
+      this.fetchResource().then(() => {
+        let activeRepresentation = this.state.resource.representations.find((r) => r.id == activeRepresentationId);
+        if (activeRepresentation) {
+          activeRepresentation.isSelected = true;
+        }
+        this.setManageMode(false);
+        this.updateStateAfterSelectionChanged();
+      });
     });
   },
   getDefaultSelectedRepresentationId: function(attributeData, association) {
