@@ -27,7 +27,7 @@ export default {
       name: data.resource.name,
       attributes: data.resource.resource_attributes.map((a) =>
         this.mapResourceAttributeToViewModel(a, data.resource.resource_representations)
-      ),
+      ).sort((a, b) => a.name.localeCompare(b.name)),
       representations: data.resource.resource_representations.map((r, i) =>
         Object.assign({}, {
           id: r.id,
@@ -35,7 +35,7 @@ export default {
           colorClass: 'color-' + i,
           isSelected: false
         })
-      )
+      ).sort((a, b) => a.id - b.id)
     };
   },
   mapResourceAttributeToViewModel: function(attribute, resourceRepresentationsData) {
