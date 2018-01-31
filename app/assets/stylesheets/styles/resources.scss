@@ -178,7 +178,7 @@
     border: solid 1px #f1f2f4;
     margin-bottom: 24px;
 
-    .flexcontainer-justify-end .btn {
+    .flexcontainer .btn {
       margin-left: 12px;
     }
 
@@ -465,5 +465,16 @@
 
   button.clear {
     display: none;
+  }
+
+  a[data-toggle="collapse"] {
+    display: inline-block;
+    line-height: 0.5;
+    padding-bottom: 3px;
+    transform: rotate(180deg);
+    text-decoration: none;
+    &.collapsed {
+      transform: none;
+    }
   }
 }

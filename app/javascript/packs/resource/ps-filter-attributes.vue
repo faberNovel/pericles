@@ -20,7 +20,12 @@
         @click='onClick(r.id)'
     ) {{r.name}}
   transition(name="h-slide-fade")
-    .flexcontainer-justify-end(v-show='manageMode')
+    .flexcontainer(v-show='manageMode')
+      input.form-control(v-if="activeRepresentation"
+        v-model="activeRepresentation.name"
+        style='width: auto;'
+      )
+      div(style='flex: 1;')
       .btn.btn-default(@click='onCancelClick') Cancel
       .btn.btn-primary(@click='onUpdateClick') Update
 </template>
@@ -29,7 +34,7 @@
 import Store from './store.js';
 
 export default {
-  props: ['representations', 'manageMode'],
+  props: ['representations', 'manageMode', 'activeRepresentation'],
   methods: {
     onClick: function(representationId) {
       Store.toggleSelect(representationId)

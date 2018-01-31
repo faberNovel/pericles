@@ -23,11 +23,13 @@
         v-show='shouldShowConstraintCollapse'
         data-toggle='collapse'
         :href="'#collapse-attribute-' + attribute.id"
+        class='collapsed'
       ) ▾
       a(
         v-show='shouldShowRepresentationCollapse'
         data-toggle='collapse'
         :href="'#collapse-representation-' + attribute.id"
+        class='collapsed'
       ) ▾
   .contraints-row.collapse(:id="'collapse-attribute-' + attribute.id"
     v-show='!manageMode'
