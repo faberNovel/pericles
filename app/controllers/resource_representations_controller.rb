@@ -49,7 +49,7 @@ class ResourceRepresentationsController < ApplicationController
     if resource_representation.update(permitted_attributes(resource_representation))
       respond_to do |format|
         format.html { redirect_to project_resource_path(project, resource) }
-        format.json { render json: resource_representation, include: '**' }
+        format.json { render json: resource_representation, include: '**', serializer: ExtendedResourceRepresentationSerializer }
       end
     else
       respond_to do |format|
