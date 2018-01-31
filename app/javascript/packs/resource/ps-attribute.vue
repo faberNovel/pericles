@@ -1,7 +1,12 @@
 <template lang="pug">
 .table-row.flexwrap(v-if='attribute.isDisplayed')
   .table-row
-    .cell {{attribute.name}}
+    .cell(v-if='activeRepVM && activeRepVM.customKeyName', :class='activeRepresentation.colorClass', style='font-weight: 700;')
+      .tool-tip(data-toggle='tooltip'
+        data-placement='top'
+        :title='attribute.name'
+      ) {{activeRepVM.customKeyName}}
+    .cell(v-else) {{attribute.name}}
     .cell.type(v-if='manageMode && attribute.resourceId && activeRepresentation')
       v-select(v-model='selected', :options='attribute.availableRepresentations', label='name')
     .cell.type(v-else-if='attribute.resourceId')
@@ -15,9 +20,14 @@
       )
     .cell
       a(
-        v-show='shouldShowCollapse'
+        v-show='shouldShowConstraintCollapse'
         data-toggle='collapse'
         :href="'#collapse-attribute-' + attribute.id"
+      ) ▾
+      a(
+        v-show='shouldShowRepresentationCollapse'
+        data-toggle='collapse'
+        :href="'#collapse-representation-' + attribute.id"
       ) ▾
   .contraints-row.collapse(:id="'collapse-attribute-' + attribute.id"
     v-show='!manageMode'
@@ -43,6 +53,23 @@
     .constraint-cell.description(v-if='attribute.description')
       dt Description
       dd {{attribute.description}}
+  .contraints-row.collapse(:id="'collapse-representation-' + attribute.id"
+    v-if='manageMode && activeRepVM'
+  )
+    .constraint-cell
+      input.form-control(placeholder='Custom key name', v-model='activeRepVM.customKeyName')
+    .constraint-cell
+      .checkbox
+        label
+          input(type='checkbox', v-model='activeRepVM.isRequired')
+          .
+            Required?
+    .constraint-cell
+      .checkbox
+        label
+          input(type='checkbox', v-model='activeRepVM.isNull')
+          .
+            Is null?
 </template>
 
 <script>
@@ -64,7 +91,7 @@ export default {
     }
   },
   computed: {
-    shouldShowCollapse: function() {
+    shouldShowConstraintCollapse: function() {
       let a = this.attribute;
       const empty = (v) => (v == undefined || v.length === 0); // 0 is not empty
       return !this.manageMode && !(
@@ -73,14 +100,16 @@ export default {
         empty(a.description)
       );
     },
+    shouldShowRepresentationCollapse: function() {
+      return this.manageMode && this.activeRepVM;
+    },
     selected: {
       get: function () {
         if (!this.activeRepresentation) {
           return null;
         }
-        let activeRepVM = this.attribute.representations.find((r) => r.id === this.activeRepresentation.id);
         let selected = this.attribute.availableRepresentations.find((r) =>
-          r.id === activeRepVM.selectedRepresentationId
+          r.id === this.activeRepVM.selectedRepresentationId
         );
         return selected;
       },
@@ -92,6 +121,12 @@ export default {
           Store.setSelectedRepresentation(this.attribute.id, representation);
         }
       }
+    },
+    activeRepVM: function() {
+      if (!this.activeRepresentation) {
+        return null;
+      }
+      return this.attribute.representations.find((r) => r.id === this.activeRepresentation.id);
     }
   },
   components: {'v-select': vSelect}

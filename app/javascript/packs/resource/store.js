@@ -6,7 +6,7 @@ export default {
       attributes: [],
       representations: [],
     },
-    orignalResource: {},
+    originalResource: {},
     manageMode: false,
     activeRepresentation: null
   },
@@ -17,7 +17,7 @@ export default {
       contentType: "application/json",
     }).then((data) => {
       let viewModel = this.mapDataToViewModel(data);
-      Object.assign(this.state.orignalResource, JSON.parse(JSON.stringify(viewModel)));
+      Object.assign(this.state.originalResource, JSON.parse(JSON.stringify(viewModel)));
       Object.assign(this.state.resource, viewModel);
     });
   },
@@ -60,9 +60,12 @@ export default {
           .find((arr) => arr.attribute_id === attribute.id);
         return {
           id: r.id,
+          associationId: association && association.id,
+          customKeyName: association && association.custom_key_name,
+          isRequired: (association == null) ? true : association.is_required,
+          isNull: association && association.is_null,
           hasAttribute: !!association,
           colorClass: 'color-' + i,
-          association: association,
           resourceRepresentationName: association && association.resource_representation_name,
           selectedRepresentationId: this.getDefaultSelectedRepresentationId(attribute, association)
         }
@@ -96,7 +99,7 @@ export default {
     }
   },
   restoreState: function() {
-    Object.assign(this.state.resource, JSON.parse(JSON.stringify(this.state.orignalResource)));
+    Object.assign(this.state.resource, JSON.parse(JSON.stringify(this.state.originalResource)));
   },
   toggleBelongingAttribute: function(attributeId, representationId) {
     let attribute = this.state.resource.attributes.find((a) => a.id === attributeId);
@@ -165,13 +168,16 @@ export default {
         description: rep.description,
         attributes_resource_representations_attributes: resource.attributes.map(
           (a) => {
-            let associationRepVM = a.representations.find((r) => r.id === rep.id);
-            let association = associationRepVM.association;
-            return Object.assign({}, association, {
+            let representationVM = a.representations.find((r) => r.id === rep.id);
+            return {
+              id: representationVM.associationId,
+              custom_key_name: representationVM.customKeyName,
+              is_required: representationVM.isRequired,
+              is_null: representationVM.isNull,
               attribute_id: a.id,
-              resource_representation_id: associationRepVM.selectedRepresentationId,
-              _destroy: !associationRepVM.hasAttribute
-            });
+              resource_representation_id: representationVM.selectedRepresentationId,
+              _destroy: !representationVM.hasAttribute
+            };
         })
       });
 
