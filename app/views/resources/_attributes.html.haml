@@ -3,28 +3,9 @@
   - if user.can_edit? resource
     = link_to 'Edit', edit_project_resource_path(project, resource, section: "all_attributes"), class: "btn btn-primary"
 
-.filter
-  .flexspace-and-center
-    %div#filter-text Filter by representation :
-    .btn.btn-link#manage Manage
-  .flexwrap
-    .btn.representation-btn#all All
-    - resource.resource_representations_with_color.each do |representation, color_class|
-      .btn.representation-btn{id: representation.id, class: color_class}
-        = representation.name
-  .flexcontainer-justify-end#buttons-row{style: 'display: none;'}
-    %a.btn.btn-default#old-edit{style: 'display: none;'} Edit (previous version)
-    = link_to 'New (previous version)', new_resource_resource_representation_path(resource), class: 'btn btn-default'
-    .btn.btn-default#cancel Cancel
-    .btn.btn-primary#update Update
+#root-vue
+  %ps-filter-attributes{':representations': 'resource.representations',
+    ':manage-mode': 'manageMode'}
 
-.flexcontainer.flexwrap#table
-  .table-row
-    .cell Name
-    .cell Type
-    .cell Nullable
-    .cell Representations
-    .cell
-      .btn#expandAll Expand All
-  - resource.resource_attributes_by_name.each do |attribute|
-    = render attribute
+  %ps-attributes{':attributes': 'resource.attributes', ':manage-mode': 'manageMode',
+    ':active-representation': 'activeRepresentation'}

@@ -372,6 +372,8 @@
       &:last-child {
         text-transform: none;
         text-align: right;
+        flex: none;
+        width: 132px;
       }
 
       &.type,&.type-select {
@@ -458,5 +460,9 @@
       opacity: 1;
       display: inline-block;
     }
+  }
+
+  button.clear {
+    display: none;
   }
 }
