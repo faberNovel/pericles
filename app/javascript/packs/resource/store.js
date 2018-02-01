@@ -30,7 +30,9 @@ export default {
       attributes: data.resource.resource_attributes.map((a) =>
         this.mapResourceAttributeToViewModel(a, data.resource.resource_representations)
       ).sort((a, b) => a.name.localeCompare(b.name)),
-      representations: data.resource.resource_representations.map((r, i) =>
+      representations: data.resource.resource_representations.filter((r) =>
+        !this.state.representationsToDelete.has(r.id)
+      ).map((r, i) =>
         Object.assign({}, {
           id: r.id,
           name: r.name,
@@ -57,7 +59,9 @@ export default {
       isArray: attribute.is_array,
       availableRepresentations: attribute.available_resource_representations,
       isDisplayed: true,
-      representations: resourceRepresentationsData.map((r, i) => {
+      representations: resourceRepresentationsData.filter((r) =>
+        !this.state.representationsToDelete.has(r.id)
+      ).map((r, i) => {
         let association = r.attributes_resource_representations
           .find((arr) => arr.attribute_id === attribute.id);
         return {
@@ -195,9 +199,9 @@ export default {
       });
     });
 
-    promises += [...this.state.representationsToDelete].map((id) =>
-      this.deleteRepresentation(id)
-    );
+    promises.concat([...this.state.representationsToDelete].map(
+      (id) => this.deleteRepresentation(id)
+    ));
     this.state.representationsToDelete.clear();
 
     // TODO: catch error
