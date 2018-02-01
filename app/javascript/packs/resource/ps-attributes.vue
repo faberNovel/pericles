@@ -6,7 +6,12 @@
     .cell Nullable
     .cell Representations
     .cell
-      .btn(@click='onClickExpandAll') Expand All
+      .btn(v-if='shouldShowExpandAll'
+        @click='onClickExpandAll'
+    ) Expand All
+      .btn(v-else
+        @click='onClickHideAll'
+    ) Hide All
   ps-attribute(
     v-for='a in attributes'
     :attribute='a'
@@ -23,6 +28,16 @@ export default {
   methods: {
     onClickExpandAll: function() {
       $('.contraints-row').collapse('show');
+      this.shouldShowExpandAll = false;
+    },
+    onClickHideAll: function() {
+      $('.contraints-row').collapse('hide');
+      this.shouldShowExpandAll = true;
+    },
+  },
+  data: function() {
+    return {
+        shouldShowExpandAll: true
     }
   },
   components: {'ps-attribute': AttributeComponent}
