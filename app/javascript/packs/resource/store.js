@@ -8,12 +8,14 @@ export default {
     },
     originalResource: {},
     manageMode: false,
-    activeRepresentation: null
+    activeRepresentation: null,
+    newRepresentationName: '',
+    representationsToDelete: new Set(),
   },
   fetchResource: function() {
     return $.ajax({
       type: "GET",
-      url: document.location.href + '.json',
+      url: document.location.pathname + '.json',
       contentType: "application/json",
     }).then((data) => {
       let viewModel = this.mapDataToViewModel(data);
@@ -101,6 +103,7 @@ export default {
   restoreState: function() {
     Object.assign(this.state.resource, JSON.parse(JSON.stringify(this.state.originalResource)));
     this.setManageMode(false);
+    this.state.representationsToDelete.clear();
     this.updateStateAfterSelectionChanged();
   },
   toggleBelongingAttribute: function(attributeId, representationId) {
@@ -192,6 +195,11 @@ export default {
       });
     });
 
+    promises += [...this.state.representationsToDelete].map((id) =>
+      this.deleteRepresentation(id)
+    );
+    this.state.representationsToDelete.clear();
+
     // TODO: catch error
     Promise.all(promises).finally(() => {
       let activeRepresentationId = this.state.activeRepresentation && this.state.activeRepresentation.id;
@@ -215,5 +223,47 @@ export default {
     let a = this.state.resource.attributes.find((a) => a.id === attributeId);
     let r  = a.representations.find((r) => r.id === this.state.activeRepresentation.id);
     r.selectedRepresentationId = newSelectedRepresentation.id;
+  },
+  setNewRepresentationName: function(value) {
+    this.state.newRepresentationName = value;
+  },
+  getNewRepresentationName: function() {
+    return this.state.newRepresentationName;
+  },
+  createNewRepresentation: function() {
+    let resource = this.state.resource;
+    return $.ajax({
+      type: "POST",
+      url: "/resources/" + resource.id + "/resource_representations",
+      contentType: "application/json",
+      data: JSON.stringify({resource_representation: {name: this.state.newRepresentationName}}),
+      dataType: "json"
+    }).then((data) => {
+      this.state.newRepresentationName = null;
+      this.fetchResource();
+    });
+  },
+  markRepresentationToBeDeleted(id) {
+    let resource = this.state.resource;
+    this.state.representationsToDelete.add(id);
+    resource.representations = resource.representations.filter(
+      (r) => r.id != id
+    )
+    resource.attributes.forEach((a) => {
+      a.representations = a.representations.filter(
+        (r) => r.id != id
+      )
+    });
+    if (this.state.activeRepresentation && this.state.activeRepresentation.id == id) {
+      this.state.activeRepresentation = null;
+    }
+  },
+  deleteRepresentation: function(id) {
+    let resource = this.state.resource;
+    return $.ajax({
+      type: "DELETE",
+      url: "/resources/" + resource.id + "/resource_representations/" + id,
+      contentType: "application/json",
+    });
   }
 }

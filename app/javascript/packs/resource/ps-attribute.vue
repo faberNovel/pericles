@@ -88,7 +88,7 @@ export default {
         Store.toggleBelongingAttribute(attributeId, representationId);
     },
     resourcePath: function(resourceId) {
-      let baseUrl = document.location.href.split('/').slice(0, -1).join('/');
+      let baseUrl = document.location.pathname.split('/').slice(0, -1).join('/');
       return  baseUrl + '/' + resourceId;
     }
   },

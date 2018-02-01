@@ -69,7 +69,10 @@ class ResourceRepresentationsController < ApplicationController
       flash[:error] = t('activerecord.errors.models.resource_representation.attributes.base.destroy_failed_foreign_key')
     end
 
-    redirect_to project_resource_path(project, resource)
+    respond_to do |format|
+      format.js { head :no_content }
+      format.html { redirect_to project_resource_path(project, resource), status: :see_other }
+    end
   end
 
   def clone

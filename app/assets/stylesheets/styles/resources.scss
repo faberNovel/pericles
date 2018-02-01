@@ -477,4 +477,8 @@
       transform: none;
     }
   }
+
+  #new:focus {
+    outline: none;
+  }
 }

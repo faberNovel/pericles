@@ -11,6 +11,11 @@
   flex-direction: row;
 }
 
+.flex-v-center {
+  display: flex;
+  align-items: center;
+}
+
 .flexcontainer-justify-end {
   display: flex;
   justify-content: flex-end;
