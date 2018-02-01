@@ -79,7 +79,8 @@ export default {
     });
   },
   toggleSelect: function(representationId) {
-    if (this.state.manageMode) {
+    let activeRepresentationIsSelected = this.state.activeRepresentation && representationId == this.state.activeRepresentation.id;
+    if (this.state.manageMode && !activeRepresentationIsSelected) {
       this.unselectAll();
     }
 
