@@ -25,22 +25,24 @@ export default {
     });
   },
   mapDataToViewModel: function(data) {
+    let resourceRepresentationsData = data.resource.resource_representations.filter((r) =>
+      !this.state.representationsToDelete.has(r.id)
+    ).sort((a, b) => a.id - b.id);
+
     return {
       id: data.resource.id,
       name: data.resource.name,
       attributes: data.resource.resource_attributes.map((a) =>
-        this.mapResourceAttributeToViewModel(a, data.resource.resource_representations)
+        this.mapResourceAttributeToViewModel(a, resourceRepresentationsData)
       ).sort((a, b) => a.name.localeCompare(b.name)),
-      representations: data.resource.resource_representations.filter((r) =>
-        !this.state.representationsToDelete.has(r.id)
-      ).map((r, i) =>
+      representations: resourceRepresentationsData.map((r, i) =>
         Object.assign({}, {
           id: r.id,
           name: r.name,
           colorClass: 'color-' + i,
           isSelected: false
         })
-      ).sort((a, b) => a.id - b.id)
+      )
     };
   },
   mapResourceAttributeToViewModel: function(attribute, resourceRepresentationsData) {
