@@ -20,11 +20,12 @@ class Resource < ApplicationRecord
   has_associated_audits
 
   def json_schema
-    ResourceRepresentationSchemaSerializer.new(
-      build_default_resource_representation,
-      is_collection: false,
-      root_key: ''
-    ).as_json
+    schemas = resource_representations.map(&:json_schema)
+    definitions = schemas.map { |s| s.delete :definitions }.reduce({}, :merge)
+    {
+      "definitions": definitions,
+      "anyOf": schemas
+    }
   end
 
   def has_invalid_mocks?

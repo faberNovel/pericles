@@ -17,6 +17,14 @@ class ResourceRepresentation < ApplicationRecord
   audited
   has_associated_audits
 
+  def json_schema
+    ResourceRepresentationSchemaSerializer.new(
+      self,
+      is_collection: false,
+      root_key: ''
+    ).as_json
+  end
+
   def find_parent_resource_representations
     parent_resource_representations = []
     referencing_associations = AttributesResourceRepresentation.where(resource_representation_id: self.id)
