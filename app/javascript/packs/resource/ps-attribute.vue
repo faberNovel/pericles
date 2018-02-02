@@ -1,11 +1,14 @@
 <template lang="pug">
 .table-row.flexwrap(v-if='attribute.isDisplayed')
   .table-row
-    .cell(v-if='activeRepVM && activeRepVM.customKeyName', :class='activeRepresentation.colorClass', style='font-weight: 700;')
+    .cell(v-if='activeAttributeRepresentation && activeAttributeRepresentation.customKeyName',
+        :class='activeRepresentation.colorClass',
+        style='font-weight: 700;'
+    )
       .tool-tip(data-toggle='tooltip'
         data-placement='top'
         :title='attribute.name'
-      ) {{activeRepVM.customKeyName}}
+      ) {{activeAttributeRepresentation.customKeyName}}
     .cell(v-else) {{attribute.name}}
     .cell.type(v-if='manageMode && attribute.resourceId && activeRepresentation')
       v-select(v-model='selected', :options='attribute.availableRepresentations', label='name')
@@ -56,20 +59,20 @@
       dt Description
       dd {{attribute.description}}
   .contraints-row.collapse(:id="'collapse-representation-' + attribute.id"
-    v-if='manageMode && activeRepVM'
+    v-if='manageMode && activeAttributeRepresentation'
   )
     .constraint-cell
-      input.form-control(placeholder='Custom key name', v-model='activeRepVM.customKeyName')
+      input.form-control(placeholder='Custom key name', v-model='activeAttributeRepresentation.customKeyName')
     .constraint-cell
       .checkbox
         label
-          input(type='checkbox', v-model='activeRepVM.isRequired')
+          input(type='checkbox', v-model='activeAttributeRepresentation.isRequired')
           .
             Required?
     .constraint-cell
       .checkbox
         label
-          input(type='checkbox', v-model='activeRepVM.isNull')
+          input(type='checkbox', v-model='activeAttributeRepresentation.isNull')
           .
             Is null?
 </template>
@@ -103,7 +106,7 @@ export default {
       );
     },
     shouldShowRepresentationCollapse: function() {
-      return this.manageMode && this.activeRepVM;
+      return this.manageMode && this.activeAttributeRepresentation;
     },
     selected: {
       get: function () {
@@ -111,7 +114,7 @@ export default {
           return null;
         }
         let selected = this.attribute.availableRepresentations.find((r) =>
-          r.id === this.activeRepVM.selectedRepresentationId
+          r.id === this.activeAttributeRepresentation.selectedRepresentationId
         );
         return selected;
       },
@@ -124,7 +127,7 @@ export default {
         }
       }
     },
-    activeRepVM: function() {
+    activeAttributeRepresentation: function() {
       if (!this.activeRepresentation) {
         return null;
       }

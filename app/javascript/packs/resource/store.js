@@ -178,15 +178,15 @@ export default {
         description: rep.description,
         attributes_resource_representations_attributes: resource.attributes.map(
           (a) => {
-            let representationVM = a.representations.find((r) => r.id === rep.id);
+            let attributeRepresentation = a.representations.find((r) => r.id === rep.id);
             return {
-              id: representationVM.associationId,
-              custom_key_name: representationVM.customKeyName,
-              is_required: representationVM.isRequired,
-              is_null: representationVM.isNull,
+              id: attributeRepresentation.associationId,
+              custom_key_name: attributeRepresentation.customKeyName,
+              is_required: attributeRepresentation.isRequired,
+              is_null: attributeRepresentation.isNull,
               attribute_id: a.id,
-              resource_representation_id: representationVM.selectedRepresentationId,
-              _destroy: !representationVM.hasAttribute
+              resource_representation_id: attributeRepresentation.selectedRepresentationId,
+              _destroy: !attributeRepresentation.hasAttribute
             };
         })
       });
