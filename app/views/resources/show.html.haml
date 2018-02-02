@@ -1,87 +1,56 @@
 = content_for :title, "Resource #{resource.name}"
 
 - content_for :page_scripts do
-  = javascript_include_tag("resources/show.js")
+  = javascript_pack_tag("resource/index.js")
 
-- if flash[:error]
-  %div{class: "alert alert-danger"}
-    =flash[:error]
+#resource-show
+  %ol.breadcrumb
+    %li
+      = link_to 'Projects', projects_path
+    %li
+      = link_to "#{project.title}", project_path(project)
+    %li
+      = link_to 'Resources', project_resources_path(project)
+    %li
+      = resource.name
 
-.page-header
-  %h1
+  - if flash[:error]
+    .alert.alert-danger
+      = flash[:error]
+
+  %h1{id: resource.id}
     = resource.name
-    .pull-right
-      .btn-group{ role: "group" }
-        = link_to 'Swift', project_resource_path(project, resource, format: "swift"), class: "btn btn-default"
-        = link_to 'Java', project_resource_path(project, resource, format: "java"), class: "btn btn-default"
-        = link_to 'Kotlin', project_resource_path(project, resource, format: "kotlin"), class: "btn btn-default"
-        = link_to 'Edit', edit_project_resource_path(project, resource, section: "base"), class: "btn btn-default" if user.can_edit? resource
-        = link_to "Delete", project_resource_path(project, resource), method: :delete, data: { confirm: 'Are you sure ?' },
-       class: "btn btn-default" if user.can_delete? resource
+    - if user.can_edit? resource
+      = link_to(image_tag('edit.svg'), edit_project_resource_path(project, resource, section: 'base'))
+    - if user.can_delete? resource
+      .pull-right
+        = link_to("Delete", project_resource_path(project, resource),
+            method: :delete,
+            data: { confirm: 'Are you sure ?' },
+            class: "btn btn-default")
 
-%p
-  = resource.description
+  %p
+    = resource.description
 
-%h3
-  Attributes
-  = render partial: "shared/last_edit", locals: {last_audit: resource.last_audit}
+  %ul.nav.nav-pills{role: 'tablist'}
+    %li.active
+      %a{href: '#pills-attributes', 'data-toggle' => "pill", role: 'tab'}
+        Attributes
+        %span.badge=resource.resource_attributes.count
+    %li
+      %a{href: '#pills-resource-instances', 'data-toggle' => "pill", role: 'tab'}
+        Instances
+        %span.badge{class: resource.has_invalid_mocks? ? 'invalid-instances' : ''}
+          =resource.resource_instances.count
+    %li
+      %a{href: '#pills-routes', 'data-toggle' => "pill", role: 'tab'}
+        Routes
+        %span.badge=resource.routes.count
 
-%div
-  / Global Nav tabs
-  %ul.nav.nav-tabs.nav-justified{ role: "tablist" }
-    %li.active{ role: "presentation" }
-      %a{ "aria-controls" => "all attributes", "data-toggle" => "tab", href: "#all-attributes", role: "tab" }
-        = "All Attributes"
-    %li{ role: "presentation" }
-      %a{ "aria-controls" => "resource representations", "data-toggle" => "tab", href: "#resource-reps", role: "tab" }
-        = "Resource Representations"
-  / Global Tab panes
   .tab-content
-    #all-attributes.tab-pane.active{ role: "tabpanel" }
-      .panel.panel-default
-        .panel-heading
-          .flexcontainer.flexcontainer-justify-end
-            = link_to 'Edit', edit_project_resource_path(project, resource, section: "all_attributes"), class: "btn btn-default" if user.can_edit? resource
-        .panel-body
-          - resource.resource_attributes.sorted_by_name.each do |attribute|
-            = render attribute
-    #resource-reps.tab-pane{ role: "tabpanel" }
-      %div
-        / Nav tabs for Resource Representations
-        %ul.nav.nav-tabs{ role: "tablist" }
-          - resource.resource_representations.each_with_index do |resource_rep, index|
-            %li{ role: "presentation", class: ('active' if index.zero?) }
-              %a{ "aria-controls" => "#{resource_rep.name}", "data-toggle" => "tab", href: "#res-#{resource_rep.id}", role: "tab" }
-                = resource_rep.name
-          - if user.can_create? ResourceRepresentation, project: project
-            %li{ role: "presentation" }
-              = link_to '+', new_resource_resource_representation_path(resource)
-        / Tab panes for Resource Representations
-        .tab-content
-          - resource.resource_representations.each_with_index do |resource_rep, index|
-            .tab-pane{ role: "tabpanel", id: "res-#{resource_rep.id}", class: ('active' if index.zero?) }
-              = render resource_rep
-
-%h3 Resource instances
-
-- if user.can_create? ResourceInstance, project: project
-  .flexcontainer.flexcontainer-justify-end
-    = link_to 'New Mock', new_resource_resource_instance_path(resource), class: "btn btn-default btn-lg"
-
-.margin-top-element
-  - if resource.resource_instances.any?
-    - resource.resource_instances.each do |instance|
-      = render instance
-  - else
-    %p
-      %i= t('.no_mocks_placeholder')
-
-%h3 Routes
-
-.margin-top-element
-  - if resource.routes.any?
-    - resource.routes.includes(:resource_representations).each do |route|
-      = render partial: 'routes/route_summary', locals: { resource: resource, route: route, should_display_representations: true }
-  - else
-    %p
-      %i= t('.no_route_placeholder')
+    #pills-attributes.tab-pane.fade.in.active{role: 'tabpanel'}
+      = render partial: 'attributes'
+    #pills-resource-instances.tab-pane.fade{role: 'tabpanel'}
+      = render partial: 'resource_instances'
+    #pills-routes.tab-pane.fade{role: 'tabpanel'}
+      = render partial: 'routes'

@@ -1,0 +1,7 @@
+.margin-top-element
+  - if resource.routes.any?
+    - resource.routes.includes(:resource_representations).each do |route|
+      = render partial: 'routes/route_summary', locals: { resource: resource, route: route, should_display_representations: true }
+  - else
+    %p
+      %i= t('.no_route_placeholder')

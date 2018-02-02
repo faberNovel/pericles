@@ -2,7 +2,7 @@
 
 - if user.can_create? Resource, project: project
   .flexcontainer.flexcontainer-justify-end
-    = link_to 'New Resource', new_project_resource_path(project), class: "btn btn-default btn-lg"
+    = link_to 'New Resource', new_project_resource_path(project), class: "btn btn-primary btn-lg"
 
 .list-group.margin-top-element
   - if @resources.empty?

@@ -2,7 +2,7 @@
 
 .flexspace-and-center
   %h1 Routes
-  = link_to 'New Route', new_project_route_path(project), class: "btn btn-default btn-lg" if user.can_create? Route, project: project
+  = link_to 'New Route', new_project_route_path(project), class: "btn btn-primary btn-lg" if user.can_create? Route, project: project
 
 - if @routes_by_resource.any?
   - @resources.each do |resource|
