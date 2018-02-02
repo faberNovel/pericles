@@ -1,8 +1,8 @@
 .flexcontainer.flexcontainer-justify-end
   .btn-group{ role: "group" }
-    = link_to 'Edit', edit_route_response_path(route, response), class: "btn btn-default" if user.can_edit? response
+    = link_to 'Edit', edit_route_response_path(route, response), class: "btn btn-primary" if user.can_edit? response
     = link_to "Delete", route_response_path(route, response), method: :delete, data: { confirm: 'Are you sure ?' },
-      class: "btn btn-default" if user.can_delete? response
+      class: "btn btn-primary" if user.can_delete? response
 
 %div
   / Response Nav tabs
@@ -24,8 +24,8 @@
           .panel-heading
             .flexcontainer.flexcontainer-justify-end
               .btn-group{ role: "group" }
-                = submit_tag("Validate JSON", class: "btn btn-default validate-json-instance", json_schema: format_json(response.json_schema))
-                = submit_tag("Generate JSON", class: "btn btn-default generate-json-instance", json_schema: format_json(response.json_schema))
+                = submit_tag("Validate JSON", class: "btn btn-primary validate-json-instance", json_schema: format_json(response.json_schema))
+                = submit_tag("Generate JSON", class: "btn btn-primary generate-json-instance", json_schema: format_json(response.json_schema))
 
         .panel-body
           - unless response.json_schema.blank?

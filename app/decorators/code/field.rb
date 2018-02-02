@@ -66,7 +66,7 @@ module Code
       when :integer
         'Int'
       when :boolean
-        'Boolean'
+        'Bool'
       when :string
         'String'
       when :date

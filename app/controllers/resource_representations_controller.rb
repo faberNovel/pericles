@@ -47,10 +47,18 @@ class ResourceRepresentationsController < ApplicationController
 
   def update
     if resource_representation.update(permitted_attributes(resource_representation))
-      redirect_to project_resource_path(project, resource)
+      respond_to do |format|
+        format.html { redirect_to project_resource_path(project, resource) }
+        format.json { render json: resource_representation, include: '**', serializer: ExtendedResourceRepresentationSerializer }
+      end
     else
-      build_missing_attributes_resource_representations
-      render 'edit', layout: 'generic', status: :unprocessable_entity
+      respond_to do |format|
+        format.html do
+          build_missing_attributes_resource_representations
+          render 'edit', layout: 'generic', status: :unprocessable_entity
+        end
+        format.json { render json: resource_representation.errors }
+      end
     end
   end
 
@@ -61,7 +69,10 @@ class ResourceRepresentationsController < ApplicationController
       flash[:error] = t('activerecord.errors.models.resource_representation.attributes.base.destroy_failed_foreign_key')
     end
 
-    redirect_to project_resource_path(project, resource)
+    respond_to do |format|
+      format.js { head :no_content }
+      format.html { redirect_to project_resource_path(project, resource), status: :see_other }
+    end
   end
 
   def clone

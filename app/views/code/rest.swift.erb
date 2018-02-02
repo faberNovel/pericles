@@ -16,7 +16,7 @@ struct <%= resource.rest_name =%> : Decodable {
 
     enum CodingKeys : String, CodingKey {
     <% resource.resource_attributes.each do |attribute| %>
-        case <%= attribute.variable_name =%> = "<%= attribute.key_name =%>"
+        case <%= attribute.variable_name =%><% if attribute.variable_name != attribute.key_name %> = "<%= attribute.key_name =%>"<% end %>
     <% end %>
     }
 }

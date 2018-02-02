@@ -11,11 +11,18 @@
   flex-direction: row;
 }
 
+.flex-v-center {
+  display: flex;
+  align-items: center;
+}
+
 .flexcontainer-justify-end {
+  display: flex;
   justify-content: flex-end;
 }
 
 .flexcontainer-space-between {
+  display: flex;
   justify-content: space-between;
 }
 
@@ -23,6 +30,11 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.flexwrap {
+  display: flex;
+  flex-wrap: wrap;
 }
 
 dl dt {
@@ -65,7 +77,7 @@ input[type=submit] {
   flex: 1;
 }
 
-.btn-default {
+.btn.btn-primary {
   border-color: transparent;
   &:hover {
     border-color: transparent;
@@ -74,4 +86,30 @@ input[type=submit] {
 
 .navbar-fixed-top {
   min-height: 60px;
+}
+
+.btn.btn-default {
+  background-color: white;
+  color: $grey;
+  &:hover,&:active,&:focus {
+    color: darken($grey, 5%);
+    background-color: white;
+  }
+}
+
+.last-edit {
+  display: inline;
+  font-weight: normal;
+  font-size: 10px;
+  font-style: italic;
+  color: $grey;
+  &:before {
+    content: " ";
+  }
+  span {
+    font-weight: bold;
+    &:before,&:after {
+      content: " ";
+    }
+  }
 }

@@ -2,6 +2,14 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.4.0 - 2018-02-02
+
+* Overhaul of resource page
+* Fix issue with proxy not creating a report for a json response
+* Fix swift code having lint warning and wrong boolean types
+* Fix issue with valid resource instance marked as invalid
+
+
 ## 0.3.1 - 2018-01-22
 
 * Added deploy to Heroku button

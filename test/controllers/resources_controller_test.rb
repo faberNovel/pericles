@@ -218,11 +218,11 @@ class ResourcesControllerTest < ControllerWithAuthenticationTest
         let weight: Double?
 
         enum CodingKeys : String, CodingKey {
-            case date = \"date\"
+            case date
             case dateTime = \"date_time\"
-            case id = \"id\"
+            case id
             case weaknessList = \"weakness_list\"
-            case weight = \"weight\"
+            case weight
         }
     }
     }.gsub(/^    /, '')

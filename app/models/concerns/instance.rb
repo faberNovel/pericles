@@ -5,6 +5,7 @@ module Instance
     has_and_belongs_to_many :mock_pickers
 
     validates :name, presence: true
+    validates :parent, presence: true
     validate :body_valid?
   end
 
@@ -17,7 +18,7 @@ module Instance
   end
 
   def body_valid?
-    return unless parent.json_schema
+    return unless parent&.json_schema
 
     JSON::Validator.fully_validate(
       parent.json_schema, body, json: true

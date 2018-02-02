@@ -1,53 +1,43 @@
-.panel.panel-default
-  .panel-body
-    %a{'data-toggle': 'collapse', href: "#collapse-attribute-#{attribute.id}", style: 'color: black;'}
-      .row
-        .col-xs-3
-          %dl
-            %dt Name
-            %dd
-              %strong= attribute.name
-        .col-xs-3
-          - unless attribute.description.blank?
-            %dl
-              %dt Description
-              %dd= attribute.description
-        .col-xs-3
-          %dl
-            %dt Type
-            %dd
-              - if attribute.resource_id
-                %a{href: project_resource_path(project, attribute.resource_id)}
-                  %strong= format_type(attribute.primitive_type, attribute.resource_id, attribute.is_array)
-              - else
-                %strong= format_type(attribute.primitive_type, attribute.resource_id, attribute.is_array)
-        .col-xs-2
-          %dl
-            %dt Nullable
-            %dd= attribute.nullable
-    .row.collapse{id: "collapse-attribute-#{attribute.id}"}
-      - unless attribute.enum.blank?
-        .col-xs-2
-          %dl
-            %dt Enum
-            %dd= attribute.enum
-      - unless attribute.scheme.blank?
-        .col-xs-2
-          %dl
-            %dt Scheme
-            %dd= attribute.scheme.name
-      - unless attribute.minimum.blank?
-        .col-xs-1
-          %dl
-            %dt Minimum
-            %dd= attribute.minimum
-      - unless attribute.maximum.blank?
-        .col-xs-1
-          %dl
-            %dt Maximum
-            %dd= attribute.maximum
-      - if attribute.faker
-        .col-xs-2
-          %dl
-            %dt Faker
-            %dd= attribute.faker&.name
+.table-row.flexwrap
+  .table-row
+    .cell= attribute.name
+    .cell.type= attribute.displayed_type
+    .cell.type-select{style: 'display: none;'}
+      - if attribute.resource
+        = select_tag('resource_representation_id',
+          options_for_select(attribute.resource.resource_representations.collect{ |r| [r.name, r.id] }))
+      - else
+        = attribute.displayed_type
+    .cell= attribute.nullable
+    .cell.circles
+      - resource.resource_representations_with_color.each do |representation, color_class|
+        - if attr_res_rep = representation.attributes_resource_representation(attribute)
+          .selected.circle{'attribute-id': attribute.id, class: color_class,
+            'attributes-resource-representation-id': attr_res_rep.id,
+            'resource-representation-id': attr_res_rep.resource_representation_id}
+        - else
+          .circle{'attribute-id': attribute.id, class: color_class}
+    .cell
+      - if attribute.constraints?
+        %a{ 'data-toggle': 'collapse', href: "#collapse-attribute-#{attribute.id}" }▾
+  .contraints-row.collapse{id: "collapse-attribute-#{attribute.id}"}
+    - unless attribute.enum.blank?
+      .constraint-cell
+        %dt Enum
+        %dd= attribute.enum
+    - unless attribute.scheme.blank?
+      .constraint-cell
+        %dt Scheme
+        %dd= attribute.scheme.name
+    - unless attribute.minimum.blank?
+      .constraint-cell
+        %dt Minimum
+        %dd= attribute.minimum
+    - unless attribute.maximum.blank?
+      .constraint-cell
+        %dt Maximum
+        %dd= attribute.maximum
+    - unless attribute.description.blank?
+      .constraint-cell.description
+        %dt Description
+        %dd= attribute.description

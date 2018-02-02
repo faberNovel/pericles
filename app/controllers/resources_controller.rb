@@ -16,6 +16,7 @@ class ResourcesController < ApplicationController
           render body: CodeGenerator.new(language).from_resource(resource).generate
         end
       end
+      format.json { render json: resource, include: '**' }
     end
   end
 
