@@ -11,6 +11,7 @@ export default {
     activeRepresentation: null,
     newRepresentationName: '',
     representationsToDelete: new Set(),
+    sortMode: localStorage.getItem('sortMode') === "true"
   },
   fetchResource: function() {
     return $.ajax({
@@ -29,12 +30,15 @@ export default {
       !this.state.representationsToDelete.has(r.id)
     ).sort((a, b) => a.id - b.id);
 
+    let attributes = data.resource.resource_attributes.map((a) =>
+      this.mapResourceAttributeToViewModel(a, resourceRepresentationsData)
+    );
+    attributes = this.sortAttributes(attributes);
+
     return {
       id: data.resource.id,
       name: data.resource.name,
-      attributes: data.resource.resource_attributes.map((a) =>
-        this.mapResourceAttributeToViewModel(a, resourceRepresentationsData)
-      ).sort((a, b) => a.name.localeCompare(b.name)),
+      attributes: attributes,
       representations: resourceRepresentationsData.map((r, i) =>
         Object.assign({}, {
           id: r.id,
@@ -287,5 +291,19 @@ export default {
     r.isSelected = true;
     document.location.hash = '';
     this.updateStateAfterSelectionChanged();
+  },
+  toggleSort: function() {
+    this.state.sortMode = !this.state.sortMode;
+    localStorage.setItem('sortMode', this.state.sortMode);
+    this.state.resource.attributes = this.sortAttributes(this.state.resource.attributes);
+  },
+  sortAttributes: function(attributes) {
+    if (this.state.sortMode) {
+      return attributes.sort(
+        (a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase())
+      );
+    } else {
+      return attributes.sort((a, b) => a.id - b.id);
+    }
   }
 }
