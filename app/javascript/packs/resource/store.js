@@ -21,6 +21,7 @@ export default {
       let viewModel = this.mapDataToViewModel(data);
       Object.assign(this.state.originalResource, JSON.parse(JSON.stringify(viewModel)));
       Object.assign(this.state.resource, viewModel);
+      this.setDefaultActiveRepresentation();
     });
   },
   mapDataToViewModel: function(data) {
@@ -270,5 +271,19 @@ export default {
       url: "/resources/" + resource.id + "/resource_representations/" + id,
       contentType: "application/json",
     });
+  },
+  setDefaultActiveRepresentation: function() {
+    let hash = document.location.hash;
+    if(!hash || hash.indexOf('rep-') === -1) {
+      return;
+    }
+
+    let representationId = hash.split('rep-')[1];
+    let r  = this.state.resource.representations.find(
+      (r) => r.id == representationId
+    );
+    r.isSelected = true;
+    document.location.hash = '';
+    this.updateStateAfterSelectionChanged();
   }
 }

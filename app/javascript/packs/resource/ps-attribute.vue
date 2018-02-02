@@ -92,7 +92,11 @@ export default {
     },
     resourcePath: function(resourceId) {
       let baseUrl = document.location.pathname.split('/').slice(0, -1).join('/');
-      return  baseUrl + '/' + resourceId;
+      let url = baseUrl + '/' + resourceId;
+      if (this.activeAttributeRepresentation && this.activeAttributeRepresentation.selectedRepresentationId != null) {
+        url += '#rep-' + this.activeAttributeRepresentation.selectedRepresentationId
+      }
+      return url;
     }
   },
   computed: {
