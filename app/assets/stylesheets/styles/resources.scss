@@ -377,8 +377,13 @@
         width: 132px;
       }
 
+      &:nth-child(3) {
+        flex: none;
+        width: 120px;
+      }
+
       &.type,&.type-select {
-        flex: 2;
+        flex: 1.5;
       }
     }
 
@@ -412,10 +417,6 @@
           box-shadow: none;
           color: darken($grey, 25%);
         }
-      }
-
-      .cell:nth-child(2) {
-        flex: 2;
       }
     }
 
