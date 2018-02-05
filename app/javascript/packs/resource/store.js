@@ -11,7 +11,7 @@ export default {
     activeRepresentation: null,
     newRepresentationName: '',
     representationsToDelete: new Set(),
-    sortMode: localStorage.getItem('sortMode') === "true"
+    sortMode: localStorage.getItem('sortMode')
   },
   fetchResource: function() {
     return $.ajax({
@@ -292,15 +292,28 @@ export default {
     document.location.hash = '';
     this.updateStateAfterSelectionChanged();
   },
-  toggleSort: function() {
-    this.state.sortMode = !this.state.sortMode;
+  alphabeticalSort: function() {
+    this.state.sortMode = (this.state.sortMode === 'alphabetical') ? 'none' : 'alphabetical';
+    this.onSortModeChange();
+  },
+  typeSort: function() {
+    this.state.sortMode = (this.state.sortMode === 'type') ? 'none' : 'type';
+    this.onSortModeChange();
+  },
+  onSortModeChange: function() {
     localStorage.setItem('sortMode', this.state.sortMode);
     this.state.resource.attributes = this.sortAttributes(this.state.resource.attributes);
   },
   sortAttributes: function(attributes) {
-    if (this.state.sortMode) {
+    if (this.state.sortMode === 'alphabetical') {
       return attributes.sort(
         (a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase())
+      );
+    } else if (this.state.sortMode === 'type') {
+      return attributes.sort(
+        (a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase())
+      ).sort(
+        (a, b) => a.displayedType.toLowerCase().localeCompare(b.displayedType.toLowerCase())
       );
     } else {
       return attributes.sort((a, b) => a.id - b.id);
