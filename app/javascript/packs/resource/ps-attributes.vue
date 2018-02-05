@@ -1,10 +1,17 @@
 <template lang="pug">
 .flexcontainer.flexwrap#table
   .table-row
-    .cell Name
+    .cell.flexspace-and-center Name
+      input(
+        placeholder='Search',
+        class='form-control',
+        style='margin: 0 8px;',
+        :value='searchQuery'
+        @keyup='onSearchQueryChange'
+      )
       a(href='#' @click='onAlphabeticalSortClick')
         img#sort-icon.pull-right(:src='sortIcon("alphabetical")')
-    .cell Type
+    .cell.type Type
       a(href='#' @click='onTypeSortClick')
         img#sort-icon.pull-right(:src='sortIcon("type")')
     .cell Nullable
@@ -33,7 +40,7 @@ import Store from './store.js';
 import AttributeComponent from './ps-attribute.vue';
 
 export default {
-  props: ['attributes', 'manageMode', 'activeRepresentation', 'sortMode'],
+  props: ['attributes', 'manageMode', 'activeRepresentation', 'sortMode', 'searchQuery'],
   methods: {
     onClickExpandAll: function() {
       $('.contraints-row').collapse('show');
@@ -48,6 +55,10 @@ export default {
     },
     onTypeSortClick: function() {
       Store.typeSort();
+    },
+    onSearchQueryChange: function(e) {
+      let text = e.target.value;
+      Store.setSearchQuery(text);
     },
     sortIcon: function(sortType) {
       if (sortType === this.sortMode) {

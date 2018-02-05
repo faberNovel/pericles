@@ -11,7 +11,8 @@ export default {
     activeRepresentation: null,
     newRepresentationName: '',
     representationsToDelete: new Set(),
-    sortMode: localStorage.getItem('sortMode')
+    sortMode: localStorage.getItem('sortMode'),
+    searchQuery: ''
   },
   fetchResource: function() {
     return $.ajax({
@@ -132,14 +133,15 @@ export default {
     );
 
     if(activeRepresentations.length === 0) {
-      attributes.forEach((a) => a.isDisplayed = true);
+      attributes.forEach((a) => a.isDisplayed = this.shouldDisplayAttributeBySearchQuery(a));
     }
 
     attributes.forEach((a) => {
       let representationsWithAttribute = a.representations.filter((r) => r.hasAttribute);
       a.isDisplayed = activeRepresentations.every((activeRep) =>
         representationsWithAttribute.find((r) => r.id === activeRep.id)
-      )
+      );
+      a.isDisplayed &= this.shouldDisplayAttributeBySearchQuery(a);
     });
   },
   computeDisplayedTypeForAttributes: function() {
@@ -318,5 +320,27 @@ export default {
     } else {
       return attributes.sort((a, b) => a.id - b.id);
     }
+  },
+  setSearchQuery: function(newQuery) {
+    this.state.searchQuery = newQuery;
+    this.computeIsDislayedForAttributes();
+  },
+  shouldDisplayAttributeBySearchQuery: function(attribute) {
+    let query = this.state.searchQuery.toLowerCase();
+    if (query.length === 0) {
+      return true;
+    }
+
+    let isMatchingName = attribute.name.toLowerCase().indexOf(query) != -1;
+    if (this.state.activeRepresentation) {
+      let attributeRepresentation = attribute.representations.find(
+        (r) => r.id === this.state.activeRepresentation.id
+      );
+      let customKeyName = attributeRepresentation.customKeyName;
+      if (customKeyName) {
+        isMatchingName |= customKeyName.toLowerCase().indexOf(query) != -1;
+      }
+    }
+    return isMatchingName;
   }
 }
