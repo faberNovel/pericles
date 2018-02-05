@@ -18,11 +18,11 @@
         - if should_display_representations && !route.resource_representations.empty?
           %dl
             %dt Resource representations
-            %dd= route.resource_representations.uniq.map(&:name).join(", ")
+            %dd= route.resource_representations_links
         - else
           %dl
             %dt Resource
-            %dd= route.resource.name
+            %dd= link_to route.resource.name, project_resource_path(route.project, route.resource)
       - if resource = local_assigns[:resource]
         .col-xs-1
           = link_to 'Show', project_route_path(project, route), class: "btn btn-primary btn-md"
