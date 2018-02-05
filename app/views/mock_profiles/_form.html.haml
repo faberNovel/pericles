@@ -1,6 +1,9 @@
 - content_for :page_scripts do
   = javascript_include_tag("mock_profiles/form.js")
 
+.flexcontainer-justify-end
+  = link_to 'Export', mock_profile_path(mock_profile, format: 'zip'), class: 'btn btn-primary'
+
 #mock_profile_form
   = bootstrap_form_for(mock_profile) do |f|
     = render 'shared/errors', object: mock_profile

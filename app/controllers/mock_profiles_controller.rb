@@ -4,6 +4,18 @@ class MockProfilesController < MocksController
   layout 'full_width_column'
   lazy_controller_of :mock_profile, helper_method: true, belongs_to: :project
 
+  def show
+    respond_to do |format|
+      format.zip do
+        send_data(
+          MocksZipBuilder.new(mock_profile).zip_data,
+          type: 'application/zip',
+          filename: "#{project.title}.mocks.zip"
+        )
+      end
+    end
+  end
+
   def index
     @mock_profiles = project.mock_profiles
   end

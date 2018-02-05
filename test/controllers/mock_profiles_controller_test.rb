@@ -178,4 +178,10 @@ class MockProfilesControllerTest < ControllerWithAuthenticationTest
     get edit_mock_profile_path(@mock_profile)
     assert_response :success  # Forbidden when mock_profile have a show page
   end
+
+  test "should get zip file with all mocks" do
+    get mock_profile_path(@mock_profile, format: 'zip')
+    assert_response :success
+    assert_equal response.headers['Content-Type'], 'application/zip'
+  end
 end

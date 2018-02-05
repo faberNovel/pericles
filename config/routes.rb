@@ -30,7 +30,7 @@ Rails.application.routes.draw do
   end
   resources :resource_instances, only: [:edit, :update, :destroy]
   resources :api_error_instances, only: [:edit, :update, :destroy]
-  resources :mock_profiles, only: [:edit, :update]
+  resources :mock_profiles, only: [:edit, :update, :show]
   resources :validations, only: [:create, :new, :index]
   resources :instances, only: [:create]
   resources :headers, only: [:index]
