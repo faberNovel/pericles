@@ -31,6 +31,10 @@
 
   %p
     = resource.description
+  - unless resource.used_in_resources.empty?
+    %p
+      Used in:&nbsp
+      = resource.used_in_resources_links
 
   %ul.nav.nav-pills{role: 'tablist'}
     %li.active
