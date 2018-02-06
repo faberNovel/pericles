@@ -1,23 +1,14 @@
 require 'zip'
 
-class CodeZipBuilder
+class CodeZipBuilder < AbstractZipBuilder
   def initialize(project, language)
     @project = project
     @language = language
   end
 
-  def zip_data
-    stringio = Zip::OutputStream.write_buffer do |zio|
-      @project.resource_representations.each do |resource_representation|
-        zio.put_next_entry(filename(resource_representation))
-        zio.write file_content(resource_representation)
-      end
-    end
-    stringio.rewind
-    stringio.sysread
+  def collection
+    @project.resource_representations
   end
-
-  private
 
   def filename(resource_representation)
     decorated_representation = Code::ResourceRepresentationDecorator.new(resource_representation)

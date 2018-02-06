@@ -1,28 +1,13 @@
 require 'zip'
 
-class MocksZipBuilder
+class MocksZipBuilder < AbstractZipBuilder
   def initialize(mock_profile)
     @mock_profile = mock_profile
-    @entries = Set.new
   end
 
-  def zip_data
-    stringio = Zip::OutputStream.write_buffer do |zio|
-      @mock_profile.mock_pickers.preload(:resource_instances).each do |mock_picker|
-        entry = filename(mock_picker)
-
-        next if @entries.include? entry
-        @entries.add(entry)
-
-        zio.put_next_entry(entry)
-        zio.write file_content(mock_picker)
-      end
-    end
-    stringio.rewind
-    stringio.sysread
+  def collection
+    @mock_profile.mock_pickers.preload(:resource_instances)
   end
-
-  private
 
   def filename(mock_picker)
     if mock_picker.url_pattern.blank?
