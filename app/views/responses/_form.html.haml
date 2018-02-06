@@ -29,7 +29,7 @@
 
     .col-xs-6{class: route_response.can_have_resource_representation ? 'resource-representation' : 'api-error'}
       = f.select(:resource_representation_id,
-        resource.resource_representations.pluck(:name, :id),
+        route.representations_grouped_options,
         include_blank: true,
         selected: f.object.persisted? ? f.object.resource_representation_id : resource.resource_representations.first&.id)
       = f.select(:api_error_id,
