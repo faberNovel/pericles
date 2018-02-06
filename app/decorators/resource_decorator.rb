@@ -8,12 +8,6 @@ class ResourceDecorator < Draper::Decorator
     object.resource_attributes.decorate.sort_by(&:name)
   end
 
-  def resource_representations_with_color
-    resource_representations.order(:id).each_with_index.map do |r, i|
-      [r, "color-#{i}"]
-    end
-  end
-
   def used_in_resources_links
     object.used_in_resources.map do |r|
       h.link_to(r.name, h.project_resource_path(r.project, r))
