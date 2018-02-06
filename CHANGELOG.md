@@ -2,6 +2,18 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.4.1 - 2018-02-06
+
+* Group representation by resources for route request and response form
+* Add clone button for resource representation
+* Allow empty body for response
+* Add a resource link in route summary
+* Add a button to get an archive of all mock instances of a profile
+* Search attributes by name in resource page
+* Sort attributes by name or type in resource page
+* List where the resource is used in resource page
+* Minor fixes
+
 ## 0.4.0 - 2018-02-02
 
 * Overhaul of resource page
