@@ -34,7 +34,7 @@
       transition(name="w-slide-fade")
         input.form-control(v-if="activeRepresentation"
           v-model="activeRepresentation.name"
-          style='width: auto;'
+          style='width: 200px;'
         )
       transition(name="w-slide-fade")
         a(href='#'
