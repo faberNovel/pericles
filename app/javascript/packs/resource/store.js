@@ -342,5 +342,15 @@ export default {
       }
     }
     return isMatchingName;
+  },
+  clone: function(representationId) {
+    let resource = this.state.resource;
+    return $.ajax({
+      type: "POST",
+      url: "/resources/" + resource.id + "/resource_representations/" + representationId + '/clone',
+      contentType: "application/json",
+    }).then((data) => {
+      this.fetchResource();
+    });
   }
 }
