@@ -11,6 +11,8 @@ export default {
     activeRepresentation: null,
     newRepresentationName: '',
     representationsToDelete: new Set(),
+    sortMode: localStorage.getItem('sortMode'),
+    searchQuery: ''
   },
   fetchResource: function() {
     return $.ajax({
@@ -25,22 +27,27 @@ export default {
     });
   },
   mapDataToViewModel: function(data) {
+    let resourceRepresentationsData = data.resource.resource_representations.filter((r) =>
+      !this.state.representationsToDelete.has(r.id)
+    ).sort((a, b) => a.id - b.id);
+
+    let attributes = data.resource.resource_attributes.map((a) =>
+      this.mapResourceAttributeToViewModel(a, resourceRepresentationsData)
+    );
+    attributes = this.sortAttributes(attributes);
+
     return {
       id: data.resource.id,
       name: data.resource.name,
-      attributes: data.resource.resource_attributes.map((a) =>
-        this.mapResourceAttributeToViewModel(a, data.resource.resource_representations)
-      ).sort((a, b) => a.name.localeCompare(b.name)),
-      representations: data.resource.resource_representations.filter((r) =>
-        !this.state.representationsToDelete.has(r.id)
-      ).map((r, i) =>
+      attributes: attributes,
+      representations: resourceRepresentationsData.map((r, i) =>
         Object.assign({}, {
           id: r.id,
           name: r.name,
           colorClass: 'color-' + i,
           isSelected: false
         })
-      ).sort((a, b) => a.id - b.id)
+      )
     };
   },
   mapResourceAttributeToViewModel: function(attribute, resourceRepresentationsData) {
@@ -126,14 +133,15 @@ export default {
     );
 
     if(activeRepresentations.length === 0) {
-      attributes.forEach((a) => a.isDisplayed = true);
+      attributes.forEach((a) => a.isDisplayed = this.shouldDisplayAttributeBySearchQuery(a));
     }
 
     attributes.forEach((a) => {
       let representationsWithAttribute = a.representations.filter((r) => r.hasAttribute);
       a.isDisplayed = activeRepresentations.every((activeRep) =>
         representationsWithAttribute.find((r) => r.id === activeRep.id)
-      )
+      );
+      a.isDisplayed &= this.shouldDisplayAttributeBySearchQuery(a);
     });
   },
   computeDisplayedTypeForAttributes: function() {
@@ -285,5 +293,64 @@ export default {
     r.isSelected = true;
     document.location.hash = '';
     this.updateStateAfterSelectionChanged();
+  },
+  alphabeticalSort: function() {
+    this.state.sortMode = (this.state.sortMode === 'alphabetical') ? 'none' : 'alphabetical';
+    this.onSortModeChange();
+  },
+  typeSort: function() {
+    this.state.sortMode = (this.state.sortMode === 'type') ? 'none' : 'type';
+    this.onSortModeChange();
+  },
+  onSortModeChange: function() {
+    localStorage.setItem('sortMode', this.state.sortMode);
+    this.state.resource.attributes = this.sortAttributes(this.state.resource.attributes);
+  },
+  sortAttributes: function(attributes) {
+    if (this.state.sortMode === 'alphabetical') {
+      return attributes.sort(
+        (a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase())
+      );
+    } else if (this.state.sortMode === 'type') {
+      return attributes.sort(
+        (a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase())
+      ).sort(
+        (a, b) => a.displayedType.toLowerCase().localeCompare(b.displayedType.toLowerCase())
+      );
+    } else {
+      return attributes.sort((a, b) => a.id - b.id);
+    }
+  },
+  setSearchQuery: function(newQuery) {
+    this.state.searchQuery = newQuery;
+    this.computeIsDislayedForAttributes();
+  },
+  shouldDisplayAttributeBySearchQuery: function(attribute) {
+    let query = this.state.searchQuery.toLowerCase();
+    if (query.length === 0) {
+      return true;
+    }
+
+    let isMatchingName = attribute.name.toLowerCase().indexOf(query) != -1;
+    if (this.state.activeRepresentation) {
+      let attributeRepresentation = attribute.representations.find(
+        (r) => r.id === this.state.activeRepresentation.id
+      );
+      let customKeyName = attributeRepresentation.customKeyName;
+      if (customKeyName) {
+        isMatchingName |= customKeyName.toLowerCase().indexOf(query) != -1;
+      }
+    }
+    return isMatchingName;
+  },
+  clone: function(representationId) {
+    let resource = this.state.resource;
+    return $.ajax({
+      type: "POST",
+      url: "/resources/" + resource.id + "/resource_representations/" + representationId + '/clone',
+      contentType: "application/json",
+    }).then((data) => {
+      this.fetchResource();
+    });
   }
 }

@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '2.3.1'
+ruby '2.5.0'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.0.0'
@@ -9,8 +9,8 @@ gem 'uglifier'
 gem 'coffee-rails'
 gem 'jquery-rails'
 gem 'json_schema-faker'
-gem  'execjs'
-gem 'devise', '~> 4.3'
+gem 'execjs'
+gem 'devise', '~> 4.4', '>= 4.4.1'
 gem 'omniauth-google-oauth2', '~> 0.5.2'
 gem "audited", "~> 4.5"
 gem 'http'

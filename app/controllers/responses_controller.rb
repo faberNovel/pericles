@@ -6,6 +6,7 @@ class ResponsesController < ApplicationController
   # Avoid ApplicationController.response collision
   lazy_controller_of :route_response,
     class_name: 'Response', helper_method: true, belongs_to: :route
+  decorates_method :route
 
   def new
     route_response.headers.build(name: 'Authorization')
@@ -42,7 +43,6 @@ class ResponsesController < ApplicationController
   def route
     @route ||= Route.find(params[:route_id])
   end
-  helper_method :route
 
   def resource
     @resource ||= route.resource

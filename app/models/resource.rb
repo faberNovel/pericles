@@ -9,6 +9,8 @@ class Resource < ApplicationRecord
   has_many :resource_representations, inverse_of: :resource, dependent: :destroy
   has_many :reports, through: :routes
   has_many :resource_instances
+  has_many :referencing_attributes, class_name: 'Attribute'
+  has_many :used_in_resources, through: :referencing_attributes, source: :parent_resource
 
   accepts_nested_attributes_for :resource_attributes, allow_destroy: true, reject_if: :all_blank
   accepts_nested_attributes_for :routes, allow_destroy: true, reject_if: :all_blank

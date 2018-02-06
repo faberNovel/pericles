@@ -34,7 +34,7 @@
       transition(name="w-slide-fade")
         input.form-control(v-if="activeRepresentation"
           v-model="activeRepresentation.name"
-          style='width: auto;'
+          style='width: 200px;'
         )
       transition(name="w-slide-fade")
         a(href='#'
@@ -46,6 +46,9 @@
             :src='imageDelete'
           )
       div(style='flex: 1;')
+      transition(name="fade")
+        .btn.btn-default#clone(v-if="activeRepresentation"
+          @click='onCloneClick') Clone
       .btn.btn-default(@click='onCancelClick') Cancel
       .btn.btn-primary(@click='onUpdateClick') Update
 </template>
@@ -85,6 +88,9 @@ export default {
     },
     onDeleteClick: function() {
       Store.markRepresentationToBeDeleted(this.activeRepresentation.id);
+    },
+    onCloneClick: function() {
+      Store.clone(this.activeRepresentation.id);
     }
   }, computed: {
     newNameWidthStyle: function() {
