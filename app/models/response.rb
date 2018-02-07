@@ -30,11 +30,11 @@ class Response < ApplicationRecord
     # refactor json schema to use a JSONSchema objet with at least .to_h and .to_json
     # (We could also add .validate(json) and .json_instance)
     if resource_representation
-      ResourceRepresentationSchemaSerializer.new(
+      JSONSchemaBuilder.new(
         resource_representation,
         is_collection: is_collection,
         root_key: root_key
-      ).as_json
+      ).execute
     elsif api_error
       JSONSchemaWrapper.new(
         api_error.json_schema,

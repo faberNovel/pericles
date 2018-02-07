@@ -167,11 +167,11 @@ class ResourceRepresentationsControllerTest < ControllerWithAuthenticationTest
       resource_attribute: attribute,
       is_required: true
     )
-    json_schema = ResourceRepresentationSchemaSerializer.new(
+    json_schema = JSONSchemaBuilder.new(
       resource_representation,
       is_collection: false,
       root_key: 'movie'
-    ).as_json
+    ).execute
 
     get resource_resource_representation_path(resource, resource_representation, format: :json_schema, root_key: 'movie')
     assert_equal json_schema.deep_stringify_keys!, JSON.parse(response.body), "json schema is not correct"

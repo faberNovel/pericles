@@ -4,6 +4,9 @@ module JSONSchema
     decorates_association :attributes_resource_representations, with: JSONSchema::AttributesResourceRepresentationDecorator
     decorates_association :resource, with: JSONSchema::ResourceDecorator
 
+    def json_schema
+    end
+
     def hash
       object.hash
     end

@@ -7,13 +7,12 @@ class ResourceRepresentationsController < ApplicationController
   def show
     respond_to do |format|
       format.json_schema do
-        render(
-          json: resource_representation,
-          serializer: ResourceRepresentationSchemaSerializer,
-          adapter: :attributes,
+        schema = JSONSchemaBuilder.new(
+          resource_representation,
           is_collection: ActiveModel::Type::Boolean.new.cast(params[:is_collection]),
           root_key: params[:root_key]
-        )
+        ).execute
+        render json: schema
       end
       %i(swift java kotlin).each do |language|
         format.send(language) do
