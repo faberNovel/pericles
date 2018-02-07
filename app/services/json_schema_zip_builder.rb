@@ -12,7 +12,7 @@ class JSONSchemaZipBuilder
           next unless response.resource_representation
           folder_name = resource.name.downcase.parameterize(separator: '_')
           zio.put_next_entry("#{folder_name}/#{filename(response)}")
-          zio.write JSON.pretty_generate(response.json_schema)
+          zio.write JSON.stable_pretty_generate(response.json_schema)
         end
       end
     end

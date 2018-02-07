@@ -107,7 +107,7 @@ class ResourceRepresentationSchemaSerializer < ActiveModel::Serializer
   def required_from_resource_representation(resource_representation)
     resource_representation.attributes_resource_representations.select(&:is_required).map do |attr_resource_rep|
         attr_resource_rep.key_name
-    end.uniq
+    end.uniq.sort
   end
 
   def properties_from_resource_representation(resource_representation)

@@ -209,6 +209,7 @@ GEM
     multi_json (1.12.2)
     multi_xml (0.6.0)
     multipart-post (2.0.0)
+    neatjson (0.8.3)
     newrelic_rpm (4.4.0.336)
     nio4r (2.1.0)
     nokogiri (1.8.2)
@@ -395,6 +396,7 @@ DEPENDENCIES
   kaminari
   letter_opener (~> 1.6)
   minitest-reporters
+  neatjson (~> 0.8)
   newrelic_rpm
   omniauth-google-oauth2 (~> 0.5.2)
   passenger
