@@ -11,12 +11,17 @@ class Resource < ApplicationRecord
   has_many :resource_instances
   has_many :referencing_attributes, class_name: 'Attribute'
   has_many :used_in_resources, through: :referencing_attributes, source: :parent_resource
+  has_many :used_resources, -> { distinct }, through: :resource_attributes, source: :resource
 
   accepts_nested_attributes_for :resource_attributes, allow_destroy: true, reject_if: :all_blank
   accepts_nested_attributes_for :routes, allow_destroy: true, reject_if: :all_blank
 
   validates :name, presence: true, uniqueness: { scope: :project, case_sensitive: false }
   validates :project, presence: true
+
+  scope :not_used_in_other_resources, -> {
+    left_outer_joins(:referencing_attributes).where('attributes.resource_id IS NULL OR attributes.resource_id = attributes.parent_resource_id')
+  }
 
   audited
   has_associated_audits

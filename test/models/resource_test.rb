@@ -93,4 +93,22 @@ class ResourceTest < ActiveSupport::TestCase
     assert_equal resource.resource_attributes.where(resource: resource_nice_object, is_array: true).count, 1
     assert_equal resource.resource_attributes.where(resource: gym, is_array: false).count, 1
   end
+
+  test "not used in other resources scopes unused resource" do
+    unused_resource = create(:resource)
+    assert_equal [unused_resource], Resource.not_used_in_other_resources
+  end
+
+  test "not used in other resources does not scope used resource" do
+    used_resource = create(:resource)
+    using_resource = create(:resource)
+    create(:attribute_with_resource, parent_resource: using_resource, resource: used_resource)
+    assert_equal [using_resource], Resource.not_used_in_other_resources
+  end
+
+  test "not used in other resources scopes resource using itself" do
+    using_itself_resource = create(:resource)
+    create(:attribute_with_resource, parent_resource: using_itself_resource, resource: using_itself_resource)
+    assert_equal [using_itself_resource], Resource.not_used_in_other_resources
+  end
 end
