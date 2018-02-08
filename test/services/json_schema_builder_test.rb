@@ -31,7 +31,7 @@ class JSONSchemaBuilderTest < ActiveSupport::TestCase
 
   test "should produce a valid json schema" do
     schema = generate_schema(false, 'root_key').to_json
-    assert JSON::Validator.fully_validate(META_SCHEMA, schema, json: true).empty?
+    assert JSON::Validator.fully_validate(META_SCHEMA, schema, json: true).empty?, JSON::Validator.fully_validate(META_SCHEMA, schema, json: true)
   end
 
   test "should be an array if is_collection is set and not root_key" do
@@ -127,12 +127,12 @@ class JSONSchemaBuilderTest < ActiveSupport::TestCase
   end
 
   test 'schema with nested resources is correct' do
-    resource = create(:resource, name: 'User', description: 'A user')
+    resource = create(:resource, name: 'User')
     name_attribute = create(:attribute, parent_resource: resource, name: 'name', description: 'name of the user',
      primitive_type: :string)
     manager_attribute = create(:attribute, parent_resource: resource, name: 'manager', description: 'manager of the user',
      resource: resource, primitive_type: nil)
-    resource_representation_user = create(:resource_representation, resource: resource, name: 'user')
+    resource_representation_user = create(:resource_representation, resource: resource, name: 'user', description: 'A user')
     resource_representation_manager = create(:resource_representation, resource: resource, name: 'manager')
     create(:attributes_resource_representation, parent_resource_representation: resource_representation_user,
      resource_attribute: name_attribute)
@@ -145,6 +145,7 @@ class JSONSchemaBuilderTest < ActiveSupport::TestCase
       "type": "object",
       "definitions": {
         "manager_#{resource_representation_manager.id}": {
+          "title": "User - manager",
           "type": "object",
           "properties": {
             "name": {
@@ -164,6 +165,7 @@ class JSONSchemaBuilderTest < ActiveSupport::TestCase
               "type": "string"
             },
             "manager": {
+              "description": "manager of the user",
               "type": "object",
               "$ref": "#/definitions/manager_#{resource_representation_manager.id}"
             }
@@ -181,6 +183,6 @@ class JSONSchemaBuilderTest < ActiveSupport::TestCase
       is_collection: false,
       root_key: 'user'
     ).execute
-    assert_equal json_schema.deep_stringify_keys!, json.deep_stringify_keys!, "json schema is not correct"
+    assert_equal JSON.stable_pretty_generate(json_schema), JSON.stable_pretty_generate(json), "json schema is not correct"
   end
 end

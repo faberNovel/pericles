@@ -18,13 +18,7 @@ class ResourceRepresentation < ApplicationRecord
   has_associated_audits
 
   def json_schema
-    # TODO: Clément Villain 7/02/18
-    #JSONSchema::ResourceRepresentationDecorator.new(self).json_schema
-    ResourceRepresentationSchemaSerializer.new(
-      self,
-      is_collection: false,
-      root_key: ''
-    ).as_json
+    JSONSchema::ResourceRepresentationDecorator.new(self).json_schema
   end
 
   def attributes_resource_representation(attribute)
