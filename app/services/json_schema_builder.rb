@@ -1,11 +1,16 @@
 class JSONSchemaBuilder
-  def initialize(representation, options = {})
-    @representation = representation
+  def initialize(object, options = {})
+    @object = object
     @is_collection = options[:is_collection]
     @root_key = options[:root_key]
+    @metadata = options[:metadata] || []
   end
 
   def execute
-    JSONSchemaWrapper.new(@representation.json_schema, @root_key, @is_collection).execute
+    return if @object.nil?
+
+    JSONSchemaWrapper.new(
+      @object.json_schema, @root_key, @is_collection, @metadata
+    ).execute
   end
 end

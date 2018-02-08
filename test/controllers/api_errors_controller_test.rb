@@ -16,6 +16,21 @@ class ApiErrorControllerTest < ControllerWithAuthenticationTest
     assert_response :success
   end
 
+  test 'should get show json_schema' do
+    get project_api_error_path(@project, @api_error, format: :json_schema), params: {
+      is_collection: true, root_key: ''
+    }
+
+    assert_response :success
+    assert_equal JSON.parse(response.body)['type'], 'array'
+
+    get project_api_error_path(@project, @api_error, format: :json_schema), params: {
+      is_collection: false, root_key: 'root_key'
+    }
+    assert_equal JSON.parse(response.body)['type'], 'object'
+    assert_equal JSON.parse(response.body)['required'], ['root_key']
+  end
+
   test 'should get edit' do
     get edit_project_api_error_path(@project, @api_error)
     assert_response :success
