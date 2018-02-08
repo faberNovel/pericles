@@ -67,6 +67,37 @@ class ResponsesControllerTest < ControllerWithAuthenticationTest
     assert_equal 400, @route_response.reload.status_code
   end
 
+  test "update should associate response with metadata" do
+    assert_difference '@route_response.metadata.count' do
+      put route_response_path(@route, @route_response), params: {
+        response: {
+          metadata_responses_attributes: [
+            {
+              metadatum_id: create(:metadatum).id
+            }
+          ]
+        }
+      }
+    end
+  end
+
+  test "update should remove association with metadata" do
+    metadata_response = create(:metadata_response, response: @route_response)
+
+    assert_difference '@route_response.metadata.count', -1 do
+      put route_response_path(@route, @route_response), params: {
+        response: {
+          metadata_responses_attributes: [
+            {
+              id: metadata_response.id,
+              _destroy: true
+            }
+          ]
+        }
+      }
+    end
+  end
+
   test "should not update response if status_code is empty" do
     original_status_code = @route_response.status_code
 

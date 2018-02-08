@@ -40,6 +40,17 @@ class ResponsesController < ApplicationController
 
   private
 
+  def available_metadata_responses
+    return @metadata_responses if defined? @metadata_responses
+
+    not_associated_metadata = project.metadata.where.not(id: route_response.metadata.pluck(:id))
+    new_metadata_responses = not_associated_metadata.map do |m|
+      MetadataResponse.new(metadatum: m, response: route_response)
+    end
+    @metadata_responses = route_response.metadata_responses + new_metadata_responses
+  end
+  helper_method :available_metadata_responses
+
   def route
     @route ||= Route.find(params[:route_id])
   end
