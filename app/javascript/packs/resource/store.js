@@ -58,6 +58,7 @@ export default {
       displayedType: attribute.readable_type,
       resourceId: attribute.resource_id,
       scheme: attribute.scheme,
+      enum: attribute.enum,
       minimum: attribute.minimum,
       maximum: attribute.maximum,
       minItems: attribute.min_items,
