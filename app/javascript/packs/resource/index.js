@@ -1,3 +1,5 @@
+import 'core-js/fn/promise/finally';
+
 import Vue from 'vue/dist/vue.esm'
 
 import Store from './store.js';
