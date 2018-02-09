@@ -11,7 +11,10 @@ class Metadatum < ApplicationRecord
   validates :primitive_type, presence: true
 
   def json_schema
-    type = (datetime? || date?) ? :string : primitive_type
-    { type: type }
+    if (datetime? || date?)
+      { type: :string, format: primitive_type }
+    else
+      { type: primitive_type }
+    end
   end
 end

@@ -1,1 +1,8 @@
-= render partial: 'instances/instance', locals: {instance: metadatum_instance}
+.flexspace-and-center
+  .flex
+    = metadatum_instance.name
+  .flex{class: ('invalid-instance' unless metadatum_instance.valid?)}
+    = metadatum_instance.body
+  .btn-group{ role: "group" }
+    = link_to 'Edit', edit_polymorphic_path(metadatum_instance), class: "btn btn-primary" if user.can_edit? metadatum_instance
+    = link_to 'Delete', polymorphic_path(metadatum_instance), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-primary" if user.can_delete? metadatum_instance
