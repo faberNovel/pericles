@@ -16,6 +16,5 @@
 //= require jquery-ui/widgets/autocomplete
 //= require bootstrap-sprockets
 //= require chosen-jquery
-//= require setup_chosen
-//= require setup_tooltip
+//= require setup
 //= require regex_field
