@@ -8,7 +8,7 @@ class SliceJSONWithResourceRepresentation
     sliced_json = {}
 
     @resource_representation.attributes_resource_representations.each do |attr_res_rep|
-      key = attr_res_rep.resource_attribute.name.to_sym
+      key = attr_res_rep.key_name.to_sym
 
       next unless @json.key? key
       if attr_res_rep.is_null
