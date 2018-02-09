@@ -5,6 +5,8 @@
   - if response.can_have_api_error
     = f.select :api_error_instance_ids, response.api_error_instances.pluck(:name, :id),
         { include_blank: true, label: 'Mock Instance'.pluralize(response.is_collection ? 2 : 1) }, multiple: response.is_collection
+  = f.select :metadatum_instance_ids, response.metadatum_instances.pluck(:name, :id),
+        { include_blank: true, label: 'Metadata' }, multiple: true unless response.metadatum_instances.empty?
   %a{"data-toggle" => "collapse", href: "##{f.object.id}-advanced",  "aria-expanded" => false}
     .link
       Advanced options

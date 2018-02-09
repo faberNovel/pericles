@@ -21,7 +21,7 @@ module Instance
     return unless parent&.json_schema
 
     JSON::Validator.fully_validate(
-      parent.json_schema, body, json: true
+      parent.json_schema, body
     ).each do |error_message|
       errors.add(:body, error_message)
     end

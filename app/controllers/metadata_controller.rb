@@ -8,6 +8,9 @@ class MetadataController < ApplicationController
     @metadata = project.metadata
   end
 
+  def show
+  end
+
   def new
   end
 

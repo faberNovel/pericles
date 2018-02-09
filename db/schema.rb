@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180208103459) do
+ActiveRecord::Schema.define(version: 20180208151538) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -139,6 +139,20 @@ ActiveRecord::Schema.define(version: 20180208103459) do
     t.datetime "updated_at",   null: false
     t.index ["metadatum_id"], name: "index_metadata_responses_on_metadatum_id", using: :btree
     t.index ["response_id"], name: "index_metadata_responses_on_response_id", using: :btree
+  end
+
+  create_table "metadatum_instances", force: :cascade do |t|
+    t.string   "name"
+    t.json     "body"
+    t.integer  "metadatum_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.index ["metadatum_id"], name: "index_metadatum_instances_on_metadatum_id", using: :btree
+  end
+
+  create_table "metadatum_instances_mock_pickers", id: false, force: :cascade do |t|
+    t.integer "metadatum_instance_id", null: false
+    t.integer "mock_picker_id",        null: false
   end
 
   create_table "mock_pickers", force: :cascade do |t|
@@ -318,6 +332,7 @@ ActiveRecord::Schema.define(version: 20180208103459) do
   add_foreign_key "metadata", "projects"
   add_foreign_key "metadata_responses", "metadata"
   add_foreign_key "metadata_responses", "responses"
+  add_foreign_key "metadatum_instances", "metadata"
   add_foreign_key "mock_pickers", "mock_profiles"
   add_foreign_key "mock_pickers", "responses"
   add_foreign_key "projects", "mock_profiles"

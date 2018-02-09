@@ -1,0 +1,2 @@
+class MetadatumInstancePolicy < ProjectRelatedPolicy
+end
