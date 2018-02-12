@@ -114,6 +114,10 @@ input[type=submit] {
   }
 }
 
-.grayscaled{
+.grayscaled {
   filter: grayscale(100%);
+}
+
+.break-word {
+  overflow-wrap: break-word;
 }

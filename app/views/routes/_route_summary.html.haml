@@ -1,4 +1,4 @@
-.panel.panel-default
+.panel.panel-default.break-word
   .panel-body
     .row
       .col-xs-2.http-method-column
@@ -26,3 +26,4 @@
       - if resource = local_assigns[:resource]
         .col-xs-1
           = link_to 'Show', project_route_path(project, route), class: "btn btn-primary btn-md"
+
