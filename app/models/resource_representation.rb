@@ -34,19 +34,4 @@ class ResourceRepresentation < ApplicationRecord
     end
     parent_resource_representations.uniq
   end
-
-  def resource_representation_dependencies
-    visited = Set.new
-
-    queue = attributes_resource_representations.map { |a| a.resource_representation }.compact
-    while !queue.empty?
-      representation = queue.pop
-      next if visited.include? representation
-
-      visited << representation
-      queue += representation.attributes_resource_representations.map { |a| a.resource_representation }.compact
-    end
-
-    visited
-  end
 end

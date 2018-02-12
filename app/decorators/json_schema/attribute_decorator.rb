@@ -1,7 +1,6 @@
 module JSONSchema
   class AttributeDecorator < Draper::Decorator
     delegate_all
-    decorates_association :resource, with: JSONSchema::ResourceDecorator
 
     def primitive_type
       (datetime? || date?) ? :string : object.primitive_type

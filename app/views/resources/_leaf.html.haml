@@ -2,10 +2,8 @@
   .flexcontainer.flexcontainer-space-between
     .name
       = '      ' * indentation + (indentation.zero? ? '' : '↳ ') + resource.name
-    - if resource.has_invalid_mocks?
-      .error
-        .tool-tip{'data-toggle' => "tooltip", 'data-placement' => "top", title: "Invalid mocks !"}
-          \/!\
+    = render partial: 'has_invalid_mocks?', locals: {resource: resource}
+
 - (resource.used_resources - rendered_resources).each do |sub_resource|
   = render partial: 'leaf', locals: {resource: sub_resource, indentation: indentation + 1, rendered_resources: rendered_resources + [sub_resource]}
 

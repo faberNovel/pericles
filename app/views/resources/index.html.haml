@@ -23,10 +23,7 @@
         .flexcontainer.flexcontainer-space-between
           .name
             = resource.name
-          - if resource.has_invalid_mocks?
-            .error
-              .tool-tip{'data-toggle' => "tooltip", 'data-placement' => "top", title: "Invalid mocks !"}
-                \/!\
+          = render partial: 'has_invalid_mocks?', locals: {resource: resource}
 
   .tree{style: 'display: none'}
     - @root_resources.each do |root_resource|
