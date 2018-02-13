@@ -12,9 +12,10 @@ class Metadatum < ApplicationRecord
 
   def json_schema
     if (datetime? || date?)
-      { type: :string, format: primitive_type }
+      non_nullable = { type: :string, format: primitive_type }
     else
-      { type: primitive_type }
+      non_nullable = { type: primitive_type }
     end
+    { oneOf: [non_nullable, { type: 'null' }] }
   end
 end
