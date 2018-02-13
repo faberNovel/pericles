@@ -12,8 +12,8 @@ class Attribute < ApplicationRecord
 
   validates :name, presence: true, uniqueness: { scope: [:parent_resource], case_sensitive: true }
   validates :parent_resource, presence: true
-  validates :primitive_type, presence: true, if: "resource.nil?"
-  validates :resource, presence: true, if: "primitive_type.nil?"
+  validates :primitive_type, presence: true, if: -> { resource.nil? }
+  validates :resource, presence: true, if: -> { primitive_type.nil? }
   validate :type_cannot_be_primitive_type_and_resource
   validates :enum, absence: true, unless: :is_enumerable?
   validates :scheme, absence: true, unless: :string?
@@ -53,7 +53,7 @@ class Attribute < ApplicationRecord
   end
 
   def update_if_needed_resource_representation_of_attributes_resource_representations
-    return unless resource_id_changed?
+    return unless saved_change_to_resource_id?
     attributes_resource_representations.update(resource_representation: resource&.default_representation)
   end
 end

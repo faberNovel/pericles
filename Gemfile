@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 ruby '2.5.0'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.0.0'
+gem 'rails', '~> 5.1'
 gem 'pg'
 gem 'sass-rails'
 gem 'uglifier'
@@ -71,7 +71,7 @@ end
 gem 'bootstrap-sass', '~> 3.3.6'
 gem 'autoprefixer-rails'
 
-gem "haml-rails", "~> 0.9"
+gem "haml-rails", "~> 1.0"
 
 gem 'rails-controller-testing'
 
