@@ -27,7 +27,7 @@ To get the project up and running, proceed as follows (within the app's director
    bundle exec rake db:migrate
    ```
 
-4. Pericles uses Node.js (v7.10.1, currently), and Yarn to manage packages. We use
+4. Pericles uses [Node.js](https://nodejs.org) (v7.10.1, currently), and [Yarn](https://yarnpkg.com) to manage packages. We use
  [json-schema-faker](https://github.com/json-schema-faker/json-schema-faker) to generate JSON instances based on JSON Schemas,
  because we could not find a Ruby equivalent. To install the required packages, run:
    ```sh
