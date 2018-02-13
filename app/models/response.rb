@@ -7,11 +7,15 @@ class Response < ApplicationRecord
   has_many :reports
   has_many :resource_instances, through: :resource_representation
   has_many :api_error_instances, through: :api_error
+  has_many :metadatum_instances, through: :metadata
   has_many :mock_pickers
+  has_many :metadata_responses, dependent: :destroy
+  has_many :metadata, through: :metadata_responses
 
   delegate :project, to: :route
 
   accepts_nested_attributes_for :headers, allow_destroy: true, reject_if: :all_blank
+  accepts_nested_attributes_for :metadata_responses, allow_destroy: true
 
   validates :status_code, presence: true
   validates :route, presence: true
@@ -29,19 +33,12 @@ class Response < ApplicationRecord
     # TODO Clément Villain 21/11/17:
     # refactor json schema to use a JSONSchema objet with at least .to_h and .to_json
     # (We could also add .validate(json) and .json_instance)
-    if resource_representation
-      JSONSchemaBuilder.new(
-        resource_representation,
-        is_collection: is_collection,
-        root_key: root_key
-      ).execute
-    elsif api_error
-      JSONSchemaWrapper.new(
-        api_error.json_schema,
-        root_key,
-        is_collection,
-      ).execute
-    end
+    JSONSchemaBuilder.new(
+      resource_representation || api_error,
+      is_collection: is_collection,
+      root_key: root_key,
+      metadata: metadata,
+    ).execute
   end
 
   def can_have_api_error

@@ -1,0 +1,7 @@
+= bootstrap_form_for(model_instance.persisted? ? model_instance : [model, model_instance]) do |f|
+  = f.text_field :name
+
+  = f.text_field :body, value: model_instance.body, class: 'json', placeholder: '"string", 123, 0.5, true...'
+
+  %p
+    = f.submit

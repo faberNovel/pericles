@@ -6,7 +6,8 @@ class ResponsePolicy < ProjectRelatedPolicy
       :api_error_id,
       :is_collection,
       :root_key,
-      headers_attributes: [:id, :name, :value, :_destroy]
+      headers_attributes: [:id, :name, :value, :_destroy],
+      metadata_responses_attributes: [:id, :metadatum_id, :_destroy]
     ]
   end
 end

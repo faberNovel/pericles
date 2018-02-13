@@ -13,10 +13,10 @@ class ApiErrorsController < ApplicationController
       format.html
       format.json_schema do
         render(
-          json: JSONSchemaWrapper.new(
-            api_error.json_schema,
-            params[:root_key],
-            ActiveModel::Type::Boolean.new.cast(params[:is_collection]),
+          json: JSONSchemaBuilder.new(
+            api_error,
+            root_key: params[:root_key],
+            is_collection: ActiveModel::Type::Boolean.new.cast(params[:is_collection]),
           ).execute
         )
       end

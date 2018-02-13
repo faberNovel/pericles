@@ -20,10 +20,14 @@ module Instance
   def body_valid?
     return unless parent&.json_schema
 
-    JSON::Validator.fully_validate(
-      parent.json_schema, body, json: true
-    ).each do |error_message|
-      errors.add(:body, error_message)
+    begin
+      JSON::Validator.fully_validate(
+        parent.json_schema, body, json: true
+      ).each do |error_message|
+        errors.add(:body, error_message)
+      end
+    rescue JSON::Schema::JsonParseError
+      errors.add(:body, :json_parse_error)
     end
   end
 end

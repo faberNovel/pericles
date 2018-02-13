@@ -21,7 +21,7 @@
             %th Value
             %th
         %tbody
-          = f.fields_for :headers, wrapper: false do |response_header_fields|
+          = f.fields_for :headers do |response_header_fields|
             = render 'header_fields', f: response_header_fields
 
       = link_to_add_association "Add a Header", f, :headers,
@@ -48,5 +48,10 @@
       %pre
         %code#json_schema
           = format_json(route_response.json_schema)
+
+    %h5 Metadata
+    = f.fields_for :metadata_responses, available_metadata_responses do |metadata_responses_fields|
+      = render 'metadata_responses_fields', f: metadata_responses_fields
+
   %p
     = f.submit

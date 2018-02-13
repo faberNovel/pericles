@@ -4,6 +4,7 @@ class MockPicker < ApplicationRecord
 
   has_and_belongs_to_many :resource_instances
   has_and_belongs_to_many :api_error_instances
+  has_and_belongs_to_many :metadatum_instances
 
   validates :body_pattern, regexp: true, allow_blank: true
   validates :url_pattern, regexp: true, allow_blank: true
@@ -21,7 +22,11 @@ class MockPicker < ApplicationRecord
   end
 
   def mock_instances
-    resource_instances.to_a.map { |resource_instance| ResourceRepresentationInstance.new(resource_instance, response) } + api_error_instances.to_a
+    resource_rep_instances = resource_instances.to_a.map do |r|
+      ResourceRepresentationInstance.new(r, response)
+    end
+
+    resource_rep_instances + api_error_instances.to_a
   end
 
   def mock_body
@@ -33,6 +38,12 @@ class MockPicker < ApplicationRecord
       body = mock_instances.first.as_json
     end
     body = { response.root_key => body } unless response.root_key.blank?
+
+    if body.is_a? Hash
+      metadatum_instances.each do |m|
+        body[m.metadatum.name] = m.body.as_json
+      end
+    end
 
     body
   end

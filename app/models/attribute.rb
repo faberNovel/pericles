@@ -1,5 +1,5 @@
 class Attribute < ApplicationRecord
-  enum primitive_type: [:integer, :string, :boolean, :null, :number, :date, :datetime]
+  include HasPrimitiveType
 
   belongs_to :resource
   belongs_to :scheme

@@ -1,0 +1,9 @@
+.flex-v-center
+  = f.hidden_field :metadatum_id
+  = f.check_box :_destroy, { label: '', checked: !f.object.new_record? }, '0', '1'
+  %dl.h-margin
+    %dt Name
+    %dd= f.object.metadatum.name
+  %dl.h-margin
+    %dt Type
+    %dd= f.object.metadatum.primitive_type
