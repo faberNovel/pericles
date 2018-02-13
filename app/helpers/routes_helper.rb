@@ -2,7 +2,7 @@ module RoutesHelper
   def format_json(json)
     return if json.blank?
     json = JSON.parse(json) if json.is_a?(String)
-    JSON.pretty_generate(json)
+    JSON.stable_pretty_generate(json)
   end
 
   def label_class_for_http_method(http_method)

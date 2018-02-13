@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 ruby '2.5.0'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.0.0'
+gem 'rails', '~> 5.1'
 gem 'pg'
 gem 'sass-rails'
 gem 'uglifier'
@@ -21,6 +21,7 @@ gem "cocaine"
 gem 'regex_field', '~> 0.1.0'
 gem 'ancestry', '~> 3.0.1'
 gem 'draper', '~> 3.0'
+gem 'neatjson', '~> 0.8'
 
 # Recommended for admin interface
 # gem 'activeadmin', github: 'activeadmin' # There is no Rails 4 version just yet
@@ -70,7 +71,7 @@ end
 gem 'bootstrap-sass', '~> 3.3.6'
 gem 'autoprefixer-rails'
 
-gem "haml-rails", "~> 0.9"
+gem "haml-rails", "~> 1.0"
 
 gem 'rails-controller-testing'
 

@@ -28,7 +28,7 @@
               %th Description
               %th
           %tbody
-            = f.fields_for :request_query_parameters, wrapper: false do |query_parameter_fields|
+            = f.fields_for :request_query_parameters do |query_parameter_fields|
               = render 'request_query_parameter_fields', f: query_parameter_fields
 
 

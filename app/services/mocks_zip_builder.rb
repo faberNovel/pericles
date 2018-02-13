@@ -35,6 +35,6 @@ class MocksZipBuilder
   end
 
   def file_content(mock_picker)
-    JSON.pretty_generate(mock_picker.mock_body)
+    JSON.stable_pretty_generate(mock_picker.mock_body)
   end
 end

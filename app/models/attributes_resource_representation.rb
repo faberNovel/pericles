@@ -9,7 +9,7 @@ class AttributesResourceRepresentation < ApplicationRecord
 
   validates :parent_resource_representation, presence: true
   validates :resource_attribute, presence: true, uniqueness: { scope: [:parent_resource_representation] }
-  validates :resource_representation, presence: true, if: "resource_attribute.resource"
+  validates :resource_representation, presence: true, if: -> { resource_attribute.resource }
 
   audited associated_with: :parent_resource_representation
 

@@ -3,8 +3,8 @@ $(document).ready(function() {
     return this.id.match(/headers_attributes_\d+_name$/) !== null;
   }).each(set_autocomplete);
 
-  $(this).on('nested:fieldAdded:request_headers nested:fieldAdded:headers', function(event) {
-    var input_element = event.field.find(".form-group:first input").get(0);
+  $(this).on('cocoon:after-insert', function(event, addedItem) {
+    var input_element = addedItem.find(".form-group:first input").get(0);
     set_autocomplete(0, input_element);
   });
 });

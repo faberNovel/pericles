@@ -1,19 +1,30 @@
 = content_for :title, "Resources"
 
-- if user.can_create? Resource, project: project
-  .flexcontainer.flexcontainer-justify-end
+- content_for :page_scripts do
+  :javascript
+    function toggleTree(btn) {
+      $('.list').toggle();
+      $('.tree').toggle();
+      $(btn).toggleClass('grayscaled');
+    }
+
+.text-right
+  %button.btn.grayscaled{onclick: 'toggleTree(this)'} 🌳
+  - if user.can_create? Resource, project: project
     = link_to 'New Resource', new_project_resource_path(project), class: "btn btn-primary btn-lg"
 
-.list-group.margin-top-element
+.list-group.margin-top-element.clearfix
   - if @resources.empty?
     %p= t('.no_resources')
 
-  - @resources.each do |resource|
-    %a{class: "list-group-item", href: project_resource_path(project, resource)}
-      .flexcontainer.flexcontainer-space-between
-        .name
-          = resource.name
-        - if resource.has_invalid_mocks?
-          .error
-            .tool-tip{'data-toggle' => "tooltip", 'data-placement' => "top", title: "Invalid mocks !"}
-              \/!\
+  .list
+    - @resources.each do |resource|
+      %a{class: "list-group-item", href: project_resource_path(project, resource)}
+        .flexcontainer.flexcontainer-space-between
+          .name
+            = resource.name
+          = render partial: 'has_invalid_mocks?', locals: {resource: resource}
+
+  .tree{style: 'display: none'}
+    - @root_resources.each do |root_resource|
+      = render partial: 'leaf', locals: {resource: root_resource, indentation: 0, rendered_resources: @root_resources.to_a}

@@ -145,17 +145,13 @@ class ResourcesControllerTest < ControllerWithAuthenticationTest
 
 
   test "should get kotlin code" do
-    resource = create(:resource, name: 'Pokemon', project: create(:project, title: 'PokeApi'))
-    create(:attribute, name: 'id', primitive_type: :integer, parent_resource: resource)
-    create(:attribute, name: 'weight', primitive_type: :number, nullable: true, parent_resource: resource)
-    create(:attribute_with_resource, name: 'weakness_list', resource: create(:resource, name: 'nature'), is_array: true, parent_resource: resource)
-
-    # This attribute is not nullable but is not in default representation
-    resource.resource_attributes << create(:attribute, name: 'niceBoolean', primitive_type: :boolean)
+    resource = create(:pokemon)
 
     file = %{package #{android_company_domain_name}.pokeapi.android.data.net.retrofit.model
 
     data class RestPokemon(
+        val date: String,
+        val dateTime: String?,
         val id: Int,
         val niceBoolean: Boolean?,
         val weaknessList: List<RestNature>,
@@ -168,10 +164,7 @@ class ResourcesControllerTest < ControllerWithAuthenticationTest
   end
 
   test "should get java code" do
-    resource = create(:resource, name: 'Pokemon', project: create(:project, title: 'PokeApi'))
-    create(:attribute, name: 'id', primitive_type: :integer, parent_resource: resource)
-    create(:attribute, name: 'weight', primitive_type: :number, nullable: true, parent_resource: resource)
-    create(:attribute_with_resource, name: 'weakness_list', resource: create(:resource, name: 'nature'), is_array: true, parent_resource: resource)
+    resource = create(:pokemon)
 
     file = %{package #{android_company_domain_name}.pokeapi.android.data.net.retrofit.model
 
@@ -183,7 +176,10 @@ class ResourcesControllerTest < ControllerWithAuthenticationTest
 
     @AutoMatter
     public interface RestPokemon {
+        String date();
+        @Nullable String dateTime();
         Integer id();
+        @Nullable Boolean niceBoolean();
         List<RestNature> weaknessList();
         @Nullable Double weight();
     }
@@ -194,12 +190,7 @@ class ResourcesControllerTest < ControllerWithAuthenticationTest
   end
 
   test "should get swift code" do
-    resource = create(:resource, name: 'Pokemon', project: create(:project, title: 'PokeApi'))
-    create(:attribute, name: 'id', primitive_type: :integer, parent_resource: resource)
-    create(:attribute, name: 'weight', primitive_type: :number, nullable: true, parent_resource: resource)
-    create(:attribute_with_resource, name: 'weakness_list', resource: create(:resource, name: 'nature'), is_array: true, parent_resource: resource)
-    create(:attribute, name: 'date', primitive_type: :date, nullable: false, parent_resource: resource)
-    create(:attribute, name: 'date_time', primitive_type: :datetime, nullable: true, parent_resource: resource)
+    resource = create(:pokemon)
 
     file = %{//
     //  RestPokemon.swift
@@ -214,6 +205,7 @@ class ResourcesControllerTest < ControllerWithAuthenticationTest
         let date: Date
         let dateTime: Date?
         let id: Int
+        let niceBoolean: Bool?
         let weaknessList: [RestNature]
         let weight: Double?
 
@@ -221,6 +213,7 @@ class ResourcesControllerTest < ControllerWithAuthenticationTest
             case date
             case dateTime = \"date_time\"
             case id
+            case niceBoolean
             case weaknessList = \"weakness_list\"
             case weight
         }

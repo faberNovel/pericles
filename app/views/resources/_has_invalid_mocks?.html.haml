@@ -1,0 +1,5 @@
+- cache "#{request.uuid}/#{resource.id}/has_invalid_mocks?" do
+  - if resource.has_invalid_mocks?
+    .error
+      .tool-tip{'data-toggle' => "tooltip", 'data-placement' => "top", title: "Invalid mocks !"}
+        \/!\

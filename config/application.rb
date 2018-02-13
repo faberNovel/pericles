@@ -20,6 +20,8 @@ module Pericles_GWGw
     # Enable the asset pipeline
     config.assets.enabled = true
 
+    config.cache_store = :memory_store
+
     if ENV['S3_BUCKET_NAME'].present?
       config.paperclip_defaults = {
         :storage => :s3,

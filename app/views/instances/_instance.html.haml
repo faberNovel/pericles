@@ -2,7 +2,8 @@
   .col-xs-6
     %div
       %strong= instance.name
-    %textarea.mock_instance_text_area{disabled: 'true', class: ('invalid-instance' unless instance.valid?)}=format_json(instance.body)
+    %pre
+      %code.mock_instance_text_area{disabled: 'true', class: ('invalid-instance' unless instance.valid?)}=format_json(instance.body)
   .col-xs-6
     .flexcontainer.flexcontainer-justify-end
       .btn-group{ role: "group" }

@@ -217,6 +217,17 @@
       color: darken(#0b6975, 15%);
       border-color: darken(#0b6975, 15%);
     }
+
+    &.code {
+      color: white;
+      background-color: #0b6975;
+      border-color: transparent;
+
+      &:hover {
+        color: white;
+        background-color: darken(#0b6975, 15%);
+      }
+    }
   }
 
   .color-1 {
@@ -232,6 +243,17 @@
     &.btn:hover,&.hoverable:hover {
       color: darken(#429867, 15%);
       border-color: darken(#429867, 15%);
+    }
+
+    &.code {
+      color: white;
+      background-color: #429867;
+      border-color: transparent;
+
+      &:hover {
+        color: white;
+        background-color: darken(#429867, 15%);
+      }
     }
   }
 
@@ -249,6 +271,17 @@
       color: darken(#7db31b, 15%);
       border-color: darken(#7db31b, 15%);
     }
+
+    &.code {
+      color: white;
+      background-color: #7db31b;
+      border-color: transparent;
+
+      &:hover {
+        color: white;
+        background-color: darken(#7db31b, 15%);
+      }
+    }
   }
 
   .color-3 {
@@ -264,6 +297,17 @@
     &.btn:hover,&.hoverable:hover {
       color: darken(#fab343, 15%);
       border-color: darken(#fab343, 15%);
+    }
+
+    &.code {
+      color: white;
+      background-color: #fab343;
+      border-color: transparent;
+
+      &:hover {
+        color: white;
+        background-color: darken(#fab343, 15%);
+      }
     }
   }
 
@@ -281,6 +325,17 @@
       color: darken(#ff6500, 15%);
       border-color: darken(#ff6500, 15%);
     }
+
+    &.code {
+      color: white;
+      background-color: #ff6500;
+      border-color: transparent;
+
+      &:hover {
+        color: white;
+        background-color: darken(#ff6500, 15%);
+      }
+    }
   }
 
   .color-5 {
@@ -296,6 +351,17 @@
     &.btn:hover,&.hoverable:hover {
       color: darken(#e0222f, 15%);
       border-color: darken(#e0222f, 15%);
+    }
+
+    &.code {
+      color: white;
+      background-color: #e0222f;
+      border-color: transparent;
+
+      &:hover {
+        color: white;
+        background-color: darken(#e0222f, 15%);
+      }
     }
   }
 
@@ -313,6 +379,17 @@
       color: darken(#e42592, 15%);
       border-color: darken(#e42592, 15%);
     }
+
+    &.code {
+      color: white;
+      background-color: #e42592;
+      border-color: transparent;
+
+      &:hover {
+        color: white;
+        background-color: darken(#e42592, 15%);
+      }
+    }
   }
 
   .color-7 {
@@ -328,6 +405,17 @@
     &.btn:hover,&.hoverable:hover {
       color: darken(#cd06e4, 15%);
       border-color: darken(#cd06e4, 15%);
+    }
+
+    &.code {
+      color: white;
+      background-color: #cd06e4;
+      border-color: transparent;
+
+      &:hover {
+        color: white;
+        background-color: darken(#cd06e4, 15%);
+      }
     }
   }
 
@@ -345,6 +433,17 @@
       color: darken(#050ff0, 15%);
       border-color: darken(#050ff0, 15%);
     }
+
+    &.code {
+      color: white;
+      background-color: #050ff0;
+      border-color: transparent;
+
+      &:hover {
+        color: white;
+        background-color: darken(#050ff0, 15%);
+      }
+    }
   }
 
   .color-9 {
@@ -360,6 +459,17 @@
     &.btn:hover,&.hoverable:hover {
       color: darken(#2badbf, 15%);
       border-color: darken(#2badbf, 15%);
+    }
+
+    &.code {
+      color: white;
+      background-color: #2badbf;
+      border-color: transparent;
+
+      &:hover {
+        color: white;
+        background-color: darken(#2badbf, 15%);
+      }
     }
   }
 

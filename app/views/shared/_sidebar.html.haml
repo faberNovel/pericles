@@ -8,6 +8,8 @@
       = link_to 'Resources', project_resources_path(project)
     %li{class: active_class(RoutesController)}
       = link_to 'Routes', project_routes_path(project)
+    %li{class: active_class(MetadataController)}
+      = link_to 'Metadata', project_metadata_path(project)
     %li{class: active_class(ReportsController)}
       = link_to 'Reports', project_reports_path(project)
     %li{class: active_class(MockProfilesController)}

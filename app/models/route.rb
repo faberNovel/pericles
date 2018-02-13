@@ -30,11 +30,11 @@ class Route < ApplicationRecord
   end
 
   def request_json_schema
-    ResourceRepresentationSchemaSerializer.new(
+    JSONSchemaBuilder.new(
       request_resource_representation,
       is_collection: request_is_collection,
       root_key: request_root_key
-    ).as_json if request_resource_representation
+    ).execute if request_resource_representation
   end
 
   def mock_path

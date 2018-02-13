@@ -17,7 +17,7 @@
             %th Value
             %th
         %tbody
-          = f.fields_for :request_headers, wrapper: false do |header_fields|
+          = f.fields_for :request_headers do |header_fields|
             = render 'request_header_fields', f: header_fields
 
 

@@ -1,0 +1,13 @@
+.flexspace-and-center
+  %dl.flex
+    %dt Name
+    %dd
+      %strong= metadatum.name
+  %dl.flex
+    %dt Type
+    %dd
+      %strong= metadatum.primitive_type
+  .btn-group{ role: "group" }
+    = link_to 'Show mocks', project_metadatum_path(project, metadatum), class: 'btn btn-primary' if !local_assigns.key? :show || local_assigns[:show]
+    = link_to 'Edit', edit_metadatum_path(metadatum), class: 'btn btn-primary' if user.can_edit? metadatum
+    = link_to 'Delete', metadatum_path(metadatum), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-primary' if user.can_delete? metadatum

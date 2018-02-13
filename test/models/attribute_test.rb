@@ -80,7 +80,13 @@ class AttributeTest < ActiveSupport::TestCase
     attribute = create(:attribute_with_resource)
     resource = attribute.resource
     representation = attribute.parent_resource.default_representation
-    attributes_resource_representation = representation.attributes_resource_representations.first
+    attributes_resource_representation = create(:attributes_resource_representation,
+      resource_attribute: attribute,
+      parent_resource_representation: representation,
+      resource_representation: resource.default_representation,
+      is_required: true
+    )
+    attribute.reload
 
     assert attributes_resource_representation.resource_representation_id
     attribute.update(resource_id: nil, primitive_type: :integer)

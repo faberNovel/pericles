@@ -48,7 +48,7 @@ class ProjectsController < ApplicationController
     if project.update(permitted_attributes(project))
       redirect_to project
     else
-      render 'edit', layout: 'full_width_column', status: :unprocessable_entity
+      render 'edit', status: :unprocessable_entity
     end
   end
 

@@ -11,4 +11,9 @@ class SliceJSONWithResourceRepresentationTest < ActiveSupport::TestCase
     json = SliceJSONWithResourceRepresentation.new({id: 1, name: "John Doe"}, @representation).execute
     assert_equal({id: 1}, json)
   end
+  test "should use representation overided key name" do
+    @representation.attributes_resource_representations.first.update(custom_key_name: 'key')
+    json = SliceJSONWithResourceRepresentation.new({id: 1, name: "John Doe", key: 'value'}, @representation).execute
+    assert_equal({key: 'value'}, json)
+  end
 end

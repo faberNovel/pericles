@@ -1,5 +1,5 @@
 class Attribute < ApplicationRecord
-  enum primitive_type: [:integer, :string, :boolean, :null, :number, :date, :datetime]
+  include HasPrimitiveType
 
   belongs_to :resource
   belongs_to :scheme
@@ -12,8 +12,8 @@ class Attribute < ApplicationRecord
 
   validates :name, presence: true, uniqueness: { scope: [:parent_resource], case_sensitive: true }
   validates :parent_resource, presence: true
-  validates :primitive_type, presence: true, if: "resource.nil?"
-  validates :resource, presence: true, if: "primitive_type.nil?"
+  validates :primitive_type, presence: true, if: -> { resource.nil? }
+  validates :resource, presence: true, if: -> { primitive_type.nil? }
   validate :type_cannot_be_primitive_type_and_resource
   validates :enum, absence: true, unless: :is_enumerable?
   validates :scheme, absence: true, unless: :string?
@@ -22,7 +22,6 @@ class Attribute < ApplicationRecord
   validates :min_items, absence: true, unless: :is_array
   validates :max_items, absence: true, unless: :is_array
 
-  after_create :add_attribute_to_default_representation
   after_save :update_if_needed_resource_representation_of_attributes_resource_representations
 
   scope :sorted_by_name, -> { order(:name) }
@@ -53,19 +52,8 @@ class Attribute < ApplicationRecord
     resource || boolean? || null?
   end
 
-  def add_attribute_to_default_representation
-    representation = parent_resource.default_representation
-    return unless representation
-
-    representation.attributes_resource_representations.create(
-      resource_attribute: self,
-      is_required: true,
-      resource_representation: resource&.default_representation
-    )
-  end
-
   def update_if_needed_resource_representation_of_attributes_resource_representations
-    return unless resource_id_changed?
+    return unless saved_change_to_resource_id?
     attributes_resource_representations.update(resource_representation: resource&.default_representation)
   end
 end

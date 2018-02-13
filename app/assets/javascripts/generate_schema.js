@@ -28,14 +28,15 @@ function generate_schema_from_resource_representation(clicked_button) {
     var root_key = $(clicked_button).siblings('.form-group').children('input.root-key').val();
     if (root_key)
       params += '&root_key=' + root_key;
-    var body_json_schema = $(clicked_button).siblings(".form-group").children("textarea");
+    var body_json_schema = $('#json_schema');
     $.ajax({
         type: "GET",
         url: url + params,
         dataType: 'json'
       })
       .done(function(data) {
-        body_json_schema.val(JSON.stringify(data, null, 2));
+        body_json_schema.text(JSON.stringify(data, null, 2));
+        hljs.highlightBlock(body_json_schema[0]);
       });
   }
 }

@@ -5,6 +5,8 @@
     %title= "Pericles - " + yield(:title)
     = stylesheet_link_tag    'application', media: 'all'
     %link{href: "https://fonts.googleapis.com/css?family=Open+Sans:400,600", rel: "stylesheet"}
+    %link{rel: "stylesheet", href: "//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css"}
+    %script{src: "//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"}
     = javascript_include_tag 'application'
     = csrf_meta_tags
   %body

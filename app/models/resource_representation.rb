@@ -18,11 +18,7 @@ class ResourceRepresentation < ApplicationRecord
   has_associated_audits
 
   def json_schema
-    ResourceRepresentationSchemaSerializer.new(
-      self,
-      is_collection: false,
-      root_key: ''
-    ).as_json
+    JSONSchema::ResourceRepresentationDecorator.new(self).json_schema
   end
 
   def attributes_resource_representation(attribute)
@@ -37,20 +33,5 @@ class ResourceRepresentation < ApplicationRecord
       parent_resource_representations.concat(resource_representation.find_parent_resource_representations)
     end
     parent_resource_representations.uniq
-  end
-
-  def resource_representation_dependencies
-    visited = Set.new
-
-    queue = attributes_resource_representations.map { |a| a.resource_representation }.compact
-    while !queue.empty?
-      representation = queue.pop
-      next if visited.include? representation
-
-      visited << representation
-      queue += representation.attributes_resource_representations.map { |a| a.resource_representation }.compact
-    end
-
-    visited
   end
 end

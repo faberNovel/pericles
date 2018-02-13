@@ -1,0 +1,10 @@
+%div{style: 'min-height: 400px;'}
+  = bootstrap_form_for(metadatum.persisted? ? metadatum : [project, metadatum]) do |f|
+    = render 'shared/errors', object: metadatum
+
+    = f.text_field :name
+
+    = f.select :primitive_type, available_types, required: true, selected: f.object.primitive_type || :string
+
+    %p
+      = f.submit class: 'btn btn-primary'

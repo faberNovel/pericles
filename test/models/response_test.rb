@@ -20,4 +20,13 @@ class ResponseTest < ActiveSupport::TestCase
   test "have a project" do
     assert build(:response).project
   end
+
+  test "have metadata reflected in json_schema" do
+    response = build(:response,
+      root_key: 'root',
+      resource_representation: build(:resource_representation)
+    )
+    response.metadata << build(:metadatum, name: 'metadatakey')
+    assert response.json_schema[:properties].key? :metadatakey
+  end
 end

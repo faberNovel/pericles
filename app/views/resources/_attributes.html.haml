@@ -1,12 +1,13 @@
 .top
-  = render partial: "shared/last_edit", locals: {last_audit: resource.last_audit}
+  .flex
+    = render partial: "shared/last_edit", locals: {last_audit: resource.last_audit}
+  %ps-code-buttons{':active-representation': 'activeRepresentation', ':resource': 'resource'}
   - if user.can_edit? resource
     = link_to 'Edit', edit_project_resource_path(project, resource, section: "all_attributes"), class: "btn btn-primary"
 
-#root-vue
-  %ps-filter-attributes{':representations': 'resource.representations',
-    ':manage-mode': 'manageMode', ':active-representation': 'activeRepresentation'}
+%ps-filter-attributes{':representations': 'resource.representations',
+  ':manage-mode': 'manageMode', ':active-representation': 'activeRepresentation'}
 
-  %ps-attributes{':attributes': 'resource.attributes', ':manage-mode': 'manageMode',
-    ':active-representation': 'activeRepresentation', ':sort-mode': 'sortMode',
-    ':search-query': 'searchQuery'}
+%ps-attributes{':attributes': 'resource.attributes', ':manage-mode': 'manageMode',
+  ':active-representation': 'activeRepresentation', ':sort-mode': 'sortMode',
+  ':search-query': 'searchQuery'}

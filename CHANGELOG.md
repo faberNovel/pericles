@@ -2,6 +2,15 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.5.0 - 2018-02-03
+
+* Add metadata and metadatum instances
+* Metadata can be added to responses (keys are not required)
+* No longer automaticaly add attribute to default representation
+* Add buttons to download Kotlin and Swift code
+* Add a 'tree' visualization for resources
+* Minor fixes
+
 ## 0.4.1 - 2018-02-06
 
 * Group representation by resources for route request and response form

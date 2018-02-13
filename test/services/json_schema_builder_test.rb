@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class ResourceRepresentationSchemaSerializerTest < ActiveSupport::TestCase
+class JSONSchemaBuilderTest < ActiveSupport::TestCase
   attr_accessor :attributes_resource_rep
 
   def generate_schema(is_collection, root_key)
@@ -8,11 +8,11 @@ class ResourceRepresentationSchemaSerializerTest < ActiveSupport::TestCase
     representation = build(:resource_representation,
       attributes_resource_representations: [self.attributes_resource_rep, build(:attributes_resource_representation)]
     )
-    ResourceRepresentationSchemaSerializer.new(
+    JSONSchemaBuilder.new(
       representation,
       is_collection: is_collection,
       root_key: root_key
-    ).as_json
+    ).execute
   end
 
   def schema_with_one_attribute(key_name, primitive_type)
@@ -22,16 +22,16 @@ class ResourceRepresentationSchemaSerializerTest < ActiveSupport::TestCase
         build(:attributes_resource_representation, resource_attribute: attribute, custom_key_name: key_name)
       ]
     )
-    ResourceRepresentationSchemaSerializer.new(
+    JSONSchemaBuilder.new(
       representation,
       is_collection: false,
       root_key: nil
-    ).as_json
+    ).execute
   end
 
   test "should produce a valid json schema" do
     schema = generate_schema(false, 'root_key').to_json
-    assert JSON::Validator.fully_validate(META_SCHEMA, schema, json: true).empty?
+    assert JSON::Validator.fully_validate(META_SCHEMA, schema, json: true).empty?, JSON::Validator.fully_validate(META_SCHEMA, schema, json: true)
   end
 
   test "should be an array if is_collection is set and not root_key" do
@@ -59,20 +59,20 @@ class ResourceRepresentationSchemaSerializerTest < ActiveSupport::TestCase
   end
 
   test "should use root key" do
-    assert generate_schema(false, 'root_key')[:properties]['root_key']
-    assert generate_schema(true, 'root_key')[:properties]['root_key']
+    assert generate_schema(false, 'root_key')[:properties][:root_key]
+    assert generate_schema(true, 'root_key')[:properties][:root_key]
   end
 
   test "root key object should be an array if root_key and is_collection" do
     schema = generate_schema(true, 'root_key')
-    assert_equal 'array', schema[:properties]['root_key'][:type]
-    assert schema[:properties]['root_key'][:items]
+    assert_equal 'array', schema[:properties][:root_key][:type]
+    assert schema[:properties][:root_key][:items]
   end
 
   test "root key object should be an object if root_key and no is_collection" do
     schema = generate_schema(false, 'root_key')
-    assert_equal 'object', schema[:properties]['root_key'][:type]
-    assert schema[:properties]['root_key'][:properties]
+    assert_equal 'object', schema[:properties][:root_key][:type]
+    assert schema[:properties][:root_key][:properties]
   end
 
   test "should use required if root key" do
@@ -84,33 +84,33 @@ class ResourceRepresentationSchemaSerializerTest < ActiveSupport::TestCase
   end
 
   test 'attribute name is in properties' do
-    assert_includes generate_schema(false, '')[:properties], attributes_resource_rep.resource_attribute.default_key_name
+    assert_includes generate_schema(false, '')[:properties], attributes_resource_rep.resource_attribute.default_key_name.to_sym
   end
 
   test 'attribute primitive type is set' do
     schema = generate_schema(false, '')
     attribute = attributes_resource_rep.resource_attribute
-    assert_equal attribute.primitive_type, schema[:properties][attribute.default_key_name][:type]
+    assert_equal attribute.primitive_type, schema[:properties][attribute.default_key_name.to_sym][:type]
   end
 
   test 'attribute date type is string' do
     schema = schema_with_one_attribute('keyname', :date)
-    assert_equal :string, schema[:properties]['keyname'][:type]
+    assert_equal :string, schema[:properties][:keyname][:type]
   end
 
   test 'attribute date format is date' do
     schema = schema_with_one_attribute('keyname', :date)
-    assert_equal 'date', schema[:properties]['keyname'][:format]
+    assert_equal 'date', schema[:properties][:keyname][:format]
   end
 
   test 'attribute datetime type is string' do
     schema = schema_with_one_attribute('keyname', :datetime)
-    assert_equal :string, schema[:properties]['keyname'][:type]
+    assert_equal :string, schema[:properties][:keyname][:type]
   end
 
   test 'attribute datetime format is datetime' do
     schema = schema_with_one_attribute('keyname', :datetime)
-    assert_equal 'datetime', schema[:properties]['keyname'][:format]
+    assert_equal 'datetime', schema[:properties][:keyname][:format]
   end
 
   test 'attribute resource representation is null' do
@@ -118,21 +118,21 @@ class ResourceRepresentationSchemaSerializerTest < ActiveSupport::TestCase
     representation = build(:resource_representation,
       attributes_resource_representations: [attributes_resource_representation]
     )
-    schema = ResourceRepresentationSchemaSerializer.new(
+    schema = JSONSchemaBuilder.new(
       representation,
       is_collection: false,
       root_key: ''
-    ).as_json
-    assert_equal 'null', schema[:properties][attributes_resource_representation.resource_attribute.default_key_name][:type]
+    ).execute
+    assert_equal 'null', schema[:properties][attributes_resource_representation.resource_attribute.default_key_name.to_sym][:type]
   end
 
   test 'schema with nested resources is correct' do
-    resource = create(:resource, name: 'User', description: 'A user')
+    resource = create(:resource, name: 'User')
     name_attribute = create(:attribute, parent_resource: resource, name: 'name', description: 'name of the user',
      primitive_type: :string)
     manager_attribute = create(:attribute, parent_resource: resource, name: 'manager', description: 'manager of the user',
      resource: resource, primitive_type: nil)
-    resource_representation_user = create(:resource_representation, resource: resource, name: 'user')
+    resource_representation_user = create(:resource_representation, resource: resource, name: 'user', description: 'A user')
     resource_representation_manager = create(:resource_representation, resource: resource, name: 'manager')
     create(:attributes_resource_representation, parent_resource_representation: resource_representation_user,
      resource_attribute: name_attribute)
@@ -145,6 +145,7 @@ class ResourceRepresentationSchemaSerializerTest < ActiveSupport::TestCase
       "type": "object",
       "definitions": {
         "manager_#{resource_representation_manager.id}": {
+          "title": "User - manager",
           "type": "object",
           "properties": {
             "name": {
@@ -164,6 +165,7 @@ class ResourceRepresentationSchemaSerializerTest < ActiveSupport::TestCase
               "type": "string"
             },
             "manager": {
+              "description": "manager of the user",
               "type": "object",
               "$ref": "#/definitions/manager_#{resource_representation_manager.id}"
             }
@@ -176,11 +178,11 @@ class ResourceRepresentationSchemaSerializerTest < ActiveSupport::TestCase
       "additionalProperties": false
     }
 
-    json = ResourceRepresentationSchemaSerializer.new(
+    json = JSONSchemaBuilder.new(
       resource_representation_user,
       is_collection: false,
       root_key: 'user'
-    ).as_json
-    assert_equal json_schema.deep_stringify_keys!, json.deep_stringify_keys!, "json schema is not correct"
+    ).execute
+    assert_equal JSON.stable_pretty_generate(json_schema), JSON.stable_pretty_generate(json), "json schema is not correct"
   end
 end

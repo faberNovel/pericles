@@ -1,0 +1,11 @@
+%h3 Metadatum
+
+= render metadatum, show: false
+
+.flexcontainer-justify-end
+  = link_to 'New metadatum', new_metadatum_metadatum_instance_path(metadatum), class: "btn btn-primary" if user.can_create? MetadatumInstance, project: project
+
+%h3 Mocks
+.margin-top-element
+  - metadatum.metadatum_instances.each do |instance|
+    = render instance

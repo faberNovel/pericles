@@ -5,7 +5,8 @@ class ResourcesController < ApplicationController
   decorates_method :resource
 
   def index
-    @resources = project.resources.sort_by { |resource| resource.name.downcase }
+    @resources = preload_index_query(project.resources)
+    @root_resources = preload_index_query(project.resources.not_used_in_other_resources)
   end
 
   def show
@@ -56,6 +57,14 @@ class ResourcesController < ApplicationController
   end
 
   private
+
+  def preload_index_query(query)
+    query.includes(:resource_instances,
+      resource_representations: {
+        attributes_resource_representations: :resource_attribute
+      }
+    ).sort_by { |resource| resource.name.downcase }
+  end
 
   def check_valid_json_object_param(json_string)
     begin
