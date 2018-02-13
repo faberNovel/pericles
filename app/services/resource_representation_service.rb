@@ -9,8 +9,8 @@ class ResourceRepresentationService
     return unless @resource
 
     resource_representation = @resource.resource_representations.new(
-      name: "Default#{@resource.name.capitalize}",
-      description: "Automatically generated"
+      name: "Default#{@resource.name.parameterize(separator: '_', preserve_case: true).camelcase}",
+      description: "Automatically generated (please edit me)"
     )
     @representation_by_resource_id[@resource.id] = resource_representation
 

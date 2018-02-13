@@ -22,7 +22,6 @@ class Attribute < ApplicationRecord
   validates :min_items, absence: true, unless: :is_array
   validates :max_items, absence: true, unless: :is_array
 
-  after_create :add_attribute_to_default_representation
   after_save :update_if_needed_resource_representation_of_attributes_resource_representations
 
   scope :sorted_by_name, -> { order(:name) }
@@ -51,17 +50,6 @@ class Attribute < ApplicationRecord
 
   def cannot_have_min_max
     resource || boolean? || null?
-  end
-
-  def add_attribute_to_default_representation
-    representation = parent_resource.default_representation
-    return unless representation
-
-    representation.attributes_resource_representations.create(
-      resource_attribute: self,
-      is_required: true,
-      resource_representation: resource&.default_representation
-    )
   end
 
   def update_if_needed_resource_representation_of_attributes_resource_representations
