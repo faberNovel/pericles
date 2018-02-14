@@ -7,10 +7,10 @@ class Response < ApplicationRecord
   has_many :reports
   has_many :resource_instances, through: :resource_representation
   has_many :api_error_instances, through: :api_error
-  has_many :metadatum_instances, through: :metadata
   has_many :mock_pickers
   has_many :metadata_responses, dependent: :destroy
   has_many :metadata, through: :metadata_responses
+  has_many :metadatum_instances, through: :metadata
 
   delegate :project, to: :route
 
