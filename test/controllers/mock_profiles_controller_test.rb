@@ -11,6 +11,7 @@ class MockProfilesControllerTest < ControllerWithAuthenticationTest
       is_required: true
     )
     @route = create(:route, resource: @resource, url: "/mock_route")
+    create(:response, route: @route, resource_representation: @resource.default_representation)
     @resource_instance = create(:resource_instance, resource: @resource, body: {id: 1}.to_json)
     @mock_profile = create(:mock_profile, project: @project)
   end
