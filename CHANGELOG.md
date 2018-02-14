@@ -2,7 +2,11 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## 0.5.0 - 2018-02-03
+## 0.5.1 - 2018-02-14
+
+* Fix mock profile page
+
+## 0.5.0 - 2018-02-13
 
 * Add metadata and metadatum instances
 * Metadata can be added to responses (keys are not required)
