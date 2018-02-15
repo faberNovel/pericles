@@ -20,4 +20,8 @@ class GenerateJsonInstanceServiceTest < ActiveSupport::TestCase
     end
     assert date
   end
+
+  test "should generate empty body if json_schema is nil" do
+    assert_equal '', GenerateJsonInstanceService.new(nil).execute
+  end
 end

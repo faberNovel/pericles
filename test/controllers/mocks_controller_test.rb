@@ -20,4 +20,9 @@ class MocksControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
+  test "should have error if response does not exist" do
+    @route.responses.delete_all
+    get "/projects/#{@project.id}/mocks/" + @route.url
+    assert_response :not_found
+  end
 end
