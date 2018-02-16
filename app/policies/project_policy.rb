@@ -34,6 +34,7 @@ class ProjectPolicy < ApplicationPolicy
         :proxy_port,
         :proxy_username,
         :proxy_password,
+        :ignore_ssl,
         :_destroy
       ],
       user_ids: []

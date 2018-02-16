@@ -10,8 +10,13 @@ class MakeRequestToServerService
     url = URI.join(target_base_url, relative_url)
     url = URI.join(url.to_s, '?' + @request.query_string) unless @request.query_string.blank?
 
+    if @proxy_configuration.ignore_ssl
+      ctx = OpenSSL::SSL::SSLContext.new
+      ctx.verify_mode = OpenSSL::SSL::VERIFY_NONE
+    end
+
     add_proxy_configuration(HTTP.follow)
-      .send(@request.method.downcase, url, body: @request.body.read, headers: headers)
+      .send(@request.method.downcase, url, body: @request.body.read, headers: headers, ssl_context: ctx)
   end
 
   def headers
