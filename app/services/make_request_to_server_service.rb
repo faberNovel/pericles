@@ -1,17 +1,17 @@
 class MakeRequestToServerService
 
-  def initialize(proxy_url, request)
-    @proxy_url = proxy_url
-    @proxy_url += '/' unless @proxy_url.ends_with? '/'
+  def initialize(proxy_configuration, request)
+    @proxy_configuration = proxy_configuration
     @request = request
   end
 
   def execute
     relative_url = @request.path[/proxy\/?(.*)/, 1]
-    url = URI.join(@proxy_url, relative_url)
+    url = URI.join(target_base_url, relative_url)
     url = URI.join(url.to_s, '?' + @request.query_string) unless @request.query_string.blank?
 
-    HTTP.follow.send(@request.method.downcase, url, body: @request.body.read, headers: headers)
+    add_proxy_configuration(HTTP.follow)
+      .send(@request.method.downcase, url, body: @request.body.read, headers: headers)
   end
 
   def headers
@@ -25,6 +25,21 @@ class MakeRequestToServerService
   end
 
   private
+
+  def add_proxy_configuration(http)
+    return http unless @proxy_configuration.use_http_proxy?
+
+    http.via(*@proxy_configuration.http_proxy_fields)
+  end
+
+  def target_base_url
+    return @target_base_url if defined? @target_base_url
+
+    @target_base_url = @proxy_configuration.target_base_url
+    @target_base_url += '/' unless @target_base_url.ends_with? '/'
+    @target_base_url
+  end
+
   def remove_http_prefix(headers)
     headers.clone.each_key do |key|
       headers[key[5..-1]] = headers.delete(key) if key =~ /^HTTP_/

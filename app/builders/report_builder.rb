@@ -46,7 +46,7 @@ class ReportBuilder
 
   def request_headers
     MakeRequestToServerService.new(
-      @project.proxy_configuration.target_base_url, @request
+      @project.proxy_configuration, @request
     ).headers
   end
 

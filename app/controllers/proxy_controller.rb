@@ -4,7 +4,7 @@ class ProxyController < ApplicationController
 
   def compute_request
     @project = Project.find(params[:project_id])
-    @request_service = MakeRequestToServerService.new(@project.proxy_configuration.target_base_url, request)
+    @request_service = MakeRequestToServerService.new(@project.proxy_configuration, request)
     proxy_response = @request_service.execute
     content_type_is_json = /^application\/json/.match(proxy_response.headers['Content-Type'])
 

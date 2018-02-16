@@ -190,4 +190,17 @@ class ProxyControllerTest < ActionDispatch::IntegrationTest
       end
     end
   end
+
+  test "proxy should use proxy configuration" do
+    @project.proxy_configuration.update(
+      proxy_hostname: 'domain',
+      proxy_port: 3128,
+      proxy_username: 'squid_username',
+      proxy_password: 'squid_password'
+    )
+
+    VCR.use_cassette('use_another_proxy') do
+      get "/projects/#{@project.id}/proxy/users/1"
+    end
+  end
 end

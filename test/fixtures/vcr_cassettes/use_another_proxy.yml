@@ -1,0 +1,194 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://api.xyz/users/1
+    body:
+      encoding: ASCII-8BIT
+      string: ''
+    headers:
+      Request-Method:
+      - GET
+      Server-Name:
+      - www.example.com
+      Server-Port:
+      - '80'
+      Path-Info:
+      - "/projects/3056/proxy/users/1"
+      Https:
+      - 'off'
+      Content-Length:
+      - '0'
+      Remote-Addr:
+      - 127.0.0.1
+      Accept:
+      - text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5
+      Connection:
+      - close
+      Host:
+      - api.xyz
+      User-Agent:
+      - http.rb/2.2.2
+  response:
+    status:
+      code: 302
+      message: Found
+    headers:
+      Server:
+      - nginx/1.10.3 (Ubuntu)
+      Content-Type:
+      - text/html; charset=UTF-8
+      Cache-Control:
+      - no-cache
+      Date:
+      - Fri, 16 Feb 2018 13:26:14 GMT
+      Location:
+      - https://enquiry.io
+      Set-Cookie:
+      - XSRF-TOKEN=eyJpdiI6InhlanZOTVZcL2Z2dUYzaVJGTGFkVXdnPT0iLCJ2YWx1ZSI6ImpUWk9rcmF6czRwVnZielE3K0FNK2VyMzNTZTFESEpvaFZZck54b0MybHlGY0kzMmlPd0g5WHhWcWlvMHhVOGx4dXE0Nkg4SXhqdFlpQmxJeWRZMlVnPT0iLCJtYWMiOiI0ZGQyZDM0ZDY4YjljN2QyNmIwMDVlYWE2ZGIzYmZlZTAwZDhlNTQ1MTA1YmE5NzY0ZWE1N2EzZWJkOWI0MWRlIn0%3D;
+        expires=Fri, 16-Feb-2018 15:26:14 GMT; Max-Age=7200; path=/
+      - laravel_session=eyJpdiI6InM1Ykd5MGJUa1E2dkxCeGw0RVNPVkE9PSIsInZhbHVlIjoiSFNGQ05Wc2RFQ29LUW1penNYVjh4T0thdGp0OERGZlBSYUhUNHlPcGFYenFGV21LcHNVWjJhR0t4MXNQZCtNbTRSYlRNMnNqcHZOSWppcnA3aW9VdkE9PSIsIm1hYyI6IjljOGVhNWZlMmJmZjc0OGRmMWJlN2M3ZDRlMGM0Y2EzZDI1MzY1NTgwNGVmNmQ2NDI0MjhiNDllMWY2Y2RkYTgifQ%3D%3D;
+        expires=Fri, 16-Feb-2018 15:26:14 GMT; Max-Age=7200; path=/; HttpOnly
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubdomains
+      X-Frame-Options:
+      - DENY
+      X-Content-Type-Options:
+      - nosniff
+      X-Cache:
+      - MISS from vps507860
+      X-Cache-Lookup:
+      - MISS from vps507860:3128
+      Via:
+      - 1.1 vps507860 (squid/3.5.23)
+      Connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: |-
+        <!DOCTYPE html>
+        <html>
+            <head>
+                <meta charset="UTF-8" />
+                <meta http-equiv="refresh" content="1;url=https://enquiry.io" />
+
+                <title>Redirecting to https://enquiry.io</title>
+            </head>
+            <body>
+                Redirecting to <a href="https://enquiry.io">https://enquiry.io</a>.
+            </body>
+        </html>
+    http_version: 
+  recorded_at: Fri, 16 Feb 2018 13:26:14 GMT
+- request:
+    method: get
+    uri: https://enquiry.io/
+    body:
+      encoding: ASCII-8BIT
+      string: ''
+    headers:
+      Request-Method:
+      - GET
+      Server-Name:
+      - www.example.com
+      Server-Port:
+      - '80'
+      Path-Info:
+      - "/projects/3056/proxy/users/1"
+      Https:
+      - 'off'
+      Content-Length:
+      - '0'
+      Remote-Addr:
+      - 127.0.0.1
+      Accept:
+      - text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5
+      Connection:
+      - close
+      User-Agent:
+      - http.rb/2.2.2
+      Proxy-Authorization:
+      - Basic cGVyaWNsZXM6MlM4MjZSeURzY3ZE
+      Host:
+      - enquiry.io
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.10.3 (Ubuntu)
+      Content-Type:
+      - text/html; charset=UTF-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - close
+      Cache-Control:
+      - no-cache
+      Date:
+      - Fri, 16 Feb 2018 13:26:14 GMT
+      Set-Cookie:
+      - XSRF-TOKEN=eyJpdiI6IjBsOENnQms2dEpTNEx2UG54YVVVRkE9PSIsInZhbHVlIjoiMUQ3MFdBWHhvRXJlRVJ2U3N6NW5PRGpNM29XU05qVGltTW5qc1wvRWdsWTkzWk40aVpvTnFRSkd0aGp2TWZkaFZWT1VpZzUzK29aTHJqdnpQR2lxajVBPT0iLCJtYWMiOiI5NzgzNTY2Y2ZlMjM5MmRhZWIwNGNmMzRkMDYxYWM0YWFjMDBkODgyYjNmMjA5YjZkMWYwMmY3YWNlMTY1MDQwIn0%3D;
+        expires=Fri, 16-Feb-2018 15:26:14 GMT; Max-Age=7200; path=/
+      - laravel_session=eyJpdiI6InZMeXplUWw5MXVFektYYURFanVXbnc9PSIsInZhbHVlIjoiK0FuVHV1XC90b1wvU3pxdnF6MzI3NjFhM2p3eWJab3BoUGIwRmVBNG4yakZTV2lGVnhFeXV5MG1pd3pMZ3ZKV1wvTzdHbGpIWWZkazdETUpOUW1MQzNMbFE9PSIsIm1hYyI6ImEzNzBiNWE2NGIzZjdhODNhMTFmNGY5NGU0Njc0OTRmOTIwYzMyZWE2ODcxNzIwNmI4NDFiYzkxYzRiNGM4OTUifQ%3D%3D;
+        expires=Fri, 16-Feb-2018 15:26:14 GMT; Max-Age=7200; path=/; HttpOnly
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubdomains
+      X-Frame-Options:
+      - DENY
+      X-Content-Type-Options:
+      - nosniff
+    body:
+      encoding: UTF-8
+      string: "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <script async src=\"//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\"></script>\n
+        \   <script>\n        (adsbygoogle = window.adsbygoogle || []).push({\n            google_ad_client:
+        \"ca-pub-2428472790120426\",\n            enable_page_level_ads: true\n        });\n
+        \   </script>\n\n    <meta charset=\"utf-8\">\n    <meta http-equiv=\"X-UA-Compatible\"
+        content=\"IE=edge\">\n    <meta name=\"viewport\" content=\"width=device-width,
+        initial-scale=1\">\n    <link rel=\"shortcut icon\" href=\"favicon.ico\">\n
+        \   <META NAME=\"ROBOTS\" CONTENT=\"INDEX, FOLLOW\">\n\n    <title>Enquiry.io</title>\n
+        \   <meta name=\"description\" content=\"An App to organize enquiries for
+        domain.\">\n    <meta title=\"author\" content=\"VAT PS\">\n    \n\t<link
+        rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css\">\n
+        \   <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,300,600'
+        rel='stylesheet' type='text/css'>\n    <link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css\">\n
+        \   <link rel=\"stylesheet\" href=\"https://enquiry.io/css/app.css\">\n  </head>\n\n
+        \ <body>\n  \n    <script>\n      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){\n
+        \     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),\n
+        \     m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)\n
+        \     })(window,document,'script','//www.google-analytics.com/analytics.js','ga');\n
+        \     ga('create', 'UA-71722501-1', 'auto');\n      ga('send', 'pageview');\n
+        \   </script>\n\n  \n<aside class=\"home\">\n    <h1>enquiry.io</h1>\n    <h4>Organized
+        Enquiries for Domain</h4>\n    <a href=\"https://enquiry.io/auth/register\"
+        class=\"cta-btn button button-brand\">Signup for Free</a>\n    <a href=\"https://enquiry.io/auth/login\"
+        class=\"login\">Login to your Account <i class=\"fa fa-sign-in\"></i></a>\n</aside>\n<article>\n
+        \   <header class=\"homepad\">\n        <div class=\"features\">\n            <div
+        class=\"row\">\n                <div class=\"one-half column\">\n                    <h6><i
+        class=\"fa fa-list\"></i> Organized Enquiries</h6>\n                    <p>All
+        enquiries are organized and categorized by domain.</p>\n                </div>\n
+        \               <div class=\"one-half column\">\n                    <h6><i
+        class=\"fa fa-envelope-o\"></i> Personalized Email</h6>\n                    <p>Each
+        domain gets a unique email address to receive direct enquiries.</p>\n                </div>\n
+        \           </div>\n            <div class=\"row\">\n                <div
+        class=\"one-half column\">\n                    <h6><i class=\"fa fa-comments-o\"></i>
+        Direct Communication</h6>\n                    <p>Seller communicates directly
+        with buyer, nothing under the hood.</p>\n                </div>\n                <div
+        class=\"one-half column\">\n                    <h6><i class=\"fa fa-lock\"></i>
+        Private and Secure</h6>\n                    <p>All data is safe, private,
+        secure and served over SSL.</p>\n                </div>\n            </div>\n
+        \       </div>\n    </header>\n    <div class=\"steps homepad\">\n        <h6>How
+        to get started?</h6>\n        <ol>\n            <li>Signup for an account
+        and list your domains.</li>\n            <li>Point your domains to enquiry.io
+        using any of following way...</li>\n            <ul>\n                <li>Change
+        name servers to <code>ns1.enquiry.io</code>, <code>ns2.enquiry.io</code></li>\n
+        \               <li>Change A record to <code>34.199.47.26</code></li>\n                <li>Redirect
+        to <code>https://enquiry.io/domain/{YOUR_DOMAIN}</code></li>\n            </ul>\n
+        \           <li>Start receiving enquiries directly from your domain or your
+        personalized email at enquiry.io.</li>\n        </ol>\n    </div>\n    <footer>\n
+        \       <p>Dedicated to Domainers | <a href=\"mailto:hello@enquiry.io\" title=\"contact\">hello@enquiry.io</a></p>\n
+        \   </footer>\n</article>\n\n  \n    <script src=\"https://code.jquery.com/jquery-1.10.2.min.js\"></script>\n
+        \   <script src=\"https://enquiry.io/js/app.js\"></script>\n  </body>\n</html>"
+    http_version: 
+  recorded_at: Fri, 16 Feb 2018 13:26:14 GMT
+recorded_with: VCR 3.0.3
