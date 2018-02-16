@@ -1,6 +1,8 @@
 class Project < ApplicationRecord
   belongs_to :active_mock_profile, class_name: 'MockProfile', foreign_key: 'mock_profile_id'
 
+  has_one :proxy_configuration
+
   has_many :resources, inverse_of: :project, dependent: :destroy
   has_many :resource_representations, through: :resources
   has_many :routes, through: :resources
@@ -11,6 +13,9 @@ class Project < ApplicationRecord
   has_many :members
   has_many :users, through: :members
   has_many :metadata, inverse_of: :project, dependent: :destroy
+
+  accepts_nested_attributes_for :proxy_configuration, allow_destroy: true
+
 
   validates :title, presence: true, length: { in: 2..25 }, uniqueness: true
 

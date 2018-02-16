@@ -74,6 +74,32 @@ class ProjectsControllerTest < ControllerWithAuthenticationTest
     assert_equal 'New Description', @project.description
   end
 
+  test "update project proxy configuration" do
+    put project_path(@project), params: {
+      project: {
+        proxy_configuration_attributes: {
+          target_base_url: 'https://api.com'
+        }
+      }
+    }
+
+    assert_equal 'https://api.com', @project.reload.proxy_configuration.target_base_url
+  end
+
+  test "update project delete proxy configuration if no target_base_url" do
+    @project.create_proxy_configuration(target_base_url: 'https://api.com')
+
+    assert_difference 'ProxyConfiguration.count', -1 do
+      put project_path(@project), params: {
+        project: {
+          proxy_configuration_attributes: {
+            target_base_url: ''
+          }
+        }
+      }
+    end
+  end
+
   test "should not update project" do
     project_title = @project.title
     put project_path(@project), params: { project: { description: "That's it !", title: "" }}

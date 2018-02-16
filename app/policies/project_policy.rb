@@ -26,8 +26,16 @@ class ProjectPolicy < ApplicationPolicy
     [
       :title,
       :description,
-      :proxy_url,
       :mock_profile_id,
+      proxy_configuration_attributes: [
+        :id,
+        :target_base_url,
+        :proxy_hostname,
+        :proxy_port,
+        :proxy_username,
+        :proxy_password,
+        :_destroy
+      ],
       user_ids: []
     ]
   end
