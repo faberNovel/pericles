@@ -3,5 +3,13 @@
 - content_for :page_scripts do
   = javascript_pack_tag("resources/index.js")
 
+%ol.breadcrumb
+  %li
+    = link_to 'Projects', projects_path
+  %li
+    = link_to "#{project.title}", project_path(project)
+  %li
+    Resources
+
 #resources
-  %ps-resources{':resources': 'resources', ':tree-mode': 'treeMode'}
+  %ps-resources{':resources': 'displayedResources', ':tree-mode': 'treeMode'}

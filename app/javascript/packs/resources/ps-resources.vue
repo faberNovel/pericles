@@ -1,13 +1,20 @@
 <template lang="pug">
 .host
-  .text-right
-    button.btn(@click='onTreeClick', :class='{grayscaled: !treeMode}') 🌳
-    //- TODO Clément Villain 19/02/18
-    //- - if user.can_create? Resource, project: project
-    a(
-      class="btn btn-primary btn-lg"
-      :href="newResourcePath"
-    ) New Resource
+
+  .flexspace-and-center
+    input.form-control(
+      @input="updateSearchQuery"
+      placeholder='Search'
+      style='width: auto;'
+    )
+    div
+      button.btn(@click='onTreeClick', :class='{grayscaled: !treeMode}') 🌳
+      //- TODO Clément Villain 19/02/18
+      //- - if user.can_create? Resource, project: project
+      a(
+        class="btn btn-primary btn-lg"
+        :href="newResourcePath"
+      ) New Resource
 
   .list.margin-top-element
     ps-resource(
@@ -27,6 +34,10 @@ export default {
   methods: {
     onTreeClick: function() {
       Store.toggleTreeMode();
+    },
+    updateSearchQuery: function(event) {
+      let value = event.target.value;
+      Store.setQuery(value);
     }
   },
   computed: {
