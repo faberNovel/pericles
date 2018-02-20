@@ -13,7 +13,7 @@ class ReportBuilder
       url: human_readable_url,
       response_status_code: @http_response.status.code,
       response_headers: @http_response.headers.to_h,
-      response_body: @http_response.body,
+      response_body: @http_response.body.to_s.encode('utf-8', :invalid => :replace, :undef => :replace),
       request_body: @request.body.read,
       request_headers: request_headers,
       request_method: @request.method.upcase
