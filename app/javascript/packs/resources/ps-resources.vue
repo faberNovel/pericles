@@ -22,6 +22,7 @@
       :resource='resource'
       :tree-mode='treeMode'
       :depth='0'
+      :query='query'
     )
 </template>
 
@@ -30,7 +31,7 @@ import ResourceComponent from './ps-resource.vue';
 import Store from './store.js';
 
 export default {
-  props: ['resources', 'treeMode'],
+  props: ['resources', 'treeMode', 'query'],
   methods: {
     onTreeClick: function() {
       Store.toggleTreeMode();

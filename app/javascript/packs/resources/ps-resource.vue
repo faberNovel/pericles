@@ -5,7 +5,7 @@ div(style='margin-top: -1px;')
     :href='resourcePath'
   )
     .flexcontainer-space-between
-      .name {{displayedResourceName}}
+      .name(v-html='displayedResourceName')
       .error(v-if='resource.hasInvalidMocks')
         .tool-tip(
           data-toggle="tooltip"
@@ -19,6 +19,7 @@ div(style='margin-top: -1px;')
     :resource='r',
     :tree-mode='treeMode',
     :depth='depth + 1'
+    :query='query'
   )
 </template>
 
@@ -26,7 +27,7 @@ div(style='margin-top: -1px;')
 import Store from './store.js';
 
 export default {
-  props: ['resource', 'treeMode', 'depth'],
+  props: ['resource', 'treeMode', 'depth', 'query'],
   methods: {
   },
   computed: {
@@ -37,8 +38,18 @@ export default {
       return Store.findResourcesByIds(this.resource.usedResources.map((r) => r.id))
     },
     displayedResourceName: function() {
-      return '      '.repeat(this.depth) + ((this.depth == 0) ? '' : '↳ ') + this.resource.name
+      let indentation = '      '.repeat(this.depth) + ((this.depth == 0) ? '' : '↳ ');
+
+      return indentation + this.highlightedName;
     },
+    highlightedName: function() {
+      let name = this.resource.name;
+      if (this.query && this.query.length > 0) {
+        let reg = new RegExp('(' + this.query + ')', 'gi');
+        name = this.resource.name.replace(reg, '<b>$1</b>');
+      }
+      return name;
+    }
   },
   name: 'ps-resource'
 }

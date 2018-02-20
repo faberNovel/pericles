@@ -48,6 +48,22 @@ export default {
   findResourcesByIds: function(ids) {
     return this.state.resources.filter((r) => ids.indexOf(r.id) !== -1)
   },
+  flatChildren: function(resource) {
+    let visited = new Set();
+    let queue = resource.usedResources.map((r) => r.id);
+
+    while (queue.length > 0) {
+      let resourceId = queue.pop();
+
+      if(!visited.has(resourceId)) {
+        visited.add(resourceId);
+        let resource = this.state.resources.find((r) => r.id === resourceId);
+        queue = queue.concat(resource.usedResources.map((r) => r.id));
+      }
+    }
+
+    return this.state.resources.filter((r) => visited.has(r.id));
+  },
   setQuery: function(value) {
     this.state.query = value;
     this.onQueryChange();
@@ -61,7 +77,13 @@ export default {
       this.state.displayedResources = this.state.resources;
     } else {
       this.state.displayedResources = this.state.resources.filter(
-        (r) => r.name.toLowerCase().indexOf(q) !== -1
+        (r) => {
+          let resourceFound = r.name.toLowerCase().indexOf(q) !== -1
+          let someChildrenFound = this.flatChildren(r).some(
+            (child) => child.name.toLowerCase().indexOf(q) !== -1
+          )
+          return resourceFound || (this.state.treeMode && someChildrenFound);
+        }
       );
     }
   }
