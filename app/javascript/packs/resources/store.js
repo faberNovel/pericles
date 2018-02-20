@@ -1,12 +1,16 @@
-let resourcesFromCache = JSON.parse(localStorage.getItem('resources') || '[]');
-
 export default {
   state: {
-    displayedResources: resourcesFromCache,
-    resources: resourcesFromCache,
+    displayedResources: [],
+    resources: [],
+    unusedResources: [],
     projectId: document.location.pathname.split('/')[2],
     treeMode: localStorage.getItem('treeMode') == 'tree',
     query: ''
+  },
+  init: function() {
+    this.state.resources = JSON.parse(localStorage.getItem(this.state.projectId + '/resources') || '[]');
+    this.onResourcesChange();
+    this.fetchResources().then(() => this.onResourcesChange());
   },
   fetchResources: function() {
     return $.ajax({
@@ -15,7 +19,7 @@ export default {
       contentType: "application/json",
     }).then((data) => {
       this.state.resources = this.mapDataToViewModel(data);
-      localStorage.setItem('resources', JSON.stringify(this.state.resources));
+      localStorage.setItem(this.state.projectId + '/resources', JSON.stringify(this.state.resources));
     });
   },
   mapDataToViewModel: function(data) {
@@ -24,11 +28,17 @@ export default {
         id: r.id,
         name: r.name,
         usedResources: r.used_resources,
-        hasInvalidMocks: r['has_invalid_mocks?']
+        hasInvalidMocks: r['has_invalid_mocks?'],
+        requestRouteIds: r.request_route_ids,
+        responseIds: r.response_ids
       }
     }).sort(
       (a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase())
     );
+  },
+  onResourcesChange: function() {
+    this.applyFilter();
+    this.computeUnused();
   },
   toggleTreeMode: function() {
     if (this.state.treeMode) {
@@ -73,10 +83,13 @@ export default {
   },
   applyFilter: function() {
     let q = this.state.query.toLowerCase();
+    let resources = this.state.resources.filter(
+      (r) => r.requestRouteIds.length > 0 || r.responseIds.length > 0
+    );
     if (q.length === 0) {
-      this.state.displayedResources = this.state.resources;
+      this.state.displayedResources = resources;
     } else {
-      this.state.displayedResources = this.state.resources.filter(
+      this.state.displayedResources = resources.filter(
         (r) => {
           let resourceFound = r.name.toLowerCase().indexOf(q) !== -1
           let someChildrenFound = this.flatChildren(r).some(
@@ -86,5 +99,17 @@ export default {
         }
       );
     }
+  },
+  computeUnused: function() {
+    let rootResources = this.state.resources.filter(
+      (r) => r.requestRouteIds.length > 0 || r.responseIds.length > 0
+    );
+    let usedResourcesIds = rootResources.map(
+      (r) => [r.id, ...this.flatChildren(r).map((res) => res.id)]
+    ).reduce((a, b) => a.concat(b), []);
+
+    this.state.unusedResources = this.state.resources.filter(
+      (r) => usedResourcesIds.indexOf(r.id) === -1
+    );
   }
 }

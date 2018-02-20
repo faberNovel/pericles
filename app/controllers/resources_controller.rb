@@ -10,6 +10,8 @@ class ResourcesController < ApplicationController
       format.json do
         resources_query = project.resources.includes(
           :resource_instances,
+          :request_routes,
+          :responses,
           :used_resources,
           resource_representations: {
             attributes_resource_representations: :resource_attribute
