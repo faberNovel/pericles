@@ -170,13 +170,13 @@ class MockProfilesControllerTest < ControllerWithAuthenticationTest
     sign_out :user
 
     get new_project_mock_profile_path(@project)
-    assert_redirected_to new_user_session_path
+    assert_redirected_to new_user_session_path(redirect_to: request.path)
 
     patch mock_profile_path(@mock_profile), params: { mock_profile: { name: 'nice name' } }
-    assert_redirected_to new_user_session_path
+    assert_redirected_to new_user_session_path(redirect_to: request.path)
 
     post project_mock_profiles_path(@project), params: { mock_profile: { name: 'nice name' } }
-    assert_redirected_to new_user_session_path
+    assert_redirected_to new_user_session_path(redirect_to: request.path)
 
     get project_mock_profiles_path(@project)
     assert_response :success

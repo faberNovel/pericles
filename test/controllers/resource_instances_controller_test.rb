@@ -118,22 +118,22 @@ class ResourceInstancesControllerTest < ControllerWithAuthenticationTest
     sign_out :user
 
     get new_resource_resource_instance_path(@resource)
-    assert_redirected_to new_user_session_path
+    assert_redirected_to new_user_session_path(redirect_to: request.path)
 
     get edit_resource_instance_path(@resource_instance)
-    assert_redirected_to new_user_session_path
+    assert_redirected_to new_user_session_path(redirect_to: request.path)
 
     patch resource_instance_path(@resource_instance), params: {
       resource_instance: { name: 'new name' }
     }
-    assert_redirected_to new_user_session_path
+    assert_redirected_to new_user_session_path(redirect_to: request.path)
 
     post resource_resource_instances_path(@resource), params: {
       resource_instance: @resource_instance.attributes
     }
-    assert_redirected_to new_user_session_path
+    assert_redirected_to new_user_session_path(redirect_to: request.path)
 
     delete resource_instance_path(@resource_instance)
-    assert_redirected_to new_user_session_path
+    assert_redirected_to new_user_session_path(redirect_to: request.path)
   end
 end

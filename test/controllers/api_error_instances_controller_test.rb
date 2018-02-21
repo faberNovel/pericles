@@ -123,22 +123,22 @@ class ApiErrorInstancesControllerTest < ControllerWithAuthenticationTest
     sign_out :user
 
     get new_api_error_api_error_instance_path(@api_error)
-    assert_redirected_to new_user_session_path
+    assert_redirected_to new_user_session_path(redirect_to: request.path)
 
     get edit_api_error_instance_path(@api_error_instance)
-    assert_redirected_to new_user_session_path
+    assert_redirected_to new_user_session_path(redirect_to: request.path)
 
     patch api_error_instance_path(@api_error_instance), params: {
       api_error_instance: { name: 'new name' }
     }
-    assert_redirected_to new_user_session_path
+    assert_redirected_to new_user_session_path(redirect_to: request.path)
 
     post api_error_api_error_instances_path(@api_error), params: {
       api_error_instance: @api_error_instance.attributes
     }
-    assert_redirected_to new_user_session_path
+    assert_redirected_to new_user_session_path(redirect_to: request.path)
 
     delete api_error_instance_path(@api_error_instance)
-    assert_redirected_to new_user_session_path
+    assert_redirected_to new_user_session_path(redirect_to: request.path)
   end
 end

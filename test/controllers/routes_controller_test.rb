@@ -12,7 +12,7 @@ class RoutesControllerTest < ControllerWithAuthenticationTest
     sign_out :user
     project = create(:project)
     get project_routes_path(project)
-    assert_redirected_to new_user_session_path
+    assert_redirected_to new_user_session_path(redirect_to: request.path)
   end
 
   test "should show route" do
@@ -25,7 +25,7 @@ class RoutesControllerTest < ControllerWithAuthenticationTest
     sign_out :user
     route = create(:route)
     get project_route_path(route.project, route)
-    assert_redirected_to new_user_session_path
+    assert_redirected_to new_user_session_path(redirect_to: request.path)
   end
 
   test 'should get new when project has resource' do
@@ -44,7 +44,7 @@ class RoutesControllerTest < ControllerWithAuthenticationTest
   test "should not get new (not authenticated)" do
     sign_out :user
     get new_project_route_path(create(:project))
-    assert_redirected_to new_user_session_path
+    assert_redirected_to new_user_session_path(redirect_to: request.path)
   end
 
   test "should get edit" do
@@ -57,7 +57,7 @@ class RoutesControllerTest < ControllerWithAuthenticationTest
     sign_out :user
     route = create(:route)
     get edit_project_route_path(route.project, route)
-    assert_redirected_to new_user_session_path
+    assert_redirected_to new_user_session_path(redirect_to: request.path)
   end
 
   test "should create route" do
@@ -76,7 +76,7 @@ class RoutesControllerTest < ControllerWithAuthenticationTest
     assert_no_difference('Route.count') do
       post project_routes_path(route.project), params: { route: route.attributes }
     end
-    assert_redirected_to new_user_session_path
+    assert_redirected_to new_user_session_path(redirect_to: request.path)
   end
 
   test "should not create route if resource is not related to project" do
@@ -111,7 +111,7 @@ class RoutesControllerTest < ControllerWithAuthenticationTest
     put project_route_path(route.project, route), params: { route: { url: '/new_url' } }
     route.reload
     assert_equal route_original_url, route.url
-    assert_redirected_to new_user_session_path
+    assert_redirected_to new_user_session_path(redirect_to: request.path)
   end
 
   test "should delete route" do
@@ -128,7 +128,7 @@ class RoutesControllerTest < ControllerWithAuthenticationTest
     assert_no_difference 'Route.count' do
       delete project_route_path(route.project, route)
     end
-    assert_redirected_to new_user_session_path
+    assert_redirected_to new_user_session_path(redirect_to: request.path)
   end
 
   test 'non member external user should not access project routes' do
@@ -232,21 +232,21 @@ class RoutesControllerTest < ControllerWithAuthenticationTest
     assert_response :success
 
     get new_project_route_path(project)
-    assert_redirected_to new_user_session_path
+    assert_redirected_to new_user_session_path(redirect_to: request.path)
 
     post project_routes_path(route.project), params: { route: build(:route, resource: route.resource).attributes }
-    assert_redirected_to new_user_session_path
+    assert_redirected_to new_user_session_path(redirect_to: request.path)
 
     get project_route_path(project, route)
     assert_response :success
 
     get edit_project_route_path(project, route)
-    assert_redirected_to new_user_session_path
+    assert_redirected_to new_user_session_path(redirect_to: request.path)
 
     put project_route_path(route.project, route), params: { route: { url: '/new_url' } }
-    assert_redirected_to new_user_session_path
+    assert_redirected_to new_user_session_path(redirect_to: request.path)
 
     delete project_route_path(project, route)
-    assert_redirected_to new_user_session_path
+    assert_redirected_to new_user_session_path(redirect_to: request.path)
   end
 end

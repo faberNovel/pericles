@@ -15,7 +15,7 @@ class ResourceRepresentationsControllerTest < ControllerWithAuthenticationTest
   test "should not get new (not authenticated)" do
     sign_out :user
     get new_resource_resource_representation_path(@resource)
-    assert_redirected_to new_user_session_path
+    assert_redirected_to new_user_session_path(redirect_to: request.path)
   end
 
   test "should get edit" do
@@ -26,7 +26,7 @@ class ResourceRepresentationsControllerTest < ControllerWithAuthenticationTest
   test "should not get edit (not authenticated)" do
     sign_out :user
     get edit_resource_resource_representation_path(@resource, @representation)
-    assert_redirected_to new_user_session_path
+    assert_redirected_to new_user_session_path(redirect_to: request.path)
   end
 
   test "should create resource_representation" do
@@ -76,7 +76,7 @@ class ResourceRepresentationsControllerTest < ControllerWithAuthenticationTest
       }
     end
 
-    assert_redirected_to new_user_session_path
+    assert_redirected_to new_user_session_path(redirect_to: request.path)
   end
 
   test "should update resource_representation" do
@@ -117,7 +117,7 @@ class ResourceRepresentationsControllerTest < ControllerWithAuthenticationTest
       }
     }
 
-    assert_redirected_to new_user_session_path
+    assert_redirected_to new_user_session_path(redirect_to: request.path)
     assert_equal old_name, @representation.reload.name
   end
 
@@ -148,7 +148,7 @@ class ResourceRepresentationsControllerTest < ControllerWithAuthenticationTest
     assert_no_difference('ResourceRepresentation.count') do
       delete resource_resource_representation_path(@resource, @representation)
     end
-    assert_redirected_to new_user_session_path
+    assert_redirected_to new_user_session_path(redirect_to: request.path)
   end
 
   test 'should get json schema associated to resource_representation' do
@@ -182,7 +182,7 @@ class ResourceRepresentationsControllerTest < ControllerWithAuthenticationTest
 
     get resource_resource_representation_path(@resource, @representation, format: :json_schema)
 
-    assert_redirected_to new_user_session_path
+    assert_redirected_to new_user_session_path(redirect_to: request.path)
   end
 
   test "clone should create new resource_representation" do
@@ -286,25 +286,25 @@ class ResourceRepresentationsControllerTest < ControllerWithAuthenticationTest
     sign_out :user
 
     get new_resource_resource_representation_path(@resource)
-    assert_redirected_to new_user_session_path
+    assert_redirected_to new_user_session_path(redirect_to: request.path)
 
     put resource_resource_representation_path(@resource, @representation), params: {
       resource_representation: {
         name: 'New name'
       }
     }
-    assert_redirected_to new_user_session_path
+    assert_redirected_to new_user_session_path(redirect_to: request.path)
 
     post resource_resource_representations_path(@resource), params: {
       resource_representation: res_rep_params_hash
     }
-    assert_redirected_to new_user_session_path
+    assert_redirected_to new_user_session_path(redirect_to: request.path)
 
     get edit_resource_resource_representation_path(@resource, @representation)
-    assert_redirected_to new_user_session_path
+    assert_redirected_to new_user_session_path(redirect_to: request.path)
 
     post resource_resource_representation_clone_path(@resource, @representation)
-    assert_redirected_to new_user_session_path
+    assert_redirected_to new_user_session_path(redirect_to: request.path)
   end
 
   private

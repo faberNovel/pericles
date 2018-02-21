@@ -20,7 +20,7 @@ class ProjectsControllerTest < ControllerWithAuthenticationTest
   test "should not show project (not authenticated)" do
     sign_out :user
     get project_path(@project)
-    assert_redirected_to new_user_session_path
+    assert_redirected_to new_user_session_path(redirect_to: request.path)
   end
 
   test "should get new" do
@@ -31,7 +31,7 @@ class ProjectsControllerTest < ControllerWithAuthenticationTest
   test "should not get new (not authenticated)" do
     sign_out :user
     get new_project_path
-    assert_redirected_to new_user_session_path
+    assert_redirected_to new_user_session_path(redirect_to: request.path)
   end
 
   test "should get edit" do
@@ -42,7 +42,7 @@ class ProjectsControllerTest < ControllerWithAuthenticationTest
   test "should not get edit (not authenticated)" do
     sign_out :user
     get edit_project_path(@project)
-    assert_redirected_to new_user_session_path
+    assert_redirected_to new_user_session_path(redirect_to: request.path)
   end
 
   test "should create project" do
@@ -64,7 +64,7 @@ class ProjectsControllerTest < ControllerWithAuthenticationTest
     assert_no_difference('Project.count') do
       post projects_path, params: { project: { description: 'My description', title: 'My Project' }}
     end
-    assert_redirected_to new_user_session_path
+    assert_redirected_to new_user_session_path(redirect_to: request.path)
   end
 
   test "should update project" do
@@ -114,7 +114,7 @@ class ProjectsControllerTest < ControllerWithAuthenticationTest
     put project_path(@project), params: { project: { title: "New title" }}
     @project.reload
     assert_equal project_original_title, @project.title
-    assert_redirected_to new_user_session_path
+    assert_redirected_to new_user_session_path(redirect_to: request.path)
   end
 
   test "should delete project" do
@@ -129,7 +129,7 @@ class ProjectsControllerTest < ControllerWithAuthenticationTest
     assert_no_difference 'Project.count' do
       delete project_path(@project)
     end
-    assert_redirected_to new_user_session_path
+    assert_redirected_to new_user_session_path(redirect_to: request.path)
   end
 
   test "should get zip file with all json schemas" do

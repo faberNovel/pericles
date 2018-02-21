@@ -16,7 +16,7 @@ class ResponsesControllerTest < ControllerWithAuthenticationTest
     sign_out :user
 
     get new_route_response_path(@route)
-    assert_redirected_to new_user_session_path
+    assert_redirected_to new_user_session_path(redirect_to: request.path)
   end
 
   test "should get edit" do
@@ -28,7 +28,7 @@ class ResponsesControllerTest < ControllerWithAuthenticationTest
     sign_out :user
 
     get edit_route_response_path(@route, @route_response)
-    assert_redirected_to new_user_session_path
+    assert_redirected_to new_user_session_path(redirect_to: request.path)
   end
 
   test "should create response" do
@@ -53,7 +53,7 @@ class ResponsesControllerTest < ControllerWithAuthenticationTest
     assert_no_difference('Response.count') do
       post route_responses_path(@route), params: { response: @route_response.attributes }
     end
-    assert_redirected_to new_user_session_path
+    assert_redirected_to new_user_session_path(redirect_to: request.path)
   end
 
   test "should update response" do
@@ -117,7 +117,7 @@ class ResponsesControllerTest < ControllerWithAuthenticationTest
       response: { status_code: 400 }
     }
 
-    assert_redirected_to new_user_session_path
+    assert_redirected_to new_user_session_path(redirect_to: request.path)
     assert_equal original_status_code, @route_response.reload.status_code
   end
 
@@ -134,7 +134,7 @@ class ResponsesControllerTest < ControllerWithAuthenticationTest
     assert_no_difference('Response.count') do
       delete route_response_path(@route, @route_response)
     end
-    assert_redirected_to new_user_session_path
+    assert_redirected_to new_user_session_path(redirect_to: request.path)
   end
 
   test 'non member external user should not access project responses' do
@@ -208,20 +208,20 @@ class ResponsesControllerTest < ControllerWithAuthenticationTest
     sign_out :user
 
     get new_route_response_path(@route)
-    assert_redirected_to new_user_session_path
+    assert_redirected_to new_user_session_path(redirect_to: request.path)
 
     get edit_route_response_path(@route, @route_response)
-    assert_redirected_to new_user_session_path
+    assert_redirected_to new_user_session_path(redirect_to: request.path)
 
     post route_responses_path(@route), params: { response: @route_response.attributes }
-    assert_redirected_to new_user_session_path
+    assert_redirected_to new_user_session_path(redirect_to: request.path)
 
     put route_response_path(@route, @route_response), params: {
       response: { status_code: 400 }
     }
-    assert_redirected_to new_user_session_path
+    assert_redirected_to new_user_session_path(redirect_to: request.path)
 
     delete route_response_path(@route, @route_response)
-    assert_redirected_to new_user_session_path
+    assert_redirected_to new_user_session_path(redirect_to: request.path)
   end
 end

@@ -64,19 +64,19 @@ class ApiErrorControllerTest < ControllerWithAuthenticationTest
   test 'unauthenticated user should not get index' do
     sign_out :user
     get project_api_errors_path(@project)
-    assert_redirected_to new_user_session_path
+    assert_redirected_to new_user_session_path(redirect_to: request.path)
   end
 
   test 'unauthenticated user should not get show' do
     sign_out :user
     get project_api_error_path(@project, @api_error)
-    assert_redirected_to new_user_session_path
+    assert_redirected_to new_user_session_path(redirect_to: request.path)
   end
 
   test 'unauthenticated user should not get edit' do
     sign_out :user
     get edit_project_api_error_path(@project, @api_error)
-    assert_redirected_to new_user_session_path
+    assert_redirected_to new_user_session_path(redirect_to: request.path)
   end
 
   test 'unauthenticated user should not update api_error' do
@@ -88,13 +88,13 @@ class ApiErrorControllerTest < ControllerWithAuthenticationTest
       }
     }
     assert_not_equal 'new name', @api_error.reload.name
-    assert_redirected_to new_user_session_path
+    assert_redirected_to new_user_session_path(redirect_to: request.path)
   end
 
   test 'unauthenticated user should not get new' do
     sign_out :user
     get new_project_api_error_path(@project)
-    assert_redirected_to new_user_session_path
+    assert_redirected_to new_user_session_path(redirect_to: request.path)
   end
 
   test 'unauthenticated user should not create new api_error' do
@@ -104,7 +104,7 @@ class ApiErrorControllerTest < ControllerWithAuthenticationTest
         api_error: build(:api_error).attributes
       }
     end
-    assert_redirected_to new_user_session_path
+    assert_redirected_to new_user_session_path(redirect_to: request.path)
   end
 
   test 'unauthenticated user should get index of public project' do
@@ -128,7 +128,7 @@ class ApiErrorControllerTest < ControllerWithAuthenticationTest
     @project.update(is_public: true)
 
     get edit_project_api_error_path(@project, @api_error)
-    assert_redirected_to new_user_session_path
+    assert_redirected_to new_user_session_path(redirect_to: request.path)
   end
 
   test 'unauthenticated user should not update api_error of public project' do
@@ -142,7 +142,7 @@ class ApiErrorControllerTest < ControllerWithAuthenticationTest
       }
     }
     assert_not_equal 'new name', @api_error.reload.name
-    assert_redirected_to new_user_session_path
+    assert_redirected_to new_user_session_path(redirect_to: request.path)
   end
 
   test 'unauthenticated user should not get new of public project' do
@@ -150,7 +150,7 @@ class ApiErrorControllerTest < ControllerWithAuthenticationTest
     @project.update(is_public: true)
 
     get new_project_api_error_path(@project)
-    assert_redirected_to new_user_session_path
+    assert_redirected_to new_user_session_path(redirect_to: request.path)
   end
 
   test 'unauthenticated user should not create new api_error of public project' do
@@ -162,7 +162,7 @@ class ApiErrorControllerTest < ControllerWithAuthenticationTest
         api_error: build(:api_error).attributes
       }
     end
-    assert_redirected_to new_user_session_path
+    assert_redirected_to new_user_session_path(redirect_to: request.path)
   end
 
   test 'non member external user should not get index' do
