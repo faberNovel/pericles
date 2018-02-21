@@ -1,9 +1,0 @@
-%a{class: "list-group-item", href: project_resource_path(project, resource)}
-  .flexcontainer.flexcontainer-space-between
-    .name
-      = '      ' * indentation + (indentation.zero? ? '' : '↳ ') + resource.name
-    = render partial: 'has_invalid_mocks?', locals: {resource: resource}
-
-- (resource.used_resources - rendered_resources).each do |sub_resource|
-  = render partial: 'leaf', locals: {resource: sub_resource, indentation: indentation + 1, rendered_resources: rendered_resources + [sub_resource]}
-
