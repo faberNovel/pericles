@@ -3,15 +3,22 @@ require 'test_helper'
 class ResourcesControllerTest < ControllerWithAuthenticationTest
   include AndroidCodeGenHelper
 
-  test "should get index with resources sorted in alphabetical order" do
+  test "should get index" do
     project = create(:project)
-    second_resource = create(:resource, name: "Second", project: project)
-    first_resource = create(:resource, name: "First", project: project)
+    create(:resource, name: "Second", project: project)
+    create(:resource, name: "First", project: project)
     get project_resources_path(project)
     assert_response :success
-    assert assigns[:resources]
-    assert_equal [first_resource, second_resource], assigns[:resources]
   end
+
+  test "should get index json" do
+    project = create(:project)
+    create(:resource, name: "Second", project: project)
+    create(:resource, name: "First", project: project)
+    get project_resources_path(project, format: 'json')
+    assert_response :success
+  end
+
 
   test "should not get index (not authenticated)" do
     sign_out :user

@@ -6,6 +6,7 @@ class ResourceRepresentation < ApplicationRecord
   has_many :resource_attributes, through: :attributes_resource_representations
   has_many :responses, inverse_of: :resource_representation
   has_many :resource_instances, through: :resource
+  has_many :request_routes, inverse_of: :request_resource_representation, foreign_key: 'request_resource_representation_id', class_name: 'Route'
 
   delegate :project, to: :resource
 
