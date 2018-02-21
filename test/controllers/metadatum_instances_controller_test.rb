@@ -123,22 +123,22 @@ class MetadatumInstancesControllerTest < ControllerWithAuthenticationTest
     sign_out :user
 
     get new_metadatum_metadatum_instance_path(@metadatum)
-    assert_redirected_to new_user_session_path
+    assert_redirected_to new_user_session_path(redirect_to: request.path)
 
     get edit_metadatum_instance_path(@metadatum_instance)
-    assert_redirected_to new_user_session_path
+    assert_redirected_to new_user_session_path(redirect_to: request.path)
 
     patch metadatum_instance_path(@metadatum_instance), params: {
       metadatum_instance: { name: 'new name' }
     }
-    assert_redirected_to new_user_session_path
+    assert_redirected_to new_user_session_path(redirect_to: request.path)
 
     post metadatum_metadatum_instances_path(@metadatum), params: {
       metadatum_instance: @metadatum_instance.attributes
     }
-    assert_redirected_to new_user_session_path
+    assert_redirected_to new_user_session_path(redirect_to: request.path)
 
     delete metadatum_instance_path(@metadatum_instance)
-    assert_redirected_to new_user_session_path
+    assert_redirected_to new_user_session_path(redirect_to: request.path)
   end
 end

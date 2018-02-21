@@ -1,5 +1,5 @@
 class ProjectsController < ApplicationController
-  layout 'full_width_column', only: [:show, :edit]
+  layout 'full_width_column', only: [:show, :edit, :update]
   lazy_controller_of :project
   decorates_method :project
 
@@ -33,6 +33,7 @@ class ProjectsController < ApplicationController
   end
 
   def edit
+    project.build_proxy_configuration unless project.proxy_configuration
   end
 
   def create
@@ -45,7 +46,11 @@ class ProjectsController < ApplicationController
   end
 
   def update
-    if project.update(permitted_attributes(project))
+    params = permitted_attributes(project)
+
+    set_proxy_to_be_destroyed_if_blank(params)
+
+    if project.update(params)
       redirect_to project
     else
       render 'edit', status: :unprocessable_entity
@@ -56,5 +61,16 @@ class ProjectsController < ApplicationController
     project.destroy
 
     redirect_to projects_path
+  end
+
+  private
+
+  def set_proxy_to_be_destroyed_if_blank(params)
+    if params.dig(:proxy_configuration_attributes, :target_base_url).blank?
+      params[:proxy_configuration_attributes] = {
+        id: project.proxy_configuration&.id,
+        _destroy: true
+      }
+    end
   end
 end

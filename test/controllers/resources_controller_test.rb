@@ -3,21 +3,28 @@ require 'test_helper'
 class ResourcesControllerTest < ControllerWithAuthenticationTest
   include AndroidCodeGenHelper
 
-  test "should get index with resources sorted in alphabetical order" do
+  test "should get index" do
     project = create(:project)
-    second_resource = create(:resource, name: "Second", project: project)
-    first_resource = create(:resource, name: "First", project: project)
+    create(:resource, name: "Second", project: project)
+    create(:resource, name: "First", project: project)
     get project_resources_path(project)
     assert_response :success
-    assert assigns[:resources]
-    assert_equal [first_resource, second_resource], assigns[:resources]
   end
+
+  test "should get index json" do
+    project = create(:project)
+    create(:resource, name: "Second", project: project)
+    create(:resource, name: "First", project: project)
+    get project_resources_path(project, format: 'json')
+    assert_response :success
+  end
+
 
   test "should not get index (not authenticated)" do
     sign_out :user
     project = create(:project)
     get project_resources_path(project)
-    assert_redirected_to new_user_session_path
+    assert_redirected_to new_user_session_path(redirect_to: request.path)
   end
 
   test "should show resource" do
@@ -30,7 +37,7 @@ class ResourcesControllerTest < ControllerWithAuthenticationTest
     sign_out :user
     resource = create(:resource_with_attributes)
     get project_resource_path(resource.project, resource)
-    assert_redirected_to new_user_session_path
+    assert_redirected_to new_user_session_path(redirect_to: request.path)
   end
 
   test "should get new" do
@@ -43,7 +50,7 @@ class ResourcesControllerTest < ControllerWithAuthenticationTest
     sign_out :user
     project = create(:project)
     get new_project_resource_path(project)
-    assert_redirected_to new_user_session_path
+    assert_redirected_to new_user_session_path(redirect_to: request.path)
   end
 
   test "should get edit" do
@@ -56,7 +63,7 @@ class ResourcesControllerTest < ControllerWithAuthenticationTest
     sign_out :user
     resource = create(:resource)
     get edit_project_resource_path(resource.project, resource)
-    assert_redirected_to new_user_session_path
+    assert_redirected_to new_user_session_path(redirect_to: request.path)
   end
 
   test "should create resource" do
@@ -84,7 +91,7 @@ class ResourcesControllerTest < ControllerWithAuthenticationTest
     assert_no_difference('Resource.count') do
       post project_resources_path(resource.project), params: { resource: resource.attributes }
     end
-    assert_redirected_to new_user_session_path
+    assert_redirected_to new_user_session_path(redirect_to: request.path)
   end
 
   test "should update resource" do
@@ -111,7 +118,7 @@ class ResourcesControllerTest < ControllerWithAuthenticationTest
     put project_resource_path(resource.project, resource), params: { resource: { name: "New name" } }
     resource.reload
     assert_equal resource_original_name, resource.name
-    assert_redirected_to new_user_session_path
+    assert_redirected_to new_user_session_path(redirect_to: request.path)
   end
 
   test "should delete resource" do
@@ -140,7 +147,7 @@ class ResourcesControllerTest < ControllerWithAuthenticationTest
     assert_no_difference 'Resource.count' do
       delete project_resource_path(project, resource)
     end
-    assert_redirected_to new_user_session_path
+    assert_redirected_to new_user_session_path(redirect_to: request.path)
   end
 
 
@@ -326,21 +333,21 @@ class ResourcesControllerTest < ControllerWithAuthenticationTest
     assert_response :success
 
     get new_project_resource_path(project)
-    assert_redirected_to new_user_session_path
+    assert_redirected_to new_user_session_path(redirect_to: request.path)
 
     post project_resources_path(resource.project), params: { resource: build(:resource).attributes }
-    assert_redirected_to new_user_session_path
+    assert_redirected_to new_user_session_path(redirect_to: request.path)
 
     get project_resource_path(project, resource)
     assert_response :success
 
     get edit_project_resource_path(project, resource)
-    assert_redirected_to new_user_session_path
+    assert_redirected_to new_user_session_path(redirect_to: request.path)
 
     put project_resource_path(resource.project, resource), params: { resource: { name: "New name" } }
-    assert_redirected_to new_user_session_path
+    assert_redirected_to new_user_session_path(redirect_to: request.path)
 
     delete project_resource_path(project, resource)
-    assert_redirected_to new_user_session_path
+    assert_redirected_to new_user_session_path(redirect_to: request.path)
   end
 end

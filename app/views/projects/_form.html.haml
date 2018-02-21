@@ -10,10 +10,11 @@
         URL Mocks
       %input.form-control{type: 'text', value: project_mocks_root_url(project), disabled: 'true'}
 
-  = f.text_field :proxy_url
-
   - project.description ||= t('.description_default')
   = f.text_area :description
+
+  = f.fields_for :proxy_configuration do |fields|
+    = render 'proxy_configuration_fields', :f => fields
 
   %p
     = f.submit

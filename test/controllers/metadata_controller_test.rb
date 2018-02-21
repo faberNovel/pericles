@@ -140,48 +140,48 @@ class MetadataControllerTest < ControllerWithAuthenticationTest
     assert_response :success
 
     get new_project_metadatum_path(@project)
-    assert_redirected_to new_user_session_path
+    assert_redirected_to new_user_session_path(redirect_to: request.path)
 
     post project_metadata_path(@project), params: {
       metadatum: build(:metadatum).attributes
     }
-    assert_redirected_to new_user_session_path
+    assert_redirected_to new_user_session_path(redirect_to: request.path)
 
     get edit_metadatum_path(@metadatum)
-    assert_redirected_to new_user_session_path
+    assert_redirected_to new_user_session_path(redirect_to: request.path)
 
     put metadatum_path(@metadatum), params: {
       metadatum: { name: 'New name' }
     }
-    assert_redirected_to new_user_session_path
+    assert_redirected_to new_user_session_path(redirect_to: request.path)
 
     delete metadatum_path(@metadatum)
-    assert_redirected_to new_user_session_path
+    assert_redirected_to new_user_session_path(redirect_to: request.path)
   end
 
   test "unauthenticated user should not access non-public project metadata" do
     sign_out :user
 
     get project_metadata_path(@project)
-    assert_redirected_to new_user_session_path
+    assert_redirected_to new_user_session_path(redirect_to: request.path)
 
     get new_project_metadatum_path(@project)
-    assert_redirected_to new_user_session_path
+    assert_redirected_to new_user_session_path(redirect_to: request.path)
 
     post project_metadata_path(@project), params: {
       metadatum: build(:metadatum).attributes
     }
-    assert_redirected_to new_user_session_path
+    assert_redirected_to new_user_session_path(redirect_to: request.path)
 
     get edit_metadatum_path(@metadatum)
-    assert_redirected_to new_user_session_path
+    assert_redirected_to new_user_session_path(redirect_to: request.path)
 
     put metadatum_path(@metadatum), params: {
       metadatum: { name: 'New name' }
     }
-    assert_redirected_to new_user_session_path
+    assert_redirected_to new_user_session_path(redirect_to: request.path)
 
     delete metadatum_path(@metadatum)
-    assert_redirected_to new_user_session_path
+    assert_redirected_to new_user_session_path(redirect_to: request.path)
   end
 end

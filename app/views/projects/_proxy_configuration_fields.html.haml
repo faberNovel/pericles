@@ -1,0 +1,8 @@
+%h3 Proxy
+.fields.nested-fields
+  = f.text_field :target_base_url, placeholder: 'https://api-develop.herokuapp.com'
+  = f.text_field :proxy_hostname, placeholder: 'example.com'
+  = f.number_field :proxy_port, placeholder: 8080
+  = f.text_field :proxy_username, placeholder: 'username'
+  = f.text_field :proxy_password, placeholder: 'password'
+  = f.check_box :ignore_ssl

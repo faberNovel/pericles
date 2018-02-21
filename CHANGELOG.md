@@ -2,6 +2,13 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.5.2 - 2018-02-21
+
+* Add an option for the proxy to use an http proxy (like Squid)
+* Use cache first strategy for resources page
+* Add search by name in resources page
+* Add an unused section in resources page
+
 ## 0.5.1 - 2018-02-14
 
 * Fix mock profile page
