@@ -33,6 +33,12 @@ class ResourcesControllerTest < ControllerWithAuthenticationTest
     assert_response :success
   end
 
+  test "should get resource json" do
+    resource = create(:resource_with_attributes)
+    get project_resource_path(resource.project, resource, format: :json)
+    assert_response :success
+  end
+
   test "should not show resource (not authenticated)" do
     sign_out :user
     resource = create(:resource_with_attributes)
