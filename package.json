@@ -25,6 +25,7 @@
     "core-js": "^2.5.3",
     "json-schema-faker": "git+https://github.com/MrChoclate/json-schema-faker.git#f2c1740c551230847c6bad1cedca5ad3533e5e08",
     "pug": "^2.0.0-rc.4",
+    "underscore": "^1.8.3",
     "vue": "^2.5.13",
     "vue-loader": "^13.7.0",
     "vue-select": "^2.4.0",

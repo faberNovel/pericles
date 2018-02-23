@@ -151,8 +151,8 @@ ActiveRecord::Schema.define(version: 20180219094508) do
   end
 
   create_table "metadatum_instances_mock_pickers", id: false, force: :cascade do |t|
-    t.integer "metadatum_instance_id", null: false
-    t.integer "mock_picker_id", null: false
+    t.bigint "metadatum_instance_id", null: false
+    t.bigint "mock_picker_id", null: false
   end
 
   create_table "mock_pickers", id: :serial, force: :cascade do |t|

@@ -44,11 +44,31 @@ export default {
     },
     highlightedName: function() {
       let name = this.resource.name;
-      if (this.query && this.query.length > 0) {
-        let reg = new RegExp('(' + this.query + ')', 'gi');
-        name = this.resource.name.replace(reg, '<b>$1</b>');
+
+      if (!this.query || this.query.length === 0) {
+        return name;
       }
-      return name;
+
+      let permissiveQuery = Store.permissiveQuery(this.query);
+      let reg = new RegExp(permissiveQuery, 'gi');
+      let result = reg.exec(this.resource.name);
+
+      if (!result) {
+        return name;
+      }
+
+      let newName = '';
+      let foundIndice = 1;
+      name.split('').forEach((char) => {
+        if (foundIndice < result.length && result[foundIndice] == char) {
+          foundIndice += 1;
+          newName += '<b>'+ char + '</b>';
+        } else {
+          newName += char
+        }
+      });
+
+      return newName;
     }
   },
   name: 'ps-resource'
