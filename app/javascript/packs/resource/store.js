@@ -1,3 +1,6 @@
+import HttpClient from '../http/client.js';
+
+
 export default {
   state: {
     resource: {
@@ -12,14 +15,15 @@ export default {
     newRepresentationName: '',
     representationsToDelete: new Set(),
     sortMode: localStorage.getItem('sortMode'),
-    searchQuery: ''
+    searchQuery: '',
+    projectId: document.location.pathname.split('/')[2],
+    resourceId: document.location.pathname.split('/')[4],
   },
+  client: new HttpClient(),
   fetchResource: function() {
-    return $.ajax({
-      type: "GET",
-      url: document.location.pathname + '.json',
-      contentType: "application/json",
-    }).then((data) => {
+    return this.client.fetchResource(
+      this.state.projectId, this.state.resourceId
+    ).then((data) => {
       let viewModel = this.mapDataToViewModel(data);
       Object.assign(this.state.originalResource, JSON.parse(JSON.stringify(viewModel)));
       Object.assign(this.state.resource, viewModel);
@@ -201,13 +205,7 @@ export default {
         })
       });
 
-      return $.ajax({
-        type: "PUT",
-        url: "/resources/" + resource.id + "/resource_representations/" + id,
-        data: JSON.stringify({resource_representation: data}),
-        contentType: "application/json",
-        dataType: "json"
-      });
+      return this.client.updateResourceRepresentation(resource.id, id, data);
     });
 
     promises.concat([...this.state.representationsToDelete].map(
@@ -247,13 +245,9 @@ export default {
   },
   createNewRepresentation: function() {
     let resource = this.state.resource;
-    return $.ajax({
-      type: "POST",
-      url: "/resources/" + resource.id + "/resource_representations",
-      contentType: "application/json",
-      data: JSON.stringify({resource_representation: {name: this.state.newRepresentationName}}),
-      dataType: "json"
-    }).then((data) => {
+    return this.client.createNewRepresentation(
+      resource.id, this.state.newRepresentationName
+    ).then((data) => {
       this.state.newRepresentationName = null;
       this.fetchResource();
     });
@@ -275,11 +269,7 @@ export default {
   },
   deleteRepresentation: function(id) {
     let resource = this.state.resource;
-    return $.ajax({
-      type: "DELETE",
-      url: "/resources/" + resource.id + "/resource_representations/" + id,
-      contentType: "application/json",
-    });
+    return this.client.deleteRepresentation(resource.id, id);
   },
   setDefaultActiveRepresentation: function() {
     let hash = document.location.hash;
@@ -346,11 +336,9 @@ export default {
   },
   clone: function(representationId) {
     let resource = this.state.resource;
-    return $.ajax({
-      type: "POST",
-      url: "/resources/" + resource.id + "/resource_representations/" + representationId + '/clone',
-      contentType: "application/json",
-    }).then((data) => {
+    return this.client.cloneRepresentation(
+      resource.id, representationId
+    ).then((data) => {
       this.fetchResource();
     });
   }

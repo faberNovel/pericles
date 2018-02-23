@@ -1,3 +1,5 @@
+import HttpClient from '../http/client.js';
+
 export default {
   state: {
     displayedResources: [],
@@ -7,17 +9,14 @@ export default {
     treeMode: localStorage.getItem('treeMode') == 'tree',
     query: ''
   },
+  client: new HttpClient(),
   init: function() {
     this.state.resources = JSON.parse(localStorage.getItem(this.state.projectId + '/resources') || '[]');
     this.onResourcesChange();
     this.fetchResources().then(() => this.onResourcesChange());
   },
   fetchResources: function() {
-    return $.ajax({
-      type: "GET",
-      url: '/projects/' + this.state.projectId + '/resources.json',
-      contentType: "application/json",
-    }).then((data) => {
+    return this.client.fetchResources(this.state.projectId).then((data) => {
       this.state.resources = this.mapDataToViewModel(data);
       localStorage.setItem(this.state.projectId + '/resources', JSON.stringify(this.state.resources));
     });
