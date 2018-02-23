@@ -26,7 +26,7 @@ class ApplicationController < ActionController::Base
   def after_sign_in_path_for(resource)
     origin = request.env['omniauth.origin']
     if origin
-      query = CGI.unescape(URI.parse(origin).query)
+      query = CGI.unescape(URI.parse(origin).query || '')
       path = CGI::parse(query)['redirect_to']&.first
     end
 
