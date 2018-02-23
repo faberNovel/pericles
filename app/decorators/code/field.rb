@@ -27,15 +27,6 @@ module Code
       type
     end
 
-    def swift_deserialize_code
-      json_value = "json[\"#{key_name}\"]"
-      if is_array
-        "#{json_value}.arrayValue.flatMap { #{base_swift_deserialize('$0')} }"
-      else
-        base_swift_deserialize(json_value)
-      end
-    end
-
     def base_kotlin_type
       case primitive_type&.to_sym
       when :number
@@ -76,23 +67,6 @@ module Code
       when nil
         resource.rest_name
       end
-    end
-
-    def base_swift_deserialize(var)
-      return "#{resource.rest_name}(json: #{var})" if primitive_type.nil?
-      return "#{var}.string.flatMap { DateFormatter.iso8601DateShortDateFormatter.date(from: $0) }" if date?
-      return "#{var}.string.flatMap { DateFormatter.iso8601DateFullDateFormatter.date(from: $0) }" if datetime?
-
-      case primitive_type&.to_sym
-      when :number
-        "#{var}.double"
-      when :integer
-        "#{var}.int"
-      when :boolean
-        "#{var}.bool"
-      when :string
-        "#{var}.string"
-      end + (code_nullable ? 'Value' : '')
     end
   end
 end
