@@ -3,27 +3,28 @@ require 'test_helper'
 class ResourcesControllerTest < ControllerWithAuthenticationTest
   include AndroidCodeGenHelper
 
+  setup do
+    @project = create(:project)
+  end
+
   test "should get index" do
-    project = create(:project)
-    create(:resource, name: "Second", project: project)
-    create(:resource, name: "First", project: project)
-    get project_resources_path(project)
+    create(:resource, name: "Second", project: @project)
+    create(:resource, name: "First", project: @project)
+    get project_resources_path(@project)
     assert_response :success
   end
 
   test "should get index json" do
-    project = create(:project)
-    create(:resource, name: "Second", project: project)
-    create(:resource, name: "First", project: project)
-    get project_resources_path(project, format: 'json')
+    create(:resource, name: "Second", project: @project)
+    create(:resource, name: "First", project: @project)
+    get project_resources_path(@project, format: 'json')
     assert_response :success
   end
 
 
   test "should not get index (not authenticated)" do
     sign_out :user
-    project = create(:project)
-    get project_resources_path(project)
+    get project_resources_path(@project)
     assert_redirected_to new_user_session_path(redirect_to: request.path)
   end
 
@@ -34,7 +35,7 @@ class ResourcesControllerTest < ControllerWithAuthenticationTest
   end
 
   test "should get resource json" do
-    resource = create(:resource_with_attributes)
+    resource = create(:pokemon)
     get project_resource_path(resource.project, resource, format: :json)
     assert_response :success
   end
@@ -47,15 +48,13 @@ class ResourcesControllerTest < ControllerWithAuthenticationTest
   end
 
   test "should get new" do
-    project = create(:project)
-    get new_project_resource_path(project)
+    get new_project_resource_path(@project)
     assert_response :success
   end
 
   test "should not get new (not authenticated)" do
     sign_out :user
-    project = create(:project)
-    get new_project_resource_path(project)
+    get new_project_resource_path(@project)
     assert_redirected_to new_user_session_path(redirect_to: request.path)
   end
 
@@ -80,6 +79,33 @@ class ResourcesControllerTest < ControllerWithAuthenticationTest
     resource = assigns[:resource]
     assert_not_nil resource, "should create resource"
     assert_redirected_to project_resource_path(resource.project, resource)
+  end
+
+  test "should create resource from json" do
+    assert_difference('Resource.count') do
+      post project_resources_path(@project), params: {
+        resource: {name: 'Resource name'}, json_instance: '{"id": 1}'
+      }
+    end
+    assert_redirected_to project_resource_path(@project, @project.resources.order(:created_at).last)
+  end
+
+  test "should create resource from invalid json" do
+    assert_no_difference('Resource.count') do
+      post project_resources_path(@project), params: {
+        resource: {name: 'Resource name'}, json_instance: '{invalid}'
+      }
+    end
+    assert_response :unprocessable_entity
+  end
+
+  test "should create resource from json that is not an object" do
+    assert_no_difference('Resource.count') do
+      post project_resources_path(@project), params: {
+        resource: {name: 'Resource name'}, json_instance: '"valid json as string"'
+      }
+    end
+    assert_response :unprocessable_entity
   end
 
   test "should not create resource without a name" do
@@ -115,6 +141,45 @@ class ResourcesControllerTest < ControllerWithAuthenticationTest
     assert_response :unprocessable_entity
     resource.reload
     assert_equal name, resource.name
+  end
+
+  test "should update resource attributes using type to reference another resource" do
+    resource = create(:resource_with_attributes)
+    referenced_resource = create(:resource)
+    a = resource.resource_attributes.first
+    a.update(primitive_type: :integer)
+    assert_not_equal a.reload.resource_id, referenced_resource.id
+
+    put project_resource_path(resource.project, resource), params: {
+      resource: {
+        resource_attributes_attributes: {
+          0 => {
+            id: a.id,
+            type: referenced_resource.id
+          }
+        }
+      }
+    }
+    assert_equal a.reload.resource_id, referenced_resource.id
+  end
+
+  test "should update resource attributes using type as primitive_type" do
+    resource = create(:resource_with_attributes)
+    a = resource.resource_attributes.first
+    a.update(primitive_type: :string)
+    assert_not a.reload.integer?
+
+    put project_resource_path(resource.project, resource), params: {
+      resource: {
+        resource_attributes_attributes: {
+          0 => {
+            id: a.id,
+            type: 'integer'
+          }
+        }
+      }
+    }
+    assert a.reload.integer?
   end
 
   test "should not update resource (not authenticated)" do

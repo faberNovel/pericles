@@ -31,6 +31,13 @@ class ApiErrorControllerTest < ControllerWithAuthenticationTest
     assert_equal JSON.parse(response.body)['required'], ['root_key']
   end
 
+  test 'should destroy api_error' do
+    assert_difference 'ApiError.count', -1 do
+      delete project_api_error_path(@project, @api_error)
+    end
+    assert_redirected_to project_api_errors_path(@project)
+  end
+
   test 'should get edit' do
     get edit_project_api_error_path(@project, @api_error)
     assert_response :success
@@ -47,6 +54,15 @@ class ApiErrorControllerTest < ControllerWithAuthenticationTest
     assert_redirected_to project_api_error_path(@project, @api_error)
   end
 
+  test 'should not update api_error if name is blank' do
+    put project_api_error_path(@project, @api_error), params: {
+      api_error: {
+        name: ''
+      }
+    }
+    assert_response :unprocessable_entity
+  end
+
   test 'should get new' do
     get new_project_api_error_path(@project)
     assert_response :success
@@ -59,6 +75,15 @@ class ApiErrorControllerTest < ControllerWithAuthenticationTest
       }
     end
     assert_redirected_to project_api_error_path(@project, ApiError.order(:created_at).last)
+  end
+
+  test 'should not create new api_error if name is blank' do
+    assert_no_difference 'ApiError.where(project: @project).count' do
+      post project_api_errors_path(@project), params: {
+        api_error: build(:api_error).attributes.merge(name: '')
+      }
+    end
+    assert_response :unprocessable_entity
   end
 
   test 'unauthenticated user should not get index' do
