@@ -8,13 +8,13 @@
       .tool-tip(data-toggle='tooltip'
         data-placement='top'
         :title='attribute.name'
-      ) {{activeAttributeRepresentation.customKeyName}}
-    .cell(v-else) {{attribute.name}}
+      ) {{displayedName}}
+    .cell(v-else) {{displayedName}}
     .cell.type(v-if='manageMode && attribute.resourceId && activeRepresentation')
       v-select(v-model='selected', :options='attribute.availableRepresentations', label='name')
     .cell.type(v-else-if='attribute.resourceId')
-      a(:href='resourcePath(attribute.resourceId)') {{attribute.displayedType}}
-    .cell.type(v-else) {{attribute.displayedType}}
+      a(:href='resourcePath(attribute.resourceId)') {{displayedType}}
+    .cell.type(v-else) {{displayedType}}
     .cell {{attribute.nullable}}
     .cell.circles
       .circle(v-for='r in attribute.representations'
@@ -136,6 +136,29 @@ export default {
         return null;
       }
       return this.attribute.representations.find((r) => r.id === this.activeRepresentation.id);
+    },
+    displayedType: function() {
+      let rep = this.activeAttributeRepresentation;
+
+      if (rep && rep.isNull) {
+        return 'null';
+      } else {
+        return this.attribute.displayedType;
+      }
+    },
+    displayedName: function() {
+      let rep = this.activeAttributeRepresentation;
+      let name = this.attribute.name;
+
+      if (rep && rep.customKeyName) {
+        name = rep.customKeyName;
+      }
+
+      if (rep && !rep.isRequired) {
+        name += ' (optional)'
+      }
+
+      return name;
     }
   },
   components: {'v-select': vSelect}
