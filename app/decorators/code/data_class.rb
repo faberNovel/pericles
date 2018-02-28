@@ -25,13 +25,5 @@ module Code
     def should_import_java_list
       resource_attributes.any?(&:is_array)
     end
-
-    def nullable_attributes
-      @nullable_attributes ||= resource_attributes.select(&:code_nullable)
-    end
-
-    def mandatory_attributes
-      @mandatory_attributes ||= resource_attributes.reject(&:code_nullable)
-    end
   end
 end
