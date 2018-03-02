@@ -33,12 +33,7 @@ class Response < ApplicationRecord
     # TODO Clément Villain 21/11/17:
     # refactor json schema to use a JSONSchema objet with at least .to_h and .to_json
     # (We could also add .validate(json) and .json_instance)
-    JSONSchemaBuilder.new(
-      resource_representation || api_error,
-      is_collection: is_collection,
-      root_key: root_key,
-      metadata: metadata,
-    ).execute
+    JSONSchema::ResponseDecorator.new(self).json_schema
   end
 
   def can_have_api_error

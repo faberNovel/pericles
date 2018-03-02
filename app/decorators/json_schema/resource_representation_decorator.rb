@@ -8,23 +8,29 @@ module JSONSchema
 
     def json_schema_without_definitions
       Rails.cache.fetch("#{cache_key}/json_schema_without_definitions", force: !object.persisted?) do
-        schema = {
-          title: title,
-          type: 'object',
-          properties: properties,
-          additionalProperties: false,
-        }
-        schema[:description] = description unless description.blank?
-        schema[:required] = required unless required.empty?
-
-        schema
+        build_json_schema_without_definitions
       end.clone
+    end
+
+    def build_json_schema_without_definitions
+      schema = {
+        title: title,
+        type: 'object',
+        properties: properties,
+        additionalProperties: false,
+      }
+      schema[:description] = description unless description.blank?
+      schema[:required] = required unless required.empty?
+
+      schema
     end
 
     def properties
       properties_hash = {}
       attributes_resource_representations.each do |association|
-        association = JSONSchema::AttributesResourceRepresentationDecorator.new(association)
+        association = JSONSchema::AttributesResourceRepresentationDecorator.new(
+          association, context: context
+        )
         properties_hash[association.key_name] = association.property
       end
       properties_hash
@@ -39,7 +45,11 @@ module JSONSchema
     end
 
     def ref
-      "#/definitions/#{uid}"
+      "#{base_href}#{uid}"
+    end
+
+    def base_href
+      context[:base_href] || "#/definitions/"
     end
 
     def uid
@@ -68,6 +78,7 @@ module JSONSchema
         md5.update(association.resource_attribute.cache_key)
         md5.update(association.cache_key)
       end
+      md5.update(context.to_s)
       md5.hexdigest
     end
 
@@ -79,7 +90,9 @@ module JSONSchema
         representation = queue.pop
         next if visited.include? representation
 
-        visited << JSONSchema::ResourceRepresentationDecorator.new(representation)
+        visited << JSONSchema::ResourceRepresentationDecorator.new(
+          representation, context: context
+        )
         queue += next_representation_dependencies(representation)
       end
 

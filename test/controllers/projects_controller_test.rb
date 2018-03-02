@@ -17,6 +17,11 @@ class ProjectsControllerTest < ControllerWithAuthenticationTest
     assert_response :success
   end
 
+  test "should get swagger format of project" do
+    get project_path(create(:full_project), format: :swagger)
+    assert_response :success
+  end
+
   test "should not show project (not authenticated)" do
     sign_out :user
     get project_path(@project)
