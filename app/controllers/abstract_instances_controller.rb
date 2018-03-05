@@ -1,8 +1,6 @@
 class AbstractInstancesController < ApplicationController
   include ProjectRelated
 
-  layout 'full_width_column'
-
   def model_name
     raise 'Implement me!'
   end
@@ -14,7 +12,7 @@ class AbstractInstancesController < ApplicationController
     if model_instance.save
       redirect_to_model
     else
-      render 'new', layout: 'full_width_column', status: :unprocessable_entity
+      render 'new', status: :unprocessable_entity
     end
   end
 
@@ -25,7 +23,7 @@ class AbstractInstancesController < ApplicationController
     if model_instance.update(model_instance_params)
       redirect_to_model
     else
-      render 'edit', layout: 'full_width_column', status: :unprocessable_entity
+      render 'edit', status: :unprocessable_entity
     end
   end
 

@@ -27,12 +27,12 @@ class ResourceRepresentationsController < ApplicationController
 
   def new
     build_missing_attributes_resource_representations
-    render layout: 'generic'
+    render
   end
 
   def edit
     build_missing_attributes_resource_representations
-    render layout: 'generic'
+    render
   end
 
   def create
@@ -40,7 +40,7 @@ class ResourceRepresentationsController < ApplicationController
       redirect_to project_resource_path(project, resource)
     else
       build_missing_attributes_resource_representations
-      render 'new', layout: 'generic', status: :unprocessable_entity
+      render 'new', status: :unprocessable_entity
     end
   end
 
@@ -54,7 +54,7 @@ class ResourceRepresentationsController < ApplicationController
       respond_to do |format|
         format.html do
           build_missing_attributes_resource_representations
-          render 'edit', layout: 'generic', status: :unprocessable_entity
+          render 'edit', status: :unprocessable_entity
         end
         format.json { render json: resource_representation.errors }
       end

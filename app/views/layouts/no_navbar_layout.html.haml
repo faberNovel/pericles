@@ -1,0 +1,9 @@
+!!!
+%html
+  %head
+    = render partial: 'shared/head'
+  %body
+    .container#main-container
+      = render 'shared/alert'
+      = yield
+    = yield :page_scripts

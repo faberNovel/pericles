@@ -1,10 +1,10 @@
 class ProjectsController < ApplicationController
-  layout 'full_width_column', only: [:show, :edit, :update]
   lazy_controller_of :project
   decorates_method :project
 
   def index
     @projects = policy_scope(Project).all.order("lower(title)")
+    render layout: 'no_navbar_layout'
   end
 
   def show

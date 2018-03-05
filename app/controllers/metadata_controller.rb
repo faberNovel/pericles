@@ -1,6 +1,5 @@
 class MetadataController < ApplicationController
   include ProjectRelated
-  layout 'full_width_column'
 
   lazy_controller_of :metadatum, belongs_to: :project, helper_method: true
 

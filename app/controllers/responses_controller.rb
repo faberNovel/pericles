@@ -1,8 +1,6 @@
 class ResponsesController < ApplicationController
   include ProjectRelated
 
-  layout 'generic'
-
   # Avoid ApplicationController.response collision
   lazy_controller_of :route_response,
     class_name: 'Response', helper_method: true, belongs_to: :route

@@ -1,6 +1,6 @@
 class ResourcesController < ApplicationController
   include ProjectRelated
-  layout 'full_width_column'
+
   lazy_controller_of :resource, belongs_to: :project
   decorates_method :resource
 

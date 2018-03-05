@@ -1,7 +1,6 @@
 class MockProfilesController < MocksController
   include ProjectRelated
 
-  layout 'full_width_column'
   lazy_controller_of :mock_profile, helper_method: true, belongs_to: :project
 
   def show
@@ -27,7 +26,7 @@ class MockProfilesController < MocksController
     if mock_profile.save
       redirect_to_mock_profile
     else
-      render 'new', layout: 'full_width_column', status: :unprocessable_entity
+      render 'new', status: :unprocessable_entity
     end
   end
 
@@ -38,7 +37,7 @@ class MockProfilesController < MocksController
     if mock_profile.update(permitted_attributes(mock_profile))
       redirect_to_mock_profile
     else
-      render 'edit', layout: 'full_width_column', status: :unprocessable_entity
+      render 'edit', status: :unprocessable_entity
     end
   end
 

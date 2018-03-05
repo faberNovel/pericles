@@ -8,23 +8,18 @@ class RoutesController < ApplicationController
     @routes_by_resource = policy_scope(project.routes).includes(:resource, :resource_representations, :responses)
       .group_by(&:resource)
     @resources = @routes_by_resource.keys.sort_by {|r| r.name.downcase}
-    render layout: 'full_width_column'
   end
 
   def show
-    render layout: 'generic'
   end
 
   def new
     if project.resources.empty?
       redirect_to project_resources_path(project), alert: t('.resource_required')
-    else
-      render layout: 'generic'
     end
   end
 
   def edit
-    render layout: 'generic'
   end
 
   def create
@@ -33,7 +28,7 @@ class RoutesController < ApplicationController
     if route.save
       redirect_to project_route_path(project, route)
     else
-      render 'new', layout: 'full_width_column', status: :unprocessable_entity
+      render 'new', status: :unprocessable_entity
     end
   end
 
@@ -41,7 +36,7 @@ class RoutesController < ApplicationController
     if route.update(permitted_attributes(route))
       redirect_to project_route_path(project, route)
     else
-      render 'edit', layout: 'full_width_column', status: :unprocessable_entity
+      render 'edit', status: :unprocessable_entity
     end
   end
 
