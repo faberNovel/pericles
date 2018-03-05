@@ -1,3 +1,5 @@
+import HttpClient from '../http/client.js';
+
 export default {
   state: {
     displayedResources: [],
@@ -7,17 +9,14 @@ export default {
     treeMode: localStorage.getItem('treeMode') == 'tree',
     query: ''
   },
+  client: new HttpClient(),
   init: function() {
     this.state.resources = JSON.parse(localStorage.getItem(this.state.projectId + '/resources') || '[]');
     this.onResourcesChange();
     this.fetchResources().then(() => this.onResourcesChange());
   },
   fetchResources: function() {
-    return $.ajax({
-      type: "GET",
-      url: '/projects/' + this.state.projectId + '/resources.json',
-      contentType: "application/json",
-    }).then((data) => {
+    return this.client.fetchResources(this.state.projectId).then((data) => {
       this.state.resources = this.mapDataToViewModel(data);
       localStorage.setItem(this.state.projectId + '/resources', JSON.stringify(this.state.resources));
     });
@@ -81,8 +80,16 @@ export default {
   onQueryChange: function() {
     this.applyFilter();
   },
+  permissiveQuery: function(query) {
+    return query.split('').map((char) => '(' + char.toLowerCase() + ').*').join('');
+  },
+  isResourceMatchingQuery: function(resource, query) {
+    let permissiveQuery = this.permissiveQuery(query);
+    let re = new RegExp(permissiveQuery);
+    return re.test(resource.name.toLowerCase());
+  },
   applyFilter: function() {
-    let q = this.state.query.toLowerCase();
+    let q = this.state.query;
     let resources = this.state.resources.filter(
       (r) => r.requestRouteIds.length > 0 || r.responseIds.length > 0
     );
@@ -91,11 +98,11 @@ export default {
     } else {
       this.state.displayedResources = resources.filter(
         (r) => {
-          let resourceFound = r.name.toLowerCase().indexOf(q) !== -1
+          let isResourceFound = this.isResourceMatchingQuery(r, q);
           let someChildrenFound = this.flatChildren(r).some(
-            (child) => child.name.toLowerCase().indexOf(q) !== -1
+            (child) => this.isResourceMatchingQuery(child, q)
           )
-          return resourceFound || (this.state.treeMode && someChildrenFound);
+          return isResourceFound || (this.state.treeMode && someChildrenFound);
         }
       );
     }

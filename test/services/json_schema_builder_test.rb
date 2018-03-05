@@ -95,7 +95,7 @@ class JSONSchemaBuilderTest < ActiveSupport::TestCase
 
   test 'attribute date type is string' do
     schema = schema_with_one_attribute('keyname', :date)
-    assert_equal :string, schema[:properties][:keyname][:type]
+    assert_equal 'string', schema[:properties][:keyname][:type]
   end
 
   test 'attribute date format is date' do
@@ -105,7 +105,7 @@ class JSONSchemaBuilderTest < ActiveSupport::TestCase
 
   test 'attribute datetime type is string' do
     schema = schema_with_one_attribute('keyname', :datetime)
-    assert_equal :string, schema[:properties][:keyname][:type]
+    assert_equal 'string', schema[:properties][:keyname][:type]
   end
 
   test 'attribute datetime format is datetime' do

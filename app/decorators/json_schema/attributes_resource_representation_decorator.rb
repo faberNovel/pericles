@@ -9,10 +9,18 @@ module JSONSchema
 
       is_nullable = resource_attribute.nullable
       if is_nullable
-        { oneOf: [non_nullable_property, { type: 'null' }] }
+        if should_use_nullable
+          non_nullable_property.merge(nullable: true)
+        else
+          { oneOf: [non_nullable_property, { type: 'null' }] }
+        end
       else
         non_nullable_property
       end
+    end
+
+    def should_use_nullable
+      context[:use_nullable]
     end
 
     def non_nullable_property

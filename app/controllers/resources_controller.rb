@@ -105,7 +105,6 @@ class ResourcesController < ApplicationController
         :min_items,
         :max_items,
         :nullable,
-        :faker_id,
         :_destroy
       ],
       routes_attributes: [

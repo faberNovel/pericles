@@ -3,7 +3,7 @@ module JSONSchema
     delegate_all
 
     def primitive_type
-      (datetime? || date?) ? :string : object.primitive_type
+      (datetime? || date?) ? 'string' : object.primitive_type
     end
 
     def scheme

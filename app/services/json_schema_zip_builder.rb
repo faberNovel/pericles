@@ -1,32 +1,27 @@
 require 'zip'
 
-class JSONSchemaZipBuilder
+class JSONSchemaZipBuilder < AbstractZipBuilder
   def initialize(project)
     @project = project
   end
 
-  def zip_data
-    stringio = Zip::OutputStream.write_buffer do |zio|
-      @project.resources.each do |resource|
-        resource.responses.each do |response|
-          next unless response.resource_representation
-          folder_name = resource.name.downcase.parameterize(separator: '_')
-          zio.put_next_entry("#{folder_name}/#{filename(response)}")
-          zio.write JSON.stable_pretty_generate(response.json_schema)
-        end
-      end
-    end
-    stringio.rewind
-    stringio.sysread
+  def collection
+    @project.resources.map(&:responses).flatten.select(&:resource_representation)
   end
 
-  private
-
   def filename(response)
+    folder_name = response.route.resource.name.downcase.parameterize(separator: '_')
+
     verb = response.route.http_method.to_s
     route = response.route.url.gsub(':', '')
     representation = response.resource_representation.name
     status_code = response.status_code
-    "#{verb}_#{route}_#{representation}_#{status_code}".parameterize(separator: '_') + '.json_schema'
+    file = "#{verb}_#{route}_#{representation}_#{status_code}".parameterize(separator: '_') + '.json_schema'
+
+    "#{folder_name}/#{file}"
+  end
+
+  def file_content(response)
+    JSON.stable_pretty_generate(response.json_schema)
   end
 end

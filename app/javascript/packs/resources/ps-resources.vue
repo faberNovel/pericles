@@ -29,6 +29,7 @@
 <script>
 import ResourceComponent from './ps-resource.vue';
 import Store from './store.js';
+import _ from 'underscore';
 
 export default {
   props: ['resources', 'treeMode', 'query'],
@@ -36,10 +37,10 @@ export default {
     onTreeClick: function() {
       Store.toggleTreeMode();
     },
-    updateSearchQuery: function(event) {
+    updateSearchQuery: _.debounce((event) => {
       let value = event.target.value;
       Store.setQuery(value);
-    }
+    }, 300)
   },
   computed: {
     newResourcePath: function() {

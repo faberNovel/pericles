@@ -3,6 +3,8 @@ SimpleCov.start 'rails'
 
 require "minitest/reporters"
 Minitest::Reporters.use!
+require 'minitest/mock'
+
 
 ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../../config/environment', __FILE__)

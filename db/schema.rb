@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180219094508) do
+ActiveRecord::Schema.define(version: 20180223163412) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,12 +40,6 @@ ActiveRecord::Schema.define(version: 20180219094508) do
     t.index ["project_id"], name: "index_api_errors_on_project_id"
   end
 
-  create_table "attribute_fakers", id: :serial, force: :cascade do |t|
-    t.string "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "attributes", id: :serial, force: :cascade do |t|
     t.string "name"
     t.text "description"
@@ -59,11 +53,9 @@ ActiveRecord::Schema.define(version: 20180219094508) do
     t.integer "minimum"
     t.integer "maximum"
     t.boolean "nullable", default: false, null: false
-    t.integer "faker_id"
     t.integer "scheme_id"
     t.integer "min_items"
     t.integer "max_items"
-    t.index ["faker_id"], name: "index_attributes_on_faker_id"
     t.index ["resource_id"], name: "index_attributes_on_resource_id"
     t.index ["scheme_id"], name: "index_attributes_on_scheme_id"
   end
@@ -151,8 +143,8 @@ ActiveRecord::Schema.define(version: 20180219094508) do
   end
 
   create_table "metadatum_instances_mock_pickers", id: false, force: :cascade do |t|
-    t.integer "metadatum_instance_id", null: false
-    t.integer "mock_picker_id", null: false
+    t.bigint "metadatum_instance_id", null: false
+    t.bigint "mock_picker_id", null: false
   end
 
   create_table "mock_pickers", id: :serial, force: :cascade do |t|
@@ -330,7 +322,6 @@ ActiveRecord::Schema.define(version: 20180219094508) do
   end
 
   add_foreign_key "api_error_instances", "api_errors"
-  add_foreign_key "attributes", "attribute_fakers", column: "faker_id"
   add_foreign_key "attributes", "resources"
   add_foreign_key "attributes", "resources", column: "parent_resource_id"
   add_foreign_key "attributes", "schemes"

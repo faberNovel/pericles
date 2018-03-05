@@ -2,6 +2,14 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.5.3 - 2018-03-05
+
+* Add a swagger format for projects
+* Show isRequired and isNull in non managed mode
+* Allow to search different words without spaces
+* Fix login issue
+* Fix proxy issue
+
 ## 0.5.2 - 2018-02-21
 
 * Add an option for the proxy to use an http proxy (like Squid)
