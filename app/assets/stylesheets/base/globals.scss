@@ -7,92 +7,112 @@ body {
   background-color: #f9f9f9;
 }
 
+/* Sidebar Styles */
+
 #wrapper {
-    padding-left: 0;
-    -webkit-transition: all 0.5s ease;
-    -moz-transition: all 0.5s ease;
-    -o-transition: all 0.5s ease;
-    transition: all 0.5s ease;
+  padding-left: 0;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
 }
 
 #sidebar-wrapper {
-    z-index: 1;
-    position: fixed;
-    left: 250px;
-    width: 0;
-    height: 100%;
-    margin-left: -250px;
-    overflow-y: auto;
-    background: #000;
-    -webkit-transition: all 0.5s ease;
-    -moz-transition: all 0.5s ease;
-    -o-transition: all 0.5s ease;
-    transition: all 0.5s ease;
+  z-index: 1;
+  position: fixed;
+  left: 250px;
+  width: 0;
+  height: 100%;
+  margin-left: -250px;
+  overflow-y: auto;
+  background-color: #313b50;
+  box-shadow: 2px 0 4px 0 #10141b;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
 }
 
 #page-content-wrapper {
-    width: 100%;
-    position: absolute;
-    padding: 15px;
-    overflow-x: auto;
+  width: 100%;
+  position: absolute;
+  padding: 15px;
+  overflow-x: auto;
 }
-
-/* Sidebar Styles */
 
 .sidebar-nav {
-    position: absolute;
-    top: 0;
-    width: 250px;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-}
+  color: white;
+  position: absolute;
+  top: 0;
+  width: 250px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 
-.sidebar-nav li {
-    text-indent: 20px;
-    line-height: 40px;
-}
+  .nav-cell {
+    height: 56px;
 
-.sidebar-nav li a {
-    display: block;
-    text-decoration: none;
-    color: #999999;
-}
+    &.active {
+      a {
+        background-color: #202735;
+        border-left: #008afd solid 4px;
+        padding-left: 20px;
+      }
+    }
 
-.sidebar-nav li a:hover {
-    text-decoration: none;
-    color: #fff;
-    background: rgba(255,255,255,0.2);
-}
+    a {
+      padding-left: 24px;
+      height: 100%;
+      width: 100%;
+      display: flex;
+      align-items: center;
 
-.sidebar-nav li a:active,
-.sidebar-nav li a:focus {
-    text-decoration: none;
-}
+      &:hover, &:active, &:focus {
+        border-left: #008afd solid 4px;
+        padding-left: 20px;
+      }
+    }
+  }
 
-.sidebar-nav li.active a {
-    text-decoration: none;
+  a {
     color: white;
+    font-size: 12px;
+    font-weight: 400;
+    text-decoration: none;
+    text-transform: uppercase;
+
+    &:hover, &:active, &:focus {
+      text-decoration: none;
+      background-color: #202735;
+    }
+  }
+
+  .pericles-logo {
+    height: 64px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .sidebar-brand {
+    text-align: center;
+  }
+
+  .project-back {
+    height: 64px;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+  }
+
+  .arrow-back {
+    width: 24px;
+    height: 24px;
+    margin: 16px;
+  }
 }
 
-.sidebar-nav > .sidebar-brand {
-    height: 65px;
-    font-size: 18px;
-    line-height: 60px;
-}
 
-.sidebar-nav > .sidebar-brand a {
-    color: #999999;
-}
-
-.sidebar-nav > .sidebar-brand a:hover {
-    color: #fff;
-    background: none;
-}
-
-.sidebar-nav li h3 {
-    color: #ffffff;
-}
 
 @media(min-width:768px) {
     #wrapper {
@@ -120,6 +140,11 @@ body {
 .flexcontainer {
   display: flex;
   flex-direction: row;
+}
+
+.flexcolumn {
+  display: flex;
+  flex-direction: column;
 }
 
 .flex-v-center {
