@@ -30,6 +30,7 @@
 }
 
 .sidebar-nav {
+  height: 100%;
   color: white;
   position: absolute;
   top: 0;
@@ -76,11 +77,36 @@
     }
   }
 
-  .pericles-logo {
+  .dark-block {
+    padding-left: 24px;
     height: 64px;
+    display: flex;
+    align-items: center;
+    background-color: #202735;
+  }
+
+  .center, .logout {
+    height: 64px;
+    font-size: 12px;
     display: flex;
     justify-content: center;
     align-items: center;
+
+    a {
+      text-transform: none;
+      &:hover {
+        color: darken(white, 15%);
+        background-color: #313b50;
+      }
+    }
+  }
+
+  .logout {
+    color: #f1f2f4;
+
+    a:hover {
+      color: darken(#f1f2f4, 15%);
+    }
   }
 
   .sidebar-brand {

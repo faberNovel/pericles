@@ -4,7 +4,6 @@ class ProjectsController < ApplicationController
 
   def index
     @projects = policy_scope(Project).all.order("lower(title)")
-    render layout: 'no_navbar_layout'
   end
 
   def show

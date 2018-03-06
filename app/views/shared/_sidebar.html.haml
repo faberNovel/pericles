@@ -1,6 +1,6 @@
 %nav#sidebar-wrapper
   .flexcolumn.sidebar-nav
-    .pericles-logo
+    .center
       = image_tag 'logo.svg'
     - if respond_to?(:project) && project&.persisted?
       %a.project-back{href: projects_path}
@@ -20,3 +20,13 @@
         = link_to 'Mock Profiles', project_mock_profiles_path(project)
       .nav-cell{class: active_class(ApiErrorsController)}
         = link_to 'Errors', project_api_errors_path(project)
+    - else
+      %a{href: projects_path}
+        .dark-block Projects
+    %a{href: schemes_path, style: 'margin-bottom: 2px; margin-top: auto;'}
+      .dark-block Schemes
+    %a{href: new_validation_path}
+      .dark-block JSON Validation
+    .logout
+      - if current_user
+        = link_to "Log out", destroy_user_session_path, method: :delete
