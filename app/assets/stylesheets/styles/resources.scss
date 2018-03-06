@@ -61,7 +61,7 @@
   }
 
   .attributes {
-    box-shadow: 0 -1px 0 0 #eceeef;
+    box-shadow: 0 2px 4px 0 #f1f2f4;
     margin-bottom: 16px;
   }
 
@@ -173,10 +173,13 @@
   }
 
   .filter {
+    background-color: white;
     color: $grey;
     padding: 16px 16px 8px 16px;
     border: solid 1px #f1f2f4;
     margin-bottom: 24px;
+    box-shadow: 0 2px 4px 0 #f1f2f4;
+
 
     .flexcontainer .btn {
       margin-left: 12px;
@@ -476,6 +479,8 @@
   #table {
     margin-bottom: 60px; // Avoid select creating an overflow
     border: solid 1px #f1f2f4;
+    box-shadow: 0 2px 4px 0 #f1f2f4;
+
     .cell {
       flex: 1;
       padding: 12px 27px;
@@ -505,9 +510,10 @@
     }
 
     > .table-row {
+      background-color: white;
       border-bottom: solid 0.5px #eceeef;
       &:nth-child(2n) {
-        background-color: #f1f2f4;
+        background-color: #f9f9f9;
       }
     }
 
@@ -518,6 +524,8 @@
       line-height: 1.75;
       border-width: 2px;
       border-color: darken(#f1f2f4, 5%);
+      background-color: #f1f2f4;
+
       .btn {
         padding: 4px;
         &:hover {
