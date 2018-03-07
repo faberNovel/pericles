@@ -43,24 +43,18 @@
     height: 56px;
 
     &.active {
-      a {
-        background-color: #202735;
-        border-left: #008afd solid 4px;
-        padding-left: 20px;
-      }
+      background-color: #202735;
+      border-left: #008afd solid 4px;
+      padding-left: 20px;
     }
 
-    a {
-      padding-left: 24px;
-      height: 100%;
-      width: 100%;
-      display: flex;
-      align-items: center;
+    padding-left: 24px;
+    display: flex;
+    align-items: center;
 
-      &:hover, &:active, &:focus {
-        border-left: #008afd solid 4px;
-        padding-left: 20px;
-      }
+    &:hover, &:active, &:focus {
+      border-left: #008afd solid 4px;
+      padding-left: 20px;
     }
   }
 
@@ -83,6 +77,10 @@
     display: flex;
     align-items: center;
     background-color: #202735;
+
+    &:not(:last-of-type) {
+      margin-bottom: 2px;
+    }
   }
 
   .center, .logout {
@@ -124,6 +122,10 @@
     width: 24px;
     height: 24px;
     margin: 16px;
+  }
+
+  .push {
+    margin-top: auto;
   }
 }
 
