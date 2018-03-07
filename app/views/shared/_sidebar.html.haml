@@ -1,6 +1,6 @@
 %nav#sidebar-wrapper
   .flexcolumn.sidebar-nav
-    .center
+    %a.center{href: root_path}
       = image_tag 'logo.svg'
     - if respond_to?(:project) && project&.persisted?
       %a.project-back{href: projects_path}
