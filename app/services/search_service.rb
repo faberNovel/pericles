@@ -38,17 +38,17 @@ class SearchService
     )
 
     api_error_instances.where(
-      "api_error_instances.name like ?", "%#{query}%"
+      "api_error_instances.name ilike ?", "%#{query}%"
     ).or(
       api_error_instances.where(
-        'api_error_instances.body::text like ?', "%#{query}%"
+        'api_error_instances.body::text ilike ?', "%#{query}%"
       )
     )
   end
 
   def search_api_errors(query)
     @project.api_errors.where(
-      "api_errors.name like ?", "%#{query}%"
+      "api_errors.name ilike ?", "%#{query}%"
     )
   end
 
@@ -58,10 +58,10 @@ class SearchService
     )
 
     resource_attributes.where(
-      "attributes.name like ?", "%#{query}%"
+      "attributes.name ilike ?", "%#{query}%"
     ).or(
       resource_attributes.where(
-        "attributes.description like ?", "%#{query}%"
+        "attributes.description ilike ?", "%#{query}%"
       )
     )
   end
@@ -84,17 +84,17 @@ class SearchService
 
   def search_headers(headers, query)
     headers.where(
-      "headers.name like ?", "%#{query}%"
+      "headers.name ilike ?", "%#{query}%"
     ).or(
       headers.where(
-        "headers.value like ?", "%#{query}%"
+        "headers.value ilike ?", "%#{query}%"
       )
     )
   end
 
   def search_metadata(query)
     @project.metadata.where(
-      "metadata.name like ?", "%#{query}%"
+      "metadata.name ilike ?", "%#{query}%"
     )
   end
 
@@ -104,17 +104,17 @@ class SearchService
     )
 
     mock_pickers.where(
-      "mock_pickers.body_pattern like ?", "%#{query}%"
+      "mock_pickers.body_pattern ilike ?", "%#{query}%"
     ).or(
       mock_pickers.where(
-        "mock_pickers.url_pattern like ?", "%#{query}%"
+        "mock_pickers.url_pattern ilike ?", "%#{query}%"
       )
     )
   end
 
   def search_mock_profiles(query)
     @project.mock_profiles.where(
-      "mock_profiles.name like ?", "%#{query}%"
+      "mock_profiles.name ilike ?", "%#{query}%"
     )
   end
 
@@ -132,10 +132,10 @@ class SearchService
     )
 
     query_parameters.where(
-      "query_parameters.name like ?", "%#{query}%"
+      "query_parameters.name ilike ?", "%#{query}%"
     ).or(
       query_parameters.where(
-        "query_parameters.description like ?", "%#{query}%"
+        "query_parameters.description ilike ?", "%#{query}%"
       )
     )
   end
@@ -145,19 +145,19 @@ class SearchService
       response_status_code: query.to_i
     ).or(
       @project.reports.where(
-        "reports.response_body like ?", "%#{query}%"
+        "reports.response_body ilike ?", "%#{query}%"
       )
     ).or(
       @project.reports.where(
-        "reports.request_body like ?", "%#{query}%"
+        "reports.request_body ilike ?", "%#{query}%"
       )
     ).or(
       @project.reports.where(
-        "reports.request_method like ?", "%#{query}%"
+        "reports.request_method ilike ?", "%#{query}%"
       )
     ).or(
       @project.reports.where(
-        "reports.url like ?", "%#{query}%"
+        "reports.url ilike ?", "%#{query}%"
       )
     )
   end
@@ -168,30 +168,30 @@ class SearchService
     )
 
     resource_instances.where(
-      "resource_instances.name like ?", "%#{query}%"
+      "resource_instances.name ilike ?", "%#{query}%"
     ).or(
       resource_instances.where(
-        'resource_instances.body::text like ?', "%#{query}%"
+        'resource_instances.body::text ilike ?', "%#{query}%"
       )
     )
   end
 
   def search_resource_representations(query)
     @project.resource_representations.where(
-      "resource_representations.name like ?", "%#{query}%"
+      "resource_representations.name ilike ?", "%#{query}%"
     ).or(
       @project.resource_representations.where(
-        "resource_representations.description like ?", "%#{query}%"
+        "resource_representations.description ilike ?", "%#{query}%"
       )
     )
   end
 
   def search_resources(query)
     @project.resources.where(
-      "resources.name like ?", "%#{query}%"
+      "resources.name ilike ?", "%#{query}%"
     ).or(
       @project.resources.where(
-        "resources.description like ?", "%#{query}%"
+        "resources.description ilike ?", "%#{query}%"
       )
     )
   end
@@ -201,27 +201,27 @@ class SearchService
       status_code: query.to_i
     ).or(
       @project.responses.where(
-        "responses.root_key like ?", "%#{query}%"
+        "responses.root_key ilike ?", "%#{query}%"
       )
     )
   end
 
   def search_routes(query)
     @project.routes.where(
-      "routes.description like ?", "%#{query}%"
+      "routes.description ilike ?", "%#{query}%"
     ).or(
       @project.routes.where(
-        "routes.url like ?", "%#{query}%"
+        "routes.url ilike ?", "%#{query}%"
       )
     )
   end
 
   def search_schemes(query)
     Scheme.where(
-      "schemes.name like ?", "%#{query}%"
+      "schemes.name ilike ?", "%#{query}%"
     ).or(
       Scheme.where(
-        "schemes.regexp like ?", "%#{query}%"
+      "schemes.regexp ilike ?", "%#{query}%"
       )
     )
   end
@@ -232,7 +232,7 @@ class SearchService
     )
 
     validation_errors.where(
-      "validation_errors.description like ?", "%#{query}%"
+      "validation_errors.description ilike ?", "%#{query}%"
     )
   end
 end
