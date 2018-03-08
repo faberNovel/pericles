@@ -12,4 +12,4 @@
   %div= "There are no results matching « #{params[:query]} »"
 
 - @results.each do |result|
-  %div= "#{result.class}: #{result.name}"
+  %div= "#{result.class}: #{(result.respond_to? :name) ? result.name : ''}"
