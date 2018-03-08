@@ -10,7 +10,7 @@ class SearchService
     # Refactor search_* methods using pg_search gem or
     # Postgres Basic Text Matching
 
-    [
+    results = [
       search_api_error_instances(query),
       search_api_errors(query),
       search_attributes(query),
@@ -30,6 +30,8 @@ class SearchService
       search_schemes(query),
       search_validation_errors(query)
     ].sum
+
+    ResultsViewModel.new(results)
   end
 
   def search_api_error_instances(query)
@@ -212,6 +214,10 @@ class SearchService
     ).or(
       @project.routes.where(
         "routes.url ilike ?", "%#{query}%"
+      )
+    ).or(
+      @project.routes.where(
+        http_method: Route.http_methods[query.upcase]
       )
     )
   end

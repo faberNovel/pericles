@@ -144,3 +144,9 @@ input[type=submit] {
 .break-word {
   overflow-wrap: break-word;
 }
+
+.space-before {
+  &:before {
+    content: " "
+  }
+}

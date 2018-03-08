@@ -10,6 +10,51 @@
 
 - if @results.empty?
   %div= "There are no results matching « #{params[:query]} »"
+  = image_tag 'sad.gif'
+- else
+  %div= "There are #{@results.size} results matching « #{params[:query]} »"
 
-- @results.each do |result|
-  %div= "#{result.class}: #{(result.respond_to? :name) ? result.name : ''}"
+  %h4= "Resources (#{@results.resources.size})"
+  - @results.resources.each do |resource|
+    %div
+      = link_to resource.name, project_resource_path(project, resource)
+      %span.space-before= resource.description
+
+  %h4= "Resource representations (#{@results.resource_representations.size})"
+  - @results.resource_representations.each do |resource_representation|
+    %div
+      = "#{resource_representation.name} of "
+      = link_to resource_representation.resource.name, project_resource_path(project, resource_representation.resource), class: 'space-before'
+      %span.space-before= resource_representation.description
+
+  %h4= "Attributes (#{@results.resource_attributes.size})"
+  - @results.resource_attributes.each do |attribute|
+    %div
+      = "« #{attribute.name} » in "
+      = link_to attribute.parent_resource.name, project_resource_path(project, attribute.parent_resource), class: 'space-before'
+      %span.space-before= attribute.description
+
+  %h4= "Routes (#{@results.routes.size})"
+  - @results.routes.each do |route|
+    %div
+      = route.http_method
+      = link_to route.url, project_route_path(project, route), class: 'space-before'
+      %span.space-before= route.description
+
+  %h4= "Responses (#{@results.responses.size})"
+  - @results.responses.each do |response|
+    %div
+      = "Response #{response.status_code} of"
+      = link_to response.route.url, project_route_path(project, response.route), class: 'space-before'
+      %span.space-before= "root_key: #{response.root_key}"
+
+  %h4= "Headers (#{@results.headers_size})"
+  - @results.response_headers.each do |header|
+    %div
+      = "#{header.name}: #{header.value} is used in"
+      = link_to header.response.route.url, project_route_path(project, header.response.route), class: 'space-before'
+  - @results.route_headers.each do |header|
+    %div
+      = "#{header.name}: #{header.value} is used in"
+      = link_to header.route.url, project_route_path(project, header.route), class: 'space-before'
+
