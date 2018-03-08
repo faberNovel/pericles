@@ -6,6 +6,8 @@
       %a.project-back{href: projects_path}
         = image_tag 'arrow_back.svg', class: 'arrow-back'
         = project.title
+      = form_tag '/search', class: 'flex-v-center ', method: :get do
+        = text_field_tag :query, '', class: 'form-control flex', placeholder: 'Search'
       = link_to 'Project Description', project_path(project), class: "nav-cell #{ active_class(ProjectsController)}"
       = link_to 'Resources', project_resources_path(project), class: "nav-cell #{active_class(ResourcesController)}"
       = link_to 'Routes', project_routes_path(project), class: "nav-cell #{active_class(RoutesController)}"
