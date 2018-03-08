@@ -1,6 +1,6 @@
 class ResourcesController < ApplicationController
   include ProjectRelated
-  layout 'full_width_column'
+
   lazy_controller_of :resource, belongs_to: :project
   decorates_method :resource
 
@@ -42,6 +42,7 @@ class ResourcesController < ApplicationController
   end
 
   def edit
+    render layout: 'no_navbar_layout'
   end
 
   def create
@@ -59,7 +60,7 @@ class ResourcesController < ApplicationController
     if resource.update(resource_params)
       redirect_to project_resource_path(project, resource)
     else
-      render 'edit', status: :unprocessable_entity
+      render 'edit', status: :unprocessable_entity, layout: 'no_navbar_layout'
     end
   end
 

@@ -1,0 +1,147 @@
+#wrapper {
+  padding-left: 0;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+
+#sidebar-wrapper {
+  z-index: 1;
+  position: fixed;
+  left: 250px;
+  width: 0;
+  height: 100%;
+  margin-left: -250px;
+  overflow-y: auto;
+  background-color: #313b50;
+  box-shadow: 2px 0 4px 0 #10141b;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+
+#page-content-wrapper {
+  width: 100%;
+  position: absolute;
+  padding: 15px;
+  overflow-x: auto;
+}
+
+.sidebar-nav {
+  height: 100%;
+  color: white;
+  position: absolute;
+  top: 0;
+  width: 250px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  .nav-cell {
+    height: 56px;
+
+    &.active {
+      background-color: #202735;
+      border-left: #008afd solid 4px;
+      padding-left: 20px;
+    }
+
+    padding-left: 24px;
+    display: flex;
+    align-items: center;
+
+    &:hover, &:active, &:focus {
+      border-left: #008afd solid 4px;
+      padding-left: 20px;
+    }
+  }
+
+  a {
+    color: white;
+    font-size: 12px;
+    font-weight: 400;
+    text-decoration: none;
+    text-transform: uppercase;
+
+    &:hover, &:active, &:focus {
+      text-decoration: none;
+      background-color: #202735;
+    }
+  }
+
+  .dark-block {
+    padding-left: 24px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    background-color: #202735;
+
+    &:not(:last-of-type) {
+      margin-bottom: 2px;
+    }
+  }
+
+  .center, .logout {
+    height: 64px;
+    font-size: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    a {
+      text-transform: none;
+      &:hover {
+        color: darken(white, 15%);
+        background-color: #313b50;
+      }
+    }
+  }
+
+  .logout {
+    color: #f1f2f4;
+
+    a:hover {
+      color: darken(#f1f2f4, 15%);
+    }
+  }
+
+  .sidebar-brand {
+    text-align: center;
+  }
+
+  .project-back {
+    height: 64px;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+  }
+
+  .arrow-back {
+    width: 24px;
+    height: 24px;
+    margin: 16px;
+  }
+
+  .push {
+    margin-top: auto;
+  }
+}
+
+
+
+@media(min-width:768px) {
+    #wrapper {
+        padding-left: 250px;
+    }
+
+    #sidebar-wrapper {
+        width: 250px;
+    }
+
+    #page-content-wrapper {
+        padding: 20px;
+        position: relative;
+    }
+}

@@ -1,5 +1,4 @@
 class ProjectsController < ApplicationController
-  layout 'full_width_column', only: [:show, :edit, :update]
   lazy_controller_of :project
   decorates_method :project
 
