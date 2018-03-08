@@ -1,0 +1,12 @@
+%ol.breadcrumb
+  %li
+    = link_to 'Projects', projects_path
+  %li
+    = link_to "#{project.title}", project_path(project)
+  %li
+    Search results
+
+%h3 Search results
+
+- if @results.empty?
+  %div= "There are no results matching « #{params[:query]} »"

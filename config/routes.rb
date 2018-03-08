@@ -16,6 +16,7 @@ Rails.application.routes.draw do
       match 'mocks', to: "mock_profiles#compute_mock", via: :all, as: 'mocks_root'
       match 'mocks/*path', to: "mock_profiles#compute_mock", via: :all, as: 'mocks'
     end
+    match 'search', to: 'projects#search', via: [:get]
   end
   resources :resources, only: [] do
     resources :resource_representations, except: [:index] do
