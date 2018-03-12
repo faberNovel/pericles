@@ -17,6 +17,7 @@ class SearchService
       search_response_headers(query),
       search_request_headers(query),
       search_metadata(query),
+      search_metadatum_instances(query),
       search_mock_pickers(query),
       search_mock_profiles(query),
       search_project(query),
@@ -27,7 +28,6 @@ class SearchService
       search_resources(query),
       search_responses(query),
       search_routes(query),
-      search_schemes(query),
       search_validation_errors(query)
     ].sum
 
@@ -100,6 +100,20 @@ class SearchService
     )
   end
 
+  def search_metadatum_instances(query)
+    instances = MetadatumInstance.joins(:metadatum).where(
+      metadata: { project_id: @project.id }
+    )
+
+    instances.where(
+      "metadatum_instances.name ilike ?", "%#{query}%"
+    ).or(
+      instances.where(
+        'metadatum_instances.body::text ilike ?', "%#{query}%"
+      )
+    )
+  end
+
   def search_mock_pickers(query)
     mock_pickers = MockPicker.joins(:mock_profile).where(
       mock_profiles: { project_id: @project.id }
@@ -161,7 +175,7 @@ class SearchService
       @project.reports.where(
         "reports.url ilike ?", "%#{query}%"
       )
-    )
+    ).order(created_at: :desc).limit(20)
   end
 
   def search_resource_instances(query)
@@ -222,16 +236,6 @@ class SearchService
     )
   end
 
-  def search_schemes(query)
-    Scheme.where(
-      "schemes.name ilike ?", "%#{query}%"
-    ).or(
-      Scheme.where(
-      "schemes.regexp ilike ?", "%#{query}%"
-      )
-    )
-  end
-
   def search_validation_errors(query)
     validation_errors = ValidationError.joins(:report).where(
       reports: { project_id: @project.id }
@@ -239,6 +243,6 @@ class SearchService
 
     validation_errors.where(
       "validation_errors.description ilike ?", "%#{query}%"
-    )
+    ).order(created_at: :desc).limit(20)
   end
 end

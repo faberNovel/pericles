@@ -42,4 +42,48 @@ class ResultsViewModel
   def route_headers
     (@results[Header] || []).select { |h| h.http_message_type == 'Route' }
   end
+
+  def resource_instances
+    @results[ResourceInstance] || []
+  end
+
+  def api_error_instances
+    @results[ApiErrorInstance] || []
+  end
+
+  def reports
+    @results[Report] || []
+  end
+
+  def api_errors
+    @results[ApiError] || []
+  end
+
+  def validation_errors
+    @results[ValidationError] || []
+  end
+
+  def query_parameters
+    @results[QueryParameter] || []
+  end
+
+  def metadata
+    @results[Metadatum] || []
+  end
+
+  def project
+    (@results[Project] || []).first
+  end
+
+  def metadatum_instances
+    @results[MetadatumInstance] || []
+  end
+
+  def mock_profiles
+    @results[MockProfile] || []
+  end
+
+  def mock_pickers
+    @results[MockPicker] || []
+  end
 end
