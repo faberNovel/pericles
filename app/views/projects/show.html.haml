@@ -24,8 +24,9 @@
 %h4 Mock Url
 = link_to project_mocks_root_url(project), project_mocks_root_url(project)
 
-%h4 JSON Schemas
-= link_to t('actions.download'), project_path(project, format: 'json_schema'), class: 'btn btn-primary'
+%h4 Documentation
+= link_to 'JSON Schemas', project_path(project, format: 'json_schema'), class: 'btn btn-primary'
+= link_to 'Swagger', project_path(project, format: 'swagger'), class: 'btn btn-primary'
 
 %h4 Code Generation
 = link_to 'Swift', project_path(project, format: 'swift'), class: 'btn btn-primary'
