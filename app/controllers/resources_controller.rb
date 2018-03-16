@@ -41,7 +41,11 @@ class ResourcesController < ApplicationController
   def new
   end
 
-  def edit
+  def edit_attributes
+    render layout: 'no_navbar_layout'
+  end
+
+  def edit_resource
     render layout: 'no_navbar_layout'
   end
 
@@ -60,7 +64,12 @@ class ResourcesController < ApplicationController
     if resource.update(resource_params)
       redirect_to project_resource_path(project, resource)
     else
-      render 'edit', status: :unprocessable_entity, layout: 'no_navbar_layout'
+      if resource_params.key? :resource_attributes_attributes
+        template = 'edit_attributes'
+      else
+        template = 'edit_resource'
+      end
+      render template, status: :unprocessable_entity, layout: 'no_navbar_layout'
     end
   end
 

@@ -8,8 +8,6 @@
   %li
     = link_to 'Resources', project_resources_path(project)
   %li
-    = link_to "#{resource.name}", project_resource_path(project, resource)
-  %li
-    Attributes
+    = resource.name
 
-= render 'form'
+= render 'edit_resource_form'
