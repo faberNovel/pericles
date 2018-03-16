@@ -68,6 +68,10 @@ class ProjectsController < ApplicationController
     redirect_to projects_path
   end
 
+  def search
+    @results = SearchService.new(project).search(params[:query])
+  end
+
   private
 
   def set_proxy_to_be_destroyed_if_blank(params)
