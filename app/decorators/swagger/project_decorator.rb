@@ -13,7 +13,7 @@ class Swagger::ProjectDecorator < Draper::Decorator
       tags: tags,
       paths: paths,
       components: components,
-    }.deep_stringify_keys.to_yaml
+    }.deep_stringify_keys.to_json
   end
 
   def components

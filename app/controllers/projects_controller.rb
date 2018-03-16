@@ -19,7 +19,7 @@ class ProjectsController < ApplicationController
       format.swagger do
         send_data(
           Swagger::ProjectDecorator.new(project).to_swagger,
-          filename: "#{project.title}.yaml"
+          filename: "#{project.title}.json"
         )
       end
       %i(swift java kotlin).each do |language|
