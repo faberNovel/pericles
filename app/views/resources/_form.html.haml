@@ -13,6 +13,9 @@
         - unless @json_instance_error.blank?
           %li= @json_instance_error
 
+  - unless (resource.persisted? && params[:section] != "base")
+    .flexcontainer-justify-end= f.submit class: 'btn btn-primary'
+
   - unless params[:section] == "all_attributes"
 
     = f.text_field :name, placeholder: 'MyResource'
