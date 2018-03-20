@@ -58,16 +58,29 @@ class ResourcesControllerTest < ControllerWithAuthenticationTest
     assert_redirected_to new_user_session_path(redirect_to: request.path)
   end
 
-  test "should get edit" do
+  test "should get edit resource" do
     resource = create(:resource)
-    get edit_project_resource_path(resource.project, resource)
+    get edit_resource_project_resource_path(resource.project, resource)
     assert_response :success
   end
 
-  test "should not get edit (not authenticated)" do
+  test "should not get edit resource (not authenticated)" do
     sign_out :user
     resource = create(:resource)
-    get edit_project_resource_path(resource.project, resource)
+    get edit_resource_project_resource_path(resource.project, resource)
+    assert_redirected_to new_user_session_path(redirect_to: request.path)
+  end
+
+  test "should get edit attributes" do
+    resource = create(:resource)
+    get edit_attributes_project_resource_path(resource.project, resource)
+    assert_response :success
+  end
+
+  test "should not get edit attributes (not authenticated)" do
+    sign_out :user
+    resource = create(:resource)
+    get edit_attributes_project_resource_path(resource.project, resource)
     assert_redirected_to new_user_session_path(redirect_to: request.path)
   end
 
@@ -322,7 +335,10 @@ class ResourcesControllerTest < ControllerWithAuthenticationTest
     get project_resource_path(project, resource)
     assert_response :forbidden
 
-    get edit_project_resource_path(project, resource)
+    get edit_attributes_project_resource_path(project, resource)
+    assert_response :forbidden
+
+    get edit_resource_project_resource_path(project, resource)
     assert_response :forbidden
 
     put project_resource_path(resource.project, resource), params: { resource: { name: "New name" } }
@@ -353,7 +369,10 @@ class ResourcesControllerTest < ControllerWithAuthenticationTest
     get project_resource_path(project, resource)
     assert_response :success
 
-    get edit_project_resource_path(project, resource)
+    get edit_attributes_project_resource_path(project, resource)
+    assert_response :success
+
+    get edit_resource_project_resource_path(project, resource)
     assert_response :success
 
     put project_resource_path(resource.project, resource), params: { resource: { name: "New name" } }
@@ -383,7 +402,10 @@ class ResourcesControllerTest < ControllerWithAuthenticationTest
     get project_resource_path(project, resource)
     assert_response :success
 
-    get edit_project_resource_path(project, resource)
+    get edit_attributes_project_resource_path(project, resource)
+    assert_response :forbidden
+
+    get edit_resource_project_resource_path(project, resource)
     assert_response :forbidden
 
     put project_resource_path(resource.project, resource), params: { resource: { name: "New name" } }
@@ -412,7 +434,10 @@ class ResourcesControllerTest < ControllerWithAuthenticationTest
     get project_resource_path(project, resource)
     assert_response :success
 
-    get edit_project_resource_path(project, resource)
+    get edit_attributes_project_resource_path(project, resource)
+    assert_redirected_to new_user_session_path(redirect_to: request.path)
+
+    get edit_resource_project_resource_path(project, resource)
     assert_redirected_to new_user_session_path(redirect_to: request.path)
 
     put project_resource_path(resource.project, resource), params: { resource: { name: "New name" } }

@@ -129,6 +129,13 @@ class ProjectsControllerTest < ControllerWithAuthenticationTest
     assert_redirected_to projects_path
   end
 
+  test 'should search in project' do
+    project = create(:full_project)
+
+    get project_search_path(project, query: 'a')
+    assert_response :success
+  end
+
   test "should not delete project (not authenticated)" do
     sign_out :user
     assert_no_difference 'Project.count' do

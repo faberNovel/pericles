@@ -70,6 +70,8 @@ GEM
     autoprefixer-rails (7.1.4.1)
       execjs
     bcrypt (3.1.11)
+    bootsnap (1.2.0)
+      msgpack (~> 1.0)
     bootstrap-sass (3.3.7)
       autoprefixer-rails (>= 5.2.1)
       sass (>= 3.3.4)
@@ -206,6 +208,7 @@ GEM
       builder
       minitest (>= 5.0)
       ruby-progressbar
+    msgpack (1.2.4)
     multi_json (1.12.2)
     multi_xml (0.6.0)
     multipart-post (2.0.0)
@@ -374,6 +377,7 @@ DEPENDENCIES
   ancestry (~> 3.0.1)
   audited (~> 4.5)
   autoprefixer-rails
+  bootsnap
   bootstrap-sass (~> 3.3.6)
   bootstrap_form
   byebug

@@ -1,5 +1,4 @@
 class ProjectsController < ApplicationController
-  layout 'full_width_column', only: [:show, :edit, :update]
   lazy_controller_of :project
   decorates_method :project
 
@@ -20,7 +19,7 @@ class ProjectsController < ApplicationController
       format.swagger do
         send_data(
           Swagger::ProjectDecorator.new(project).to_swagger,
-          filename: "#{project.title}.yaml"
+          filename: "#{project.title}.json"
         )
       end
       %i(swift java kotlin).each do |language|
@@ -67,6 +66,10 @@ class ProjectsController < ApplicationController
     project.destroy
 
     redirect_to projects_path
+  end
+
+  def search
+    @results = SearchService.new(project).search(params[:query])
   end
 
   private

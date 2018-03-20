@@ -1,0 +1,10 @@
+- content_for :page_scripts do
+  = javascript_include_tag("resources/form.js")
+
+= bootstrap_form_for([project, resource]) do |f|
+  = render 'shared/errors', object: resource
+
+  .flexcontainer-justify-end= f.submit class: 'btn btn-primary'
+
+  = f.text_field :name, placeholder: 'MyResource'
+  = f.text_area :description

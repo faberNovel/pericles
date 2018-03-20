@@ -1,7 +1,6 @@
 class ApiErrorsController < ApplicationController
   include ProjectRelated
 
-  layout 'full_width_column'
   lazy_controller_of :api_error, helper_method: true, belongs_to: :project
 
   def index

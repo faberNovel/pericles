@@ -1,3 +1,12 @@
+html {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+  background-color: #f9f9f9;
+}
+
 * {
   font-family: 'Open Sans', sans-serif;
 }
@@ -9,6 +18,11 @@
 .flexcontainer {
   display: flex;
   flex-direction: row;
+}
+
+.flexcolumn {
+  display: flex;
+  flex-direction: column;
 }
 
 .flex-v-center {
@@ -129,4 +143,10 @@ input[type=submit] {
 
 .break-word {
   overflow-wrap: break-word;
+}
+
+.space-before {
+  &:before {
+    content: " "
+  }
 }

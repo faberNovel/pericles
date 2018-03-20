@@ -1,36 +1,48 @@
 = content_for :title, "Project #{project.title}"
 
-%h1= project.title
+#project-show
+  %h1= project.title
 
-.flexcontainer.flexcontainer-justify-end
-  .btn-group{ role: "group" }
-    = link_to t('actions.edit'), edit_project_path(project), class: "btn btn-primary" if user.can_edit? project
+  .flexcontainer.flexcontainer-justify-end
+    .btn-group{ role: "group" }
+      = link_to t('actions.edit'), edit_project_path(project), class: "btn btn-primary" if user.can_edit? project
 
-%h4 Members
-%p= project.member_list
+  %h4 Members
+  %p= project.member_list
 
-%h4 Description
-%p
-  = simple_format(project.description)
+  %h4 Description
+  %p
+    = simple_format(project.description)
 
-- unless project.proxy_configuration&.target_base_url.blank?
+  - unless project.proxy_configuration&.target_base_url.blank?
 
-  %h4 Proxied server
-  %p= project.proxy_configuration.target_base_url
+    %h4 Proxied server
+    %p= project.proxy_configuration.target_base_url
 
-  %h4 Proxy url
-  %p= project_proxy_url(project)
+    %h4 Proxy url
+    %p= project_proxy_url(project)
 
-%h4 Mock Url
-= link_to project_mocks_root_url(project), project_mocks_root_url(project)
+  %h4 Mock Url
+  = link_to project_mocks_root_url(project), project_mocks_root_url(project)
 
-%h4 JSON Schemas
-= link_to t('actions.download'), project_path(project, format: 'json_schema'), class: 'btn btn-primary'
-
-%h4 Code Generation
-= link_to 'Swift', project_path(project, format: 'swift'), class: 'btn btn-primary'
-= link_to 'Java', project_path(project, format: 'java'), class: 'btn btn-primary'
-= link_to 'Kotlin', project_path(project, format: 'kotlin'), class: 'btn btn-primary'
+  %h4 Documentation
+  .buttons
+    = link_to 'JSON Schemas', project_path(project, format: 'json_schema'), class: 'btn btn-primary'
+    = link_to 'Swagger', project_path(project, format: 'swagger'), class: 'btn btn-primary'
 
 
-= link_to t('actions.delete'), project_path(project), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-primary", id: 'delete-button' if user.can_delete? project
+  %p
+    You can put the swagger file on a server and then read it thanks to this tool
+
+    = link_to 'Swagger viewer', 'https://koumoul.com/openapi-viewer/?url=https://koumoul.com/s/geocoder/api/v1/api-docs.json&proxy=false', class: 'space-before'
+
+
+  %h4 Code Generation
+  .buttons
+    = link_to 'Swift', project_path(project, format: 'swift'), class: 'btn btn-primary'
+    = link_to 'Java', project_path(project, format: 'java'), class: 'btn btn-primary'
+
+    = link_to 'Kotlin', project_path(project, format: 'kotlin'), class: 'btn btn-primary'
+
+
+  = link_to t('actions.delete'), project_path(project), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-primary", id: 'delete-button' if user.can_delete? project

@@ -22,6 +22,10 @@ class ProjectPolicy < ApplicationPolicy
     update?
   end
 
+  def search?
+    show?
+  end
+
   def permitted_attributes
     [
       :title,

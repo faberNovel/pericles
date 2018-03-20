@@ -40,6 +40,7 @@ gem 'pundit', '~> 1.1'
 
 gem 'webpacker', '~> 3.0'
 
+gem 'bootsnap', require: false
 
 group :development, :test do
   gem 'byebug'

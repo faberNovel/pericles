@@ -2,6 +2,7 @@
   display: flex;
   margin: 0;
   border-top: 1px solid #ddd;
+  background-color: #f1f2f4;
 
   > * {
     overflow: hidden;
@@ -15,7 +16,7 @@
 }
 
 .route-row:nth-child(odd) {
-  background-color: #f9f9f9;
+  background-color: white;
 }
 
 
@@ -42,6 +43,8 @@
 }
 
 .routes-sub-container {
+  box-shadow: 0 2px 4px 0 #f1f2f4;
+
   a {
     color: black;
   }
