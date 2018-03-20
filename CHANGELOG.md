@@ -2,6 +2,11 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.6.0 - 2018-03-20
+
+* Add a global search
+* Sidebar new design
+
 ## 0.5.3 - 2018-03-05
 
 * Add a swagger format for projects
