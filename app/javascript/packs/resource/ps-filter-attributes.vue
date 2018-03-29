@@ -6,7 +6,7 @@
     transition(name="fade")
       .btn.btn-link(@click='onManageClick'
         v-show='!manageMode'
-      ) Manage
+      ) Manage representations
   .flexwrap
     transition(name="w-slide-fade")
       .btn.representation-btn#all(
