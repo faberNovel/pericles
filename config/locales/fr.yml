@@ -6,3 +6,6 @@ fr:
     download: Télécharger
     delete: Supprimer
     sign_in: S'identifier
+  errors:
+    messages:
+      taken: "%{value} n'est pas disponible"
