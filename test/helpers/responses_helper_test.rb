@@ -1,3 +1,5 @@
+require 'test_helper'
+
 class ResponsesHelperTest < ActionView::TestCase
 
   test 'response_status_code_class' do
@@ -12,11 +14,17 @@ class ResponsesHelperTest < ActionView::TestCase
 
   test "schema_summary" do
     assert_equal '', schema_summary("", nil, true)
-    assert_equal '', schema_summary("", '', true)
+    assert_equal '', schema_summary("", build(:resource_representation, name: ''), true)
 
-    assert_equal '{ "user": UserDetailed }', schema_summary("user", 'UserDetailed', false)
-    assert_equal '{ "user": [ UserDetailed ] }', schema_summary("user", 'UserDetailed', true)
-    assert_equal '{ UserDetailed }', schema_summary("", 'UserDetailed', false)
-    assert_equal '[ UserDetailed ]', schema_summary("", 'UserDetailed', true)
+    rep = build(:resource_representation, name: 'UserDetailed')
+    rep_link = link_to(
+      rep.name,
+      project_resource_path(rep.resource.project, rep.resource, anchor: "rep-#{rep.id}")
+    )
+
+    assert_equal "{ \"user\": #{rep_link} }", schema_summary("user", rep, false)
+    assert_equal "{ \"user\": [ #{rep_link} ] }", schema_summary("user", rep, true)
+    assert_equal "{ #{rep_link} }", schema_summary("", rep, false)
+    assert_equal "[ #{rep_link} ]", schema_summary("", rep, true)
   end
 end

@@ -31,7 +31,7 @@
           - unless response.json_schema.blank?
             .row
               .col-xs-6
-                %h4= "JSON Schema #{schema_summary(response.root_key, response.representation&.name, response.is_collection)}"
+                %h4= "JSON Schema #{response.schema_summary}".html_safe
                 %pre.pre-scrollable
                   %code
                     =format_json(response.json_schema)

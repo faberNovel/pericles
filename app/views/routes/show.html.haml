@@ -56,7 +56,7 @@
                 - unless route.request_json_schema.blank?
                   .row
                     .col-xs-6
-                      %h4= "JSON Schema #{schema_summary(route.request_root_key, route.request_resource_representation&.name, route.request_is_collection)}"
+                      %h4= "JSON Schema #{route.request_schema_summary}".html_safe
                       %pre.pre-scrollable
                         %code
                           =format_json(route.request_json_schema)
@@ -118,5 +118,5 @@
       .tab-content
         - route.responses.each_with_index do |response, index|
           .tab-pane{ role: "tabpanel", id: "resp-#{response.id}", class: ('active' if index.zero?) }
-            = render response
+            = render response.decorate
 

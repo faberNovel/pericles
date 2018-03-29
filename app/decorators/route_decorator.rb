@@ -29,6 +29,14 @@ class RouteDecorator < Draper::Decorator
     end.to_sentence.html_safe
   end
 
+  def request_schema_summary
+    h.schema_summary(
+      request_root_key,
+      request_resource_representation,
+      request_is_collection
+    )
+  end
+
   private
 
   def promote_route_resource(resources)
