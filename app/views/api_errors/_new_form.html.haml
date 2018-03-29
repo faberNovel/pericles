@@ -1,0 +1,16 @@
+= bootstrap_form_for([project, api_error]) do |f|
+
+  = f.text_field :name
+
+  = f.text_area :json_schema, class: 'json'
+
+  .alert.alert-warning= t('.json_instance_explanation')
+
+  .form-group{class: @json_instance_error.blank? ? '' : 'has-error'}
+    %label.control-label From JSON (BETA)
+    = text_area_tag(:json_instance, @json_instance, class: 'form-control json', placeholder: format_json({code: 1, message: 'Error'}.to_json))
+    - unless @json_instance_error.blank?
+      %span.help-block= @json_instance_error
+
+  %p
+    = f.submit

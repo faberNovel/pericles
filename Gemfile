@@ -22,6 +22,7 @@ gem 'regex_field', '~> 0.1.0'
 gem 'ancestry', '~> 3.0.1'
 gem 'draper', '~> 3.0'
 gem 'neatjson', '~> 0.8'
+gem 'json-schema-generator'
 
 # Recommended for admin interface
 # gem 'activeadmin', github: 'activeadmin' # There is no Rails 4 version just yet

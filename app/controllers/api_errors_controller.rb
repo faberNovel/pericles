@@ -29,7 +29,8 @@ class ApiErrorsController < ApplicationController
   end
 
   def create
-    if api_error.save
+    generate_schema_from_json_instance if should_generate_schema_from_json_instance
+    if @json_instance_error.blank? && api_error.save
       redirect_to project_api_error_path(project, api_error)
     else
       render 'new', status: :unprocessable_entity
@@ -47,5 +48,33 @@ class ApiErrorsController < ApplicationController
   def destroy
     api_error.destroy
     redirect_to project_api_errors_path(project)
+  end
+
+  private
+
+  # TODO Clément Villain 29/03/18: refactor this with ResourcesController
+  # Maybe use dry-validation?
+  def check_valid_json_object_param(json_string)
+    begin
+      parsed_json = JSON.parse(json_string)
+    rescue JSON::ParserError
+      @json_instance_error = 'could not parse JSON'
+      return
+    end
+
+    @json_instance_error = 'JSON is not an object' unless parsed_json.is_a? Hash
+  end
+
+  def should_generate_schema_from_json_instance
+    return false if params[:json_instance].blank?
+
+    check_valid_json_object_param(params[:json_instance])
+    return false if @json_instance_error
+
+    params[:json_schema].blank?
+  end
+
+  def generate_schema_from_json_instance
+    params[:api_error][:json_schema] = JSON::SchemaGenerator.generate 'Pericles', params[:json_instance]
   end
 end

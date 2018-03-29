@@ -1,4 +1,7 @@
 en:
   api_errors:
+    new_form:
+      json_instance_explanation:
+        If you give us an example of your error, we can try to generate a JSON Schema from it
     index:
       no_errors: There are no errors defined, please define here what kind of errors your API can throw

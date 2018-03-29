@@ -77,6 +77,39 @@ class ApiErrorControllerTest < ControllerWithAuthenticationTest
     assert_redirected_to project_api_error_path(@project, ApiError.order(:created_at).last)
   end
 
+  test 'should create new api_error from json instance' do
+    assert_difference 'ApiError.where(project: @project).count' do
+      post project_api_errors_path(@project), params: {
+        api_error: build(:api_error).attributes.except(:json_schema),
+        json_instance: {
+          code: 1,
+          message: 'Error number 1'
+        }.to_json
+      }
+    end
+    assert_redirected_to project_api_error_path(@project, ApiError.order(:created_at).last)
+  end
+
+  test 'should not create new api_error from invalid json instance' do
+    assert_no_difference 'ApiError.where(project: @project).count' do
+      post project_api_errors_path(@project), params: {
+        api_error: build(:api_error).attributes.except(:json_schema),
+        json_instance: '{lol'
+      }
+    end
+    assert_response :unprocessable_entity
+  end
+
+  test 'should not create new api_error from json that is not an object' do
+    assert_no_difference 'ApiError.where(project: @project).count' do
+      post project_api_errors_path(@project), params: {
+        api_error: build(:api_error).attributes.except(:json_schema),
+        json_instance: [1, 2, 3].to_json
+      }
+    end
+    assert_response :unprocessable_entity
+  end
+
   test 'should not create new api_error if name is blank' do
     assert_no_difference 'ApiError.where(project: @project).count' do
       post project_api_errors_path(@project), params: {
