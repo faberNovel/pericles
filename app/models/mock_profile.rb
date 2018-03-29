@@ -1,6 +1,6 @@
 class MockProfile < ApplicationRecord
   belongs_to :project
-  has_many :mock_pickers
+  has_many :mock_pickers, dependent: :destroy
   has_many :responses, through: :mock_pickers
   has_ancestry
 

@@ -2,6 +2,7 @@
   = javascript_include_tag("mock_profiles/form.js")
 
 .flexcontainer-justify-end
+  = link_to 'Delete', mock_profile_path(mock_profile), class: 'btn btn-default h-margin', method: :delete, data: { confirm: 'Are you sure ?' }
   = link_to 'Export', mock_profile_path(mock_profile, format: 'zip'), class: 'btn btn-primary'
 
 #mock_profile_form
