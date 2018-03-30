@@ -12,7 +12,7 @@ en:
       no_mocks_placeholder: "There are no mocks for this response"
     index:
       no_resources: "There are no resources, create one !"
-    form:
+    create_form:
       json_instance_explanation: |
         If you already have a JSON example for this resource, Pericles can
         try to pre-fill the attributes from it. The JSON must

@@ -103,10 +103,10 @@ class ResourcesControllerTest < ControllerWithAuthenticationTest
     assert_redirected_to project_resource_path(@project, @project.resources.order(:created_at).last)
   end
 
-  test "should create resource from invalid json" do
+  test "should not create resource from invalid json" do
     assert_no_difference('Resource.count') do
       post project_resources_path(@project), params: {
-        resource: {name: 'Resource name'}, json_instance: '{invalid}'
+        resource: {name: 'Resource name', json_instance: '{invalid}'}
       }
     end
     assert_response :unprocessable_entity
@@ -115,7 +115,7 @@ class ResourcesControllerTest < ControllerWithAuthenticationTest
   test "should create resource from json that is not an object" do
     assert_no_difference('Resource.count') do
       post project_resources_path(@project), params: {
-        resource: {name: 'Resource name'}, json_instance: '"valid json as string"'
+        resource: {name: 'Resource name', json_instance: '"valid json as string"'}
       }
     end
     assert_response :unprocessable_entity

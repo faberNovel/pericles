@@ -31,3 +31,6 @@ en:
   errors:
     messages:
       taken: "%{value} has already been taken"
+      could_not_parse_json: Could not parse JSON
+      json_object_cannot_be_blank: JSON cannot be blank
+      json_must_be_an_object: JSON must be an object

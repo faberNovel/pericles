@@ -39,6 +39,9 @@ class ResourcesController < ApplicationController
   end
 
   def new
+    @resource_creation_contract = ResourceCreationContract.new(
+      resource
+    )
   end
 
   def edit_attributes
@@ -50,12 +53,15 @@ class ResourcesController < ApplicationController
   end
 
   def create
-    check_valid_json_object_param(params[:json_instance]) unless params[:json_instance].blank?
-    if @json_instance_error.blank? && resource.save
-      resource.try_create_attributes_from_json(params[:json_instance]) if params[:json_instance]
+    json_instance = params[:resource]&.delete :json_instance
+    @resource_creation_contract = ResourceCreationContract.new(
+      resource,
+      json_instance
+    )
+
+    if @resource_creation_contract.save
       redirect_to project_resource_path(project, resource)
     else
-      @json_instance = params[:json_instance]
       render 'new', status: :unprocessable_entity
     end
   end
@@ -84,17 +90,6 @@ class ResourcesController < ApplicationController
   end
 
   private
-
-  def check_valid_json_object_param(json_string)
-    begin
-      parsed_json = JSON.parse(json_string)
-    rescue JSON::ParserError
-      @json_instance_error = 'could not parse JSON'
-      return
-    end
-
-    @json_instance_error = 'JSON is not an object' unless parsed_json.is_a? Hash
-  end
 
   def resource_params
     return @resource_params if @resource_params

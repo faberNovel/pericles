@@ -2,7 +2,7 @@
   #error_explanation
     %h2
       = pluralize(object.errors.count, "error")
-      = "prohibited this #{object.class.name} from being saved:"
+      = " prohibited this #{object.respond_to?(:class_name) ? object.class_name : object.class.name} from being saved:"
     %ul
       - object.errors.full_messages.each do |msg|
         %li= msg
