@@ -1,4 +1,5 @@
 = bootstrap_form_for project do |f|
+  .flexcontainer-justify-end= f.submit class: 'btn btn-primary'
   = render 'shared/errors', object: project
 
   = f.text_field :title

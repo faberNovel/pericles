@@ -1,4 +1,5 @@
 = bootstrap_form_for([resource, resource_representation]) do |f|
+  .flexcontainer-justify-end= f.submit class: 'btn btn-primary'
   = render 'shared/errors', object: resource_representation
 
   .row
@@ -46,6 +47,3 @@
                 = fields.text_field :custom_key_name, hide_label: true, placeholder: attribute.key_name_placeholder
               %td
                 = fields.hidden_field :attribute_id
-
-  %p
-    = f.submit

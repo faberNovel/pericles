@@ -6,6 +6,7 @@
 = hidden_field_tag 'project_id', route.resource.project.id
 
 = bootstrap_form_for([route, route_response]) do |f|
+  .flexcontainer-justify-end= f.submit class: 'btn btn-primary'
   = render 'shared/errors', object: route_response
 
   .row
@@ -53,5 +54,3 @@
     = f.fields_for :metadata_responses, available_metadata_responses do |metadata_responses_fields|
       = render 'metadata_responses_fields', f: metadata_responses_fields
 
-  %p
-    = f.submit

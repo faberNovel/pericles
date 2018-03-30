@@ -1,4 +1,5 @@
 = bootstrap_form_for([project, api_error]) do |f|
+  .flexcontainer-justify-end= f.submit class: 'btn btn-primary'
 
   = f.text_field :name
 
@@ -11,6 +12,3 @@
     = text_area_tag(:json_instance, @json_instance, class: 'form-control json', placeholder: format_json({code: 1, message: 'Error'}.to_json))
     - unless @json_instance_error.blank?
       %span.help-block= @json_instance_error
-
-  %p
-    = f.submit

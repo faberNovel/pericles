@@ -1,7 +1,5 @@
 = bootstrap_form_for(model_instance.persisted? ? model_instance : [model, model_instance]) do |f|
+  .flexcontainer-justify-end= f.submit class: 'btn btn-primary'
   = f.text_field :name
 
   = f.text_area :body, value: format_json(model_instance.body), class: 'json'
-
-  %p
-    = f.submit

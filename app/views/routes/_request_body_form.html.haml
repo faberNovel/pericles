@@ -2,6 +2,7 @@
   = javascript_include_tag("generate_schema")
 
 = bootstrap_form_for([project, route]) do |f|
+  .flexcontainer-justify-end= f.submit class: 'btn btn-primary'
   = render 'shared/errors', object: route
 
   %h3 Request
@@ -23,6 +24,3 @@
         = f.check_box :request_is_collection
         = f.text_field :request_root_key, class: 'root-key'
         = f.text_area :request_json_schema, size: "60x20", label: 'Body JSON schema', readonly: true, value: format_json(route.request_json_schema)
-
-  %p
-    = f.submit

@@ -1,9 +1,7 @@
 = bootstrap_form_for scheme do |f|
+  .flexcontainer-justify-end= f.submit class: 'btn btn-primary'
   = render 'shared/errors', object: scheme
 
   = f.text_field :name
 
   = f.regex_field :regexp
-
-  %p
-    = f.submit
