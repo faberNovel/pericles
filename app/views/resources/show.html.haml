@@ -21,13 +21,15 @@
   %h1{id: resource.id}
     = resource.name
     - if user.can_edit? resource
-      = link_to(image_tag('edit.svg'), edit_resource_project_resource_path(project, resource))
+      = link_to(image_tag('edit.svg'), edit_resource_project_resource_path(project, resource), 'v-if': '!manageMode')
     - if user.can_delete? resource
       .pull-right
-        = link_to("Delete", project_resource_path(project, resource),
-            method: :delete,
-            data: { confirm: 'Are you sure ?' },
-            class: "btn btn-default")
+        %transition{name: "w-slide-fade"}
+          = link_to("Delete", project_resource_path(project, resource),
+              method: :delete,
+              data: { confirm: 'Are you sure ?' },
+              class: "btn btn-default",
+              'v-if': '!manageMode')
 
   %p
     = resource.description
@@ -36,20 +38,21 @@
       Used in:&nbsp
       = resource.used_in_resources_links
 
-  %ul.nav.nav-pills{role: 'tablist'}
-    %li.active
-      %a{href: '#pills-attributes', 'data-toggle' => "pill", role: 'tab'}
-        Attributes
-        %span.badge=resource.resource_attributes.count
-    %li
-      %a{href: '#pills-resource-instances', 'data-toggle' => "pill", role: 'tab'}
-        Instances
-        %span.badge{class: resource.has_invalid_mocks? ? 'invalid-instances' : ''}
-          =resource.resource_instances.count
-    %li
-      %a{href: '#pills-routes', 'data-toggle' => "pill", role: 'tab'}
-        Routes
-        %span.badge=resource.routes.count
+  %transition{name: "h-slide-fade"}
+    %ul.nav.nav-pills{role: 'tablist', 'v-if': '!manageMode'}
+      %li.active
+        %a{href: '#pills-attributes', 'data-toggle' => "pill", role: 'tab'}
+          Attributes
+          %span.badge=resource.resource_attributes.count
+      %li
+        %a{href: '#pills-resource-instances', 'data-toggle' => "pill", role: 'tab'}
+          Instances
+          %span.badge{class: resource.has_invalid_mocks? ? 'invalid-instances' : ''}
+            =resource.resource_instances.count
+      %li
+        %a{href: '#pills-routes', 'data-toggle' => "pill", role: 'tab'}
+          Routes
+          %span.badge=resource.routes.count
 
   .tab-content
     #pills-attributes.tab-pane.fade.in.active{role: 'tabpanel'}

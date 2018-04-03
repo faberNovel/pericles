@@ -8,18 +8,26 @@
 
 
 .h-slide-fade-enter-active, .h-slide-fade-leave-active {
-  > * {
+  * {
     transition: all 0.4s;
   }
   transition: all 0.4s;
 }
 
 .h-slide-fade-enter-active, .h-slide-fade-leave {
-  > * {
+  > .btn, .btn-group {
     height: 34px;
   }
-  > a {
+  > a, .flex {
     height: 20px;
+  }
+
+  > li {
+    height: 40px;
+
+    &.active {
+      height: 44px;
+    }
   }
 }
 
@@ -34,6 +42,7 @@
   margin-top: 0 !important;
   margin-bottom: 0 !important;;
   opacity: 0;
+  height: 0 !important;
 }
 
 
