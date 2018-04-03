@@ -17,7 +17,9 @@
     .cell.type(v-else) {{displayedType}}
     .cell {{attribute.nullable}}
     .cell.circles
-      .circle(v-for='r in attribute.representations'
+      .circle(
+        v-for='r in attribute.representations'
+        v-if='r.hasAttribute || manageMode'
         :class="[{selected: r.hasAttribute, hoverable: manageMode}, r.colorClass]"
         @click='toggleBelongingAttribute(attribute.id, r.id)'
       )

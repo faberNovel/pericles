@@ -223,6 +223,10 @@
 
   }
 
+  .hoverable:hover {
+    cursor: pointer;
+  }
+
   .color-0 {
     color: #0b6975;
     border-color: #0b6975;
