@@ -614,6 +614,15 @@
     }
   }
 
+  #new {
+    border-color: #008afd;
+    color: #008afd;
+    &::placeholder {
+      color: #008afd;
+    }
+    font-weight: 600;
+  }
+
   #new:focus {
     outline: none;
   }

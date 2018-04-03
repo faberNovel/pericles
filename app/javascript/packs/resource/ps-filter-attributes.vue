@@ -23,8 +23,8 @@
       v-if='manageMode'
       :value='getNewRepresentationName()'
       @input="updateNewRepresentationName"
-      placeholder='New Representation (press Enter)'
-      :size='"New Representation (press Enter)".length'
+      placeholder='+ New Representation (press Enter)'
+      size='29'
       :style='newNameWidthStyle'
       @click='onAllClick'
       @keyup.enter='createNewRepresentation'
