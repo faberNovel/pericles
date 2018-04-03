@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
 
   sequence :attribute_name do |n|
     "Attribute #{n}"

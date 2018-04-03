@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
 
   sequence :resource_representation_name do |n|
     "Resource_Representation #{n}"

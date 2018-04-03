@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :api_error_instance do
     name 'Nice name'
     body '{}'

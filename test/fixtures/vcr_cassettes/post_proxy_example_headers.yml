@@ -30,7 +30,7 @@ http_interactions:
       Host:
       - example.com
       User-Agent:
-      - http.rb/2.2.2
+      - http.rb/3.0.0
   response:
     status:
       code: 200

@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
 
   sequence :email do |n|
     "person#{n}#{User::INTERNAL_EMAIL_DOMAIN}"

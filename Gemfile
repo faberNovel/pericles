@@ -17,7 +17,7 @@ gem 'http'
 gem 'kaminari'
 gem 'rollbar', '~> 2.15', '>= 2.15.4'
 gem 'chosen-rails'
-gem "cocaine"
+gem 'terrapin'
 gem 'regex_field', '~> 0.1.0'
 gem 'ancestry', '~> 3.0.1'
 gem 'draper', '~> 3.0'
@@ -55,7 +55,7 @@ end
 
 group :test do
   gem 'minitest-reporters'
-  gem 'factory_girl_rails'
+  gem 'factory_bot_rails'
   gem 'simplecov', :require => false
   gem 'vcr'
   gem 'webmock'
