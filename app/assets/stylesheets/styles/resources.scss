@@ -617,6 +617,13 @@
   #new:focus {
     outline: none;
   }
+
+  .no-attributes {
+    padding: 24px;
+    text-align: center;
+    font-style: italic;
+    flex: 1;
+  }
 }
 
 

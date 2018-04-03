@@ -341,5 +341,8 @@ export default {
     ).then((data) => {
       this.fetchResource();
     });
+  },
+  getResourceAttributesEditPath: function() {
+    return '/projects/' + this.state.projectId + '/resources/' + this.state.resourceId + '/edit_attributes';
   }
 }

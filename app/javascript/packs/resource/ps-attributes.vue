@@ -31,6 +31,9 @@
     :manage-mode='manageMode'
     :active-representation='activeRepresentation'
   )
+  .no-attributes(v-if='attributes.length === 0').
+    There is no attributes in this resource, you can add some
+    #[a(:href='editAttributesPath') here]
 </template>
 
 <script>
@@ -71,6 +74,11 @@ export default {
   data: function() {
     return {
         shouldShowExpandAll: true
+    }
+  },
+  computed: {
+    editAttributesPath: function() {
+      return Store.getResourceAttributesEditPath();
     }
   },
   components: {'ps-attribute': AttributeComponent}
