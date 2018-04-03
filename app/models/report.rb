@@ -18,7 +18,11 @@ class Report < ApplicationRecord
   end
 
   def valid_status?
-    self.validation_errors.find { |e| e.status_code? }.blank?
+    status_error.blank?
+  end
+
+  def status_error
+    self.validation_errors.find { |e| e.status_code? }
   end
 
   def header_errors

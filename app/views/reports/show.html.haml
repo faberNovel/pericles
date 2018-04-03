@@ -7,6 +7,20 @@
 - else
   = render partial: 'routes/route_summary', locals: { route: report.route.decorate, real_url: report.url, should_display_representations: true }
 
+- unless report.body_errors.empty? && report.header_errors.empty?
+  %h4 Errors
+
+  %ul
+    - unless report.valid_status?
+      %li.error= report.status_error.description
+    - report.header_errors.each do |e|
+      %li.error= e.description
+  - report.body_errors.group_by(&:readable_path).each do |path, errors|
+    %h6= path
+    %ul
+      - errors.sort_by { |e| [e.type, e.path] }.each do |e|
+        %li.error= e.description
+
 %h4 Request
 
 .request-method
@@ -69,10 +83,6 @@
           %pre.pre-scrollable
             %code
               =format_json(report.response_body)
-          .body-errors
-            %ul
-              - report.body_errors.each do |e|
-                %li= e
     .tab-pane{ role: "tabpanel", id: "resp-headers" }
       .panel.panel-default
         .panel-body
@@ -82,7 +92,3 @@
               %tr
                 %td= key
                 %td= value
-            - report.header_errors.each do |e|
-              %tr.header-error
-                %td= e.header_name
-                %td
