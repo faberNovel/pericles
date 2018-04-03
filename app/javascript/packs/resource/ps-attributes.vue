@@ -37,6 +37,8 @@
 </template>
 
 <script>
+import Vue from 'vue/dist/vue.esm'
+
 import DefaultSortIcon from 'images/sort.svg';
 import SelectedSortIcon from 'images/selected_sort.svg';
 import Store from './store.js';
@@ -71,9 +73,16 @@ export default {
       }
     }
   },
+  watch: {
+    activeRepresentation: function(val, oldVal) {
+      if(this.manageMode) {
+        Vue.nextTick(this.onClickExpandAll);
+      }
+    }
+  },
   data: function() {
     return {
-        shouldShowExpandAll: true
+      shouldShowExpandAll: true
     }
   },
   computed: {
