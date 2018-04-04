@@ -6,10 +6,7 @@ Pericles was designed to make **API specification** easier.
 
 ## Installation
 
-Pericles is a Ruby on Rails project, and currently runs on Ruby v2.3.1. Make sure you are using the right version before
- continuing.
-
-To get the project up and running, proceed as follows (within the app's directory):
+Pericles is a Ruby on Rails project. To get the project up and running, proceed as follows (within the app's directory):
 
 1. Install the required gems and dependencies:
    ```sh
