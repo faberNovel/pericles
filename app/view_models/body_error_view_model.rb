@@ -41,6 +41,10 @@ class BodyErrorViewModel
     end
   end
 
+  def required_property
+    /did not contain a required property of ('[^']+')/.match(shorten_description)[1]
+  end
+
   private
 
   def current_type
@@ -49,10 +53,6 @@ class BodyErrorViewModel
 
   def target_type
     /of type (.*) did not match the following type: (.*)/.match(shorten_description)[2]
-  end
-
-  def required_property
-    /did not contain a required property of ('[^']+')/.match(shorten_description)[1]
   end
 
   def additional_list

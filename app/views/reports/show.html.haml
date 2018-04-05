@@ -7,7 +7,7 @@
 - else
   = render partial: 'routes/route_summary', locals: { route: report.route.decorate, real_url: report.url, should_display_representations: true }
 
-- unless report.body_errors.empty? && report.header_errors.empty?
+- if report.body_errors.any? || report.header_errors.any?
   %h4 Errors
 
   %ul

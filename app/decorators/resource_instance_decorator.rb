@@ -6,7 +6,7 @@ class ResourceInstanceDecorator < Draper::Decorator
       representation = object.parent.resource_representations[i]
       body_errors = errors.split("\n").map { |e| BodyErrorViewModel.new(e) }
       hash.merge({
-        representation => body_errors
+        representation => BodyErrorsViewModel.new(*body_errors)
       })
     end
   end
