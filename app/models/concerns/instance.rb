@@ -27,7 +27,7 @@ module Instance
         add_error_message(error_message)
       end
     rescue JSON::Schema::JsonParseError
-      errors.add(:body, :json_parse_error)
+      errors.add(:body, :could_not_parse_json)
     end
   end
 
