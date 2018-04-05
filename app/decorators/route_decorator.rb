@@ -24,7 +24,7 @@ class RouteDecorator < Draper::Decorator
     object.resource_representations.uniq.map do |r|
       h.link_to(
         r.name,
-        h.project_resource_path(r.project, r.resource_id, anchor: "res-#{r.id}")
+        h.project_resource_path(r.project, r.resource_id, anchor: "rep-#{r.id}")
       )
     end.to_sentence.html_safe
   end

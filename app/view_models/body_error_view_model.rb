@@ -31,8 +31,14 @@ class BodyErrorViewModel
   end
 
   def path
-    match = /The property '#\/([^']*)'/.match(shorten_description)
-    match[1] if match
+    match = /The property '(#\/[^']*)'/.match(shorten_description)
+    return unless match
+
+    if match[1] == '#/'
+      'root'
+    else
+      match[1].gsub(/^#\//, '')
+    end
   end
 
   private
