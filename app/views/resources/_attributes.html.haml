@@ -1,9 +1,10 @@
-.top
-  .flex
-    = render partial: "shared/last_edit", locals: {last_audit: resource.last_audit}
-  %ps-code-buttons{':active-representation': 'activeRepresentation', ':resource': 'resource'}
-  - if user.can_edit? resource
-    = link_to 'Edit attributes', edit_attributes_project_resource_path(project, resource), class: "btn btn-primary"
+%transition{name: "h-slide-fade"}
+  .top{'v-if': '!manageMode'}
+    .flex
+      = render partial: "shared/last_edit", locals: {last_audit: resource.last_audit}
+    %ps-code-buttons{':active-representation': 'activeRepresentation', ':resource': 'resource'}
+    - if user.can_edit? resource
+      = link_to 'Edit attributes', edit_attributes_project_resource_path(project, resource), class: "btn btn-primary"
 
 %ps-filter-attributes{':representations': 'resource.representations',
   ':manage-mode': 'manageMode', ':active-representation': 'activeRepresentation'}

@@ -4,7 +4,6 @@
 
 #mock_profile_form
   = bootstrap_form_for([project, mock_profile]) do |f|
+    .flexcontainer-justify-end= f.submit class: 'btn btn-primary'
     = f.text_field :name
 
-    %p
-      = f.submit

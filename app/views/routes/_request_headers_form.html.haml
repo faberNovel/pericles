@@ -2,6 +2,7 @@
   = javascript_include_tag("header_autocomplete")
 
 = bootstrap_form_for([project, route]) do |f|
+  .flexcontainer-justify-end= f.submit class: 'btn btn-primary'
   = render 'shared/errors', object: route
 
   %h3 Request
@@ -24,6 +25,3 @@
 
       = link_to_add_association "Add a Header", f, :request_headers,
         { 'data-association-insertion-node' => "#table_request_headers tbody", 'data-association-insertion-method' => 'append' }
-
-  %p
-    = f.submit

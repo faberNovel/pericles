@@ -1,5 +1,5 @@
 module Authorization
-  include ActiveSupport::Concern
+  extend ActiveSupport::Concern
 
   def can_create?(record_class, options = {})
     Pundit.policy(UserContext.new(object, options[:project]), record_class).create?

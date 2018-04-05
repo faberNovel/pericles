@@ -56,6 +56,16 @@ class MockProfilesControllerTest < ControllerWithAuthenticationTest
     assert_response :success
   end
 
+  test "delete mock profile new" do
+    @mock_profile.mock_pickers << create(:mock_picker) << create(:mock_picker)
+
+    assert_difference 'MockPicker.count', -2 do
+      assert_difference 'MockProfile.count', -1 do
+        delete mock_profile_path(@mock_profile)
+      end
+    end
+  end
+
   test "mock profile mocks" do
     r = create(:response, route: @route, resource_representation: @resource.default_representation)
     mock_picker = create(:mock_picker, response: r)

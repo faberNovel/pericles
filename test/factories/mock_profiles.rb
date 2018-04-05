@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
 
   sequence :mock_profile_name do |n|
     "MockProfile #{n}"

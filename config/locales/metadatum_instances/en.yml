@@ -1,8 +1,0 @@
-en:
-  activerecord:
-    errors:
-      models:
-        metadatum_instance:
-          attributes:
-            body:
-              json_parse_error: 'Cannot parse this body'

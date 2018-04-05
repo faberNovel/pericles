@@ -1,4 +1,5 @@
 = bootstrap_form_for([project, route]) do |f|
+  .flexcontainer-justify-end= f.submit class: 'btn btn-primary'
   = render 'shared/errors', object: route
 
 
@@ -34,6 +35,3 @@
 
         = link_to_add_association "Add a Query Parameter", f, :request_query_parameters,
           { 'data-association-insertion-node' => "#table_request_query_parameters tbody", 'data-association-insertion-method' => 'append' }
-
-  %p
-    = f.submit

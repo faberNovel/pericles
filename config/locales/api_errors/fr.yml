@@ -1,4 +1,7 @@
 fr:
   api_errors:
+    new_form:
+      json_instance_explanation:
+        Si vous nous donnez un exemple de votre erreur, nous pouvons essayer de générer un JSON Schema pour vous
     index:
       no_errors: Aucune erreur n'est spécifiée, il faut définir ici la forme des erreurs que l'API renvoie

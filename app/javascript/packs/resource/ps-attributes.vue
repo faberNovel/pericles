@@ -31,9 +31,14 @@
     :manage-mode='manageMode'
     :active-representation='activeRepresentation'
   )
+  .no-attributes(v-if='attributes.length === 0').
+    There is no attributes in this resource, you can add some
+    #[a(:href='editAttributesPath') here]
 </template>
 
 <script>
+import Vue from 'vue/dist/vue.esm'
+
 import DefaultSortIcon from 'images/sort.svg';
 import SelectedSortIcon from 'images/selected_sort.svg';
 import Store from './store.js';
@@ -68,9 +73,21 @@ export default {
       }
     }
   },
+  watch: {
+    activeRepresentation: function(val, oldVal) {
+      if(this.manageMode) {
+        Vue.nextTick(this.onClickExpandAll);
+      }
+    }
+  },
   data: function() {
     return {
-        shouldShowExpandAll: true
+      shouldShowExpandAll: true
+    }
+  },
+  computed: {
+    editAttributesPath: function() {
+      return Store.getResourceAttributesEditPath();
     }
   },
   components: {'ps-attribute': AttributeComponent}

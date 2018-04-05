@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
 
   sequence :url_sequence do |n|
     "/users/#{n}"

@@ -6,7 +6,7 @@
     transition(name="fade")
       .btn.btn-link(@click='onManageClick'
         v-show='!manageMode'
-      ) Manage
+      ) Manage representations
   .flexwrap
     transition(name="w-slide-fade")
       .btn.representation-btn#all(
@@ -23,8 +23,8 @@
       v-if='manageMode'
       :value='getNewRepresentationName()'
       @input="updateNewRepresentationName"
-      placeholder='New Representation (press Enter)'
-      :size='"New Representation (press Enter)".length'
+      placeholder='+ New Representation (press Enter)'
+      size='29'
       :style='newNameWidthStyle'
       @click='onAllClick'
       @keyup.enter='createNewRepresentation'
@@ -68,12 +68,18 @@ export default {
       Store.unselectAll();
     },
     onManageClick: function() {
+      $("#sidebar-wrapper").css('width', '0px');
+      $("#wrapper").css('padding-left', '0px');
       Store.setManageMode(true);
     },
     onCancelClick: function() {
+      $("#sidebar-wrapper").css('width', '');
+      $("#wrapper").css('padding-left', '');
       Store.restoreState();
     },
     onUpdateClick: function() {
+      $("#sidebar-wrapper").css('width', '');
+      $("#wrapper").css('padding-left', '');
       Store.updateResourceRepresentations();
     },
     getNewRepresentationName: function() {

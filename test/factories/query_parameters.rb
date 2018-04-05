@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
 
   sequence :query_parameter_name do |n|
     "QueryParameter #{n}"

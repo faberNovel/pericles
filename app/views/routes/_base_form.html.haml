@@ -1,4 +1,5 @@
 = bootstrap_form_for([project, route]) do |f|
+  .flexcontainer-justify-end= f.submit class: 'btn btn-primary'
   = render 'shared/errors', object: route
 
   .row
@@ -8,6 +9,3 @@
       = f.text_field :url, placeholder: "/my_resources"
       = f.select :http_method, Route.http_methods.keys.to_a
       = f.text_area :description, placeholder: t('.description_placeholder')
-
-  %p
-    = f.submit

@@ -20,7 +20,7 @@
               %span{ class: label_class_for_http_method(report.request_method) }= report.request_method
           %td= report.url
           %td= report.response_status_code
-          %td= time_ago_in_words(report.created_at) + ' ago'
+          %td= report.created_at.strftime("%d/%m/%y - %HH%M")
           %td= report.response.blank? ? t('.unknown') : (report.correct? ? '☑' : '☐')
           %td= link_to 'Detail', project_report_path(project, report)
 

@@ -7,11 +7,18 @@ module ResponsesHelper
     end
   end
 
-  def schema_summary(root_key, name, is_collection)
-    return '' if name.blank?
-    name = "[ #{name} ]" if is_collection
-    name = "\"#{root_key}\": #{name}" unless root_key.blank?
-    name = "{ #{name} }" unless is_collection and root_key.blank?
-    return name
+  def schema_summary(root_key, representation, is_collection)
+    return '' if representation&.name.blank?
+
+    summary = link_to(
+      representation.name,
+      project_resource_path(representation.resource.project, representation.resource, anchor: "rep-#{representation.id}")
+    )
+
+    summary = "[ #{summary} ]" if is_collection
+    summary = "\"#{root_key}\": #{summary}" unless root_key.blank?
+    summary = "{ #{summary} }" unless is_collection and root_key.blank?
+
+    summary
   end
 end

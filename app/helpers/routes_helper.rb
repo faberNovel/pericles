@@ -1,7 +1,15 @@
 module RoutesHelper
   def format_json(json)
     return if json.blank?
-    json = JSON.parse(json) if json.is_a?(String)
+
+    if json.is_a?(String)
+      begin
+        json = JSON.parse(json)
+      rescue JSON::ParserError
+        return json
+      end
+    end
+
     JSON.stable_pretty_generate(json)
   end
 

@@ -1,8 +1,6 @@
 = bootstrap_form_for([project, api_error]) do |f|
+  .flexcontainer-justify-end= f.submit class: 'btn btn-primary'
 
   = f.text_field :name
 
   = f.text_area :json_schema, class: 'json'
-
-  %p
-    = f.submit

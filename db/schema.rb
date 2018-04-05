@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180223163412) do
+ActiveRecord::Schema.define(version: 20180403141405) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -252,7 +252,6 @@ ActiveRecord::Schema.define(version: 20180223163412) do
 
   create_table "responses", id: :serial, force: :cascade do |t|
     t.integer "status_code"
-    t.json "body_schema_backup"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "route_id"
@@ -272,7 +271,6 @@ ActiveRecord::Schema.define(version: 20180223163412) do
     t.integer "resource_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.json "request_body_schema_backup"
     t.integer "request_resource_representation_id"
     t.boolean "request_is_collection", default: false, null: false
     t.string "request_root_key"

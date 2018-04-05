@@ -223,6 +223,10 @@
 
   }
 
+  .hoverable:hover {
+    cursor: pointer;
+  }
+
   .color-0 {
     color: #0b6975;
     border-color: #0b6975;
@@ -614,8 +618,24 @@
     }
   }
 
+  #new {
+    border-color: #008afd;
+    color: #008afd;
+    &::placeholder {
+      color: #008afd;
+    }
+    font-weight: 600;
+  }
+
   #new:focus {
     outline: none;
+  }
+
+  .no-attributes {
+    padding: 24px;
+    text-align: center;
+    font-style: italic;
+    flex: 1;
   }
 }
 

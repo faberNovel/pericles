@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
 
   sequence :metadatum_name do |n|
     "Metadatum #{n}"

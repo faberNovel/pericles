@@ -6,3 +6,9 @@ fr:
     download: Télécharger
     delete: Supprimer
     sign_in: S'identifier
+  errors:
+    messages:
+      taken: "%{value} n'est pas disponible"
+      could_not_parse_json: Impossible de parser le JSON
+      json_object_cannot_be_blank: Un JSON ne peut pas être vide
+      json_must_be_an_object: Ce JSON doit être un objet

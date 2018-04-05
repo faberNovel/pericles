@@ -61,7 +61,7 @@ class AbstractInstancesController < ApplicationController
     authorize @model_instance
     @model_instance
   end
-  helper_method :model_instance
+  decorates_method :model_instance
 
   def redirect_to_model
     redirect_to send("project_#{model_name}_path", project, model)

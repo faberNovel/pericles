@@ -24,9 +24,17 @@ class RouteDecorator < Draper::Decorator
     object.resource_representations.uniq.map do |r|
       h.link_to(
         r.name,
-        h.project_resource_path(r.project, r.resource_id, anchor: "res-#{r.id}")
+        h.project_resource_path(r.project, r.resource_id, anchor: "rep-#{r.id}")
       )
     end.to_sentence.html_safe
+  end
+
+  def request_schema_summary
+    h.schema_summary(
+      request_root_key,
+      request_resource_representation,
+      request_is_collection
+    )
   end
 
   private

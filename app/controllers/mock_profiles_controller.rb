@@ -41,6 +41,17 @@ class MockProfilesController < MocksController
     end
   end
 
+  def destroy
+    new_active = project.mock_profiles.where.not(
+      id: mock_profile.id
+    ).first
+    project.update(mock_profile_id: new_active&.id)
+
+    mock_profile.destroy
+
+    redirect_to project_mock_profiles_path(project)
+  end
+
   private
 
   def find_project
