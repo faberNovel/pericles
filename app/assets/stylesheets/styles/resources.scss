@@ -220,6 +220,14 @@
       background-color: #f1f2f4;
       border-color: darken(#f1f2f4, 15%);
     }
+
+    input {
+      width: fit-content;
+      padding: 0px;
+      height: 17px;
+      border: none;
+      box-shadow: none;
+    }
   }
 
   .hoverable:hover {

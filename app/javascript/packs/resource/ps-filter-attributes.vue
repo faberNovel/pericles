@@ -13,23 +13,11 @@
         @click='onAllClick'
         v-show="!manageMode"
       ) All
-    .btn.representation-btn.flex-v-center(
-        v-for='r in representations'
-        :id='r.id'
-        :class="[{selected: r.isSelected}, r.colorClass]"
-        @click='onClick(r.id)'
+    PsRepresentationBtn(
+      v-for='r in representations'
+      :representation='r'
+      :manageMode='manageMode'
     )
-      .name {{r.name}}
-      a(v-if='manageMode'
-        @click='onCloneClick(r)'
-        style='margin-left: 16px; display: inline-flex;'
-      )
-        ImageCopy
-      a(v-if='manageMode'
-        @click='onDeleteClick(r)'
-        style='margin-left: 4px; display: inline-flex;'
-      )
-        ImageDelete
 
     input.representation-btn#new(
       v-if='manageMode'
@@ -41,27 +29,16 @@
       @click='onAllClick'
       @keyup.enter='createNewRepresentation'
     )
-  transition(name="h-slide-fade")
-    .flexcontainer.flex-v-center(v-show='manageMode', style='margin-top: 16px;')
-      transition(name="w-slide-fade")
-        input.form-control(v-if="activeRepresentation"
-          v-model="activeRepresentation.name"
-          style='width: 200px;'
-        )
 </template>
 
 <script>
-import ImageDelete from 'images/delete.svg';
-import ImageCopy from 'images/copy.svg';
+import PsRepresentationBtn from './ps-representation-btn.vue';
 import Store from './store.js';
 
 
 export default {
   props: ['representations', 'manageMode', 'activeRepresentation'],
   methods: {
-    onClick: function(representationId) {
-      Store.toggleSelect(representationId)
-    },
     onAllClick: function() {
       Store.unselectAll();
     },
@@ -79,12 +56,6 @@ export default {
     },
     createNewRepresentation: function() {
       Store.createNewRepresentation();
-    },
-    onDeleteClick: function(representation) {
-      Store.markRepresentationToBeDeleted(representation.id);
-    },
-    onCloneClick: function(representation) {
-      Store.clone(this.activeRepresentation.id);
     }
   },
   computed: {
@@ -99,8 +70,7 @@ export default {
     }
   },
   components: {
-    ImageDelete,
-    ImageCopy
+    PsRepresentationBtn
   }
 }
 </script>
