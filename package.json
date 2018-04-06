@@ -29,6 +29,7 @@
     "vue": "^2.5.13",
     "vue-loader": "^13.7.0",
     "vue-select": "^2.4.0",
+    "vue-svg-loader": "^0.5.0",
     "vue-template-compiler": "^2.5.13"
   },
   "devDependencies": {

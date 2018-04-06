@@ -10,10 +10,10 @@
         @keyup='onSearchQueryChange'
       )
       a(href='#' @click='onAlphabeticalSortClick')
-        img#sort-icon.pull-right(:src='sortIcon("alphabetical")')
+        SortIcon#sort-icon.pull-right(:fill='sortIconColor("alphabetical")')
     .cell.type Type
       a(href='#' @click='onTypeSortClick')
-        img#sort-icon.pull-right(:src='sortIcon("type")')
+        SortIcon#sort-icon.pull-right(:fill='sortIconColor("type")')
     .cell Nullable
     .cell Representations
     .cell
@@ -39,8 +39,7 @@
 <script>
 import Vue from 'vue/dist/vue.esm'
 
-import DefaultSortIcon from 'images/sort.svg';
-import SelectedSortIcon from 'images/selected_sort.svg';
+import SortIcon from 'images/sort.svg';
 import Store from './store.js';
 import AttributeComponent from './ps-attribute.vue';
 
@@ -65,11 +64,11 @@ export default {
       let text = e.target.value;
       Store.setSearchQuery(text);
     },
-    sortIcon: function(sortType) {
+    sortIconColor: function(sortType) {
       if (sortType === this.sortMode) {
-        return SelectedSortIcon;
+        return "#008afd";
       } else {
-        return DefaultSortIcon;
+        return "#999999";
       }
     }
   },
@@ -90,7 +89,10 @@ export default {
       return Store.getResourceAttributesEditPath();
     }
   },
-  components: {'ps-attribute': AttributeComponent}
+  components: {
+    SortIcon,
+    'ps-attribute': AttributeComponent
+  }
 }
 </script>
 
