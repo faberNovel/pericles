@@ -49,8 +49,6 @@
       transition(name="fade")
         .btn.btn-default#clone(v-if="activeRepresentation"
           @click='onCloneClick') Clone
-      .btn.btn-default(@click='onCancelClick') Cancel
-      .btn.btn-primary(@click='onUpdateClick') Update
 </template>
 
 <script>
@@ -71,16 +69,6 @@ export default {
       $("#sidebar-wrapper").css('width', '0px');
       $("#wrapper").css('padding-left', '0px');
       Store.setManageMode(true);
-    },
-    onCancelClick: function() {
-      $("#sidebar-wrapper").css('width', '');
-      $("#wrapper").css('padding-left', '');
-      Store.restoreState();
-    },
-    onUpdateClick: function() {
-      $("#sidebar-wrapper").css('width', '');
-      $("#wrapper").css('padding-left', '');
-      Store.updateResourceRepresentations();
     },
     getNewRepresentationName: function() {
       return Store.getNewRepresentationName();

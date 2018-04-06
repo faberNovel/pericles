@@ -16,6 +16,18 @@ document.addEventListener('DOMContentLoaded', () => {
       'ps-filter-attributes': FilterAttributesComponent,
       'ps-attributes': AttributesComponent,
       'ps-code-buttons': CodeButtonsComponent,
+    },
+    methods: {
+      onCancelClick: function() {
+        $("#sidebar-wrapper").css('width', '');
+        $("#wrapper").css('padding-left', '');
+        Store.restoreState();
+      },
+      onUpdateClick: function() {
+        $("#sidebar-wrapper").css('width', '');
+        $("#wrapper").css('padding-left', '');
+        Store.updateResourceRepresentations();
+      },
     }
   });
 
