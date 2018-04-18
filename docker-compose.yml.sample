@@ -7,12 +7,20 @@ services:
     depends_on:
       - postgres
     environment:
+      SECRET_KEY_BASE: <use 'bundle exec rake secret' to generate>
       GOOGLE_APP_ID: "" 
       GOOGLE_APP_SECRET: ""
       INTERNAL_EMAIL_DOMAIN: ""
       RAILS_ENV: "production"
       SECRET_KEY_BASE: ""
-      DATABASE_URL: postgres://pericles@postgres/pericles
+      # URL used to generate absolute links in emails
+      MAIL_DEFAULT_URL: ""
+      # Domain of the from field in your email
+      MAIL_SMTP_DOMAIN: ""
+      # Password to connect to your SMTP server
+      MAIL_SMTP_PASSWORD: ""
+      MAIL_SMTP_USERNAME: ""
+      DATABASE_URL: "postgres://pericles@postgres/pericles"
   postgres:
     image: postgres:9.6.2-alpine
     environment:
