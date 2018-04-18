@@ -1,0 +1,20 @@
+version: '2'
+services:
+  web:
+    build: .
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres
+    environment:
+      GOOGLE_APP_ID: "" 
+      GOOGLE_APP_SECRET: ""
+      INTERNAL_EMAIL_DOMAIN: ""
+      RAILS_ENV: "production"
+      SECRET_KEY_BASE: ""
+      DATABASE_URL: postgres://pericles@postgres/pericles
+  postgres:
+    image: postgres:9.6.2-alpine
+    environment:
+      POSTGRES_USER: pericles
+      POSTGRES_DB: pericles
