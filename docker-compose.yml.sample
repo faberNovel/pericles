@@ -1,7 +1,7 @@
 version: '2'
 services:
-  web:
-    build: .
+  ruby:
+    image: pericles:ruby-2.5
     ports:
       - "3000:3000"
     depends_on:
@@ -22,7 +22,11 @@ services:
       MAIL_SMTP_USERNAME: ""
       DATABASE_URL: "postgres://pericles@postgres/pericles"
   postgres:
-    image: postgres:9.6.2-alpine
+    image: postgres:10-alpine
     environment:
       POSTGRES_USER: pericles
       POSTGRES_DB: pericles
+    volumes:
+      - postgresql_data:/var/lib/postgresql/data
+volumes:
+  postgresql_data:
