@@ -8,11 +8,7 @@ RUN curl -sL https://deb.nodesource.com/setup_7.x | bash && \
     apt-get update && \
     apt-get install -y curl graphviz nodejs && \
     bundle config --global frozen 1 && \
-    mkdir -p /app && cd /app
-
-# no proxy for assets, serve them as static files
-ENV RAILS_SERVE_STATIC_FILES enabled
-ENV RAILS_DISABLE_FORCE_SSL enabled
+    mkdir -p /app
 
 WORKDIR /app
 
