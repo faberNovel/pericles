@@ -12,6 +12,7 @@ RUN curl -sL https://deb.nodesource.com/setup_7.x | bash && \
 
 # no proxy for assets, serve them as static files
 ENV RAILS_SERVE_STATIC_FILES enabled
+ENV RAILS_DISABLE_FORCE_SSL enabled
 
 WORKDIR /app
 
