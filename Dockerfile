@@ -23,4 +23,4 @@ RUN bundle install && \
 RUN ["chmod", "+x", "docker-entrypoint.sh"]
 ENTRYPOINT ["./docker-entrypoint.sh"]
 
-CMD ["bundle exec rails s"]
+CMD ["bin/rails", "server", "-b", "0.0.0.0"]
