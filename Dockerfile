@@ -24,4 +24,4 @@ RUN bundle install && \
 RUN ["chmod", "+x", "docker-entrypoint.sh"]
 ENTRYPOINT ["./docker-entrypoint.sh"]
 
-CMD ["bin/rails", "server", "-b", "0.0.0.0"]
+CMD bundle exec passenger start -p $PORT --max-pool-size 3

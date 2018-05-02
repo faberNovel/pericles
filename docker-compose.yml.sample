@@ -8,7 +8,7 @@ services:
       - postgres
     environment:
       SECRET_KEY_BASE: <use 'bundle exec rake secret' to generate>
-      GOOGLE_APP_ID: "" 
+      GOOGLE_APP_ID: ""
       GOOGLE_APP_SECRET: ""
       INTERNAL_EMAIL_DOMAIN: ""
       RAILS_ENV: "production"
@@ -21,6 +21,7 @@ services:
       MAIL_SMTP_PASSWORD: ""
       MAIL_SMTP_USERNAME: ""
       DATABASE_URL: "postgres://pericles@postgres/pericles"
+      PORT: 3000
   postgres:
     image: postgres:10-alpine
     environment:
