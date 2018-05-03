@@ -1,0 +1,32 @@
+version: '2'
+services:
+  ruby:
+    image: pericles:ruby-2.5
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres
+    environment:
+      SECRET_KEY_BASE: <use 'bundle exec rake secret' to generate>
+      GOOGLE_APP_ID: "" 
+      GOOGLE_APP_SECRET: ""
+      INTERNAL_EMAIL_DOMAIN: ""
+      RAILS_ENV: "production"
+      SECRET_KEY_BASE: ""
+      # URL used to generate absolute links in emails
+      MAIL_DEFAULT_URL: ""
+      # Domain of the from field in your email
+      MAIL_SMTP_DOMAIN: ""
+      # Password to connect to your SMTP server
+      MAIL_SMTP_PASSWORD: ""
+      MAIL_SMTP_USERNAME: ""
+      DATABASE_URL: "postgres://pericles@postgres/pericles"
+  postgres:
+    image: postgres:10-alpine
+    environment:
+      POSTGRES_USER: pericles
+      POSTGRES_DB: pericles
+    volumes:
+      - postgresql_data:/var/lib/postgresql/data
+volumes:
+  postgresql_data:
