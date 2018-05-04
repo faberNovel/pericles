@@ -14,7 +14,11 @@ class BodyErrorViewModel
     when :required
       "#{path} - missing property #{required_property}"
     when :type
-      "#{path} - wrong type: #{current_type} instead of #{target_type}"
+      if current_type == 'null'
+        "#{path} - cannot be null"
+      else
+        "#{path} - wrong type: #{current_type} instead of #{target_type}"
+      end
     else
       @original_description
     end
