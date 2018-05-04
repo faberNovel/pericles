@@ -39,7 +39,7 @@ gem 'pundit', '~> 1.1'
 # Recommended for serializing models in json
 # gem 'active_model_serializers', '~> 0.10.0.rc3'
 
-gem 'webpacker', '~> 3.0'
+gem 'webpacker', '~> 3.5', '>= 3.5.3'
 
 gem 'bootsnap', require: false
 

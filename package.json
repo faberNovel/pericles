@@ -21,7 +21,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@rails/webpacker": "^3.2.1",
+    "@rails/webpacker": "3.5",
     "core-js": "^2.5.3",
     "json-schema-faker": "git+https://github.com/MrChoclate/json-schema-faker.git#f2c1740c551230847c6bad1cedca5ad3533e5e08",
     "pug": "^2.0.0-rc.4",
@@ -33,6 +33,6 @@
     "vue-template-compiler": "^2.5.13"
   },
   "devDependencies": {
-    "webpack-dev-server": "^2.11.1"
+    "webpack-dev-server": "2.11.2"
   }
 }
