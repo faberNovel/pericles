@@ -2,7 +2,7 @@ class BodyErrorsViewModel
   include Enumerable
 
   def initialize(*body_error_view_models)
-    @body_error_view_models = body_error_view_models
+    @body_error_view_models = body_error_view_models.select(&:valid?)
   end
 
   def grouped_body_error_view_models

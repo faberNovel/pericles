@@ -45,6 +45,10 @@ class BodyErrorViewModel
     /did not contain a required property of ('[^']+')/.match(shorten_description)[1]
   end
 
+  def valid?
+    path.present?
+  end
+
   private
 
   def current_type
@@ -61,7 +65,7 @@ class BodyErrorViewModel
 
   def shorten_description
     @original_description
-      .split(' outside of the schema when none are allowed in schema')[0]
-      .split(' in schema')[0]
+      .gsub(/ outside of the schema when none are allowed in schema(.*)/, '')
+      .gsub(/ in schema(.*)/, '')
   end
 end

@@ -37,5 +37,16 @@ class BodyErrorViewModelTest < ActiveSupport::TestCase
     assert_equal 2, bevm.count
     assert_equal wanted_descriptions, bevm.map(&:description)
   end
+
+  test 'filter invalid body error' do
+    description = "The property '#/documents/0/product/0/price' of type string did not match any of the required schemas. The schema specific errors were:\n\n- oneOf #0:\n    - The property '#/documents/0/product/0/price' of type string did not match the following type: number\n- oneOf #1:\n    - The property '#/documents/0/product/0/price' of type string did not match the following type: null"
+    vms = description.split("\n").map do |line|
+      BodyErrorViewModel.new(line)
+    end
+    assert_equal 6, vms.count
+
+    bevm = BodyErrorsViewModel.new(*vms)
+    assert_equal 3, bevm.count
+  end
 end
 
