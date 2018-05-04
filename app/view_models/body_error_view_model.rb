@@ -53,8 +53,6 @@ class BodyErrorViewModel
     path.present?
   end
 
-  private
-
   def current_type
     /of type (.*) did not match the following type: (.*)/.match(shorten_description)[1]
   end
@@ -62,6 +60,8 @@ class BodyErrorViewModel
   def target_type
     /of type (.*) did not match the following type: (.*)/.match(shorten_description)[2]
   end
+
+  private
 
   def additional_list
     /\[([^\]]+)\]/.match(shorten_description)[1]
