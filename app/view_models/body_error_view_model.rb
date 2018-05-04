@@ -14,7 +14,11 @@ class BodyErrorViewModel
     when :required
       "#{path} - missing property #{required_property}"
     when :type
-      "#{path} - wrong type: #{current_type} instead of #{target_type}"
+      if current_type == 'null'
+        "#{path} - cannot be null"
+      else
+        "#{path} - wrong type: #{current_type} instead of #{target_type}"
+      end
     else
       @original_description
     end
@@ -45,7 +49,9 @@ class BodyErrorViewModel
     /did not contain a required property of ('[^']+')/.match(shorten_description)[1]
   end
 
-  private
+  def valid?
+    path.present?
+  end
 
   def current_type
     /of type (.*) did not match the following type: (.*)/.match(shorten_description)[1]
@@ -55,13 +61,15 @@ class BodyErrorViewModel
     /of type (.*) did not match the following type: (.*)/.match(shorten_description)[2]
   end
 
+  private
+
   def additional_list
     /\[([^\]]+)\]/.match(shorten_description)[1]
   end
 
   def shorten_description
     @original_description
-      .split(' outside of the schema when none are allowed in schema')[0]
-      .split(' in schema')[0]
+      .gsub(/ outside of the schema when none are allowed in schema(.*)/, '')
+      .gsub(/ in schema(.*)/, '')
   end
 end

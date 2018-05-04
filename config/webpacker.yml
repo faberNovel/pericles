@@ -20,11 +20,9 @@ default: &default
     - .scss
     - .css
     - .png
-    - .svg
     - .gif
     - .jpeg
     - .jpg
-    - .svg
 
 development:
   <<: *default

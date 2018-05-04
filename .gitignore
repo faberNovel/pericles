@@ -36,3 +36,5 @@ node_modules/
 yarn-debug.log*
 yarn-error.log*
 .yarn-integrity
+
+docker-compose.yml

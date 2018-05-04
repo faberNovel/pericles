@@ -18,19 +18,23 @@
     .alert.alert-danger
       = flash[:error]
 
-  %h1{id: resource.id}
-    = resource.name
-    - if user.can_edit? resource
-      = link_to(image_tag('edit.svg'), edit_resource_project_resource_path(project, resource), 'v-if': '!manageMode')
-    - if user.can_delete? resource
-      .pull-right
+  .flexspace-and-bottom.margin-top-element
+    %h1{id: resource.id}
+      = resource.name
+      - if user.can_edit? resource
+        = link_to(image_tag('edit.svg'), edit_resource_project_resource_path(project, resource), 'v-if': '!manageMode')
+    .flexcontainer-justify-end
+      - if user.can_delete? resource
         %transition{name: "w-slide-fade"}
           = link_to("Delete", project_resource_path(project, resource),
               method: :delete,
               data: { confirm: 'Are you sure ?' },
               class: "btn btn-default",
               'v-if': '!manageMode')
-
+      %transition{name: "w-slide-fade"}
+        .btn.btn-default.h-margin{'@click': 'onCancelClick', 'v-if': 'manageMode'} Cancel
+      %transition{name: "w-slide-fade"}
+        .btn.btn-primary{'@click': 'onUpdateClick', 'v-if': 'manageMode'} Update
   %p
     = resource.description
   - unless resource.used_in_resources.empty?

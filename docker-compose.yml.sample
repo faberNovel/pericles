@@ -1,0 +1,35 @@
+version: '2'
+services:
+  ruby:
+    image: pericles:ruby-2.5
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres
+    environment:
+      SECRET_KEY_BASE: <use 'bundle exec rake secret' to generate>
+      GOOGLE_APP_ID: <FILL ME>
+      GOOGLE_APP_SECRET: <FILL ME>
+      INTERNAL_EMAIL_DOMAIN: <FILL ME>
+      ANDROID_COMPANY_DOMAIN_NAME: <FILL ME>
+      MAIL_DEFAULT_URL: <FILL ME>
+      MAIL_SMTP_DOMAIN: <FILL ME>
+      MAIL_SMTP_USERNAME: <FILL ME>
+      MAIL_SMTP_PASSWORD: <FILL ME>
+      RAILS_ENV: "production"
+      DATABASE_URL: "postgres://pericles@postgres/pericles"
+      # Should match ports
+      PORT: 3000
+      # no proxy for assets, serve them as static files
+      RAILS_SERVE_STATIC_FILES: enabled
+      # no proxy for SSL, do not force it
+      RAILS_DISABLE_FORCE_SSL: enabled
+  postgres:
+    image: postgres:10-alpine
+    environment:
+      POSTGRES_USER: pericles
+      POSTGRES_DB: pericles
+    volumes:
+      - postgresql_data:/var/lib/postgresql/data
+volumes:
+  postgresql_data:

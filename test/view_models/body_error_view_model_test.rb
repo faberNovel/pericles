@@ -28,6 +28,15 @@ class BodyErrorViewModelTest < ActiveSupport::TestCase
     assert_equal "products/0 - wrong type: string instead of object" , vm.description
   end
 
+  test 'non null type' do
+    original_description = "The property '#/products/0' of type null did not match the following type: object in schema 532dcc88-39f9-5fe0-a10f-a45e6d960d25"
+    vm = BodyErrorViewModel.new(original_description)
+
+    assert_equal :type, vm.type
+    assert_equal 'products', vm.readable_path
+    assert_equal "products/0 - cannot be null" , vm.description
+  end
+
   test 'unknown error' do
     original_description = "Never gonna give you up"
     vm = BodyErrorViewModel.new(original_description)

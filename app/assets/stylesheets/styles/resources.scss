@@ -221,6 +221,13 @@
       border-color: darken(#f1f2f4, 15%);
     }
 
+    input {
+      width: fit-content;
+      padding: 0px;
+      height: 17px;
+      border: none;
+      box-shadow: none;
+    }
   }
 
   .hoverable:hover {
@@ -235,6 +242,10 @@
       background-color: #0b6975;
       &.btn:hover,&.hoverable:hover {
         color: #f9f9f9;
+      }
+
+      svg {
+        fill: white;
       }
     }
     &.btn:hover,&.hoverable:hover {
@@ -252,6 +263,10 @@
         background-color: darken(#0b6975, 15%);
       }
     }
+
+    svg {
+      fill: #0b6975;
+    }
   }
 
   .color-1 {
@@ -262,6 +277,10 @@
       background-color: #429867;
       &.btn:hover,&.hoverable:hover {
         color: #f9f9f9;
+      }
+
+      svg {
+        fill: white;
       }
     }
     &.btn:hover,&.hoverable:hover {
@@ -279,6 +298,10 @@
         background-color: darken(#429867, 15%);
       }
     }
+
+    svg {
+      fill: #429867;
+    }
   }
 
   .color-2 {
@@ -289,6 +312,10 @@
       background-color: #7db31b;
       &.btn:hover,&.hoverable:hover {
         color: #f9f9f9;
+      }
+
+      svg {
+        fill: white;
       }
     }
     &.btn:hover,&.hoverable:hover {
@@ -306,6 +333,10 @@
         background-color: darken(#7db31b, 15%);
       }
     }
+
+    svg {
+      fill: #7db31b;
+    }
   }
 
   .color-3 {
@@ -316,6 +347,10 @@
       background-color: #fab343;
       &.btn:hover,&.hoverable:hover {
         color: #f9f9f9;
+      }
+
+      svg {
+        fill: white;
       }
     }
     &.btn:hover,&.hoverable:hover {
@@ -333,6 +368,10 @@
         background-color: darken(#fab343, 15%);
       }
     }
+
+    svg {
+      fill: #fab343;
+    }
   }
 
   .color-4 {
@@ -343,6 +382,10 @@
       background-color: #ff6500;
       &.btn:hover,&.hoverable:hover {
         color: #f9f9f9;
+      }
+
+      svg {
+        fill: white;
       }
     }
     &.btn:hover,&.hoverable:hover {
@@ -360,6 +403,10 @@
         background-color: darken(#ff6500, 15%);
       }
     }
+
+    svg {
+      fill: #ff6500;
+    }
   }
 
   .color-5 {
@@ -370,6 +417,10 @@
       background-color: #e0222f;
       &.btn:hover,&.hoverable:hover {
         color: #f9f9f9;
+      }
+
+      svg {
+        fill: white;
       }
     }
     &.btn:hover,&.hoverable:hover {
@@ -387,6 +438,10 @@
         background-color: darken(#e0222f, 15%);
       }
     }
+
+    svg {
+      fill: #e0222f;
+    }
   }
 
   .color-6 {
@@ -397,6 +452,10 @@
       background-color: #e42592;
       &.btn:hover,&.hoverable:hover {
         color: #f9f9f9;
+      }
+
+      svg {
+        fill: white;
       }
     }
     &.btn:hover,&.hoverable:hover {
@@ -414,6 +473,10 @@
         background-color: darken(#e42592, 15%);
       }
     }
+
+    svg {
+      fill: #e42592;
+    }
   }
 
   .color-7 {
@@ -424,6 +487,10 @@
       background-color: #cd06e4;
       &.btn:hover,&.hoverable:hover {
         color: #f9f9f9;
+      }
+
+      svg {
+        fill: white;
       }
     }
     &.btn:hover,&.hoverable:hover {
@@ -441,6 +508,10 @@
         background-color: darken(#cd06e4, 15%);
       }
     }
+
+    svg {
+      fill: #cd06e4;
+    }
   }
 
   .color-8 {
@@ -451,6 +522,10 @@
       background-color: #050ff0;
       &.btn:hover,&.hoverable:hover {
         color: #f9f9f9;
+      }
+
+      svg {
+        fill: white;
       }
     }
     &.btn:hover,&.hoverable:hover {
@@ -468,6 +543,10 @@
         background-color: darken(#050ff0, 15%);
       }
     }
+
+    svg {
+      fill: #050ff0;
+    }
   }
 
   .color-9 {
@@ -478,6 +557,10 @@
       background-color: #2badbf;
       &.btn:hover,&.hoverable:hover {
         color: #f9f9f9;
+      }
+
+      svg {
+        fill: white;
       }
     }
     &.btn:hover,&.hoverable:hover {
@@ -494,6 +577,10 @@
         color: white;
         background-color: darken(#2badbf, 15%);
       }
+    }
+
+    svg {
+      fill: #2badbf;
     }
   }
 

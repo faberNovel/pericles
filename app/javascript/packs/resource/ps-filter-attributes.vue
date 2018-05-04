@@ -13,12 +13,12 @@
         @click='onAllClick'
         v-show="!manageMode"
       ) All
-    .btn.representation-btn(
-        v-for='r in representations'
-        :id='r.id'
-        :class="[{selected: r.isSelected}, r.colorClass]"
-        @click='onClick(r.id)'
-    ) {{r.name}}
+    PsRepresentationBtn(
+      v-for='r in representations'
+      :representation='r'
+      :manageMode='manageMode'
+    )
+
     input.representation-btn#new(
       v-if='manageMode'
       :value='getNewRepresentationName()'
@@ -29,41 +29,16 @@
       @click='onAllClick'
       @keyup.enter='createNewRepresentation'
     )
-  transition(name="h-slide-fade")
-    .flexcontainer.flex-v-center(v-show='manageMode', style='margin-top: 16px;')
-      transition(name="w-slide-fade")
-        input.form-control(v-if="activeRepresentation"
-          v-model="activeRepresentation.name"
-          style='width: 200px;'
-        )
-      transition(name="w-slide-fade")
-        a(href='#'
-          style='margin-left: 16px;'
-          data-toggle="confirmation"
-          @click='onDeleteClick'
-        )
-          img(v-if="activeRepresentation"
-            :src='imageDelete'
-          )
-      div(style='flex: 1;')
-      transition(name="fade")
-        .btn.btn-default#clone(v-if="activeRepresentation"
-          @click='onCloneClick') Clone
-      .btn.btn-default(@click='onCancelClick') Cancel
-      .btn.btn-primary(@click='onUpdateClick') Update
 </template>
 
 <script>
-import imageDelete from 'images/delete.svg';
+import PsRepresentationBtn from './ps-representation-btn.vue';
 import Store from './store.js';
 
 
 export default {
   props: ['representations', 'manageMode', 'activeRepresentation'],
   methods: {
-    onClick: function(representationId) {
-      Store.toggleSelect(representationId)
-    },
     onAllClick: function() {
       Store.unselectAll();
     },
@@ -71,16 +46,6 @@ export default {
       $("#sidebar-wrapper").css('width', '0px');
       $("#wrapper").css('padding-left', '0px');
       Store.setManageMode(true);
-    },
-    onCancelClick: function() {
-      $("#sidebar-wrapper").css('width', '');
-      $("#wrapper").css('padding-left', '');
-      Store.restoreState();
-    },
-    onUpdateClick: function() {
-      $("#sidebar-wrapper").css('width', '');
-      $("#wrapper").css('padding-left', '');
-      Store.updateResourceRepresentations();
     },
     getNewRepresentationName: function() {
       return Store.getNewRepresentationName();
@@ -91,14 +56,9 @@ export default {
     },
     createNewRepresentation: function() {
       Store.createNewRepresentation();
-    },
-    onDeleteClick: function() {
-      Store.markRepresentationToBeDeleted(this.activeRepresentation.id);
-    },
-    onCloneClick: function() {
-      Store.clone(this.activeRepresentation.id);
     }
-  }, computed: {
+  },
+  computed: {
     newNameWidthStyle: function() {
       let widthValue = '';
       if (this.getNewRepresentationName()) {
@@ -107,10 +67,10 @@ export default {
         widthValue = 'auto';
       }
       return 'width:' + widthValue + ';';
-    },
-    imageDelete: function() {
-      return imageDelete;
     }
+  },
+  components: {
+    PsRepresentationBtn
   }
 }
 </script>
