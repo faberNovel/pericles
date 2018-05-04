@@ -2,6 +2,13 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.6.2 - 2018-05-04
+
+* Welcome Docker 👋🐳 (thanks @julienmession)
+* Fix proxy report crash when oneOf was used
+* Grouped report type errors
+* Polished resource page layout
+
 ## 0.6.1 - 2018-03-20
 
 * Generate json schema of api error from example
