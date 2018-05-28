@@ -29,4 +29,19 @@ class ResponseTest < ActiveSupport::TestCase
     response.metadata << build(:metadatum, name: 'metadatakey')
     assert response.json_schema[:properties].key? :metadatakey
   end
+
+  test 'mock_picker does not prevent destroy' do
+    r = create(:response)
+    create(:mock_picker, response: r)
+
+    assert r.destroy
+  end
+
+
+  test 'report does not prevent destroy' do
+    r = create(:response)
+    create(:report, response: r)
+
+    assert r.destroy
+  end
 end

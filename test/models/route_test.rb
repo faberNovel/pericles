@@ -62,4 +62,11 @@ class RouteTest < ActiveSupport::TestCase
   test 'have a project' do
     assert build(:route).project
   end
+
+  test 'report does not prevent destroy' do
+    r = create(:route)
+    create(:report, route: r)
+
+    assert r.destroy
+  end
 end

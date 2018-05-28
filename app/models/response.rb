@@ -4,10 +4,10 @@ class Response < ApplicationRecord
   belongs_to :api_error
 
   has_many :headers, inverse_of: :http_message, as: :http_message, dependent: :destroy
-  has_many :reports
+  has_many :reports, dependent: :destroy
   has_many :resource_instances, through: :resource_representation
   has_many :api_error_instances, through: :api_error
-  has_many :mock_pickers
+  has_many :mock_pickers, dependent: :destroy
   has_many :metadata_responses, dependent: :destroy
   has_many :metadata, through: :metadata_responses
   has_many :metadatum_instances, through: :metadata

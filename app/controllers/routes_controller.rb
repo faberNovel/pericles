@@ -37,10 +37,9 @@ class RoutesController < ApplicationController
   end
 
   def destroy
-    resource = route.resource
     route.destroy
 
-    redirect_to project_resource_path(project, resource)
+    redirect_to project_routes_path(project)
   end
 
   private

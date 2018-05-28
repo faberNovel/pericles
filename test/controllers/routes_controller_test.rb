@@ -118,7 +118,7 @@ class RoutesControllerTest < ControllerWithAuthenticationTest
     assert_difference 'Route.count', -1 do
       delete project_route_path(route.project, route)
     end
-    assert_redirected_to project_resource_path(route.project, route.resource)
+    assert_redirected_to project_routes_path(route.project)
   end
 
   test 'should not delete route (not authenticated)' do
@@ -187,7 +187,7 @@ class RoutesControllerTest < ControllerWithAuthenticationTest
     assert_redirected_to project_route_path(route.project, route)
 
     delete project_route_path(project, route)
-    assert_redirected_to project_resource_path(route.project, route.resource)
+    assert_redirected_to project_routes_path(route.project)
   end
 
   test 'non member external user should access public project routes with read-only permission' do
