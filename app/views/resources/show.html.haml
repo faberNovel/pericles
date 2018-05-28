@@ -47,7 +47,9 @@
       %li.active
         %a{href: '#pills-attributes', 'data-toggle' => "pill", role: 'tab'}
           Attributes
-          %span.badge=resource.resource_attributes.count
+          %span.badge= resource.resource_attributes.count
+          &nbsp& representations
+          %span.badge= resource.resource_representations.count
       %li
         %a{href: '#pills-resource-instances', 'data-toggle' => "pill", role: 'tab'}
           Instances
