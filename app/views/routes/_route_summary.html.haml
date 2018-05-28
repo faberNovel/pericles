@@ -6,7 +6,7 @@
       .col-xs-3
         %dl
           %dt URL
-          %dd= route.url
+          %dd= link_to route.url, project_route_path(route.project, route)
           -if url = local_assigns[:real_url]
             %dd
               %strong= url
