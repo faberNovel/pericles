@@ -6,19 +6,11 @@ class MocksController < ApplicationController
     return render json: { error: 'Route not found' }, status: :not_found unless main_route
 
     route = Route.find_by(id: main_route[:name])
-    profile = find_mock_profile
-    mock_picker = find_matching_mock_picker(profile, route)
-    response = mock_picker&.response || route.responses.find { |r| r.status_code == 200 } || route.responses.first
-
+    mock_picker = find_matching_mock_picker(route)
+    response = find_response(mock_picker, route)
     return render json: { error: 'Response not found' }, status: :not_found unless response
 
-    if mock_picker
-      mock_body = mock_picker.mock_body
-    else
-      mock_body = random_mock(response)
-    end
-
-    render json: mock_body, status: response.status_code
+    render json: build_body(mock_picker, response), status: response.status_code
   end
 
   def find_mock_profile
@@ -27,7 +19,20 @@ class MocksController < ApplicationController
 
   private
 
-  def find_matching_mock_picker(mock_profile, route)
+  def build_body(mock_picker, response)
+    if mock_picker
+      mock_picker.mock_body
+    else
+      random_mock(response)
+    end
+  end
+
+  def find_response(mock_picker, route)
+    mock_picker&.response || route.responses.find { |r| r.status_code == 200 } || route.responses.first
+  end
+
+  def find_matching_mock_picker(route)
+    mock_profile = find_mock_profile
     mock_pickers_of_route = mock_profile&.inherited_and_self_mock_pickers_of(route)
     mock_pickers_of_route.detect do |picker|
       picker.match(request_url, request.body.read)
