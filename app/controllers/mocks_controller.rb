@@ -1,5 +1,7 @@
 class MocksController < ApplicationController
   def compute_mock
+    expires_now
+
     @project = Project.find(params[:project_id])
     routes = @project.build_route_set
     main_route = routes.recognize_path(request_url, { method: request.method })
