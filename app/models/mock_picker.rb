@@ -22,11 +22,7 @@ class MockPicker < ApplicationRecord
   end
 
   def mock_instances
-    resource_rep_instances = resource_instances.to_a.map do |r|
-      ResourceRepresentationInstance.new(r, response)
-    end
-
-    resource_rep_instances + api_error_instances.to_a
+    resource_instances.to_a + api_error_instances.to_a
   end
 
   def mock_body
