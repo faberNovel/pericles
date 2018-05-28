@@ -6,16 +6,15 @@ class ReportsControllerTest < ControllerWithAuthenticationTest
     @report = create(:report, route: @project.routes.first, project: @project)
   end
 
-  test "should get index" do
+  test 'should get index' do
     get project_reports_path(@project)
     assert_response :success
   end
 
-  test "should get show" do
+  test 'should get show' do
     get project_report_path(@project, @report)
     assert_response :success
   end
-
 
   test 'member external user should access project reports' do
     external_user = create(:user, :external)

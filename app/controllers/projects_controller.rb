@@ -3,7 +3,7 @@ class ProjectsController < ApplicationController
   decorates_method :project
 
   def index
-    @projects = policy_scope(Project).all.order("lower(title)")
+    @projects = policy_scope(Project).all.order('lower(title)')
   end
 
   def show
@@ -22,7 +22,7 @@ class ProjectsController < ApplicationController
           filename: "#{project.title}.json"
         )
       end
-      %i(swift java kotlin).each do |language|
+      %i[swift java kotlin].each do |language|
         format.send(language) do
           send_data(
             CodeZipBuilder.new(project, language).zip_data,
@@ -34,8 +34,7 @@ class ProjectsController < ApplicationController
     end
   end
 
-  def new
-  end
+  def new; end
 
   def edit
     project.build_proxy_configuration unless project.proxy_configuration
@@ -47,7 +46,6 @@ class ProjectsController < ApplicationController
     else
       render 'new', status: :unprocessable_entity
     end
-
   end
 
   def update

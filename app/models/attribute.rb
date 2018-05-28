@@ -38,13 +38,11 @@ class Attribute < ApplicationRecord
   private
 
   def is_enumerable?
-    primitive_type && !self.boolean?
+    primitive_type && !boolean?
   end
 
   def type_cannot_be_primitive_type_and_resource
-    unless primitive_type.nil? || resource.nil?
-      errors.add(:base, :type_cannot_be_primitive_type_and_resource)
-    end
+    errors.add(:base, :type_cannot_be_primitive_type_and_resource) unless primitive_type.nil? || resource.nil?
   end
 
   def cannot_have_min_max

@@ -49,6 +49,7 @@ Layout/AlignHash:
 # definition are aligned.
 Layout/AlignParameters:
   Enabled: false
+  EnforcedStyle: with_fixed_indentation
 
 # Whether `and` and `or` are banned only in conditionals (conditionals)
 # or completely (always).
@@ -296,7 +297,7 @@ Style/ModuleFunction:
 # as the last array element, or a new line.
 Layout/MultilineArrayBraceLayout:
   Enabled: true
-  EnforcedStyle: symmetrical
+  EnforcedStyle: new_line
 
 # Avoid multi-line chains of blocks.
 Style/MultilineBlockChain:
@@ -310,7 +311,7 @@ Layout/MultilineBlockLayout:
 # the last hash element, or a new line.
 Layout/MultilineHashBraceLayout:
   Enabled: true
-  EnforcedStyle: symmetrical
+  EnforcedStyle: new_line
 
 # Do not use then for multi-line if/unless.
 Style/MultilineIfThen:
@@ -320,7 +321,7 @@ Style/MultilineIfThen:
 # the last method argument, or a new line.
 Layout/MultilineMethodCallBraceLayout:
   Enabled: true
-  EnforcedStyle: symmetrical
+  EnforcedStyle: new_line
 
 # Checks indentation of method calls with the dot operator that span more than
 # one line.

@@ -27,7 +27,7 @@ class ApplicationController < ActionController::Base
     origin = request.env['omniauth.origin']
     if origin
       query = CGI.unescape(URI.parse(origin).query || '')
-      path = CGI::parse(query)['redirect_to']&.first
+      path = CGI.parse(query)['redirect_to']&.first
     end
 
     path || super(resource)

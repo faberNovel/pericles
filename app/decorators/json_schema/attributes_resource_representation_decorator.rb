@@ -37,7 +37,7 @@ module JSONSchema
         {
           description: resource_attribute.description
         }
-      ).select { |_, v| !v.blank? }
+      ).select { |_, v| v.present? }
     end
 
     def item_property
@@ -48,7 +48,7 @@ module JSONSchema
         }
       else
         primitive_property
-      end.select { |_, v| !v.blank? }
+      end.select { |_, v| v.present? }
     end
 
     def primitive_property
@@ -79,11 +79,11 @@ module JSONSchema
 
       enum_values = resource_attribute.enum.split(',').map(&:strip)
       case resource_attribute.primitive_type
-      when "integer"
+      when 'integer'
         enum_values.map(&:to_i)
-      when "number"
+      when 'number'
         enum_values.map(&:to_f)
-      when "null"
+      when 'null'
         [nil]
       else
         enum_values

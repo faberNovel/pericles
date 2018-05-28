@@ -11,8 +11,7 @@ class ResponsesController < ApplicationController
     route_response.headers.build(name: 'Content-Type', value: 'application/json')
   end
 
-  def edit
-  end
+  def edit; end
 
   def create
     if route_response.save

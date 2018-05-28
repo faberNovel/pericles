@@ -29,7 +29,7 @@ class ResourcesController < ApplicationController
   def show
     respond_to do |format|
       format.html {}
-      %i(swift java kotlin).each do |language|
+      %i[swift java kotlin].each do |language|
         format.send(language) do
           render body: CodeGenerator.new(language).from_resource(resource).generate
         end
@@ -80,13 +80,11 @@ class ResourcesController < ApplicationController
   end
 
   def destroy
-    begin
-      resource.destroy
-      redirect_to project_resources_path(project)
-    rescue ActiveRecord::InvalidForeignKey
-      flash.now[:error] = t('activerecord.errors.models.resource.attributes.base.destroy_failed_foreign_key')
-      render 'show', status: :conflict
-    end
+    resource.destroy
+    redirect_to project_resources_path(project)
+  rescue ActiveRecord::InvalidForeignKey
+    flash.now[:error] = t('activerecord.errors.models.resource.attributes.base.destroy_failed_foreign_key')
+    render 'show', status: :conflict
   end
 
   private
@@ -134,8 +132,8 @@ class ResourcesController < ApplicationController
     return @available_types if defined? @available_types
 
     selectable_resources = project.resources.select(&:persisted?)
-    primitive_types = Attribute.primitive_types.keys.to_a.map { |k| [k.capitalize, k]}
-    resource_types = selectable_resources.sort_by(&:name).collect { |r| [ r.name, r.id ] }
+    primitive_types = Attribute.primitive_types.keys.to_a.map { |k| [k.capitalize, k] }
+    resource_types = selectable_resources.sort_by(&:name).collect { |r| [r.name, r.id] }
     @available_types = primitive_types + resource_types
   end
   helper_method :available_types

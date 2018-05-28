@@ -11,7 +11,7 @@ class Metadatum < ApplicationRecord
   validates :primitive_type, presence: true
 
   def json_schema
-    if (datetime? || date?)
+    if datetime? || date?
       non_nullable = { type: :string, format: primitive_type }
     else
       non_nullable = { type: primitive_type }

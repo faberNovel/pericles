@@ -10,7 +10,7 @@ class Report < ApplicationRecord
   validates :response_status_code, :response_headers, :request_headers, presence: true
 
   def correct?
-    self.validation_errors.empty?
+    validation_errors.empty?
   end
 
   def errors?
@@ -22,14 +22,14 @@ class Report < ApplicationRecord
   end
 
   def status_error
-    self.validation_errors.find { |e| e.status_code? }
+    validation_errors.find(&:status_code?)
   end
 
   def header_errors
-    self.validation_errors.select { |e| e.header? }
+    validation_errors.select(&:header?)
   end
 
   def body_errors
-    self.validation_errors.select { |e| e.body? }
+    validation_errors.select(&:body?)
   end
 end

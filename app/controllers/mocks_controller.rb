@@ -3,18 +3,14 @@ class MocksController < ApplicationController
     @project = Project.find(params[:project_id])
     routes = @project.build_route_set
     main_route = routes.recognize_path(request_url, { method: request.method })
-    unless main_route
-      return render json: {error: 'Route not found'}, status: :not_found
-    end
+    return render json: { error: 'Route not found' }, status: :not_found unless main_route
 
-    route = Route.find_by_id(main_route[:name])
+    route = Route.find_by(id: main_route[:name])
     profile = find_mock_profile
     mock_picker = find_matching_mock_picker(profile, route)
-    response = mock_picker&.response || route.responses.find {|r| r.status_code == 200} || route.responses.first
+    response = mock_picker&.response || route.responses.find { |r| r.status_code == 200 } || route.responses.first
 
-    unless response
-      return render json: {error: 'Response not found'}, status: :not_found
-    end
+    return render json: { error: 'Response not found' }, status: :not_found unless response
 
     if mock_picker
       mock_body = mock_picker.mock_body

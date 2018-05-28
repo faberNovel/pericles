@@ -1,5 +1,4 @@
 class MakeRequestToServerService
-
   def initialize(proxy_configuration, request)
     @proxy_configuration = proxy_configuration
     @request = request
@@ -8,7 +7,7 @@ class MakeRequestToServerService
   def execute
     relative_url = @request.path[/proxy\/?(.*)/, 1]
     url = URI.join(target_base_url, relative_url)
-    url = URI.join(url.to_s, '?' + @request.query_string) unless @request.query_string.blank?
+    url = URI.join(url.to_s, '?' + @request.query_string) if @request.query_string.present?
 
     if @proxy_configuration.ignore_ssl
       ctx = OpenSSL::SSL::SSLContext.new
@@ -20,7 +19,7 @@ class MakeRequestToServerService
   end
 
   def headers
-    filtered_headers = @request.headers.env.select{|k, v| !v.blank? && (k.in?(ActionDispatch::Http::Headers::CGI_VARIABLES) || k =~ /^HTTP_/) }
+    filtered_headers = @request.headers.env.select { |k, v| v.present? && (k.in?(ActionDispatch::Http::Headers::CGI_VARIABLES) || k =~ /^HTTP_/) }
 
     remove_http_prefix(filtered_headers)
     transform_headers_case(filtered_headers)
@@ -53,7 +52,7 @@ class MakeRequestToServerService
 
   def transform_headers_case(headers)
     headers.clone.each_key do |key|
-      headers[key.titleize.tr(" ", "-")] = headers.delete(key)
+      headers[key.titleize.tr(' ', '-')] = headers.delete(key)
     end
   end
 end

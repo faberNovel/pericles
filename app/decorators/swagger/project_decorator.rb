@@ -3,7 +3,7 @@ class Swagger::ProjectDecorator < Draper::Decorator
 
   def to_swagger
     {
-      openapi: "3.0.0",
+      openapi: '3.0.0',
       info: {
         description: description,
         title: title,
@@ -12,7 +12,7 @@ class Swagger::ProjectDecorator < Draper::Decorator
       servers: servers,
       tags: tags,
       paths: paths,
-      components: components,
+      components: components
     }.deep_stringify_keys.to_json
   end
 
@@ -28,9 +28,11 @@ class Swagger::ProjectDecorator < Draper::Decorator
         r, context: context
       )
 
-      hash.merge!({
-        representation.uid => representation.json_schema_without_definitions
-      })
+      hash.merge!(
+        {
+          representation.uid => representation.json_schema_without_definitions
+        }
+      )
     end
   end
 
@@ -41,9 +43,11 @@ class Swagger::ProjectDecorator < Draper::Decorator
       )
       uid = Swagger::ResponseDecorator.new(r, context: context).uid
 
-      hash.merge!({
-        uid => response.json_schema.except(:definitions)
-      })
+      hash.merge!(
+        {
+          uid => response.json_schema.except(:definitions)
+        }
+      )
     end
   end
 
@@ -65,7 +69,7 @@ class Swagger::ProjectDecorator < Draper::Decorator
       {
         name: r.name,
         description: r.description
-      }.select { |_, v| !v.blank? }
+      }.reject { |_, v| v.present? }
     end
   end
 
@@ -78,20 +82,24 @@ class Swagger::ProjectDecorator < Draper::Decorator
       routes_by_method = routes.reduce({}) do |h, r|
         r = Swagger::RouteDecorator.new(r, context: context)
 
-        h.merge!({
-          r.http_method.to_s.downcase => r.to_swagger
-        })
+        h.merge!(
+          {
+            r.http_method.to_s.downcase => r.to_swagger
+          }
+        )
       end
 
-      hash.merge!({
-        url => routes_by_method
-      })
+      hash.merge!(
+        {
+          url => routes_by_method
+        }
+      )
     end
   end
 
   def context
     {
-      base_href: "#/components/schemas/",
+      base_href: '#/components/schemas/',
       use_nullable: true
     }.merge(super)
   end

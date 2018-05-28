@@ -1,5 +1,5 @@
 class ResourceInstancesController < AbstractInstancesController
   def model_name
-    "resource"
+    'resource'
   end
 end

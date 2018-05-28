@@ -9,7 +9,7 @@ class HeaderTest < ActiveSupport::TestCase
     assert_not build(:header, http_message: nil).valid?
   end
 
-  test "Header should be valid with all attributes set correctly" do
-    assert build(:header, name: "Content-Type", value: "application/json").valid?
+  test 'Header should be valid with all attributes set correctly' do
+    assert build(:header, name: 'Content-Type', value: 'application/json').valid?
   end
 end

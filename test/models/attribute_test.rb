@@ -23,27 +23,27 @@ class AttributeTest < ActiveSupport::TestCase
     assert_not build(:attribute_with_resource, primitive_type: :integer).valid?
   end
 
-  test "An attribute cannot have an enum if it has a resource type" do
-    assert_not build(:attribute_with_resource, enum: "not, valid").valid?
+  test 'An attribute cannot have an enum if it has a resource type' do
+    assert_not build(:attribute_with_resource, enum: 'not, valid').valid?
   end
 
-  test "An attribute cannot have an enum if it is a boolean" do
-    assert_not build(:attribute, primitive_type: :boolean, enum: "not, valid").valid?
+  test 'An attribute cannot have an enum if it is a boolean' do
+    assert_not build(:attribute, primitive_type: :boolean, enum: 'not, valid').valid?
   end
 
-  test "An attribute cannot have a scheme if it is not a string" do
+  test 'An attribute cannot have a scheme if it is not a string' do
     assert_not build(:attribute_with_resource, scheme: create(:scheme)).valid?
     assert_not build(:attribute, primitive_type: :boolean, scheme: create(:scheme)).valid?
   end
 
-  test "A string/integer/number attribute can have a min or max" do
+  test 'A string/integer/number attribute can have a min or max' do
     [:string, :integer, :number].each do |type|
       assert build(:attribute, primitive_type: type, minimum: 3).valid?
       assert build(:attribute, primitive_type: type, maximum: 3).valid?
     end
   end
 
-  test "A resource/boolean/null attribute cannot have a min or max" do
+  test 'A resource/boolean/null attribute cannot have a min or max' do
     [:boolean, :null].each do |type|
       assert_not build(:attribute, primitive_type: type, minimum: 3).valid?
       assert_not build(:attribute, primitive_type: type, maximum: 3).valid?
@@ -53,7 +53,7 @@ class AttributeTest < ActiveSupport::TestCase
     assert_not build(:attribute_with_resource, minimum: 3).valid?
   end
 
-  test "Only array attribute can have min_items or max_items" do
+  test 'Only array attribute can have min_items or max_items' do
     assert build(:attribute, primitive_type: :boolean, is_array: true, min_items: 3).valid?
     assert build(:attribute, primitive_type: :boolean, is_array: true, max_items: 3).valid?
 
@@ -61,17 +61,17 @@ class AttributeTest < ActiveSupport::TestCase
     assert_not build(:attribute, primitive_type: :boolean, is_array: false, min_items: 3).valid?
   end
 
-  test "An attribute can have a scheme if it is a string" do
+  test 'An attribute can have a scheme if it is a string' do
     assert build(:attribute, primitive_type: :string, scheme: create(:scheme)).valid?
   end
 
-  test "Attribute should be valid with all fields set correctly" do
+  test 'Attribute should be valid with all fields set correctly' do
     assert build(:attribute,
-      name: "New Attribute",
-      description: "New test attribute",
+      name: 'New Attribute',
+      description: 'New test attribute',
       is_array: true,
       primitive_type: :string,
-      enum: "valid",
+      enum: 'valid',
       scheme: create(:scheme)
     ).valid?
   end

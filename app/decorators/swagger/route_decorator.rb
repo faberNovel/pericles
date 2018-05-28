@@ -8,7 +8,7 @@ class Swagger::RouteDecorator < Draper::Decorator
       parameters: parameters,
       responses: responses,
       requestBody: request_body
-    }.select { |_, v| !v.blank? }
+    }.reject { |_, v| v.present? }
   end
 
   def responses
@@ -21,7 +21,7 @@ class Swagger::RouteDecorator < Draper::Decorator
         response, context: context
       ).to_swagger
 
-      hash.merge!({status.to_s => swager_response})
+      hash.merge!({ status.to_s => swager_response })
     end
   end
 
@@ -52,7 +52,7 @@ class Swagger::RouteDecorator < Draper::Decorator
     request_query_parameters.map do |q|
       {
         name: q.name,
-        in: "query",
+        in: 'query',
         required: !q.is_optional,
         schema: {
           type: q.primitive_type

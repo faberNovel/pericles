@@ -1,14 +1,14 @@
 require 'test_helper'
 
 class ProxyConfigurationTest < ActiveSupport::TestCase
-  test "must have proxy_hostname and proxy_password or nothing" do
+  test 'must have proxy_hostname and proxy_password or nothing' do
     assert_not build(:proxy_configuration, proxy_hostname: 'example.com').valid?
     assert_not build(:proxy_configuration, proxy_port: 1234).valid?
     assert build(:proxy_configuration, proxy_hostname: 'example.com', proxy_port: 1234).valid?
     assert build(:proxy_configuration, proxy_hostname: nil, proxy_port: nil).valid?
   end
 
-  test "must have password if proxy_username is set" do
+  test 'must have password if proxy_username is set' do
     assert_not build(:proxy_configuration,
       proxy_hostname: 'example.com',
       proxy_port: 1234,
@@ -22,7 +22,7 @@ class ProxyConfigurationTest < ActiveSupport::TestCase
     ).valid?
   end
 
-  test "cannot have proxy_username without proxy_hostname" do
+  test 'cannot have proxy_username without proxy_hostname' do
     assert_not build(:proxy_configuration,
       proxy_hostname: nil,
       proxy_port: nil,
@@ -31,7 +31,7 @@ class ProxyConfigurationTest < ActiveSupport::TestCase
     ).valid?
   end
 
-  test "use_http_proxy? returns true if proxy_hostname is set" do
+  test 'use_http_proxy? returns true if proxy_hostname is set' do
     assert_not build(:proxy_configuration, proxy_hostname: nil, proxy_port: nil).use_http_proxy?
     assert build(:proxy_configuration, proxy_hostname: 'example.com', proxy_port: 1234).use_http_proxy?
   end

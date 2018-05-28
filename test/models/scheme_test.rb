@@ -5,14 +5,14 @@ class SchemeTest < ActiveSupport::TestCase
     assert_not build(:scheme, name: nil).valid?
   end
 
-  test "set scheme to null if destroyed" do
+  test 'set scheme to null if destroyed' do
     s = create(:scheme)
     a = create(:attribute, primitive_type: :string, scheme: s)
     assert s.destroy
     assert_not a.reload.scheme
   end
 
-  test "is pattern if regexp is set" do
+  test 'is pattern if regexp is set' do
     s = create(:scheme, regexp: 'cool')
     assert s.pattern?
   end

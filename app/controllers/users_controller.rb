@@ -1,6 +1,5 @@
 class UsersController < ApplicationController
   include Authenticated
 
-  def show
-  end
+  def show; end
 end

@@ -24,13 +24,12 @@ class Response < ApplicationRecord
 
   audited associated_with: :route
 
-
   def json_instance
     GenerateJsonInstanceService.new(json_schema).execute if json_schema
   end
 
   def json_schema
-    # TODO Clément Villain 21/11/17:
+    # TODO: Clément Villain 21/11/17:
     # refactor json schema to use a JSONSchema objet with at least .to_h and .to_json
     # (We could also add .validate(json) and .json_instance)
     JSONSchema::ResponseDecorator.new(self).json_schema

@@ -7,7 +7,7 @@ class BodyErrorViewModelTest < ActiveSupport::TestCase
 
     assert_equal :additional, vm.type
     assert_equal 'products', vm.readable_path
-    assert_equal "products/0 - additional properties \"price_FR1_2017\", \"currency_FR1_2017\"" , vm.description
+    assert_equal 'products/0 - additional properties "price_FR1_2017", "currency_FR1_2017"', vm.description
   end
 
   test 'required property' do
@@ -16,7 +16,7 @@ class BodyErrorViewModelTest < ActiveSupport::TestCase
 
     assert_equal :required, vm.type
     assert_equal 'products', vm.readable_path
-    assert_equal "products/0 - missing property 'isInStock'" , vm.description
+    assert_equal "products/0 - missing property 'isInStock'", vm.description
   end
 
   test 'wrong type' do
@@ -25,7 +25,7 @@ class BodyErrorViewModelTest < ActiveSupport::TestCase
 
     assert_equal :type, vm.type
     assert_equal 'products', vm.readable_path
-    assert_equal "products/0 - wrong type: string instead of object" , vm.description
+    assert_equal 'products/0 - wrong type: string instead of object', vm.description
   end
 
   test 'non null type' do
@@ -34,11 +34,11 @@ class BodyErrorViewModelTest < ActiveSupport::TestCase
 
     assert_equal :type, vm.type
     assert_equal 'products', vm.readable_path
-    assert_equal "products/0 - cannot be null" , vm.description
+    assert_equal 'products/0 - cannot be null', vm.description
   end
 
   test 'unknown error' do
-    original_description = "Never gonna give you up"
+    original_description = 'Never gonna give you up'
     vm = BodyErrorViewModel.new(original_description)
 
     assert_nil vm.type
@@ -46,4 +46,3 @@ class BodyErrorViewModelTest < ActiveSupport::TestCase
     assert_equal original_description, vm.description
   end
 end
-

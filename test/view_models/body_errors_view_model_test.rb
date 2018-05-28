@@ -69,4 +69,3 @@ class BodyErrorViewModelTest < ActiveSupport::TestCase
     assert_equal 2, bevm.count
   end
 end
-

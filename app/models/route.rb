@@ -8,7 +8,7 @@ class Route < ApplicationRecord
   has_many :reports
 
   belongs_to :resource, inverse_of: :routes
-  belongs_to :request_resource_representation, class_name: "ResourceRepresentation"
+  belongs_to :request_resource_representation, class_name: 'ResourceRepresentation'
 
   delegate :project, to: :resource
 
@@ -17,7 +17,7 @@ class Route < ApplicationRecord
 
   validates :http_method, presence: true
   validates :url, presence: true
-  validates :resource, presence: true, uniqueness: { scope: [:http_method, :url]}
+  validates :resource, presence: true, uniqueness: { scope: [:http_method, :url] }
   validate :request_resource_representation_must_belongs_to_project
 
   audited
@@ -30,11 +30,13 @@ class Route < ApplicationRecord
   end
 
   def request_json_schema
-    JSONSchemaBuilder.new(
-      request_resource_representation,
-      is_collection: request_is_collection,
-      root_key: request_root_key
-    ).execute if request_resource_representation
+    if request_resource_representation
+      JSONSchemaBuilder.new(
+        request_resource_representation,
+        is_collection: request_is_collection,
+        root_key: request_root_key
+      ).execute
+    end
   end
 
   def mock_path

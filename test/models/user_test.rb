@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
-  test "user should have an email" do
+  test 'user should have an email' do
     user = build(:user, email: nil)
     assert_not user.valid?
   end
@@ -26,9 +26,14 @@ class UserTest < ActiveSupport::TestCase
    does not already exist)" do
     access_token = OmniAuth::AuthHash.new
 
-    access_token.info = { email: "test#{User::INTERNAL_EMAIL_DOMAIN}", first_name: 'John', last_name: 'Smith',
-     image: 'http://example.com/img.jpg' }
-    user =  User.from_omniauth(access_token)
+    access_token.info = {
+      email: "test#{User::INTERNAL_EMAIL_DOMAIN}",
+      first_name: 'John',
+      last_name: 'Smith',
+      image: 'http://example.com/img.jpg'
+    }
+
+    user = User.from_omniauth(access_token)
     assert user.persisted?
     assert_equal "test#{User::INTERNAL_EMAIL_DOMAIN}", user.email
     assert_equal 'John', user.first_name
@@ -70,7 +75,7 @@ class UserTest < ActiveSupport::TestCase
     assert_equal 'Smith', user.last_name
   end
 
-  test "from_omniauth should return nil if email is not provided" do
+  test 'from_omniauth should return nil if email is not provided' do
     access_token = OmniAuth::AuthHash.new
 
     access_token.info = { email: '' }

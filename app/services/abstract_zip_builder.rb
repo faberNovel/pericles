@@ -1,7 +1,6 @@
 require 'zip'
 
 class AbstractZipBuilder
-
   def collection
     raise 'implement me!'
   end

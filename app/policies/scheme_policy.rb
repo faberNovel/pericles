@@ -1,14 +1,14 @@
 class SchemePolicy < ApplicationPolicy
   def create?
-    user && user.internal?
+    user&.internal?
   end
 
   def update?
-    user && user.internal?
+    user&.internal?
   end
 
   def destroy?
-    user && user.internal?
+    user&.internal?
   end
 
   def permitted_attributes

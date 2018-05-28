@@ -14,11 +14,11 @@ class MockPicker < ApplicationRecord
   end
 
   def body_regexp
-    Regexp.new(body_pattern) unless body_pattern.blank?
+    Regexp.new(body_pattern) if body_pattern.present?
   end
 
   def url_regexp
-    Regexp.new(url_pattern) unless url_pattern.blank?
+    Regexp.new(url_pattern) if url_pattern.present?
   end
 
   def mock_instances
@@ -37,7 +37,7 @@ class MockPicker < ApplicationRecord
     else
       body = mock_instances.first.as_json
     end
-    body = { response.root_key => body } unless response.root_key.blank?
+    body = { response.root_key => body } if response.root_key.present?
 
     if body.is_a? Hash
       metadatum_instances.each do |m|

@@ -16,7 +16,6 @@ class Project < ApplicationRecord
 
   accepts_nested_attributes_for :proxy_configuration, allow_destroy: true
 
-
   validates :title, presence: true, length: { in: 2..25 }, uniqueness: true
 
   after_create :add_default_mock_profile

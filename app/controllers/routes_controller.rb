@@ -7,20 +7,16 @@ class RoutesController < ApplicationController
   def index
     @routes_by_resource = policy_scope(project.routes).includes(:resource, :resource_representations, :responses)
       .group_by(&:resource)
-    @resources = @routes_by_resource.keys.sort_by {|r| r.name.downcase}
+    @resources = @routes_by_resource.keys.sort_by { |r| r.name.downcase }
   end
 
-  def show
-  end
+  def show; end
 
   def new
-    if project.resources.empty?
-      redirect_to project_resources_path(project), alert: t('.resource_required')
-    end
+    redirect_to project_resources_path(project), alert: t('.resource_required') if project.resources.empty?
   end
 
-  def edit
-  end
+  def edit; end
 
   def create
     route.request_headers.build(name: 'Authorization')

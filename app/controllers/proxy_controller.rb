@@ -1,7 +1,6 @@
 FORBIDDEN_HEADERS = ['Transfer-Encoding'].freeze
 
 class ProxyController < ApplicationController
-
   def compute_request
     @project = Project.find(params[:project_id])
     @request_service = MakeRequestToServerService.new(@project.proxy_configuration, request)

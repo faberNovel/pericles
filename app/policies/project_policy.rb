@@ -2,7 +2,7 @@ class ProjectPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
       return scope.where(is_public: true) if user.nil?
-      user.internal? ? scope.all : scope.left_joins(:members).where("members.user_id = ? OR projects.is_public = true", user.id)
+      user.internal? ? scope.all : scope.left_joins(:members).where('members.user_id = ? OR projects.is_public = true', user.id)
     end
   end
 
@@ -11,7 +11,7 @@ class ProjectPolicy < ApplicationPolicy
   end
 
   def create?
-    user && user.internal?
+    user&.internal?
   end
 
   def update?

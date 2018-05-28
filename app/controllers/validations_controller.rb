@@ -1,11 +1,10 @@
 class ValidationsController < ApplicationController
-
   def index
     @validations = Validation.order(created_at: 'desc').page(params[:page]).per(10)
   end
 
   def new
-    @default_json_instance = "{}"
+    @default_json_instance = '{}'
   end
 
   def create

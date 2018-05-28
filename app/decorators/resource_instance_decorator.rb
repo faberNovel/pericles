@@ -5,9 +5,11 @@ class ResourceInstanceDecorator < Draper::Decorator
     object.errors[:instance].each_with_index.reduce({}) do |hash, (errors, i)|
       representation = object.parent.resource_representations[i]
       body_errors = errors.split("\n").map { |e| BodyErrorViewModel.new(e) }
-      hash.merge({
-        representation => BodyErrorsViewModel.new(*body_errors)
-      })
+      hash.merge(
+        {
+          representation => BodyErrorsViewModel.new(*body_errors)
+        }
+      )
     end
   end
 end

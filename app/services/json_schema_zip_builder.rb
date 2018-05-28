@@ -13,7 +13,7 @@ class JSONSchemaZipBuilder < AbstractZipBuilder
     folder_name = response.route.resource.name.downcase.parameterize(separator: '_')
 
     verb = response.route.http_method.to_s
-    route = response.route.url.gsub(':', '')
+    route = response.route.url.delete(':')
     representation = response.resource_representation.name
     status_code = response.status_code
     file = "#{verb}_#{route}_#{representation}_#{status_code}".parameterize(separator: '_') + '.json_schema'

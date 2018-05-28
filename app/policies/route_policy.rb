@@ -17,7 +17,7 @@ class RoutePolicy < ProjectRelatedPolicy
 
   def create?
     return false unless super
-    return true if !record.is_a? Route
-    return project.resources.where(id: record.resource_id).exists?
+    return true unless record.is_a? Route
+    project.resources.where(id: record.resource_id).exists?
   end
 end

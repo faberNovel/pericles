@@ -6,9 +6,7 @@ class ResourceRepresentationInstance
     self.response = response
   end
 
-  def name
-    resource_instance.name
-  end
+  delegate :name, to: :resource_instance
 
   def as_json
     resource_instance.body_sliced_with(response.resource_representation)
