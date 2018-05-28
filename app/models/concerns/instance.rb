@@ -17,18 +17,20 @@ module Instance
     JSON.parse(body)
   end
 
-  def body_valid?
-    return unless parent&.json_schema
+  def body_valid?(json_schema = nil)
+    json_schema = json_schema || parent&.json_schema
+    return unless json_schema
 
     begin
       JSON::Validator.fully_validate(
-        parent.json_schema, body, json: true
+        json_schema, body, json: true
       ).each do |error_message|
         add_error_message(error_message)
       end
     rescue JSON::Schema::JsonParseError
       errors.add(:body, :could_not_parse_json)
     end
+    errors.empty?
   end
 
   private

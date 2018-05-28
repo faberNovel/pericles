@@ -5,7 +5,6 @@ class Response < ApplicationRecord
 
   has_many :headers, inverse_of: :http_message, as: :http_message, dependent: :destroy
   has_many :reports, dependent: :destroy
-  has_many :resource_instances, through: :resource_representation
   has_many :api_error_instances, through: :api_error
   has_many :mock_pickers, dependent: :destroy
   has_many :metadata_responses, dependent: :destroy
@@ -41,6 +40,10 @@ class Response < ApplicationRecord
 
   def can_have_resource_representation
     status_code && !can_have_api_error
+  end
+
+  def resource_instances
+    resource_representation.resource_instances
   end
 
   def representation
