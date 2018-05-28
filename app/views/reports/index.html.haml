@@ -20,7 +20,7 @@
               %span{ class: label_class_for_http_method(report.request_method) }= report.request_method
           %td= report.url
           %td= report.response_status_code
-          %td= report.created_at.strftime("%d/%m/%y - %HH%M")
+          %td.date= report.created_at
           %td= report.response.blank? ? t('.unknown') : (report.correct? ? '☑' : '☐')
           %td= link_to 'Detail', project_report_path(project, report)
 
@@ -28,3 +28,8 @@
 
 - else
   %p= t('.no_reports')
+
+:javascript
+  $('td.date').each(function() {
+    $(this).text(new Date($(this).text()).toLocaleString());
+  })
