@@ -7,9 +7,9 @@ module JSONSchema
     end
 
     def json_schema_without_definitions
-      Rails.cache.fetch("#{cache_key}/json_schema_without_definitions", force: !object.persisted?) do
-        build_json_schema_without_definitions
-      end.clone
+      # TODO: Clement Villain 28/05/2018
+      # Build a cache system
+      build_json_schema_without_definitions
     end
 
     def build_json_schema_without_definitions
@@ -68,18 +68,6 @@ module JSONSchema
 
     def title
       "#{object.resource.name} - #{object.name}"
-    end
-
-    def cache_key
-      md5 = Digest::MD5.new
-      md5.update(object.cache_key)
-      md5.update(resource.cache_key)
-      attributes_resource_representations.each do |association|
-        md5.update(association.resource_attribute.cache_key)
-        md5.update(association.cache_key)
-      end
-      md5.update(context.to_s)
-      md5.hexdigest
     end
 
     def resource_representation_dependencies
