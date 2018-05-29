@@ -275,6 +275,35 @@ class ResourcesControllerTest < ControllerWithAuthenticationTest
     assert_not Attribute.exists?(a.id)
   end
 
+  test 'swap two attributes names' do
+    resource = create(:resource)
+    a = create(:attribute, parent_resource: resource, name: 'a')
+    b = create(:attribute, parent_resource: resource, name: 'b')
+
+    assert_no_difference 'Attribute.count' do
+      put project_resource_path(resource.project, resource), params: {
+        resource: {
+          resource_attributes_attributes: {
+            0 => {
+              id: a.id,
+              name: b.name,
+              type: a.type
+            },
+            1 => {
+              id: b.id,
+              name: a.name,
+              type: b.type
+            }
+          }
+        }
+      }
+    end
+
+    assert_redirected_to project_resource_path(resource.project, resource)
+    assert_equal a.reload.name, 'b'
+    assert_equal b.reload.name, 'a'
+  end
+
   test 'should not update resource (not authenticated)' do
     sign_out :user
     resource = create(:resource)
