@@ -10,6 +10,8 @@ module BodyError
         AdditionalErrorViewModel.new(path, additional_list)
       when :required
         RequiredErrorViewModel.new(path, [required_property])
+      when :enum
+        EnumErrorViewModel.new(path, current_value, target_values)
       else
         BodyErrorViewModel.new(path, original_description)
       end
@@ -41,6 +43,8 @@ module BodyError
         :required
       elsif shorten_description.include? 'did not match the following type:'
         :type
+      elsif shorten_description.include? 'did not match one of the following values'
+        :enum
       end
     end
 
@@ -79,6 +83,14 @@ module BodyError
       @original_description
         .gsub(/ outside of the schema when none are allowed in schema(.*)/, '')
         .gsub(/ in schema(.*)/, '')
+    end
+
+    def current_value
+      /value (.*) did not match one of the following values: (.*)/.match(shorten_description)[1]
+    end
+
+    def target_values
+      /value (.*) did not match one of the following values: (.*)/.match(shorten_description)[2]
     end
   end
 end

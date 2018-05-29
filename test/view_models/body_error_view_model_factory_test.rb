@@ -41,6 +41,15 @@ class BodyErrorViewModelFactoryTest < ActiveSupport::TestCase
     assert_equal 'products/0 - cannot be null', vm.description
   end
 
+  test 'enum error' do
+    original_description = "The property '#/nearestCity/timezone' value nil did not match one of the following values: Europe/Paris in schema 75af1738-b348-5a40-9990-f5cfbbb0c29d#"
+    vm = @factory.build(original_description)
+
+    assert_equal :enum, vm.type
+    assert_equal 'nearestCity/timezone', vm.readable_path
+    assert_equal 'nearestCity/timezone value is nil and should be Europe/Paris', vm.description
+  end
+
   test 'unknown error' do
     original_description = 'Never gonna give you up'
     vm = @factory.build(original_description)
