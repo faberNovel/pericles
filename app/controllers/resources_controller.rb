@@ -67,7 +67,7 @@ class ResourcesController < ApplicationController
   end
 
   def update
-    if resource.update(resource_params)
+    if update_resource
       redirect_to project_resource_path(project, resource)
     else
       if resource_params.key? :resource_attributes_attributes
@@ -88,6 +88,15 @@ class ResourcesController < ApplicationController
   end
 
   private
+
+  def update_resource
+    resource.update(resource_params)
+  rescue ActiveRecord::RecordNotUnique => e
+    taken_attribute_name = /=\(\d+, (.*)\) already exists./.match(e.to_s)[1]
+    taken_attribute = resource.resource_attributes.reject(&:id).find { |a| a.name == taken_attribute_name }
+    taken_attribute.errors.add(:name, :taken)
+    false
+  end
 
   def resource_params
     return @resource_params if @resource_params

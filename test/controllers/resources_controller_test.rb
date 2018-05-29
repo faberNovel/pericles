@@ -194,6 +194,87 @@ class ResourcesControllerTest < ControllerWithAuthenticationTest
     assert a.reload.integer?
   end
 
+  test 'adding attribute with same name fails' do
+    resource = create(:resource_with_attributes)
+    a = resource.resource_attributes.first
+
+    assert_no_difference 'Attribute.count' do
+      put project_resource_path(resource.project, resource), params: {
+        resource: {
+          resource_attributes_attributes: {
+            0 => {
+              name: a.name,
+              type: a.type
+            }
+          }
+        }
+      }
+    end
+
+    assert_response :unprocessable_entity
+  end
+
+  test 'deleted then created attribute is not flagged as error if we add attribute with same name' do
+    resource = create(:resource_with_attributes)
+    same_name = resource.resource_attributes.first
+    deleted_then_created = create(:attribute, parent_resource: resource)
+
+    assert_no_difference 'Attribute.count' do
+      put project_resource_path(resource.project, resource), params: {
+        resource: {
+          resource_attributes_attributes: {
+            0 => {
+              id: same_name.id,
+              name: same_name.name,
+              type: same_name.type
+            },
+            1 => {
+              name: same_name.name,
+              type: same_name.type
+            },
+            2 => {
+              id: deleted_then_created.id,
+              _destroy: true
+            },
+            3 => {
+              name: deleted_then_created.name,
+              type: deleted_then_created.type
+            }
+          }
+        }
+      }
+    end
+
+    assert_response :unprocessable_entity
+    assert_equal 1, response.body.scan(/taken/).count
+  end
+
+
+  test 'destroy attribute and adding attribute with the same name' do
+    resource = create(:resource_with_attributes)
+    a = resource.resource_attributes.first
+
+    assert_no_difference 'Attribute.count' do
+      put project_resource_path(resource.project, resource), params: {
+        resource: {
+          resource_attributes_attributes: {
+            0 => {
+              id: a.id,
+              _destroy: true,
+            },
+            1 => {
+              name: a.name,
+              type: a.type
+            }
+          }
+        }
+      }
+    end
+
+    assert_redirected_to project_resource_path(resource.project, resource)
+    assert_not Attribute.exists?(a.id)
+  end
+
   test 'should not update resource (not authenticated)' do
     sign_out :user
     resource = create(:resource)

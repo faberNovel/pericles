@@ -8,6 +8,6 @@ class Code::AttributesResourceRepresentationDecorator < Draper::Decorator
   end
 
   def code_nullable
-    object.resource_attribute.nullable
+    !object.is_required || object.resource_attribute.nullable
   end
 end

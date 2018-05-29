@@ -11,7 +11,9 @@ class AttributeTest < ActiveSupport::TestCase
 
   test "Two Attributes within the same parent_resource shouldn't have the same name" do
     attribute = create(:attribute)
-    assert_not build(:attribute, name: attribute.name, parent_resource: attribute.parent_resource).valid?
+    assert_raise ActiveRecord::RecordNotUnique do
+      create(:attribute, name: attribute.name, parent_resource: attribute.parent_resource)
+    end
     assert build(:attribute, name: attribute.name.upcase, parent_resource: attribute.parent_resource).valid?
   end
 
