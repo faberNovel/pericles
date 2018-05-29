@@ -21,7 +21,7 @@ function onSelectChanged(option) {
     scheme.find('select').chosen({allow_single_deselect: true, search_contains: true})
     scheme_enum.show();
   } else {
-    scheme.find('select').val([]);
+    scheme.find('select option').removeAttr('selected');
     enum_.find('input').val('');
     scheme_enum.hide();
   }
