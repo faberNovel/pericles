@@ -23,7 +23,7 @@
   "dependencies": {
     "@rails/webpacker": "3.5",
     "core-js": "^2.5.3",
-    "json-schema-faker": "git+https://github.com/MrChoclate/json-schema-faker.git#f2c1740c551230847c6bad1cedca5ad3533e5e08",
+    "json-schema-faker": "git+https://github.com/MrChoclate/json-schema-faker.git#8fe8cced8159c9e89c5e46b2ea873f2a9a980398",
     "pug": "^2.0.0-rc.4",
     "underscore": "^1.8.3",
     "vue": "^2.5.13",
