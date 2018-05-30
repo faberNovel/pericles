@@ -14,8 +14,8 @@ div(style='margin-top: -1px;')
         ) /!\
 
   ps-resource(
-    v-if='treeMode && depth < 10'
-    v-for='r in usedResources'
+    v-if='shouldDisplayChildren'
+    v-for='r in displayedChildren'
     :resource='r',
     :tree-mode='treeMode',
     :depth='depth + 1'
@@ -37,10 +37,33 @@ export default {
     usedResources: function() {
       return Store.findResourcesByIds(this.resource.usedResources.map((r) => r.id))
     },
+    shouldFilterChildren: function() {
+      return !this.treeMode && !(this.query == null || this.query.length === 0);
+    },
+    filteredResources: function () {
+      return this.usedResources.filter((r) => {
+        let resourceMatchingQuery = Store.isResourceMatchingQuery(r, this.query);
+        let hasNestedChildrenMatchingQuery = Store.hasNestedChildrenMatchingQuery(r, this.query);
+        return resourceMatchingQuery || hasNestedChildrenMatchingQuery;
+      });
+    },
+    displayedChildren: function() {
+      if(!this.shouldFilterChildren) {
+        return this.usedResources;
+      }
+      return this.filteredResources;
+    },
     displayedResourceName: function() {
       let indentation = '      '.repeat(this.depth) + ((this.depth == 0) ? '' : '↳ ');
 
       return indentation + this.highlightedName;
+    },
+    shouldDisplayChildren: function() {
+      if (this.treeMode) {
+        return this.depth < 10
+      }
+
+      return this.depth < 10 && Store.hasNestedChildrenMatchingQuery(this.resource, this.query);
     },
     highlightedName: function() {
       let name = this.resource.name;
