@@ -41,7 +41,6 @@ gem 'pundit', '~> 1.1'
 
 gem 'webpacker', '~> 3.5', '>= 3.5.3'
 
-gem 'bootsnap', require: false
 
 group :development, :test do
   gem 'byebug'
