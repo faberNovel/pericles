@@ -202,4 +202,22 @@ class ProxyControllerTest < ActionDispatch::IntegrationTest
       get "/projects/#{@project.id}/proxy/users/1"
     end
   end
+
+  test 'proxy should hide password' do
+    @project.proxy_configuration.update(target_base_url: 'https://ad-pericles.herokuapp.com')
+
+    VCR.use_cassette('proxy_post_password', match_requests_on: [:method, :uri]) do
+      post(
+        "/projects/#{@project.id}/proxy/users/sign_in",
+        params: {
+          username: 'john.doe@gmail.com',
+          password: 'myverysecurepassword'
+        },
+        as: :json
+      )
+    end
+
+    assert_not_includes Report.last.request_body, 'myverysecurepassword'
+    assert_not_includes Report.last.response_body, 'myverysecurepassword'
+  end
 end

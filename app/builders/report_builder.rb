@@ -13,8 +13,8 @@ class ReportBuilder
       url: human_readable_url,
       response_status_code: @http_response.status.code,
       response_headers: @http_response.headers.to_h,
-      response_body: @http_response.body.to_s.encode('utf-8', invalid: :replace, undef: :replace),
-      request_body: @request.body.read,
+      response_body: hide_sensitive_value(@http_response.body.to_s.encode('utf-8', invalid: :replace, undef: :replace)),
+      request_body: hide_sensitive_value(@request.body.read),
       request_headers: request_headers,
       request_method: @request.method.upcase
     )
@@ -84,5 +84,16 @@ class ReportBuilder
       e.report = report
       e.save
     end
+  end
+
+  def hide_sensitive_value(body)
+    begin
+      hash = JSON.parse(body)
+    rescue JSON::ParserError
+      return body
+    end
+    filters = @request.env['action_dispatch.parameter_filter']
+    parameter_filter = ActionDispatch::Http::ParameterFilter.new(filters)
+    parameter_filter.filter(hash).to_json
   end
 end
