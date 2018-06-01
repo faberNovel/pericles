@@ -83,6 +83,10 @@ class ResourceRepresentationsController < ApplicationController
     redirect_to project_resource_path(project, resource)
   end
 
+  def random
+    render json: resource_representation.random_instance
+  end
+
   private
 
   def resource

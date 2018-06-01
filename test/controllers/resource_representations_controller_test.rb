@@ -18,6 +18,15 @@ class ResourceRepresentationsControllerTest < ControllerWithAuthenticationTest
     assert_redirected_to new_user_session_path(redirect_to: request.path)
   end
 
+  test 'get random json from representation' do
+    @representation.attributes_resource_representations.update(is_required: true)
+    get random_resource_resource_representation_path(@resource, @representation)
+
+    json = JSON.parse(response.body)
+    assert json
+    assert_not_nil json[@representation.attributes_resource_representations.first.key_name]
+  end
+
   test 'should get edit' do
     get edit_resource_resource_representation_path(@resource, @representation)
     assert_response :success

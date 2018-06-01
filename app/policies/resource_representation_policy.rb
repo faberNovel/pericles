@@ -3,6 +3,10 @@ class ResourceRepresentationPolicy < ProjectRelatedPolicy
     create?
   end
 
+  def random?
+    show?
+  end
+
   def permitted_attributes_for_create
     [
       :name,

@@ -25,6 +25,10 @@ class ResourceRepresentation < ApplicationRecord
     ResourceInstance.where(resource: resource).select { |r| r.body_valid?(json_schema)  }
   end
 
+  def random_instance
+    GenerateJsonInstanceService.new(json_schema).execute
+  end
+
   def attributes_resource_representation(attribute)
     attributes_resource_representations.find_by(resource_attribute: attribute)
   end
