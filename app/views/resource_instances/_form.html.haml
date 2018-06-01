@@ -5,7 +5,7 @@
   .flexcontainer.flexwrap.flex-v-center
     - model.resource_representations.each_with_index do |r, i|
       .btn.selected{id: r.id, class: "color-#{i}"}=r.name
-
+  #error.error
   = f.text_area :body, value: format_json(model_instance.body), class: 'json'
 
   - model_instance.body_errors_by_representations.each_pair do |rep, body_errors|
