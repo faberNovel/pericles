@@ -234,356 +234,6 @@
     cursor: pointer;
   }
 
-  .color-0 {
-    color: #0b6975;
-    border-color: #0b6975;
-    &.selected {
-      color: white;
-      background-color: #0b6975;
-      &.btn:hover,&.hoverable:hover {
-        color: #f9f9f9;
-      }
-
-      svg {
-        fill: white;
-      }
-    }
-    &.btn:hover,&.hoverable:hover {
-      color: darken(#0b6975, 15%);
-      border-color: darken(#0b6975, 15%);
-    }
-
-    &.code {
-      color: white;
-      background-color: #0b6975;
-      border-color: transparent;
-
-      &:hover {
-        color: white;
-        background-color: darken(#0b6975, 15%);
-      }
-    }
-
-    svg {
-      fill: #0b6975;
-    }
-  }
-
-  .color-1 {
-    color: #429867;
-    border-color: #429867;
-    &.selected {
-      color: white;
-      background-color: #429867;
-      &.btn:hover,&.hoverable:hover {
-        color: #f9f9f9;
-      }
-
-      svg {
-        fill: white;
-      }
-    }
-    &.btn:hover,&.hoverable:hover {
-      color: darken(#429867, 15%);
-      border-color: darken(#429867, 15%);
-    }
-
-    &.code {
-      color: white;
-      background-color: #429867;
-      border-color: transparent;
-
-      &:hover {
-        color: white;
-        background-color: darken(#429867, 15%);
-      }
-    }
-
-    svg {
-      fill: #429867;
-    }
-  }
-
-  .color-2 {
-    color: #7db31b;
-    border-color: #7db31b;
-    &.selected {
-      color: white;
-      background-color: #7db31b;
-      &.btn:hover,&.hoverable:hover {
-        color: #f9f9f9;
-      }
-
-      svg {
-        fill: white;
-      }
-    }
-    &.btn:hover,&.hoverable:hover {
-      color: darken(#7db31b, 15%);
-      border-color: darken(#7db31b, 15%);
-    }
-
-    &.code {
-      color: white;
-      background-color: #7db31b;
-      border-color: transparent;
-
-      &:hover {
-        color: white;
-        background-color: darken(#7db31b, 15%);
-      }
-    }
-
-    svg {
-      fill: #7db31b;
-    }
-  }
-
-  .color-3 {
-    color: #fab343;
-    border-color: #fab343;
-    &.selected {
-      color: white;
-      background-color: #fab343;
-      &.btn:hover,&.hoverable:hover {
-        color: #f9f9f9;
-      }
-
-      svg {
-        fill: white;
-      }
-    }
-    &.btn:hover,&.hoverable:hover {
-      color: darken(#fab343, 15%);
-      border-color: darken(#fab343, 15%);
-    }
-
-    &.code {
-      color: white;
-      background-color: #fab343;
-      border-color: transparent;
-
-      &:hover {
-        color: white;
-        background-color: darken(#fab343, 15%);
-      }
-    }
-
-    svg {
-      fill: #fab343;
-    }
-  }
-
-  .color-4 {
-    color: #ff6500;
-    border-color: #ff6500;
-    &.selected {
-      color: white;
-      background-color: #ff6500;
-      &.btn:hover,&.hoverable:hover {
-        color: #f9f9f9;
-      }
-
-      svg {
-        fill: white;
-      }
-    }
-    &.btn:hover,&.hoverable:hover {
-      color: darken(#ff6500, 15%);
-      border-color: darken(#ff6500, 15%);
-    }
-
-    &.code {
-      color: white;
-      background-color: #ff6500;
-      border-color: transparent;
-
-      &:hover {
-        color: white;
-        background-color: darken(#ff6500, 15%);
-      }
-    }
-
-    svg {
-      fill: #ff6500;
-    }
-  }
-
-  .color-5 {
-    color: #e0222f;
-    border-color: #e0222f;
-    &.selected {
-      color: white;
-      background-color: #e0222f;
-      &.btn:hover,&.hoverable:hover {
-        color: #f9f9f9;
-      }
-
-      svg {
-        fill: white;
-      }
-    }
-    &.btn:hover,&.hoverable:hover {
-      color: darken(#e0222f, 15%);
-      border-color: darken(#e0222f, 15%);
-    }
-
-    &.code {
-      color: white;
-      background-color: #e0222f;
-      border-color: transparent;
-
-      &:hover {
-        color: white;
-        background-color: darken(#e0222f, 15%);
-      }
-    }
-
-    svg {
-      fill: #e0222f;
-    }
-  }
-
-  .color-6 {
-    color: #e42592;
-    border-color: #e42592;
-    &.selected {
-      color: white;
-      background-color: #e42592;
-      &.btn:hover,&.hoverable:hover {
-        color: #f9f9f9;
-      }
-
-      svg {
-        fill: white;
-      }
-    }
-    &.btn:hover,&.hoverable:hover {
-      color: darken(#e42592, 15%);
-      border-color: darken(#e42592, 15%);
-    }
-
-    &.code {
-      color: white;
-      background-color: #e42592;
-      border-color: transparent;
-
-      &:hover {
-        color: white;
-        background-color: darken(#e42592, 15%);
-      }
-    }
-
-    svg {
-      fill: #e42592;
-    }
-  }
-
-  .color-7 {
-    color: #cd06e4;
-    border-color: #cd06e4;
-    &.selected {
-      color: white;
-      background-color: #cd06e4;
-      &.btn:hover,&.hoverable:hover {
-        color: #f9f9f9;
-      }
-
-      svg {
-        fill: white;
-      }
-    }
-    &.btn:hover,&.hoverable:hover {
-      color: darken(#cd06e4, 15%);
-      border-color: darken(#cd06e4, 15%);
-    }
-
-    &.code {
-      color: white;
-      background-color: #cd06e4;
-      border-color: transparent;
-
-      &:hover {
-        color: white;
-        background-color: darken(#cd06e4, 15%);
-      }
-    }
-
-    svg {
-      fill: #cd06e4;
-    }
-  }
-
-  .color-8 {
-    color: #050ff0;
-    border-color: #050ff0;
-    &.selected {
-      color: white;
-      background-color: #050ff0;
-      &.btn:hover,&.hoverable:hover {
-        color: #f9f9f9;
-      }
-
-      svg {
-        fill: white;
-      }
-    }
-    &.btn:hover,&.hoverable:hover {
-      color: darken(#050ff0, 15%);
-      border-color: darken(#050ff0, 15%);
-    }
-
-    &.code {
-      color: white;
-      background-color: #050ff0;
-      border-color: transparent;
-
-      &:hover {
-        color: white;
-        background-color: darken(#050ff0, 15%);
-      }
-    }
-
-    svg {
-      fill: #050ff0;
-    }
-  }
-
-  .color-9 {
-    color: #2badbf;
-    border-color: #2badbf;
-    &.selected {
-      color: white;
-      background-color: #2badbf;
-      &.btn:hover,&.hoverable:hover {
-        color: #f9f9f9;
-      }
-
-      svg {
-        fill: white;
-      }
-    }
-    &.btn:hover,&.hoverable:hover {
-      color: darken(#2badbf, 15%);
-      border-color: darken(#2badbf, 15%);
-    }
-
-    &.code {
-      color: white;
-      background-color: #2badbf;
-      border-color: transparent;
-
-      &:hover {
-        color: white;
-        background-color: darken(#2badbf, 15%);
-      }
-    }
-
-    svg {
-      fill: #2badbf;
-    }
-  }
-
   #table {
     margin-bottom: 60px; // Avoid select creating an overflow
     border: solid 1px #f1f2f4;
@@ -747,5 +397,364 @@
 
   b {
     color: #008afd;
+  }
+}
+
+#new_resource_instance {
+  .btn {
+    margin-bottom: 8px;
+    margin-right: 8px;
+  }
+}
+
+#resource-show, #new_resource_instance {
+  .color-0 {
+    color: #0b6975;
+    border-color: #0b6975;
+    &.selected {
+      color: white;
+      background-color: #0b6975;
+      &.btn:hover, &.hoverable:hover {
+        color: #f9f9f9;
+      }
+
+      svg {
+        fill: white;
+      }
+    }
+    &.btn:hover, &.hoverable:hover {
+      color: darken(#0b6975, 15%);
+      border-color: darken(#0b6975, 15%);
+    }
+
+    &.code {
+      color: white;
+      background-color: #0b6975;
+      border-color: transparent;
+
+      &:hover {
+        color: white;
+        background-color: darken(#0b6975, 15%);
+      }
+    }
+
+    svg {
+      fill: #0b6975;
+    }
+  }
+
+  .color-1 {
+    color: #429867;
+    border-color: #429867;
+    &.selected {
+      color: white;
+      background-color: #429867;
+      &.btn:hover, &.hoverable:hover {
+        color: #f9f9f9;
+      }
+
+      svg {
+        fill: white;
+      }
+    }
+    &.btn:hover, &.hoverable:hover {
+      color: darken(#429867, 15%);
+      border-color: darken(#429867, 15%);
+    }
+
+    &.code {
+      color: white;
+      background-color: #429867;
+      border-color: transparent;
+
+      &:hover {
+        color: white;
+        background-color: darken(#429867, 15%);
+      }
+    }
+
+    svg {
+      fill: #429867;
+    }
+  }
+
+  .color-2 {
+    color: #7db31b;
+    border-color: #7db31b;
+    &.selected {
+      color: white;
+      background-color: #7db31b;
+      &.btn:hover, &.hoverable:hover {
+        color: #f9f9f9;
+      }
+
+      svg {
+        fill: white;
+      }
+    }
+    &.btn:hover, &.hoverable:hover {
+      color: darken(#7db31b, 15%);
+      border-color: darken(#7db31b, 15%);
+    }
+
+    &.code {
+      color: white;
+      background-color: #7db31b;
+      border-color: transparent;
+
+      &:hover {
+        color: white;
+        background-color: darken(#7db31b, 15%);
+      }
+    }
+
+    svg {
+      fill: #7db31b;
+    }
+  }
+
+  .color-3 {
+    color: #fab343;
+    border-color: #fab343;
+    &.selected {
+      color: white;
+      background-color: #fab343;
+      &.btn:hover, &.hoverable:hover {
+        color: #f9f9f9;
+      }
+
+      svg {
+        fill: white;
+      }
+    }
+    &.btn:hover, &.hoverable:hover {
+      color: darken(#fab343, 15%);
+      border-color: darken(#fab343, 15%);
+    }
+
+    &.code {
+      color: white;
+      background-color: #fab343;
+      border-color: transparent;
+
+      &:hover {
+        color: white;
+        background-color: darken(#fab343, 15%);
+      }
+    }
+
+    svg {
+      fill: #fab343;
+    }
+  }
+
+  .color-4 {
+    color: #ff6500;
+    border-color: #ff6500;
+    &.selected {
+      color: white;
+      background-color: #ff6500;
+      &.btn:hover, &.hoverable:hover {
+        color: #f9f9f9;
+      }
+
+      svg {
+        fill: white;
+      }
+    }
+    &.btn:hover, &.hoverable:hover {
+      color: darken(#ff6500, 15%);
+      border-color: darken(#ff6500, 15%);
+    }
+
+    &.code {
+      color: white;
+      background-color: #ff6500;
+      border-color: transparent;
+
+      &:hover {
+        color: white;
+        background-color: darken(#ff6500, 15%);
+      }
+    }
+
+    svg {
+      fill: #ff6500;
+    }
+  }
+
+  .color-5 {
+    color: #e0222f;
+    border-color: #e0222f;
+    &.selected {
+      color: white;
+      background-color: #e0222f;
+      &.btn:hover, &.hoverable:hover {
+        color: #f9f9f9;
+      }
+
+      svg {
+        fill: white;
+      }
+    }
+    &.btn:hover, &.hoverable:hover {
+      color: darken(#e0222f, 15%);
+      border-color: darken(#e0222f, 15%);
+    }
+
+    &.code {
+      color: white;
+      background-color: #e0222f;
+      border-color: transparent;
+
+      &:hover {
+        color: white;
+        background-color: darken(#e0222f, 15%);
+      }
+    }
+
+    svg {
+      fill: #e0222f;
+    }
+  }
+
+  .color-6 {
+    color: #e42592;
+    border-color: #e42592;
+    &.selected {
+      color: white;
+      background-color: #e42592;
+      &.btn:hover, &.hoverable:hover {
+        color: #f9f9f9;
+      }
+
+      svg {
+        fill: white;
+      }
+    }
+    &.btn:hover, &.hoverable:hover {
+      color: darken(#e42592, 15%);
+      border-color: darken(#e42592, 15%);
+    }
+
+    &.code {
+      color: white;
+      background-color: #e42592;
+      border-color: transparent;
+
+      &:hover {
+        color: white;
+        background-color: darken(#e42592, 15%);
+      }
+    }
+
+    svg {
+      fill: #e42592;
+    }
+  }
+
+  .color-7 {
+    color: #cd06e4;
+    border-color: #cd06e4;
+    &.selected {
+      color: white;
+      background-color: #cd06e4;
+      &.btn:hover, &.hoverable:hover {
+        color: #f9f9f9;
+      }
+
+      svg {
+        fill: white;
+      }
+    }
+    &.btn:hover, &.hoverable:hover {
+      color: darken(#cd06e4, 15%);
+      border-color: darken(#cd06e4, 15%);
+    }
+
+    &.code {
+      color: white;
+      background-color: #cd06e4;
+      border-color: transparent;
+
+      &:hover {
+        color: white;
+        background-color: darken(#cd06e4, 15%);
+      }
+    }
+
+    svg {
+      fill: #cd06e4;
+    }
+  }
+
+  .color-8 {
+    color: #050ff0;
+    border-color: #050ff0;
+    &.selected {
+      color: white;
+      background-color: #050ff0;
+      &.btn:hover, &.hoverable:hover {
+        color: #f9f9f9;
+      }
+
+      svg {
+        fill: white;
+      }
+    }
+    &.btn:hover, &.hoverable:hover {
+      color: darken(#050ff0, 15%);
+      border-color: darken(#050ff0, 15%);
+    }
+
+    &.code {
+      color: white;
+      background-color: #050ff0;
+      border-color: transparent;
+
+      &:hover {
+        color: white;
+        background-color: darken(#050ff0, 15%);
+      }
+    }
+
+    svg {
+      fill: #050ff0;
+    }
+  }
+
+  .color-9 {
+    color: #2badbf;
+    border-color: #2badbf;
+    &.selected {
+      color: white;
+      background-color: #2badbf;
+      &.btn:hover, &.hoverable:hover {
+        color: #f9f9f9;
+      }
+
+      svg {
+        fill: white;
+      }
+    }
+    &.btn:hover, &.hoverable:hover {
+      color: darken(#2badbf, 15%);
+      border-color: darken(#2badbf, 15%);
+    }
+
+    &.code {
+      color: white;
+      background-color: #2badbf;
+      border-color: transparent;
+
+      &:hover {
+        color: white;
+        background-color: darken(#2badbf, 15%);
+      }
+    }
+
+    svg {
+      fill: #2badbf;
+    }
   }
 }
