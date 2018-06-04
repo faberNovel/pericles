@@ -17,7 +17,11 @@ class ResourceUpdateContract
 
   def add_error_to_invalid_attribute(e)
     taken_attribute_name = /=\(\d+, (.*)\) already exists./.match(e.to_s)[1]
-    taken_attribute = @resource.resource_attributes.reject(&:id).find { |a| a.name == taken_attribute_name }
+
+    new_attributes = @resource.resource_attributes.reject(&:id)
+    potential_invalid_attributes = new_attributes + attributes_with_dirty_names
+
+    taken_attribute = potential_invalid_attributes.find { |a| a.name == taken_attribute_name }
     taken_attribute.errors.add(:name, :taken)
   end
 
@@ -28,21 +32,24 @@ class ResourceUpdateContract
   end
 
   def remove_collision_placeholder
-    attributes_whose_name_changes.all? do |a|
-      a.update(name: a.name.gsub(/^AVOID_COLLISION/, ''))
+    attributes_with_dirty_names.all? do |a|
+      a.destroyed? || a.update(name: a.name.gsub(/^AVOID_COLLISION/, ''))
     end
   end
 
   def add_collision_placeholder
-    attributes_whose_name_changes.all? do |a|
+    attributes_with_dirty_names.all? do |a|
       a.update(name: "AVOID_COLLISION#{a.name}")
     end
   end
 
-  def attributes_whose_name_changes
-    @resource.resource_attributes.select do |a|
-      attribute_param = @resource_params[:resource_attributes_attributes]&.values&.find { |hash| a.id == hash[:id].to_i }
-      attribute_param && (a.name != attribute_param[:name])
+  def attributes_with_dirty_names
+    @attributes_whose_name_changes ||= begin
+      attribute_hashes = @resource_params[:resource_attributes_attributes]&.values
+      @resource.resource_attributes.select do |a|
+        attribute_param = attribute_hashes&.find { |hash| a.id == hash[:id].to_i }
+        attribute_param && (a.name != attribute_param[:name])
+      end
     end
   end
 end

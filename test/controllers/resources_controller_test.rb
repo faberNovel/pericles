@@ -214,6 +214,34 @@ class ResourcesControllerTest < ControllerWithAuthenticationTest
     assert_response :unprocessable_entity
   end
 
+  test 'renaming attribute with same name fails' do
+    resource = create(:resource)
+    a = create(:attribute, parent_resource: resource)
+    b = create(:attribute, parent_resource: resource)
+
+    assert_no_difference 'Attribute.count' do
+      put project_resource_path(resource.project, resource), params: {
+        resource: {
+          resource_attributes_attributes: {
+            0 => {
+              id: a.id,
+              name: a.name,
+              type: a.type
+            },
+            1 => {
+              id: b.id,
+              name: a.name,
+              type: b.type
+            }
+          }
+        }
+      }
+    end
+
+    assert_equal 1, response.body.scan(/taken/).count
+    assert_response :unprocessable_entity
+  end
+
   test 'deleted then created attribute is not flagged as error if we add attribute with same name' do
     resource = create(:resource_with_attributes)
     same_name = resource.resource_attributes.first
