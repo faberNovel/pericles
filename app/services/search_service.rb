@@ -157,22 +157,26 @@ class SearchService
   end
 
   def search_reports(query)
-    @project.reports.where(
+    oldest_created_at = @project.reports.order(created_at: :desc).limit(1).offset(1000).first&.created_at
+    reports = @project.reports
+    reports = reports.where('created_at >= :date', date: oldest_created_at) if oldest_created_at
+
+    reports.where(
       response_status_code: query.to_i
     ).or(
-      @project.reports.where(
+      reports.where(
         'reports.response_body ilike ?', "%#{query}%"
       )
     ).or(
-      @project.reports.where(
+      reports.where(
         'reports.request_body ilike ?', "%#{query}%"
       )
     ).or(
-      @project.reports.where(
+      reports.where(
         'reports.request_method ilike ?', "%#{query}%"
       )
     ).or(
-      @project.reports.where(
+      reports.where(
         'reports.url ilike ?', "%#{query}%"
       )
     ).order(created_at: :desc).limit(20)
@@ -240,6 +244,13 @@ class SearchService
     validation_errors = ValidationError.joins(:report).where(
       reports: { project_id: @project.id }
     )
+
+    oldest_created_at = validation_errors.order(created_at: :desc).limit(1).offset(1000).first&.created_at
+    if oldest_created_at
+      validation_errors = validation_errors.where(
+        'validation_errors.created_at >= :date', date: oldest_created_at
+      )
+    end
 
     validation_errors.where(
       'validation_errors.description ilike ?', "%#{query}%"
