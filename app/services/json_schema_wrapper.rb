@@ -12,18 +12,20 @@ class JSONSchemaWrapper
     title = @json_schema.delete :title
     description = @json_schema.delete :description
 
-    @json_schema = {type: 'array', items: @json_schema } if @is_collection
-    @json_schema = {
-      type: 'object',
-      properties: {@root_key.to_sym => @json_schema},
-      required: [@root_key.to_s],
-      additionalProperties: false
-    } unless @root_key.blank?
+    @json_schema = { type: 'array', items: @json_schema } if @is_collection
+    if @root_key.present?
+      @json_schema = {
+        type: 'object',
+        properties: { @root_key.to_sym => @json_schema },
+        required: [@root_key.to_s],
+        additionalProperties: false
+      }
+    end
     add_metadata if should_add_metadata
 
-    @json_schema[:definitions] = definitions unless definitions.blank?
-    @json_schema[:title] = title unless title.blank?
-    @json_schema[:description] = description unless description.blank?
+    @json_schema[:definitions] = definitions if definitions.present?
+    @json_schema[:title] = title if title.present?
+    @json_schema[:description] = description if description.present?
     @json_schema
   end
 

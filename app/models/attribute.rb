@@ -9,7 +9,7 @@ class Attribute < ApplicationRecord
   has_many :attributes_resource_representations, inverse_of: :resource_attribute, dependent: :destroy
   has_many :resource_representations, through: :attributes_resource_representations
 
-  validates :name, presence: true, uniqueness: { scope: [:parent_resource], case_sensitive: true }
+  validates :name, presence: true
   validates :parent_resource, presence: true
   validates :primitive_type, presence: true, if: -> { resource.nil? }
   validates :resource, presence: true, if: -> { primitive_type.nil? }
@@ -38,13 +38,11 @@ class Attribute < ApplicationRecord
   private
 
   def is_enumerable?
-    primitive_type && !self.boolean?
+    primitive_type && !boolean?
   end
 
   def type_cannot_be_primitive_type_and_resource
-    unless primitive_type.nil? || resource.nil?
-      errors.add(:base, :type_cannot_be_primitive_type_and_resource)
-    end
+    errors.add(:base, :type_cannot_be_primitive_type_and_resource) unless primitive_type.nil? || resource.nil?
   end
 
   def cannot_have_min_max

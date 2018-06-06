@@ -39,20 +39,19 @@ class AttributesImporter
   end
 
   def create_attribute_from_primitive_class(key, primitive_class, is_array)
-    case
-    when primitive_class <= Integer
+    if primitive_class <= Integer
       @resource.resource_attributes.create(
         name: key, primitive_type: :integer, is_array: is_array
       )
-    when primitive_class <= String
+    elsif primitive_class <= String
       @resource.resource_attributes.create(
         name: key, primitive_type: :string, is_array: is_array
       )
-    when primitive_class <= TrueClass, primitive_class <= FalseClass
+    elsif primitive_class <= TrueClass || primitive_class <= FalseClass
       @resource.resource_attributes.create(
         name: key, primitive_type: :boolean, is_array: is_array
       )
-    when primitive_class <= Float
+    elsif primitive_class <= Float
       @resource.resource_attributes.create(
         name: key, primitive_type: :number, is_array: is_array
       )

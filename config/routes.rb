@@ -26,6 +26,9 @@ Rails.application.routes.draw do
   resources :resources, only: [] do
     resources :resource_representations, except: [:index] do
       match 'clone', via: [:post]
+      member do
+        get 'random'
+      end
     end
     resources :resource_instances, only: [:new, :create]
   end

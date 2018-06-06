@@ -6,21 +6,21 @@ class ProjectTest < ActiveSupport::TestCase
   end
 
   test "Two projects shouldn't have the same title" do
-    create(:project, title: "NOK")
-    assert_not build(:project, title: "NOK").valid?
+    create(:project, title: 'NOK')
+    assert_not build(:project, title: 'NOK').valid?
   end
 
   test "shouldn't exist with a title that's too short or too long" do
-    assert_not build(:project, title: "a").valid?
-    assert_not build(:project, title: "testtesttesttesttesttesttesttesttesttesttest").valid?
+    assert_not build(:project, title: 'a').valid?
+    assert_not build(:project, title: 'testtesttesttesttesttesttesttesttesttesttest').valid?
   end
 
-  test "Project should be valid with all attributes set correctly" do
-    assert build(:project, title: "New Project", description: "Project description").valid?
+  test 'Project should be valid with all attributes set correctly' do
+    assert build(:project, title: 'New Project', description: 'Project description').valid?
   end
 
-  test "created projects have a mock profile" do
-    project = create(:project, title: "New Project", description: "Project description")
+  test 'created projects have a mock profile' do
+    project = create(:project, title: 'New Project', description: 'Project description')
     assert_equal project.mock_profiles.count, 1
   end
 

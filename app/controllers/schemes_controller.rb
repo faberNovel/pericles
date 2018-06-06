@@ -5,11 +5,9 @@ class SchemesController < ApplicationController
     @schemes = policy_scope(Scheme).all
   end
 
-  def new
-  end
+  def new; end
 
-  def edit
-  end
+  def edit; end
 
   def update
     if scheme.update(permitted_attributes(scheme))

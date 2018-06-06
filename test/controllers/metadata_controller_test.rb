@@ -6,17 +6,17 @@ class MetadataControllerTest < ControllerWithAuthenticationTest
     @metadatum = create(:metadatum, project: @project)
   end
 
-  test "should get index" do
+  test 'should get index' do
     get project_metadata_path(@project)
     assert_response :success
   end
 
-  test "should get new" do
+  test 'should get new' do
     get new_project_metadatum_path(@project)
     assert_response :success
   end
 
-  test "should create metadatum" do
+  test 'should create metadatum' do
     assert_difference('Metadatum.where(project: @project).count') do
       post project_metadata_path(@project), params: {
         metadatum: build(:metadatum).attributes
@@ -25,12 +25,12 @@ class MetadataControllerTest < ControllerWithAuthenticationTest
     assert_redirected_to project_metadata_path(@project)
   end
 
-  test "should get edit" do
+  test 'should get edit' do
     get edit_metadatum_path(@metadatum)
     assert_response :success
   end
 
-  test "should update metadatum" do
+  test 'should update metadatum' do
     assert_not_equal 'New name', @metadatum
 
     put metadatum_path(@metadatum), params: {
@@ -41,7 +41,7 @@ class MetadataControllerTest < ControllerWithAuthenticationTest
     assert_equal 'New name', @metadatum.reload.name
   end
 
-  test "should delete metadatum" do
+  test 'should delete metadatum' do
     assert_difference 'Metadatum.count', -1 do
       delete metadatum_path(@metadatum)
     end
@@ -108,7 +108,6 @@ class MetadataControllerTest < ControllerWithAuthenticationTest
     @project.update(is_public: true)
     sign_in external_user
 
-
     get project_metadata_path(@project)
     assert_response :success
 
@@ -159,7 +158,7 @@ class MetadataControllerTest < ControllerWithAuthenticationTest
     assert_redirected_to new_user_session_path(redirect_to: request.path)
   end
 
-  test "unauthenticated user should not access non-public project metadata" do
+  test 'unauthenticated user should not access non-public project metadata' do
     sign_out :user
 
     get project_metadata_path(@project)

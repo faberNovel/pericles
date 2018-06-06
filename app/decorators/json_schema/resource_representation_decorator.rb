@@ -3,13 +3,13 @@ module JSONSchema
     delegate_all
 
     def json_schema
-      json_schema_without_definitions.merge({definitions: definitions})
+      json_schema_without_definitions.merge({ definitions: definitions })
     end
 
     def json_schema_without_definitions
-      Rails.cache.fetch("#{cache_key}/json_schema_without_definitions", force: !object.persisted?) do
-        build_json_schema_without_definitions
-      end.clone
+      # TODO: Clement Villain 28/05/2018
+      # Build a cache system
+      build_json_schema_without_definitions
     end
 
     def build_json_schema_without_definitions
@@ -17,9 +17,9 @@ module JSONSchema
         title: title,
         type: 'object',
         properties: properties,
-        additionalProperties: false,
+        additionalProperties: false
       }
-      schema[:description] = description unless description.blank?
+      schema[:description] = description if description.present?
       schema[:required] = required unless required.empty?
 
       schema
@@ -49,11 +49,11 @@ module JSONSchema
     end
 
     def base_href
-      context[:base_href] || "#/definitions/"
+      context[:base_href] || '#/definitions/'
     end
 
     def uid
-      name = object.name.gsub(' ', '_')
+      name = object.name.tr(' ', '_')
       id = object.id || object.hash.abs
       "#{name}_#{id}"
     end
@@ -61,7 +61,7 @@ module JSONSchema
     def required
       attributes_resource_representations
         .select(&:is_required)
-        .map { |attr_resource_rep| attr_resource_rep.key_name }
+        .map(&:key_name)
         .uniq
         .sort # We sort to generate a stable json schema
     end
@@ -70,23 +70,11 @@ module JSONSchema
       "#{object.resource.name} - #{object.name}"
     end
 
-    def cache_key
-      md5 = Digest::MD5.new
-      md5.update(object.cache_key)
-      md5.update(resource.cache_key)
-      attributes_resource_representations.each do |association|
-        md5.update(association.resource_attribute.cache_key)
-        md5.update(association.cache_key)
-      end
-      md5.update(context.to_s)
-      md5.hexdigest
-    end
-
     def resource_representation_dependencies
       visited = Set.new
 
       queue = next_representation_dependencies(object)
-      while !queue.empty?
+      until queue.empty?
         representation = queue.pop
         next if visited.include? representation
 
@@ -106,7 +94,7 @@ module JSONSchema
             attributes_resource_representations: :resource_attribute,
             resource: nil
           }
-        ).map { |a| a.resource_representation }.compact
+        ).map(&:resource_representation).compact
     end
   end
 end

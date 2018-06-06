@@ -6,7 +6,7 @@ class SearchService
   def search(query)
     return [] if query.blank?
 
-    # TODO Clément Villain 15/03/2018
+    # TODO: Clément Villain 15/03/2018
     # Refactor search_* methods using pg_search gem or
     # Postgres Basic Text Matching
 
@@ -40,7 +40,7 @@ class SearchService
     )
 
     api_error_instances.where(
-      "api_error_instances.name ilike ?", "%#{query}%"
+      'api_error_instances.name ilike ?', "%#{query}%"
     ).or(
       api_error_instances.where(
         'api_error_instances.body::text ilike ?', "%#{query}%"
@@ -50,7 +50,7 @@ class SearchService
 
   def search_api_errors(query)
     @project.api_errors.where(
-      "api_errors.name ilike ?", "%#{query}%"
+      'api_errors.name ilike ?', "%#{query}%"
     )
   end
 
@@ -60,16 +60,16 @@ class SearchService
     )
 
     resource_attributes.where(
-      "attributes.name ilike ?", "%#{query}%"
+      'attributes.name ilike ?', "%#{query}%"
     ).or(
       resource_attributes.where(
-        "attributes.description ilike ?", "%#{query}%"
+        'attributes.description ilike ?', "%#{query}%"
       )
     )
   end
 
   def search_response_headers(query)
-    headers = Header.joins(response: {route: :resource}).where(
+    headers = Header.joins(response: { route: :resource }).where(
       resources: { project_id: @project.id }
     )
 
@@ -86,17 +86,17 @@ class SearchService
 
   def search_headers(headers, query)
     headers.where(
-      "headers.name ilike ?", "%#{query}%"
+      'headers.name ilike ?', "%#{query}%"
     ).or(
       headers.where(
-        "headers.value ilike ?", "%#{query}%"
+        'headers.value ilike ?', "%#{query}%"
       )
     )
   end
 
   def search_metadata(query)
     @project.metadata.where(
-      "metadata.name ilike ?", "%#{query}%"
+      'metadata.name ilike ?', "%#{query}%"
     )
   end
 
@@ -106,7 +106,7 @@ class SearchService
     )
 
     instances.where(
-      "metadatum_instances.name ilike ?", "%#{query}%"
+      'metadatum_instances.name ilike ?', "%#{query}%"
     ).or(
       instances.where(
         'metadatum_instances.body::text ilike ?', "%#{query}%"
@@ -120,17 +120,17 @@ class SearchService
     )
 
     mock_pickers.where(
-      "mock_pickers.body_pattern ilike ?", "%#{query}%"
+      'mock_pickers.body_pattern ilike ?', "%#{query}%"
     ).or(
       mock_pickers.where(
-        "mock_pickers.url_pattern ilike ?", "%#{query}%"
+        'mock_pickers.url_pattern ilike ?', "%#{query}%"
       )
     )
   end
 
   def search_mock_profiles(query)
     @project.mock_profiles.where(
-      "mock_profiles.name ilike ?", "%#{query}%"
+      'mock_profiles.name ilike ?', "%#{query}%"
     )
   end
 
@@ -148,32 +148,36 @@ class SearchService
     )
 
     query_parameters.where(
-      "query_parameters.name ilike ?", "%#{query}%"
+      'query_parameters.name ilike ?', "%#{query}%"
     ).or(
       query_parameters.where(
-        "query_parameters.description ilike ?", "%#{query}%"
+        'query_parameters.description ilike ?', "%#{query}%"
       )
     )
   end
 
   def search_reports(query)
-    @project.reports.where(
+    oldest_created_at = @project.reports.order(created_at: :desc).limit(1).offset(1000).first&.created_at
+    reports = @project.reports
+    reports = reports.where('created_at >= :date', date: oldest_created_at) if oldest_created_at
+
+    reports.where(
       response_status_code: query.to_i
     ).or(
-      @project.reports.where(
-        "reports.response_body ilike ?", "%#{query}%"
+      reports.where(
+        'reports.response_body ilike ?', "%#{query}%"
       )
     ).or(
-      @project.reports.where(
-        "reports.request_body ilike ?", "%#{query}%"
+      reports.where(
+        'reports.request_body ilike ?', "%#{query}%"
       )
     ).or(
-      @project.reports.where(
-        "reports.request_method ilike ?", "%#{query}%"
+      reports.where(
+        'reports.request_method ilike ?', "%#{query}%"
       )
     ).or(
-      @project.reports.where(
-        "reports.url ilike ?", "%#{query}%"
+      reports.where(
+        'reports.url ilike ?', "%#{query}%"
       )
     ).order(created_at: :desc).limit(20)
   end
@@ -184,7 +188,7 @@ class SearchService
     )
 
     resource_instances.where(
-      "resource_instances.name ilike ?", "%#{query}%"
+      'resource_instances.name ilike ?', "%#{query}%"
     ).or(
       resource_instances.where(
         'resource_instances.body::text ilike ?', "%#{query}%"
@@ -194,20 +198,20 @@ class SearchService
 
   def search_resource_representations(query)
     @project.resource_representations.where(
-      "resource_representations.name ilike ?", "%#{query}%"
+      'resource_representations.name ilike ?', "%#{query}%"
     ).or(
       @project.resource_representations.where(
-        "resource_representations.description ilike ?", "%#{query}%"
+        'resource_representations.description ilike ?', "%#{query}%"
       )
     )
   end
 
   def search_resources(query)
     @project.resources.where(
-      "resources.name ilike ?", "%#{query}%"
+      'resources.name ilike ?', "%#{query}%"
     ).or(
       @project.resources.where(
-        "resources.description ilike ?", "%#{query}%"
+        'resources.description ilike ?', "%#{query}%"
       )
     )
   end
@@ -217,17 +221,17 @@ class SearchService
       status_code: query.to_i
     ).or(
       @project.responses.where(
-        "responses.root_key ilike ?", "%#{query}%"
+        'responses.root_key ilike ?', "%#{query}%"
       )
     )
   end
 
   def search_routes(query)
     @project.routes.where(
-      "routes.description ilike ?", "%#{query}%"
+      'routes.description ilike ?', "%#{query}%"
     ).or(
       @project.routes.where(
-        "routes.url ilike ?", "%#{query}%"
+        'routes.url ilike ?', "%#{query}%"
       )
     ).or(
       @project.routes.where(
@@ -241,8 +245,15 @@ class SearchService
       reports: { project_id: @project.id }
     )
 
+    oldest_created_at = validation_errors.order(created_at: :desc).limit(1).offset(1000).first&.created_at
+    if oldest_created_at
+      validation_errors = validation_errors.where(
+        'validation_errors.created_at >= :date', date: oldest_created_at
+      )
+    end
+
     validation_errors.where(
-      "validation_errors.description ilike ?", "%#{query}%"
+      'validation_errors.description ilike ?', "%#{query}%"
     ).order(created_at: :desc).limit(20)
   end
 end

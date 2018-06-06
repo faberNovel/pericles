@@ -13,8 +13,8 @@ class ReportBuilder
       url: human_readable_url,
       response_status_code: @http_response.status.code,
       response_headers: @http_response.headers.to_h,
-      response_body: @http_response.body.to_s.encode('utf-8', :invalid => :replace, :undef => :replace),
-      request_body: @request.body.read,
+      response_body: hide_sensitive_value(@http_response.body.to_s.encode('utf-8', invalid: :replace, undef: :replace)),
+      request_body: hide_sensitive_value(@request.body.read),
       request_headers: request_headers,
       request_method: @request.method.upcase
     )
@@ -35,13 +35,13 @@ class ReportBuilder
 
   def find_route
     routes = @project.build_route_set
-    escaped_url =  @request.path[/proxy(\/?.*)/, 1]
+    escaped_url = @request.path[/proxy(\/?.*)/, 1]
     begin
       main_route = routes.recognize_path(escaped_url, { method: @request.method })
     rescue ActionController::RoutingError
       return nil
     end
-    Route.find_by_id(main_route[:name])
+    Route.find_by(id: main_route[:name])
   end
 
   def request_headers
@@ -61,8 +61,8 @@ class ReportBuilder
 
   def find_response_with_lowest_errors
     find_response_with_no_errors ||
-    find_response_with_no_status_errors ||
-    route.responses.first
+      find_response_with_no_status_errors ||
+      route.responses.first
   end
 
   def find_response_with_no_errors
@@ -84,5 +84,16 @@ class ReportBuilder
       e.report = report
       e.save
     end
+  end
+
+  def hide_sensitive_value(body)
+    begin
+      hash = JSON.parse(body)
+    rescue JSON::ParserError
+      return body
+    end
+    filters = @request.env['action_dispatch.parameter_filter']
+    parameter_filter = ActionDispatch::Http::ParameterFilter.new(filters)
+    parameter_filter.filter(hash).to_json
   end
 end

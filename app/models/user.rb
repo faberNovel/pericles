@@ -14,7 +14,7 @@ class User < ApplicationRecord
     User.find_or_create_by(email: data['email']) do |user|
       user.first_name = data['first_name']
       user.last_name = data['last_name']
-      user.password = Devise.friendly_token[0,20]
+      user.password = Devise.friendly_token[0, 20]
       user.avatar_url = data['image']
     end
   end

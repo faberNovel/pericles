@@ -1,9 +1,9 @@
 class Validation < ApplicationRecord
   def status
     if json_schema_errors.any?
-      json_schema_errors.first[:description] == "parse_error" ? :schema_parse_error : :schema_validation_error
+      json_schema_errors.first[:description] == 'parse_error' ? :schema_parse_error : :schema_validation_error
     elsif json_instance_errors.any?
-      json_instance_errors.first[:description] == "parse_error" ? :instance_parse_error : :instance_validation_error
+      json_instance_errors.first[:description] == 'parse_error' ? :instance_parse_error : :instance_validation_error
     else
       :success
     end
@@ -44,7 +44,7 @@ class Validation < ApplicationRecord
     begin
       errors = JSON::Validator.fully_validate(schema, json, json: true)
     rescue JSON::Schema::JsonParseError, TypeError
-      errors << "parse_error"
+      errors << 'parse_error'
     end
     errors
   end

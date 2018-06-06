@@ -16,8 +16,8 @@ module ResponsesHelper
     )
 
     summary = "[ #{summary} ]" if is_collection
-    summary = "\"#{root_key}\": #{summary}" unless root_key.blank?
-    summary = "{ #{summary} }" unless is_collection and root_key.blank?
+    summary = "\"#{root_key}\": #{summary}" if root_key.present?
+    summary = "{ #{summary} }" unless is_collection && root_key.blank?
 
     summary
   end

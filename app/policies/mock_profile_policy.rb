@@ -17,7 +17,7 @@ class MockProfilePolicy < ProjectRelatedPolicy
         :_destroy,
         resource_instance_ids: [],
         api_error_instance_ids: [],
-        metadatum_instance_ids: [],
+        metadatum_instance_ids: []
       ]
     ]
   end

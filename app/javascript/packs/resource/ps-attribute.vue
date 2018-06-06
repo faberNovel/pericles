@@ -156,8 +156,8 @@ export default {
         name = rep.customKeyName;
       }
 
-      if (rep && !rep.isRequired) {
-        name += ' (optional)'
+      if (rep) {
+        name += rep.isRequired ? ' (required)' : ' (optional)';
       }
 
       return name;

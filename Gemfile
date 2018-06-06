@@ -12,7 +12,7 @@ gem 'json_schema-faker'
 gem 'execjs'
 gem 'devise', '~> 4.4', '>= 4.4.1'
 gem 'omniauth-google-oauth2', '~> 0.5.2'
-gem "audited", "~> 4.5"
+gem 'audited', '~> 4.5'
 gem 'http'
 gem 'kaminari'
 gem 'rollbar', '~> 2.15', '>= 2.15.4'
@@ -41,7 +41,6 @@ gem 'pundit', '~> 1.1'
 
 gem 'webpacker', '~> 3.5', '>= 3.5.3'
 
-gem 'bootsnap', require: false
 
 group :development, :test do
   gem 'byebug'
@@ -56,7 +55,7 @@ end
 group :test do
   gem 'minitest-reporters'
   gem 'factory_bot_rails'
-  gem 'simplecov', :require => false
+  gem 'simplecov', require: false
   gem 'vcr'
   gem 'webmock'
 end
@@ -73,14 +72,14 @@ end
 gem 'bootstrap-sass', '~> 3.3.6'
 gem 'autoprefixer-rails'
 
-gem "haml-rails", "~> 1.0"
+gem 'haml-rails', '~> 1.0'
 
 gem 'rails-controller-testing'
 
 gem 'json-schema', '~> 2.8'
 gem 'json', '~> 2.0.2'
 
-gem "cocoon", '~> 1.2'
+gem 'cocoon', '~> 1.2'
 gem 'bootstrap_form'
 gem 'rails-erd', '~> 1.5'
 

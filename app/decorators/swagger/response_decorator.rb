@@ -5,15 +5,17 @@ class Swagger::ResponseDecorator < Draper::Decorator
     h = { description: '' }
     return h unless json_schema
 
-    h.merge({
-      content: {
-        'application/json' => {
-          schema: {
-            '$ref' => ref
+    h.merge(
+      {
+        content: {
+          'application/json' => {
+            schema: {
+              '$ref' => ref
+            }
           }
         }
       }
-    })
+    )
   end
 
   def uid
@@ -26,6 +28,6 @@ class Swagger::ResponseDecorator < Draper::Decorator
 
   def base_href
     # TODO: Clément Villain 2/03/18 refactor with json schema
-    context[:base_href] || "#/definitions/"
+    context[:base_href] || '#/definitions/'
   end
 end

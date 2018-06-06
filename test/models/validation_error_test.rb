@@ -1,8 +1,8 @@
 require 'test_helper'
 
 class ValidationErrorTest < ActiveSupport::TestCase
-  test "header name is the first word of description" do
-    validation_error =  build(:validation_error,
+  test 'header name is the first word of description' do
+    validation_error = build(:validation_error,
       category: :header,
       description: 'Content-Type is missing from the response headers'
     )

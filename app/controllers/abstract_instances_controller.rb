@@ -5,8 +5,7 @@ class AbstractInstancesController < ApplicationController
     raise 'Implement me!'
   end
 
-  def new
-  end
+  def new; end
 
   def create
     if model_instance.save
@@ -16,8 +15,7 @@ class AbstractInstancesController < ApplicationController
     end
   end
 
-  def edit
-  end
+  def edit; end
 
   def update
     if model_instance.update(model_instance_params)
@@ -41,7 +39,7 @@ class AbstractInstancesController < ApplicationController
   def model
     return @model if defined? @model
     @model = begin
-      model = model_class.find(params["#{model_name}_id".to_sym]) if params.has_key? "#{model_name}_id".to_sym
+      model = model_class.find(params["#{model_name}_id".to_sym]) if params.key? "#{model_name}_id".to_sym
       model || model_instance.send(model_name)
     end
 
@@ -53,9 +51,9 @@ class AbstractInstancesController < ApplicationController
   def model_instance
     return @model_instance if defined? @model_instance
     @model_instance = begin
-      model_instance = model_instance_class.find(params[:id]) if params.has_key? :id
-      model_instance ||= model.send("#{model_name}_instances").build(model_instance_params) if params.has_key? "#{model_name}_instance".to_sym
-      model_instance || model_instance_class.new({model_name.to_sym => model, body: default_body, name: default_name})
+      model_instance = model_instance_class.find(params[:id]) if params.key? :id
+      model_instance ||= model.send("#{model_name}_instances").build(model_instance_params) if params.key? "#{model_name}_instance".to_sym
+      model_instance || model_instance_class.new({ model_name.to_sym => model, body: default_body, name: default_name })
     end
 
     authorize @model_instance
@@ -70,7 +68,7 @@ class AbstractInstancesController < ApplicationController
   def model_instance_params
     params.require("#{model_name}_instance".to_sym).permit(
       :name,
-      :body,
+      :body
     )
   end
 
@@ -79,7 +77,7 @@ class AbstractInstancesController < ApplicationController
   end
 
   def model_class
-    "#{model_name.camelize}".constantize
+    model_name.camelize.to_s.constantize
   end
 
   def default_body

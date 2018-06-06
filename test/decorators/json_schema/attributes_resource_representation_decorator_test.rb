@@ -13,12 +13,15 @@ class AttributesResourceRepresentationDecoratorTest < ActiveSupport::TestCase
 
   test 'nullable property' do
     @decorator.resource_attribute.update(nullable: true)
-    assert_equal({
-      oneOf: [
-        { type: 'integer' },
-        { type: 'null' }
-      ]
-    }, @decorator.property)
+    assert_equal(
+      {
+        oneOf: [
+          { type: 'integer' },
+          { type: 'null' }
+        ]
+      },
+      @decorator.property
+    )
   end
 
   test 'array property' do
@@ -28,12 +31,15 @@ class AttributesResourceRepresentationDecoratorTest < ActiveSupport::TestCase
       max_items: 456
     )
 
-    assert_equal({
-      type: 'array',
-      items: { type: 'integer' },
-      minItems: 123,
-      maxItems: 456
-    }, @decorator.property)
+    assert_equal(
+      {
+        type: 'array',
+        items: { type: 'integer' },
+        minItems: 123,
+        maxItems: 456
+      },
+      @decorator.property
+    )
   end
 
   test 'enum string is correctly cast' do
@@ -58,9 +64,12 @@ class AttributesResourceRepresentationDecoratorTest < ActiveSupport::TestCase
     )
     @decorator.reload
 
-    assert_equal({
-      type: 'object',
-      '$ref': "#/definitions/#{referenced_rep.name}_#{referenced_rep.id}"
-    }, @decorator.property)
+    assert_equal(
+      {
+        type: 'object',
+        '$ref': "#/definitions/#{referenced_rep.name}_#{referenced_rep.id}"
+      },
+      @decorator.property
+    )
   end
 end

@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class UsersControllerTest < ControllerWithAuthenticationTest
-  test "should show user" do
+  test 'should show user' do
     get user_path(@user)
     assert_response :success
   end

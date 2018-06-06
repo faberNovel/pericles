@@ -14,7 +14,7 @@ class ResourceRepresentationsController < ApplicationController
         ).execute
         render json: schema
       end
-      %i(swift java kotlin).each do |language|
+      %i[swift java kotlin].each do |language|
         format.send(language) do
           body = CodeGenerator.new(language)
             .from_resource_representation(resource_representation)
@@ -81,6 +81,10 @@ class ResourceRepresentationsController < ApplicationController
     copy.save!
 
     redirect_to project_resource_path(project, resource)
+  end
+
+  def random
+    render json: resource_representation.random_instance
   end
 
   private

@@ -84,9 +84,18 @@ export default {
     return query.split('').map((char) => '(' + char.toLowerCase() + ').*').join('');
   },
   isResourceMatchingQuery: function(resource, query) {
+    if (query == null || query.length === 0) {
+      return false;
+    }
+
     let permissiveQuery = this.permissiveQuery(query);
     let re = new RegExp(permissiveQuery);
     return re.test(resource.name.toLowerCase());
+  },
+  hasNestedChildrenMatchingQuery: function (resource, query) {
+    return this.flatChildren(resource).some(
+      (child) => this.isResourceMatchingQuery(child, query)
+    );
   },
   applyFilter: function() {
     let q = this.state.query;
@@ -99,10 +108,8 @@ export default {
       this.state.displayedResources = resources.filter(
         (r) => {
           let isResourceFound = this.isResourceMatchingQuery(r, q);
-          let someChildrenFound = this.flatChildren(r).some(
-            (child) => this.isResourceMatchingQuery(child, q)
-          )
-          return isResourceFound || (this.state.treeMode && someChildrenFound);
+          let someChildrenFound = this.hasNestedChildrenMatchingQuery(r, q);
+          return isResourceFound || someChildrenFound;
         }
       );
     }

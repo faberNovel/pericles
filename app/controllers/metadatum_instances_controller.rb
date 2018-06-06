@@ -1,4 +1,4 @@
-class MetadatumInstancesController< AbstractInstancesController
+class MetadatumInstancesController < AbstractInstancesController
   def model_name
     'metadatum'
   end

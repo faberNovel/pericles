@@ -19,8 +19,7 @@ class MockProfilesController < MocksController
     @mock_profiles = project.mock_profiles
   end
 
-  def new
-  end
+  def new; end
 
   def create
     if mock_profile.save
@@ -30,8 +29,7 @@ class MockProfilesController < MocksController
     end
   end
 
-  def edit
-  end
+  def edit; end
 
   def update
     if mock_profile.update(permitted_attributes(mock_profile))

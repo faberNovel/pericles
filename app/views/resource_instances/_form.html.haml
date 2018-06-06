@@ -1,8 +1,15 @@
 = bootstrap_form_for(model_instance.persisted? ? model_instance : [model, model_instance]) do |f|
-  .flexcontainer-justify-end= f.submit class: 'btn btn-primary'
+  .flexcontainer-justify-end
+    = f.submit class: 'btn btn-primary'
   = f.text_field :name
+  .flexcontainer.flexwrap.flex-v-center
+    - model.resource_representations.each_with_index do |r, i|
+      .btn.selected{id: r.id, class: "color-#{i}"}=r.name
+  #error.error
   = f.text_area :body, value: format_json(model_instance.body), class: 'json'
 
   - model_instance.body_errors_by_representations.each_pair do |rep, body_errors|
     = link_to rep.name, project_resource_path(project, rep.resource, anchor: "rep-#{rep.id}")
     = render partial: 'shared/schema_errors', locals: { body_errors: body_errors }
+
+= javascript_include_tag 'resources/new_representation'

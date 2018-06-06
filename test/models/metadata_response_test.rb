@@ -9,7 +9,7 @@ class MetadataResponseTest < ActiveSupport::TestCase
     assert_not build(:metadata_response, response: nil).valid?
   end
 
-  test "couple metadatum/response should be unique" do
+  test 'couple metadatum/response should be unique' do
     metadata_response = create(:metadata_response)
 
     assert_not build(:metadata_response,

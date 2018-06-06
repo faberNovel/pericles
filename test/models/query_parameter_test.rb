@@ -13,7 +13,7 @@ class QueryParameterTest < ActiveSupport::TestCase
     assert_not build(:query_parameter, route: nil).valid?
   end
 
-  test "QueryParameter should be valid with all attributes set correctly" do
-    assert build(:query_parameter, name: "user_id", description: "New test QueryParameter", primitive_type: :string, is_optional: false).valid?
+  test 'QueryParameter should be valid with all attributes set correctly' do
+    assert build(:query_parameter, name: 'user_id', description: 'New test QueryParameter', primitive_type: :string, is_optional: false).valid?
   end
 end

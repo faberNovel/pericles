@@ -10,53 +10,53 @@ class MockProfilesControllerTest < ControllerWithAuthenticationTest
       parent_resource_representation: @resource.default_representation,
       is_required: true
     )
-    @route = create(:route, resource: @resource, url: "/mock_route")
+    @route = create(:route, resource: @resource, url: '/mock_route')
     create(:response, route: @route, resource_representation: @resource.default_representation)
-    @resource_instance = create(:resource_instance, resource: @resource, body: {id: 1}.to_json)
+    @resource_instance = create(:resource_instance, resource: @resource, body: { id: 1 }.to_json)
     @mock_profile = create(:mock_profile, project: @project)
   end
 
-  test "mock profile edition form" do
+  test 'mock profile edition form' do
     get edit_mock_profile_path(@mock_profile)
     assert_response :success
   end
 
-  test "mock profile update" do
+  test 'mock profile update' do
     patch mock_profile_path(@mock_profile), params: { mock_profile: { name: 'nice name' } }
     assert_equal 'nice name', @mock_profile.reload.name
     assert_redirected_to edit_mock_profile_path(@mock_profile)
   end
 
-  test "mock profile add parent" do
+  test 'mock profile add parent' do
     parent = create(:mock_profile)
-    patch mock_profile_path(@mock_profile), params: { mock_profile: { name: 'nice name', parent_id: parent.id} }
+    patch mock_profile_path(@mock_profile), params: { mock_profile: { name: 'nice name', parent_id: parent.id } }
     assert_equal @mock_profile.reload.parent, parent
     assert_redirected_to edit_mock_profile_path(@mock_profile)
   end
 
-  test "mock profile cannot add cyclic dependency" do
-    patch mock_profile_path(@mock_profile), params: { mock_profile: { name: 'nice name', parent_id: @mock_profile.id} }
+  test 'mock profile cannot add cyclic dependency' do
+    patch mock_profile_path(@mock_profile), params: { mock_profile: { name: 'nice name', parent_id: @mock_profile.id } }
     assert_response 422
   end
 
-  test "mock profile create" do
+  test 'mock profile create' do
     assert_difference 'MockProfile.count' do
       post project_mock_profiles_path(@project), params: { mock_profile: { name: 'nice name' } }
     end
     assert_redirected_to edit_mock_profile_path(MockProfile.order(:id).last)
   end
 
-  test "mock profile index" do
+  test 'mock profile index' do
     get project_mock_profiles_path(@project)
     assert_response :success
   end
 
-  test "mock profile new" do
+  test 'mock profile new' do
     get new_project_mock_profile_path(@project)
     assert_response :success
   end
 
-  test "delete mock profile new" do
+  test 'delete mock profile new' do
     @mock_profile.mock_pickers << create(:mock_picker) << create(:mock_picker)
 
     assert_difference 'MockPicker.count', -2 do
@@ -66,7 +66,7 @@ class MockProfilesControllerTest < ControllerWithAuthenticationTest
     end
   end
 
-  test "mock profile mocks" do
+  test 'mock profile mocks' do
     r = create(:response, route: @route, resource_representation: @resource.default_representation)
     mock_picker = create(:mock_picker, response: r)
     @mock_profile.mock_pickers << mock_picker
@@ -76,7 +76,7 @@ class MockProfilesControllerTest < ControllerWithAuthenticationTest
     assert_response :success
   end
 
-  test "mock profile mocks using parent" do
+  test 'mock profile mocks using parent' do
     r = create(:response, route: @route, resource_representation: @resource.default_representation)
     mock_profile_child = create(:mock_profile)
     mock_profile_child.parent = @mock_profile
@@ -91,7 +91,7 @@ class MockProfilesControllerTest < ControllerWithAuthenticationTest
     assert_response :success
   end
 
-  test "mock profile mocks using overrided picker first" do
+  test 'mock profile mocks using overrided picker first' do
     r = create(:response, route: @route, resource_representation: @resource.default_representation)
     mock_profile_child = create(:mock_profile)
     mock_profile_child.parent = @mock_profile
@@ -102,7 +102,7 @@ class MockProfilesControllerTest < ControllerWithAuthenticationTest
 
     mock_picker_child = create(:mock_picker, response: r)
     mock_profile_child.mock_pickers << mock_picker_child
-    resource_instance = create(:resource_instance, resource: @resource, body: {id: 2}.to_json)
+    resource_instance = create(:resource_instance, resource: @resource, body: { id: 2 }.to_json)
     mock_picker_child.resource_instances << resource_instance
 
     get "/projects/#{@project.id}/mock_profiles/#{mock_profile_child.id}/mocks#{@route.url}"
@@ -195,7 +195,7 @@ class MockProfilesControllerTest < ControllerWithAuthenticationTest
     assert_response :success  # Forbidden when mock_profile have a show page
   end
 
-  test "should get zip file with all mocks" do
+  test 'should get zip file with all mocks' do
     get mock_profile_path(@mock_profile, format: 'zip')
     assert_response :success
     assert_equal response.headers['Content-Type'], 'application/zip'

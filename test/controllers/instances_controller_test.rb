@@ -1,11 +1,10 @@
 require 'test_helper'
 
 class InstancesControllerTest < ActionDispatch::IntegrationTest
-
-  test "should create instance" do
+  test 'should create instance' do
     json_schema = {
       type: 'object',
-      title: "Movie",
+      title: 'Movie',
       description: 'A movie',
       properties: {
         movie: {
@@ -14,16 +13,16 @@ class InstancesControllerTest < ActionDispatch::IntegrationTest
             main_title: {
               type: 'string',
               description: 'title of the film',
-              enum: ["The Godfather", "Finding Nemo"]
+              enum: ['The Godfather', 'Finding Nemo']
             }
           },
-          required: ["main_title"]
+          required: ['main_title']
         }
       },
       required: ['movie']
     }
-    post instances_path, headers: { 'Accept' => 'application/json' }, params: {schema: json_schema}
+    post instances_path, headers: { 'Accept' => 'application/json' }, params: { schema: json_schema }
     assert_response :success
-    assert JSON::Validator.validate(response.body, json_schema), "json generated should match json schema"
+    assert JSON::Validator.validate(response.body, json_schema), 'json generated should match json schema'
   end
 end

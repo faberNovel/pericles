@@ -20,4 +20,8 @@
 
 @import "bootstrap-sprockets";
 @import "bootstrap";
+
+// https://github.com/tsechingho/chosen-rails/issues/97
+$chosen-sprite: image-url('chosen-sprite.png');
+$chosen-sprite-retina: image-url('chosen-sprite@2x.png');
 @import "chosen";

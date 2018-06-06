@@ -9,13 +9,13 @@ class ResourceInstanceTest < ActiveSupport::TestCase
     assert_not build(:resource_instance, resource: nil).valid?
   end
 
-  test "have a project" do
+  test 'have a project' do
     assert build(:resource_instance).project
   end
 
-  test "should be valid in relation to its resource default representation" do
+  test 'should be valid in relation to its resource default representation' do
     resource = create(:resource)
-    attribute = create(:attribute, parent_resource: resource, name: "id", primitive_type: :integer)
+    attribute = create(:attribute, parent_resource: resource, name: 'id', primitive_type: :integer)
     create(:attributes_resource_representation,
       resource_attribute: attribute,
       parent_resource_representation: resource.default_representation,
@@ -24,9 +24,9 @@ class ResourceInstanceTest < ActiveSupport::TestCase
     assert build(:resource_instance, body: '{"id": 1}', resource: resource).valid?
   end
 
-  test "should be valid in relation to at least one representation" do
+  test 'should be valid in relation to at least one representation' do
     resource = create(:resource)
-    attribute = create(:attribute, parent_resource: resource, name: "id", primitive_type: :integer)
+    attribute = create(:attribute, parent_resource: resource, name: 'id', primitive_type: :integer)
     create(:attributes_resource_representation,
       resource_attribute: attribute,
       parent_resource_representation: resource.default_representation,

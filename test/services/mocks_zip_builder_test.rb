@@ -8,7 +8,7 @@ class MocksZipBuilderTest < ActiveSupport::TestCase
     @mock_picker = create(:mock_picker, mock_profile: @mock_profile, response: @response)
   end
 
-  test "test filename is based on route url" do
+  test 'test filename is based on route url' do
     zip_data = MocksZipBuilder.new(@mock_profile.reload).zip_data
     Zip::InputStream.open(StringIO.new(zip_data)) do |io|
       entry = io.get_next_entry
@@ -16,7 +16,7 @@ class MocksZipBuilderTest < ActiveSupport::TestCase
     end
   end
 
-  test "test filename is based on url pattern if not blank" do
+  test 'test filename is based on url pattern if not blank' do
     @mock_picker.update(url_pattern: '/path/to/file/1')
     zip_data = MocksZipBuilder.new(@mock_profile.reload).zip_data
     Zip::InputStream.open(StringIO.new(zip_data)) do |io|

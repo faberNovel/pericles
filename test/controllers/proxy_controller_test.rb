@@ -5,35 +5,35 @@ class ProxyControllerTest < ActionDispatch::IntegrationTest
     @project = create(:full_project)
   end
 
-  test "should proxy get example.com" do
+  test 'should proxy get example.com' do
     @project.proxy_configuration.update(target_base_url: 'http://example.com/')
     VCR.use_cassette('proxy_example', match_requests_on: [:method, :uri]) do
       get "/projects/#{@project.id}/proxy/index.html"
     end
   end
 
-  test "should proxy get example.com with query string" do
+  test 'should proxy get example.com with query string' do
     @project.proxy_configuration.update(target_base_url: 'http://example.com/')
     VCR.use_cassette('proxy_example_querystring', match_requests_on: [:uri]) do
       get "/projects/#{@project.id}/proxy/index.html?arg1=value1"
     end
   end
 
-  test "should proxy post example.com" do
+  test 'should proxy post example.com' do
     @project.proxy_configuration.update(target_base_url: 'http://example.com/')
     VCR.use_cassette('post_proxy_example', match_requests_on: [:method, :uri]) do
       post "/projects/#{@project.id}/proxy/index.html"
     end
   end
 
-  test "should proxy post example.com with body" do
+  test 'should proxy post example.com with body' do
     @project.proxy_configuration.update(target_base_url: 'http://example.com/')
     VCR.use_cassette('post_proxy_example_body', match_requests_on: [:body]) do
       post "/projects/#{@project.id}/proxy/index.html", params: { root_key: 'value' }
     end
   end
 
-  test "should proxy post example.com with correct headers" do
+  test 'should proxy post example.com with correct headers' do
     @project = create(:full_project, id: 166)
     @project.proxy_configuration.update(target_base_url: 'http://example.com/')
     VCR.use_cassette('post_proxy_example_headers', match_requests_on: [:headers]) do
@@ -41,7 +41,7 @@ class ProxyControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test "should receive response" do
+  test 'should receive response' do
     @project.proxy_configuration.update(target_base_url: 'http://example.com/')
     VCR.use_cassette('proxy_example_response') do
       get "/projects/#{@project.id}/proxy/index.html"
@@ -51,7 +51,7 @@ class ProxyControllerTest < ActionDispatch::IntegrationTest
     assert_equal '"359670651+gzip+ident"', response.headers['Etag']
   end
 
-  test "should not proxy Transfer-Encoding" do
+  test 'should not proxy Transfer-Encoding' do
     @project.proxy_configuration.update(target_base_url: 'http://example.com/')
     VCR.use_cassette('proxy_example') do
       get "/projects/#{@project.id}/proxy/index.html"
@@ -59,7 +59,7 @@ class ProxyControllerTest < ActionDispatch::IntegrationTest
     assert_not response.headers['Transfer-Encoding']
   end
 
-  test "should follow redirection" do
+  test 'should follow redirection' do
     @project.proxy_configuration.update(target_base_url: 'https://pokeapi.co/api/v2/')
     VCR.use_cassette('proxy_example_redirection') do
       get "/projects/#{@project.id}/proxy/pokemon"
@@ -68,36 +68,35 @@ class ProxyControllerTest < ActionDispatch::IntegrationTest
     assert_match('"count":811', response.body)
   end
 
-  test "should validate correct response" do
+  test 'should validate correct response' do
     VCR.use_cassette('correct_full_project') do
       get "/projects/#{@project.id}/proxy/users/1"
     end
     assert_not response.headers['X-Pericles-Report']
   end
 
-  test "should not validate missing header" do
+  test 'should not validate missing header' do
     VCR.use_cassette('missing_header_full_project') do
       get "/projects/#{@project.id}/proxy/users/1"
     end
     assert response.headers['X-Pericles-Report']
   end
 
-  test "should not validate wrong status" do
+  test 'should not validate wrong status' do
     VCR.use_cassette('wrong_status_full_project') do
       get "/projects/#{@project.id}/proxy/users/1"
     end
     assert response.headers['X-Pericles-Report']
   end
 
-
-  test "should not validate wrong body" do
+  test 'should not validate wrong body' do
     VCR.use_cassette('wrong_body_full_project') do
       get "/projects/#{@project.id}/proxy/users/1"
     end
     assert response.headers['X-Pericles-Report']
   end
 
-  test "save report with error" do
+  test 'save report with error' do
     assert_difference 'Report.all.select(&:errors?).count' do
       VCR.use_cassette('wrong_body_full_project') do
         get "/projects/#{@project.id}/proxy/users/1"
@@ -105,7 +104,7 @@ class ProxyControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test "save report with no error" do
+  test 'save report with no error' do
     assert_difference 'Report.all.select(&:correct?).count' do
       VCR.use_cassette('correct_full_project') do
         get "/projects/#{@project.id}/proxy/users/1"
@@ -113,23 +112,23 @@ class ProxyControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test "should proxy special character URI" do
+  test 'should proxy special character URI' do
     VCR.use_cassette('correct_full_project_with_special_uri', match_requests_on: [:uri]) do
-      get ActionDispatch::Journey::Router::Utils::escape_path("/projects/#{@project.id}/proxy/users/<135>-<01>-<30-10-2017>-<60234>-<V17>-<103>")
+      get ActionDispatch::Journey::Router::Utils.escape_path("/projects/#{@project.id}/proxy/users/<135>-<01>-<30-10-2017>-<60234>-<V17>-<103>")
     end
   end
 
-  test "should find route with special character" do
+  test 'should find route with special character' do
     route = @project.routes.first
     route.update(url: '/users/:uuid')
     VCR.use_cassette('correct_full_project_with_special_uri') do
       assert_difference 'Report.where(route: route).count' do
-        get ActionDispatch::Journey::Router::Utils::escape_path("/projects/#{@project.id}/proxy/users/<135>-<01>-<30-10-2017>-<60234>-<V17>-<103>")
+        get ActionDispatch::Journey::Router::Utils.escape_path("/projects/#{@project.id}/proxy/users/<135>-<01>-<30-10-2017>-<60234>-<V17>-<103>")
       end
     end
   end
 
-  test "should find root route (/)" do
+  test 'should find root route (/)' do
     route = @project.routes.first
     route.update(url: '/')
     VCR.use_cassette('correct_full_project_root_url', match_requests_on: [:uri]) do
@@ -139,13 +138,13 @@ class ProxyControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test "should proxy gzip compression" do
+  test 'should proxy gzip compression' do
     @project.proxy_configuration.update(target_base_url: 'https://pokeapi.co/api/v2/')
     route = @project.routes.first
     route.update(url: '/berry/')
 
     VCR.use_cassette('gzip_content_encoding') do
-      get "/projects/#{@project.id}/proxy/berry/", headers: { "Accept-Encoding" => "gzip" }
+      get "/projects/#{@project.id}/proxy/berry/", headers: { 'Accept-Encoding' => 'gzip' }
     end
 
     report = Report.order(created_at: :desc).first
@@ -155,7 +154,7 @@ class ProxyControllerTest < ActionDispatch::IntegrationTest
     assert_equal 'gzip', response.headers['Content-Encoding']
   end
 
-  test "should create report only if Content-Type is application/json" do
+  test 'should create report only if Content-Type is application/json' do
     @project.proxy_configuration.update(target_base_url: 'https://prismic-io.s3.amazonaws.com/fabernoveltechnologies')
     route = @project.routes.first
     route.update(url: '/:path')
@@ -167,7 +166,7 @@ class ProxyControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test "should create report with error if no schema and body is not empty" do
+  test 'should create report with error if no schema and body is not empty' do
     response = @project.routes.first.responses.first
     response.update(resource_representation_id: nil)
     assert_nil response.json_schema
@@ -179,7 +178,7 @@ class ProxyControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test "should not create report with error if no schema and body is empty" do
+  test 'should not create report with error if no schema and body is empty' do
     response = @project.routes.first.responses.first
     response.update(resource_representation_id: nil)
     assert_nil response.json_schema
@@ -191,7 +190,7 @@ class ProxyControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test "proxy should use proxy configuration" do
+  test 'proxy should use proxy configuration' do
     @project.proxy_configuration.update(
       proxy_hostname: 'domain',
       proxy_port: 3128,
@@ -202,5 +201,23 @@ class ProxyControllerTest < ActionDispatch::IntegrationTest
     VCR.use_cassette('use_another_proxy') do
       get "/projects/#{@project.id}/proxy/users/1"
     end
+  end
+
+  test 'proxy should hide password' do
+    @project.proxy_configuration.update(target_base_url: 'https://ad-pericles.herokuapp.com')
+
+    VCR.use_cassette('proxy_post_password', match_requests_on: [:method, :uri]) do
+      post(
+        "/projects/#{@project.id}/proxy/users/sign_in",
+        params: {
+          username: 'john.doe@gmail.com',
+          password: 'myverysecurepassword'
+        },
+        as: :json
+      )
+    end
+
+    assert_not_includes Report.last.request_body, 'myverysecurepassword'
+    assert_not_includes Report.last.response_body, 'myverysecurepassword'
   end
 end

@@ -1,6 +1,5 @@
 class ResourceRepresentationService
-
-  def initialize(resource, representation_by_resource_id={})
+  def initialize(resource, representation_by_resource_id = {})
     @resource = resource
     @representation_by_resource_id = representation_by_resource_id
   end
@@ -10,7 +9,7 @@ class ResourceRepresentationService
 
     resource_representation = @resource.resource_representations.new(
       name: "Default#{@resource.name.parameterize(separator: '_', preserve_case: true).camelcase}",
-      description: "Automatically generated (please edit me)"
+      description: 'Automatically generated (please edit me)'
     )
     @representation_by_resource_id[@resource.id] = resource_representation
 

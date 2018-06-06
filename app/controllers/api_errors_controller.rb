@@ -15,18 +15,16 @@ class ApiErrorsController < ApplicationController
           json: JSONSchemaBuilder.new(
             api_error,
             root_key: params[:root_key],
-            is_collection: ActiveModel::Type::Boolean.new.cast(params[:is_collection]),
+            is_collection: ActiveModel::Type::Boolean.new.cast(params[:is_collection])
           ).execute
         )
       end
     end
   end
 
-  def new
-  end
+  def new; end
 
-  def edit
-  end
+  def edit; end
 
   def create
     generate_schema_from_json_instance if should_generate_schema_from_json_instance
@@ -52,7 +50,7 @@ class ApiErrorsController < ApplicationController
 
   private
 
-  # TODO Clément Villain 29/03/18: refactor this with ResourcesController
+  # TODO: Clément Villain 29/03/18: refactor this with ResourcesController
   # Maybe use dry-validation?
   def check_valid_json_object_param(json_string)
     begin

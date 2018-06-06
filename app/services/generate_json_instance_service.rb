@@ -1,5 +1,4 @@
 class GenerateJsonInstanceService
-
   def initialize(schema)
     @schema = schema.is_a?(String) ? JSON.parse(schema) : schema
   end
@@ -8,6 +7,6 @@ class GenerateJsonInstanceService
     return '' if @schema.nil?
 
     js_file = File.join(Rails.root, 'lib', 'node', 'generate_mock.js')
-    JSON.parse(Terrapin::CommandLine.new("node", ":js :schema").run(js: js_file, schema: @schema.to_json))
+    JSON.parse(Terrapin::CommandLine.new('node', ':js :schema').run(js: js_file, schema: @schema.to_json))
   end
 end
