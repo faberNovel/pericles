@@ -2,6 +2,13 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.6.3 - 2018-06-06
+
+* Add buttons to select representation in new mock page
+* Display (required) for representation attributes
+* Hide sensitive values in proxy report
+* Minor fixes and improvements
+
 ## 0.6.2 - 2018-05-04
 
 * Welcome Docker 👋🐳 (thanks @julienmession)
