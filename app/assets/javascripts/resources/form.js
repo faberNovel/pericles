@@ -35,8 +35,7 @@ function onSelectChanged(option) {
   }
 
   if (option.value === 'string') {
-    scheme.find('.chosen-container').removeAttr('style');
-    scheme.find('select').chosen({allow_single_deselect: true, search_contains: true})
+    scheme.find('select').chosen({allow_single_deselect: true, search_contains: true, width: '15vw'})
     scheme_enum.show();
   } else {
     scheme.find('select option').removeAttr('selected');
@@ -110,4 +109,4 @@ $(document).ready(function () {
     var a = addedElement.find('a[href="#attr-collapse-"]')[0];
     a['href'] = "#" + uniqid;
   });
-})
+});
