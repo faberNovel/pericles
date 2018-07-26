@@ -231,4 +231,17 @@ class ProxyControllerTest < ActionDispatch::IntegrationTest
     end
     assert_response :forbidden
   end
+
+  test 'proxy should rescue ConnectionError' do
+    client = Minitest::Mock.new
+    def client.get(*_args)
+      raise HTTP::ConnectionError
+    end
+
+    HTTP::Client.stub :new, client do
+      get "/projects/#{@project.id}/proxy"
+    end
+    assert_equal 'HTTP::ConnectionError', response.body
+    assert_response :bad_request
+  end
 end
