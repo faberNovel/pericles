@@ -88,12 +88,27 @@ class ReportBuilder
 
   def hide_sensitive_value(body)
     begin
-      hash = JSON.parse(body)
+      json = JSON.parse(body)
     rescue JSON::ParserError
       return body
     end
+
+    hide_sensitive_value_from_json(json)
+  end
+
+  def hide_sensitive_value_from_json(json)
+    if json.is_a? Array
+      json.map { |hash| hide_sensitive_value(hash) }
+    else
+      hide_sensitive_value_from_hash(json)
+    end.to_json
+  end
+
+  def hide_sensitive_value_from_hash(hash)
+    return hash unless hash.is_a? Hash
+
     filters = @request.env['action_dispatch.parameter_filter']
     parameter_filter = ActionDispatch::Http::ParameterFilter.new(filters)
-    parameter_filter.filter(hash).to_json
+    parameter_filter.filter(hash)
   end
 end

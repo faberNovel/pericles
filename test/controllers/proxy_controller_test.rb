@@ -220,4 +220,15 @@ class ProxyControllerTest < ActionDispatch::IntegrationTest
     assert_not_includes Report.last.request_body, 'myverysecurepassword'
     assert_not_includes Report.last.response_body, 'myverysecurepassword'
   end
+
+  test 'proxy should work if api returns array' do
+    @project.proxy_configuration.update(target_base_url: 'http://preprod.cyg-icade.com/api/v1/fr')
+
+    assert_difference 'Report.count' do
+      VCR.use_cassette('proxy_cyg_icade', match_requests_on: [:method, :uri]) do
+        get "/projects/#{@project.id}/proxy/private/content/themes"
+      end
+    end
+    assert_response :forbidden
+  end
 end
