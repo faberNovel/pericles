@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180529073528) do
+ActiveRecord::Schema.define(version: 20180727095817) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -153,6 +153,7 @@ ActiveRecord::Schema.define(version: 20180529073528) do
     t.integer "response_id"
     t.string "url_pattern"
     t.string "body_pattern"
+    t.integer "instances_number"
     t.index ["mock_profile_id"], name: "index_mock_pickers_on_mock_profile_id"
     t.index ["response_id"], name: "index_mock_pickers_on_response_id"
   end

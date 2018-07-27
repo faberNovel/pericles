@@ -26,10 +26,12 @@ class MockPicker < ApplicationRecord
   end
 
   def mock_body
-    return GenerateJsonInstanceService.new(response.json_schema).execute unless mock_instances.any?
+    if mock_instances.empty? && !response.is_collection
+      return GenerateJsonInstanceService.new(response.json_schema).execute
+    end
 
     if response.is_collection
-      body = mock_instances.map(&:as_json)
+      body = collection_body
     else
       body = mock_instances.first.as_json
     end
@@ -39,6 +41,23 @@ class MockPicker < ApplicationRecord
       metadatum_instances.each do |m|
         body[m.metadatum.name] = m.body.as_json
       end
+    end
+
+    body
+  end
+
+  private
+
+  def collection_body
+    body = mock_instances.map(&:as_json)
+    return body if instances_number.nil?
+    return [] if instances_number.negative?
+
+    if mock_instances.count >= instances_number
+      body = body.slice(0, instances_number)
+    else
+      instances_number_to_generate = instances_number - mock_instances.count
+      body += (0...instances_number_to_generate).map { |_| GenerateJsonInstanceService.new(response.resource_representation.json_schema).execute }
     end
 
     body
