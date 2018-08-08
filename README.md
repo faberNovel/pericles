@@ -1,6 +1,8 @@
 # Pericles
 
-Welcome to Pericles !
+<p align="center" >
+  <img src="banner.jpg" title="Pericles banner">
+</p>
 
 Pericles was designed to make **API specification** easier.
 
