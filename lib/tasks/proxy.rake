@@ -3,4 +3,10 @@ namespace :proxy do
   task clean_reports: :environment do
     Report.where('created_at < ?', 3.days.ago).destroy_all
   end
+
+  task validate_reports: :environment do
+    Report.where(validated: false).find_each do |report|
+      ReportValidator.new(report).validate
+    end
+  end
 end

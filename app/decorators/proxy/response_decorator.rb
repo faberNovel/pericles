@@ -3,25 +3,25 @@ module Proxy
     delegate_all
     decorates Response
 
-    def errors_from_http_response(http_response)
-      errors_for_status(http_response) +
-        errors_for_headers(http_response) +
-        errors_for_body(http_response)
+    def errors_from_report(report)
+      errors_for_status(report.response_status_code) +
+        errors_for_headers(report.response_headers) +
+        errors_for_body(report.response_body)
     end
 
-    def errors_for_status(http_response)
-      status_code == http_response.status.code ? [] :
+    def errors_for_status(status_code_to_check)
+      status_code == status_code_to_check ? [] :
       [
         ValidationError.new(
           category: :status_code,
-          description: "Status code is #{http_response.status.code} instead of #{status_code}"
+          description: "Status code is #{status_code_to_check} instead of #{status_code}"
         )
       ]
     end
 
-    def errors_for_headers(http_response)
+    def errors_for_headers(headers_to_check)
       headers.map do |h|
-        next if http_response.headers.to_h.key? h.name
+        next if headers_to_check.key? h.name
         ValidationError.new(
           category: :header,
           description: "#{h.name} is missing from the response headers"
@@ -29,8 +29,8 @@ module Proxy
       end.compact
     end
 
-    def errors_for_body(http_response)
-      body_is_empty = http_response.body.to_s.length.zero?
+    def errors_for_body(body_to_check)
+      body_is_empty = body_to_check.length.zero?
 
       if json_schema.nil?
         return [] if body_is_empty
@@ -40,7 +40,7 @@ module Proxy
       return [ValidationError.new(category: :body, description: 'Body must not be empty')] if body_is_empty
 
       errors = JSON::Validator.fully_validate(
-        json_schema, http_response.body, json: true
+        json_schema, body_to_check, json: true
       )
 
       errors.empty? ? [] :

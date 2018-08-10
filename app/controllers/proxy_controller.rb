@@ -14,6 +14,7 @@ class ProxyController < ApplicationController
     content_type_is_json = /^application\/json/.match(proxy_response.headers['Content-Type'])
     if content_type_is_json
       report = ReportBuilder.new(@project, proxy_response, request).build
+      ReportValidator.new(report).validate
       add_validation_header(report)
     end
 
