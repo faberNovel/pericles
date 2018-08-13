@@ -13,16 +13,17 @@
         %th
         %th
     %tbody
-      - @reports.each do |report|
-        %tr{:class => (report.route.blank? || report.response.blank?) ? 'missing' : (report.correct? ? 'valid' : 'invalid' )}
+      - reports.each do |report|
+        %tr{class: report.tr_class}
           %td
             .request-method
               %span{ class: label_class_for_http_method(report.request_method) }= report.request_method
           %td= report.url
           %td= report.response_status_code
           %td.date= report.created_at
-          %td= report.response.blank? ? t('.unknown') : (report.correct? ? '☑' : '☐')
-          %td= link_to 'Detail', project_report_path(project, report)
+          %td= report.status
+          - if report.validated?
+            %td= link_to 'Detail', project_report_path(project, report)
 
   = paginate @reports
 

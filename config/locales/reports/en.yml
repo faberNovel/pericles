@@ -1,5 +1,6 @@
 en:
   reports:
     index:
+      in_validation: 'Validation pending'
       unknown: 'UNKNOWN'
       no_reports: 'There are no reports, please use the proxy to generate some'
