@@ -40,7 +40,7 @@ class ReportBuilder
 
   def hide_sensitive_value_from_json(json)
     if json.is_a? Array
-      json.map { |hash| hide_sensitive_value(hash) }
+      json.map { |hash| hide_sensitive_value_from_hash(hash) }
     else
       hide_sensitive_value_from_hash(json)
     end.to_json

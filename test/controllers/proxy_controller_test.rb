@@ -244,4 +244,12 @@ class ProxyControllerTest < ActionDispatch::IntegrationTest
     assert_equal 'HTTP::ConnectionError', response.body
     assert_response :bad_request
   end
+
+  test 'proxy should work if attr is an array' do
+    @project.proxy_configuration.update(target_base_url: 'https://bets.applidium.net')
+    VCR.use_cassette('proxy_bets_sports') do
+      get "/projects/#{@project.id}/proxy/sports.json"
+    end
+    assert_equal 200, response.status
+  end
 end

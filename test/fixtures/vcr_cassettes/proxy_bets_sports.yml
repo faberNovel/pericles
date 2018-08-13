@@ -1,0 +1,69 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://bets.applidium.net/sports.json
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      Request-Method:
+      - GET
+      Server-Name:
+      - www.example.com
+      Server-Port:
+      - '80'
+      Path-Info:
+      - "/projects/1116/proxy/sports.json"
+      Https:
+      - 'off'
+      Content-Length:
+      - '0'
+      Remote-Addr:
+      - 127.0.0.1
+      Accept:
+      - text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5
+      Connection:
+      - close
+      Host:
+      - bets.applidium.net
+      User-Agent:
+      - http.rb/3.0.0
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 13 Aug 2018 08:32:26 GMT
+      Server:
+      - Apache
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Etag:
+      - W/"30356440443c21e8579fd088374847ff"
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      X-Runtime:
+      - '0.043966'
+      X-Request-Id:
+      - 2ba17634-3b09-433b-b274-a897a16927b2
+      Status:
+      - 200 OK
+      Connection:
+      - close
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '[{"id":1,"name":"Football","logo":"https://bets.s3.amazonaws.com/Sports_Logos/foot.png","competitions":[{"id":18,"name":"World
+        Cup 2018 Russia","topic_arn":null}]},{"id":2,"name":"Rugby","logo":"https://bets.s3.amazonaws.com/Sports_Logos/rugby.png","competitions":[]}]'
+    http_version: 
+  recorded_at: Mon, 13 Aug 2018 08:32:26 GMT
+recorded_with: VCR 4.0.0
