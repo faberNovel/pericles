@@ -2,6 +2,13 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.6.4 - 2018-08-16
+
+* Proxy handles connection error
+* Add instances number to mock response
+* Better README style
+* Fix sensitive value hide in proxy
+
 ## 0.6.3 - 2018-06-06
 
 * Add buttons to select representation in new mock page
