@@ -11,7 +11,7 @@ class MockProfilesControllerTest < ControllerWithAuthenticationTest
       is_required: true
     )
     @route = create(:route, resource: @resource, url: '/mock_route')
-    create(:response, route: @route, resource_representation: @resource.default_representation)
+    @route_response = create(:response, route: @route, resource_representation: @resource.default_representation)
     @resource_instance = create(:resource_instance, resource: @resource, body: { id: 1 }.to_json)
     @mock_profile = create(:mock_profile, project: @project)
   end
@@ -25,6 +25,24 @@ class MockProfilesControllerTest < ControllerWithAuthenticationTest
     patch mock_profile_path(@mock_profile), params: { mock_profile: { name: 'nice name' } }
     assert_equal 'nice name', @mock_profile.reload.name
     assert_redirected_to edit_mock_profile_path(@mock_profile)
+  end
+
+  test 'mock profile update create mock pickers' do
+    assert_difference 'MockPicker.count' do
+      patch mock_profile_path(@mock_profile), params: {
+        mock_profile: {
+          name: 'nice name',
+          mock_pickers_attributes: [
+            {
+              response_id: @route_response.id,
+              instances_number: 10
+            }
+          ]
+        }
+      }
+    end
+
+    assert_equal 10, MockPicker.last.instances_number
   end
 
   test 'mock profile add parent' do

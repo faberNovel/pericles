@@ -1,4 +1,6 @@
 .fields.nested-fields
+  - if response.is_collection
+    = f.number_field :instances_number, label: 'Instances number (limit or add random instances)'
   - if response.can_have_resource_representation
     = f.select :resource_instance_ids, response.resource_instances.pluck(:name, :id),
         { include_blank: true, label: 'Mock Instance'.pluralize(response.is_collection ? 2 : 1) }, multiple: response.is_collection

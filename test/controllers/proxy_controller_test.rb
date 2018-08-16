@@ -220,4 +220,36 @@ class ProxyControllerTest < ActionDispatch::IntegrationTest
     assert_not_includes Report.last.request_body, 'myverysecurepassword'
     assert_not_includes Report.last.response_body, 'myverysecurepassword'
   end
+
+  test 'proxy should work if api returns array' do
+    @project.proxy_configuration.update(target_base_url: 'http://preprod.cyg-icade.com/api/v1/fr')
+
+    assert_difference 'Report.count' do
+      VCR.use_cassette('proxy_cyg_icade', match_requests_on: [:method, :uri]) do
+        get "/projects/#{@project.id}/proxy/private/content/themes"
+      end
+    end
+    assert_response :forbidden
+  end
+
+  test 'proxy should rescue ConnectionError' do
+    client = Minitest::Mock.new
+    def client.get(*_args)
+      raise HTTP::ConnectionError
+    end
+
+    HTTP::Client.stub :new, client do
+      get "/projects/#{@project.id}/proxy"
+    end
+    assert_equal 'HTTP::ConnectionError', response.body
+    assert_response :bad_request
+  end
+
+  test 'proxy should work if attr is an array' do
+    @project.proxy_configuration.update(target_base_url: 'https://bets.applidium.net')
+    VCR.use_cassette('proxy_bets_sports') do
+      get "/projects/#{@project.id}/proxy/sports.json"
+    end
+    assert_equal 200, response.status
+  end
 end

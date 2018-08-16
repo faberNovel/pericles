@@ -4,11 +4,17 @@ class ProxyController < ApplicationController
   def compute_request
     @project = Project.find(params[:project_id])
     @request_service = MakeRequestToServerService.new(@project.proxy_configuration, request)
-    proxy_response = @request_service.execute
-    content_type_is_json = /^application\/json/.match(proxy_response.headers['Content-Type'])
 
+    begin
+      proxy_response = @request_service.execute
+    rescue HTTP::ConnectionError => e
+      return render body: e.to_s, status: :bad_request
+    end
+
+    content_type_is_json = /^application\/json/.match(proxy_response.headers['Content-Type'])
     if content_type_is_json
       report = ReportBuilder.new(@project, proxy_response, request).build
+      ReportValidator.new(report).validate
       add_validation_header(report)
     end
 

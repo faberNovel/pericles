@@ -1,3 +1,11 @@
+function hasBoundaries(option) {
+  return option.value === 'integer' || option.value === 'string' || option.value === 'number';
+}
+
+function shouldShowConstraintLink(option) {
+  return option.value === 'string' || option.value === 'integer' || option.value === 'number';
+}
+
 function onSelectChanged(option) {
   var fields = $(option).parents('.fields');
   var minimum = fields.find(".constraints input[id$='minimum']").parents('.form-group');
@@ -8,7 +16,8 @@ function onSelectChanged(option) {
   var scheme = fields.find(".constraints select[id$='scheme_id']").parents('.form-group');
   var enum_ = fields.find(".constraints input[id$='enum']").parents('.form-group');
 
-  if (option.value === 'integer' || option.value == 'string' || option.value == 'number') {
+
+  if (hasBoundaries(option)) {
     min_max.show();
   } else {
     minimum.find('input').val('');
@@ -16,9 +25,17 @@ function onSelectChanged(option) {
     min_max.hide();
   }
 
+  let constraints = fields.find('.hide-show-link');
+  if (shouldShowConstraintLink(option)) {
+    constraints.css('opacity', 1);
+    constraints.css('cursor', '');
+  } else {
+    constraints.css('opacity', 0);
+    constraints.css('cursor', 'default');
+  }
+
   if (option.value === 'string') {
-    scheme.find('.chosen-container').removeAttr('style');
-    scheme.find('select').chosen({allow_single_deselect: true, search_contains: true})
+    scheme.find('select').chosen({allow_single_deselect: true, search_contains: true, width: '15vw'})
     scheme_enum.show();
   } else {
     scheme.find('select option').removeAttr('selected');
@@ -92,4 +109,4 @@ $(document).ready(function () {
     var a = addedElement.find('a[href="#attr-collapse-"]')[0];
     a['href'] = "#" + uniqid;
   });
-})
+});

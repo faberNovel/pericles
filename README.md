@@ -1,6 +1,14 @@
-# Pericles
+Pericles
+&middot;
+![Language](https://img.shields.io/badge/language-Ruby-red.svg)
+![Framework](https://img.shields.io/badge/framework-Rails-red.svg)
+![License](https://img.shields.io/github/license/applidium/Pericles.svg)
+[![Twitter](https://img.shields.io/badge/twitter-@applidium-blue.svg)](https://twitter.com/applidium)
+======
 
-Welcome to Pericles !
+<p align="center" >
+  <img src="banner.jpg" alt="Pericles">
+</p>
 
 Pericles was designed to make **API specification** easier.
 

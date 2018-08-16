@@ -376,6 +376,7 @@ PLATFORMS
 
 DEPENDENCIES
   active_model_serializers (~> 0.10.0)
+  addressable (~> 2.5, >= 2.5.2)
   ancestry (~> 3.0.1)
   audited (~> 4.5)
   autoprefixer-rails

@@ -1,6 +1,7 @@
 class ReportsController < ApplicationController
   include ProjectRelated
 
+  decorates_assigned :reports
   decorates_assigned :report
 
   def index

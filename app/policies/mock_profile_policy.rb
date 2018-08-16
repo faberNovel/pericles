@@ -14,6 +14,7 @@ class MockProfilePolicy < ProjectRelatedPolicy
         :resource_instance_ids,
         :api_error_instance_ids,
         :response_id,
+        :instances_number,
         :_destroy,
         resource_instance_ids: [],
         api_error_instance_ids: [],
