@@ -94,6 +94,15 @@ class RoutesControllerTest < ControllerWithAuthenticationTest
     assert_equal '/new_url', route.url
   end
 
+  test 'update route can change resource' do
+    route = create(:route)
+    new_resource = create(:resource)
+    put project_route_path(route.project, route), params: { route: { resource_id: new_resource.id } }
+    assert_redirected_to project_route_path(route.project, route)
+    route.reload
+    assert_equal new_resource, route.resource
+  end
+
   test 'should not update route' do
     route = create(:route)
     url = route.url
