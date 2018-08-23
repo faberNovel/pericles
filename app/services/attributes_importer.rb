@@ -55,6 +55,10 @@ class AttributesImporter
       @resource.resource_attributes.create(
         name: key, primitive_type: :number, is_array: is_array
       )
+    elsif primitive_class <= NilClass
+      @resource.resource_attributes.create(
+        name: key, primitive_type: :null, is_array: is_array, nullable: true
+      )
     end
   end
 
