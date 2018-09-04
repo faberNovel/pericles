@@ -2,6 +2,12 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.6.5 - 2018-09-04
+
+* Handle null value in JSON importer
+* A route resource is now updatable
+* Validate report even if route is missing
+
 ## 0.6.4 - 2018-08-16
 
 * Proxy handles connection error

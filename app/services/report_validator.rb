@@ -10,7 +10,8 @@ class ReportValidator
   private
 
   def create_errors
-    return if @report.nil? || route.nil?
+    return if @report.nil?
+    return @report.update(validated: true) if route.nil?
 
     response = find_response_with_lowest_errors
     @report.update(route: route, response: response)
