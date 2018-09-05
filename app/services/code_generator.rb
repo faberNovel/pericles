@@ -17,8 +17,18 @@ class CodeGenerator
 
   def generate
     ApplicationController.render(
-      template: "code/rest.#{@language}",
+      template: template,
       locals: { resource: @resource, project: @project }
     )
+  end
+
+  private
+
+  def template
+    if @language.to_sym == :ruby
+      "code/serializer.#{@language}"
+    else
+      "code/rest.#{@language}"
+    end
   end
 end

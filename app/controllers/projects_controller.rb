@@ -22,7 +22,7 @@ class ProjectsController < ApplicationController
           filename: "#{project.title}.json"
         )
       end
-      %i[swift java kotlin].each do |language|
+      %i[swift java kotlin ruby].each do |language|
         format.send(language) do
           send_data(
             CodeZipBuilder.new(project, language).zip_data,

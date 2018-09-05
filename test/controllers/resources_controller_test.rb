@@ -452,6 +452,24 @@ class ResourcesControllerTest < ControllerWithAuthenticationTest
     assert_equal(response.body, file)
   end
 
+  test 'should get ruby code' do
+    resource = create(:pokemon)
+
+    file = %(class PokemonSerializer < ActiveModel::Serializer
+      attributes(
+        :date,
+        :date_time,
+        :id,
+        :nice_boolean,
+        :weakness_list,
+        :weight,
+      )
+    end
+    ).gsub(/^    /, '')
+    get project_resource_path(resource.project, resource, format: 'ruby')
+    assert_equal(response.body, file)
+  end
+
   test 'non member external user should not access project resources' do
     external_user = create(:user, :external)
     sign_in external_user

@@ -3,7 +3,11 @@ module Code
     extend ActiveSupport::Concern
 
     def rest_name
-      "Rest#{name.parameterize(separator: '_', preserve_case: true).camelcase}"
+      "Rest#{pascal_name}"
+    end
+
+    def pascal_name
+      name.parameterize(separator: '_', preserve_case: true).camelcase
     end
 
     def kotlin_filename
@@ -16,6 +20,10 @@ module Code
 
     def swift_filename
       "#{rest_name}.swift"
+    end
+
+    def ruby_filename
+      "#{name.underscore}_serializer.rb"
     end
 
     def should_import_nullable_annotation

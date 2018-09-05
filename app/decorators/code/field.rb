@@ -2,8 +2,12 @@ module Code
   module Field
     extend ActiveSupport::Concern
 
-    def variable_name
+    def camel_variable_name
       name.parameterize(separator: '_', preserve_case: true).camelcase(:lower)
+    end
+
+    def snake_variable_name
+      name.underscore
     end
 
     def kotlin_type

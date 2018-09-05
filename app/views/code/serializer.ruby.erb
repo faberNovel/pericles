@@ -1,0 +1,7 @@
+class <%= resource.pascal_name =%>Serializer < ActiveModel::Serializer
+  attributes(
+<% resource.resource_attributes.each do |attribute| %>
+    :<%= attribute.snake_variable_name =%>,
+<% end %>
+  )
+end
