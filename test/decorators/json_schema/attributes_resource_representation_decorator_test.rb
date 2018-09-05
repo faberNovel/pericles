@@ -15,7 +15,7 @@ class AttributesResourceRepresentationDecoratorTest < ActiveSupport::TestCase
     @decorator.resource_attribute.update(nullable: true)
     assert_equal(
       {
-        oneOf: [
+        anyOf: [
           { type: 'integer' },
           { type: 'null' }
         ]

@@ -101,6 +101,20 @@ class ResourceTest < ActiveSupport::TestCase
     assert_equal resource.resource_attributes.where(resource: gym, is_array: false).count, 1
   end
 
+  test 'create object attribute from nested json if did not find existing resource' do
+    resource = create(:resource)
+    assert_difference 'Attribute.count', 1 do
+      resource.try_create_attributes_from_json(
+        '
+        {
+          "object": {"id": 1}
+        }
+        '
+      )
+    end
+    assert_equal resource.resource_attributes.where(primitive_type: :object, is_array: false).count, 1
+  end
+
   test 'not used in other resources scopes unused resource' do
     unused_resource = create(:resource)
     assert_equal [unused_resource], Resource.not_used_in_other_resources

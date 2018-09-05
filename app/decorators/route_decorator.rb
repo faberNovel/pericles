@@ -37,6 +37,10 @@ class RouteDecorator < Draper::Decorator
     )
   end
 
+  def http_method_order
+    %i[GET POST PUT PATCH OPTIONS DELETE].index(http_method)
+  end
+
   private
 
   def promote_route_resource(resources)

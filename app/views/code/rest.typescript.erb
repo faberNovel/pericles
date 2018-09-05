@@ -1,0 +1,23 @@
+export interface <%= resource.rest_name =%> {
+<% resource.resource_attributes.each do |attribute| %>
+  <%= attribute.key_name =%>: <%= attribute.typescript_type =%>;
+<% end %>
+}
+
+export class <%= resource.pascal_name =%> {
+<% resource.resource_attributes.each do |attribute| %>
+  <%= attribute.camel_variable_name =%>: <%= attribute.typescript_type.sub(/^Rest/, '') =%>;
+<% end %>
+
+  constructor(json: <%= resource.rest_name =%>) {
+<% resource.resource_attributes.each do |attribute| %>
+<% if attribute.primitive_type %>
+    this.<%= attribute.camel_variable_name =%> = json.<%= attribute.key_name =%>;
+<% elsif attribute.is_array %>
+    this.<%= attribute.camel_variable_name =%> = json.<%= attribute.key_name =%><%= attribute.code_nullable ? '?' : '' =%>.map((o) => new <%= attribute.base_typescript_type.sub(/^Rest/, '') =%>(o));
+<% else %>
+    this.<%= attribute.camel_variable_name =%> = new <%= attribute.base_typescript_type.sub(/^Rest/, '') =%>(json.<%= attribute.key_name =%>);
+<% end %>
+<% end %>
+  }
+}

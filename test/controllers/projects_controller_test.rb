@@ -171,6 +171,20 @@ class ProjectsControllerTest < ControllerWithAuthenticationTest
     assert_equal response.headers['Content-Type'], 'application/zip'
   end
 
+  test 'should get all ruby files' do
+    project = create(:full_project)
+    get project_path(project, format: 'ruby')
+    assert_response :success
+    assert_equal response.headers['Content-Type'], 'application/zip'
+  end
+
+  test 'should get all typescript files' do
+    project = create(:full_project)
+    get project_path(project, format: 'typescript')
+    assert_response :success
+    assert_equal response.headers['Content-Type'], 'application/zip'
+  end
+
   test 'external user should not show project' do
     external_user = create(:user, :external)
     sign_in external_user

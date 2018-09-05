@@ -113,6 +113,16 @@ class JSONSchemaBuilderTest < ActiveSupport::TestCase
     assert_equal 'datetime', schema[:properties][:keyname][:format]
   end
 
+  test 'attribute object is of type object' do
+    schema = schema_with_one_attribute('keyname', :object)
+    assert_equal({ type: 'object' }, schema[:properties][:keyname])
+  end
+
+  test 'attribute any is of all types' do
+    schema = schema_with_one_attribute('keyname', :any)
+    assert_equal({type: %w[string number integer boolean null array object] }, schema[:properties][:keyname])
+  end
+
   test 'attribute resource representation is null' do
     attributes_resource_representation = build(:attributes_resource_representation, is_null: true)
     representation = build(:resource_representation,

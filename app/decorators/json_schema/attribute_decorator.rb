@@ -5,6 +5,8 @@ module JSONSchema
     def primitive_type
       if datetime? || date?
         'string'
+      elsif object.any?
+        %w[string number integer boolean null array object]
       else
         object.primitive_type
       end

@@ -1,7 +1,7 @@
 namespace :proxy do
-  desc 'Clean reports older than 3 days'
+  desc 'Clean reports older than 1 month'
   task clean_reports: :environment do
-    Report.where('created_at < ?', 3.days.ago).destroy_all
+    Report.where('created_at < ?', 1.month.ago).destroy_all
   end
 
   task validate_reports: :environment do

@@ -2,6 +2,6 @@ module HasPrimitiveType
   extend ActiveSupport::Concern
 
   included do
-    enum primitive_type: [:integer, :string, :boolean, :null, :number, :date, :datetime]
+    enum primitive_type: [:integer, :string, :boolean, :null, :number, :date, :datetime, :object, :any]
   end
 end

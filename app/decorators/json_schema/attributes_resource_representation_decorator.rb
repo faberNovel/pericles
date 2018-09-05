@@ -12,7 +12,7 @@ module JSONSchema
         if should_use_nullable
           non_nullable_property.merge(nullable: true)
         else
-          { oneOf: [non_nullable_property, { type: 'null' }] }
+          { anyOf: [non_nullable_property, { type: 'null' }] }
         end
       else
         non_nullable_property

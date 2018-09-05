@@ -13,6 +13,6 @@ import io.norberg.automatter.AutoMatter;
 @AutoMatter
 public interface <%= resource.rest_name =%> {
 <% resource.resource_attributes.each do |attribute| %>
-    <%= attribute.java_type =%> <%= attribute.variable_name =%>();
+    <%= attribute.java_type =%> <%= attribute.camel_variable_name =%>();
 <% end %>
 }

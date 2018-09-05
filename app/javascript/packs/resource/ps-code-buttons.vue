@@ -2,6 +2,8 @@
 .flexcontainer.flexwrap.btn-group(role="group" style='margin-right: 16px;')
   a(:class='classes', :href='computeUrl("swift")') Swift
   a(:class='classes', :href='computeUrl("kotlin")') Kotlin
+  a(:class='classes', :href='computeUrl("ruby")') Ruby
+  a(:class='classes', :href='computeUrl("typescript")') TypeScript
 </template>
 
 <script>

@@ -19,6 +19,10 @@ class CodeZipBuilder < AbstractZipBuilder
       decorated_representation.java_filename
     when :swift
       decorated_representation.swift_filename
+    when :ruby
+      decorated_representation.ruby_filename
+    when :typescript
+      decorated_representation.typescript_filename
     end
   end
 

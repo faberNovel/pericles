@@ -7,4 +7,6 @@ Mime::Type.register "application/schema+json", :json_schema
 Mime::Type.register "text/plain", :java
 Mime::Type.register "text/plain", :kotlin
 Mime::Type.register "text/plain", :swift
+Mime::Type.register "text/plain", :ruby
+Mime::Type.register "text/plain", :typescript
 Mime::Type.register "application/x-yaml", :swagger

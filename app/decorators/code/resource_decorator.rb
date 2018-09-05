@@ -5,6 +5,6 @@ class Code::ResourceDecorator < Draper::Decorator
   def resource_attributes
     @resource_attributes ||= object.resource_attributes.map do |a|
       Code::AttributeDecorator.new(a)
-    end.sort_by(&:variable_name)
+    end.sort_by(&:camel_variable_name)
   end
 end

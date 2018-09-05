@@ -26,15 +26,39 @@ class AttributesImporter
 
   def create_attribute_from_class(key, cls, value, is_array)
     if cls <= Hash
-      resource = @resources.detect do |r|
-        key.to_s.camelize.pluralize == r.name.camelize.pluralize
-      end
-      resource ||= @resources.sort_by { |r| r.name.length }.reverse.detect do |r|
-        key.to_s.camelize.pluralize.include? r.name.camelize.pluralize
-      end
-      @resource.resource_attributes.create(name: key, resource: resource, is_array: is_array)
+      create_attribute_from_hash(key, is_array)
     else
       create_attribute_from_primitive_class(key, cls, value, is_array)
+    end
+  end
+
+  def create_attribute_from_hash(key, is_array)
+    resource = find_nested_resource(key)
+    if resource
+      @resource.resource_attributes.create(name: key, resource: resource, is_array: is_array)
+    else
+      @resource.resource_attributes.create(name: key, primitive_type: :object, is_array: is_array)
+    end
+  end
+
+  def normalize(key)
+    key.to_s.underscore.pluralize
+  end
+
+  def find_nested_resource(key)
+    normalized_key = normalize(key)
+    exactly_matching_resource(normalized_key) || resource_with_included_name(normalized_key)
+  end
+
+  def exactly_matching_resource(normalized_key)
+    @resources.detect do |r|
+      normalized_key == normalize(r.name)
+    end
+  end
+
+  def resource_with_included_name(normalized_key)
+    @resources.sort_by { |r| r.name.length }.reverse.detect do |r|
+      normalized_key.include? normalize(r.name)
     end
   end
 
