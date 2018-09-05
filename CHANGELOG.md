@@ -2,6 +2,14 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.6.6 - 2018-09-05
+
+* Add type Object and any for attributes
+* Add ruby serializers generation from resource/resource representation
+* Add typescript interface and mapper generation from resource/resource representation
+* Sort routes index by url and method
+* Automatically clean reports older than 1 month
+
 ## 0.6.5 - 2018-09-04
 
 * Handle null value in JSON importer
