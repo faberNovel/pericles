@@ -11,7 +11,7 @@
         %h4= resource.name
 
     .routes-sub-container
-      - @routes_by_resource[resource].each do |route|
+      - @routes_by_resource[resource].sort_by { |route| [route.url, route.http_method_order] }.each do |route|
         %a{class: 'route-row', href: project_route_path(project, route)}
           %div{style: 'width: 10%'}
             %span{ class: label_class_for_http_method(route.http_method) }= route.http_method

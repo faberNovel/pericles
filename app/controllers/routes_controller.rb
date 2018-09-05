@@ -6,6 +6,7 @@ class RoutesController < ApplicationController
 
   def index
     @routes_by_resource = policy_scope(project.routes).includes(:resource, :resource_representations, :responses)
+      .map(&:decorate)
       .group_by(&:resource)
     @resources = @routes_by_resource.keys.sort_by { |r| r.name.downcase }
   end
