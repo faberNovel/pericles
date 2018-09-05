@@ -31,6 +31,13 @@ module Code
       type
     end
 
+    def typescript_type
+      type = base_typescript_type
+      type = "#{type}[]" if is_array
+      type = "#{type} | null | undefined" if code_nullable
+      type
+    end
+
     def base_kotlin_type
       case primitive_type&.to_sym
       when :number
@@ -68,6 +75,29 @@ module Code
         'Date'
       when :datetime
         'Date'
+      when nil
+        resource.rest_name
+      end
+    end
+
+    def base_typescript_type
+      case primitive_type&.to_sym
+      when :number
+        'number'
+      when :integer
+        'number'
+      when :boolean
+        'boolean'
+      when :string
+        'string'
+      when :date
+        'string'
+      when :datetime
+        'string'
+      when :object
+        'object'
+      when :any
+        'any'
       when nil
         resource.rest_name
       end

@@ -470,6 +470,40 @@ class ResourcesControllerTest < ControllerWithAuthenticationTest
     assert_equal(response.body, file)
   end
 
+  test 'should get typescript code' do
+    resource = create(:pokemon)
+
+    file = %(export interface RestPokemon {
+      date: string;
+      date_time: string | null | undefined;
+      id: number;
+      niceBoolean: boolean | null | undefined;
+      weakness_list: RestNature[];
+      weight: number | null | undefined;
+    }
+
+    export class Pokemon {
+      date: string;
+      dateTime: string | null | undefined;
+      id: number;
+      niceBoolean: boolean | null | undefined;
+      weaknessList: Nature[];
+      weight: number | null | undefined;
+
+      constructor(json: RestPokemon) {
+        this.date = json.date;
+        this.dateTime = json.date_time;
+        this.id = json.id;
+        this.niceBoolean = json.niceBoolean;
+        this.weaknessList = json.weakness_list.map((o) => new Nature(o));
+        this.weight = json.weight;
+      }
+    }
+    ).gsub(/^    /, '')
+    get project_resource_path(resource.project, resource, format: 'typescript')
+    assert_equal(response.body, file)
+  end
+
   test 'non member external user should not access project resources' do
     external_user = create(:user, :external)
     sign_in external_user

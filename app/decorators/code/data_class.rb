@@ -26,6 +26,10 @@ module Code
       "#{name.underscore}_serializer.rb"
     end
 
+    def typescript_filename
+      "#{name.underscore}.ts"
+    end
+
     def should_import_nullable_annotation
       resource_attributes.any?(&:code_nullable)
     end
