@@ -36,7 +36,7 @@
       %transition{name: "w-slide-fade"}
         .btn.btn-primary{'@click': 'onUpdateClick', 'v-if': 'manageMode'} Update
   %p
-    = resource.description
+    = simple_format(resource.description)
   - unless resource.used_in_resources.empty?
     %p
       Used in:&nbsp
