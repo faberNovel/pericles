@@ -18,3 +18,4 @@
 //= require chosen-jquery
 //= require setup
 //= require regex_field
+//= require jsoneditor

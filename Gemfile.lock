@@ -175,6 +175,8 @@ GEM
       json_schema (>= 0.12.4)
       pxeger
     jsonapi-renderer (0.2.0)
+    jsoneditor-rails (1.0.1)
+      sass-rails
     jsonpath (0.8.11)
       multi_json
       to_regexp (~> 0.2.1)
@@ -400,6 +402,7 @@ DEPENDENCIES
   json-schema (~> 2.8)
   json-schema-generator
   json_schema-faker
+  jsoneditor-rails
   kaminari
   letter_opener (~> 1.6)
   minitest-reporters

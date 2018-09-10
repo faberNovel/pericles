@@ -24,6 +24,7 @@ gem 'draper', '~> 3.0'
 gem 'neatjson', '~> 0.8'
 gem 'addressable', '~> 2.5', '>= 2.5.2'
 gem 'json-schema-generator'
+gem 'jsoneditor-rails'
 
 # Recommended for admin interface
 # gem 'activeadmin', github: 'activeadmin' # There is no Rails 4 version just yet

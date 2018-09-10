@@ -1,11 +1,5 @@
-function display_generated_instance(instance, display_result_element) {
-  var instance_string = JSON.stringify(instance, null, 2);
-  display_result_element.empty();
-  display_result_element.val(instance_string);
-}
-
-function generate_json_instance(json_schema, display_result_element) {
-  var schema = JSON.parse(json_schema);
+function generateJsonInstance(jsonSchema, callback) {
+  var schema = JSON.parse(jsonSchema);
   var data = {
     schema: schema
   };
@@ -17,7 +11,7 @@ function generate_json_instance(json_schema, display_result_element) {
       dataType: "json"
     })
     .done(function(data) {
-      display_generated_instance(data, display_result_element);
+      callback(data);
     })
     .fail(function(data) {
       console.log(data);
