@@ -32,9 +32,8 @@
             .row
               .col-xs-6
                 %h4= "JSON Schema #{response.schema_summary}".html_safe
-                %pre.pre-scrollable
-                  %code
-                    =format_json(response.json_schema)
+                .jsoneditor-container{ id: "resp-#{response.id}-json-editor", json: response.json_schema.to_json, 'read-only': true }
+
 
               .col-xs-6
                 %h4 JSON Instance

@@ -31,9 +31,10 @@ $(document).ready(function() {
 
   $('.jsoneditor-container').each(function() {
     container = this;
-    options = {mode: 'code'};
+    options = {mode: container.hasAttribute('read-only') ? 'view' : 'code'};
     var editor = new JSONEditor(container, options);
     editor.set(JSON.parse(container.getAttribute('json')));
+    editor.expandAll && editor.expandAll();
     editors[container.id] = editor;
   });
 });
