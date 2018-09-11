@@ -2,6 +2,11 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.6.7 - 2018-09-11
+
+* Fix infinite loop
+* Better json display for route show
+
 ## 0.6.6 - 2018-09-05
 
 * Add type Object and any for attributes
