@@ -13,6 +13,10 @@ require 'authentication/controller_with_authentication_test.rb'
 class ActiveSupport::TestCase
   ActiveRecord::Migration.check_pending!
   include FactoryBot::Syntax::Methods
+
+  def assert_not_looping(&block)
+    assert Thread.new(&block).join(10)&.value, 'block is looping'
+  end
 end
 
 class ActionDispatch::IntegrationTest
