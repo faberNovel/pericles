@@ -57,15 +57,13 @@
                   .row
                     .col-xs-6
                       %h4= "JSON Schema #{route.request_schema_summary}".html_safe
-                      %pre.pre-scrollable
-                        %code
-                          =format_json(route.request_json_schema)
+                      .jsoneditor-container{ id: "request-route.id-json-editor", json: route.request_json_schema.to_json, 'read-only': true }
 
                     .col-xs-6
                       %h4 JSON Instance
                       #request-json-validation-result
-                      = text_area_tag(:request_json_instance, format_json(route.request_json_instance), size: "70x15",
-                       class: "generated-json-instance-or-to-validate")
+                      .jsoneditor-container{ id: "request-route.id-json-editor", json: route.request_json_instance.to_json }
+
 
                 - else
                   %p

@@ -32,16 +32,13 @@
             .row
               .col-xs-6
                 %h4= "JSON Schema #{response.schema_summary}".html_safe
-                %pre.pre-scrollable
-                  %code
-                    =format_json(response.json_schema)
+                .jsoneditor-container{ id: "resp-#{response.id}-json-editor", json: response.json_schema.to_json, 'read-only': true }
+
 
               .col-xs-6
                 %h4 JSON Instance
                 %div{ id: "resp-#{response.id}-json-validation-result" }
-                = text_area_tag(:response_json_instance, format_json(response.json_instance),
-                 id: "resp-#{response.id}-generated-json-instance-or-to-validate", class: "generated-json-instance-or-to-validate",
-                 size: "70x15")
+                .jsoneditor-container{ id: "resp-#{response.id}-json-editor", json: response.json_instance.to_json }
 
           - else
             %p

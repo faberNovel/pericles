@@ -76,7 +76,7 @@ module JSONSchema
       queue = next_representation_dependencies(object)
       until queue.empty?
         representation = queue.pop
-        next if visited.include? representation
+        next if visited.map(&:id).include? representation.id
 
         visited << JSONSchema::ResourceRepresentationDecorator.new(
           representation, context: context
