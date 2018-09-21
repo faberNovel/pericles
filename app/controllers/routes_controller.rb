@@ -20,7 +20,6 @@ class RoutesController < ApplicationController
   def edit; end
 
   def create
-    route.request_headers.build(name: 'Authorization')
     route.request_headers.build(name: 'Content-Type', value: 'application/json')
     if route.save
       redirect_to project_route_path(project, route)
