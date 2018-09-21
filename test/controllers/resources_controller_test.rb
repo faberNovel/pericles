@@ -474,29 +474,29 @@ class ResourcesControllerTest < ControllerWithAuthenticationTest
     resource = create(:pokemon)
 
     file = %(export interface RestPokemon {
-      date: string;
-      date_time: string | null | undefined;
-      id: number;
-      niceBoolean: boolean | null | undefined;
-      weakness_list: RestNature[];
-      weight: number | null | undefined;
+      readonly date: string;
+      readonly date_time: string | undefined;
+      readonly id: number;
+      readonly niceBoolean: boolean;
+      readonly weakness_list: ReadonlyArray<RestNature>;
+      readonly weight: number | undefined;
     }
 
     export class Pokemon {
-      date: string;
-      dateTime: string | null | undefined;
-      id: number;
-      niceBoolean: boolean | null | undefined;
-      weaknessList: Nature[];
-      weight: number | null | undefined;
+      public readonly date: string;
+      public readonly dateTime: string | undefined;
+      public readonly id: number;
+      public readonly niceBoolean: boolean;
+      public readonly weaknessList: ReadonlyArray<Nature>;
+      public readonly weight: number | undefined;
 
-      constructor(json: RestPokemon) {
+      public constructor(json: RestPokemon) {
         this.date = json.date;
-        this.dateTime = json.date_time;
+        this.dateTime = (json.date_time !== null && json.date_time !== undefined) ? json.date_time : undefined;
         this.id = json.id;
-        this.niceBoolean = json.niceBoolean;
+        this.niceBoolean = json.niceBoolean !== undefined && json.niceBoolean !== null && json.niceBoolean;
         this.weaknessList = json.weakness_list.map((o) => new Nature(o));
-        this.weight = json.weight;
+        this.weight = (json.weight !== null && json.weight !== undefined) ? json.weight : undefined;
       }
     }
     ).gsub(/^    /, '')
