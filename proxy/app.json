@@ -1,0 +1,21 @@
+{
+  "name": "Pericles Proxy",
+  "description": "Proxy for Pericles, a tool that makes API specification easier.",
+  "repository": "https://github.com/applidium/pericles/proxy",
+  "keywords": ["API", "specification", "RESTful", "JSON", "JSON schema", "resource", "route"],
+  "env": {
+    "PROJECT_PATH": {
+      "description": "Required by subdir-heroku-buildpack",
+      "value": "/proxy"
+    }
+  },
+  "buildpacks": [
+    {
+      "url": "https://github.com/timanovsky/subdir-heroku-buildpack"
+    },
+    {
+      "url": "https://github.com/HashNuke/heroku-buildpack-elixir.git"
+    }
+  ]
+}
+
