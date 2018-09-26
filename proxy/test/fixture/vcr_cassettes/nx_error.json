@@ -1,0 +1,25 @@
+[
+  {
+    "request": {
+      "body": "",
+      "headers": {
+        "x-forwarded-for": "127.0.0.1",
+        "accept-encoding": ""
+      },
+      "method": "get",
+      "options": {
+        "follow_redirect": "true",
+        "connect_timeout": 30000
+      },
+      "request_body": "",
+      "url": "https://domain.fake/?"
+    },
+    "response": {
+      "binary": false,
+      "body": "nxdomain",
+      "headers": [],
+      "status_code": null,
+      "type": "error"
+    }
+  }
+]
