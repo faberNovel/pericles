@@ -1,6 +1,8 @@
 # Pericles Proxy
 
-Proxy based on proxy configurations of Pericles database. It records raw reports requiring further inspection.
+Performant proxy based on proxy configurations of Pericles database. It records raw reports requiring further inspection.
+
+Pericles comes with its own proxy, integrated in the Rails application. However this stack is not suited for handling concurrent slow clients. That's why we wrote a specific proxy written in Elixir.
 
 ## Installation
 
@@ -33,6 +35,8 @@ mix test
 ```
 
 ## Deployment
+
+Once you deployed your proxy, remember to set the PROXY_HOST environment variable in Pericles.
 
 ### Heroku
 

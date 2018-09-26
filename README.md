@@ -85,6 +85,7 @@ Name | Description | Example
 `DATABASE_URL` | The URL of your PostgreSQL database. Defaults to [database.yml](config/database.yml). | `postgres://username:password@host/database`
 `RAILS_SERVE_STATIC_FILES` | In case your reverse proxy do not serve static files. Defaults to false. | `enabled`
 `RAILS_DISABLE_FORCE_SSL` | In case your reverse proxy do not handle SSL. Defaults to false. | `enabled`
+`PROXY_HOST` | The host of your [Elixir proxy](proxy)
 
 ### Google OAuth2
 
