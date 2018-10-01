@@ -35,7 +35,8 @@ function onSelectChanged(option) {
   }
 
   if (option.value === 'string') {
-    scheme.find('select').chosen({allow_single_deselect: true, search_contains: true, width: '15vw'})
+    scheme_enum.find('.chosen-container').css('width', '150px');
+    scheme.find('select').chosen({allow_single_deselect: true, search_contains: true, width: '150px'});
     scheme_enum.show();
   } else {
     scheme.find('select option').removeAttr('selected');
