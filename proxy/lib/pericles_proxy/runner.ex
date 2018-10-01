@@ -39,12 +39,11 @@ defmodule PericlesProxy.Runner do
 
   @spec prepare_url(Conn.t, String.t, String.t) :: String.t
   defp prepare_url(conn, base_url, path) do
-    params = Conn.fetch_query_params(conn).query_params
-    prepare_base_url(base_url)
+    url = prepare_base_url(base_url)
     |> URI.parse
     |> URI.merge(path)
-    |> Map.put(:query, URI.encode_query(params))
     |> URI.to_string
+    "#{url}?#{conn.query_string}"
   end
 
   @spec read_body(Conn.t) :: String.t
