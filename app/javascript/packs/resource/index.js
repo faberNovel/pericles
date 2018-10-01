@@ -32,4 +32,8 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   Store.fetchResource();
+
+  $(document).ready(function() {
+    $("select").chosen({search_contains: true, width: '100%'});
+  });
 });

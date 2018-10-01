@@ -8,7 +8,11 @@ Rails.application.routes.draw do
         get 'edit_resource'
       end
     end
-    resources :routes
+    resources :routes do
+      collection do
+        post 'rest'
+      end
+    end
     resources :api_errors
     resources :reports, only: [:index, :show]
     resources :mock_profiles, only: [:index, :new, :create]

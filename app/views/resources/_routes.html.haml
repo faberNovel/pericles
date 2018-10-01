@@ -3,5 +3,21 @@
     - resource.routes.includes(:resource_representations).decorate.each do |route|
       = render partial: 'routes/route_summary', locals: { resource: resource, route: route, should_display_representations: true }
   - else
-    %p
-      %i= t('.no_route_placeholder')
+    = form_tag rest_project_routes_path(project), method: :post do
+      .flexspace-and-bottom.margin-top-element
+        %h4 Fast REST creation
+        .flexcontainer-justify-end
+          = submit_tag 'Create REST', class: 'btn btn-primary'
+
+      = hidden_field_tag(:resource_id, resource.id)
+
+      .form-group
+        %label Url
+        = text_field_tag(:url, '', placeholder: "/#{resource.name.underscore}", class: 'form-control')
+
+      .form-group
+        %label Request
+        = select_tag(:request_representation_id, options_from_collection_for_select(project.resource_representations, :id, :name), class: 'form-control')
+      .form-group{style: 'min-height: 400px'}
+        %label Response
+        = select_tag(:response_representation_id, options_from_collection_for_select(project.resource_representations, :id, :name), class: 'form-control')

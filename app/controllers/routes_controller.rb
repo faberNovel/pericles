@@ -28,6 +28,30 @@ class RoutesController < ApplicationController
     end
   end
 
+  def rest
+    url = params[:url]
+    resource = policy_scope(Resource).find(params[:resource_id])
+    request_representation = policy_scope(ResourceRepresentation).find(params[:request_representation_id])
+    response_representation = policy_scope(ResourceRepresentation).find(params[:response_representation_id])
+
+    authorize project.routes.build(resource_id: resource.id)
+
+    CreateRestRoutesTransaction.new.call(
+      url: url,
+      resource: resource,
+      request_resource_representation: request_representation,
+      response_resource_representation: response_representation
+    ) do |monad|
+      monad.success do
+        redirect_to project_resource_path(project, resource)
+      end
+
+      monad.failure do
+        redirect_to project_resource_path(project, resource)
+      end
+    end
+  end
+
   def update
     if route.update(permitted_attributes(route))
       redirect_to project_route_path(project, route)
