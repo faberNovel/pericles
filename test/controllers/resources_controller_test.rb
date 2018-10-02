@@ -461,9 +461,10 @@ class ResourcesControllerTest < ControllerWithAuthenticationTest
         :date_time,
         :id,
         :nice_boolean,
-        :weakness_list,
         :weight,
       )
+
+      has_many :weakness_list, serializer: NatureSerializer
     end
     ).gsub(/^    /, '')
     get project_resource_path(resource.project, resource, format: 'ruby')

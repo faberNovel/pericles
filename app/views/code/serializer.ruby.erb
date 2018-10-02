@@ -1,7 +1,11 @@
-class <%= resource.pascal_name =%>Serializer < ActiveModel::Serializer
+class <%= resource.pascal_name %>Serializer < ActiveModel::Serializer
   attributes(
-<% resource.resource_attributes.each do |attribute| %>
-    :<%= attribute.snake_variable_name =%>,
+<% resource.resource_attributes.select(&:primitive_type).each do |attribute| %>
+    :<%= attribute.snake_variable_name %>,
 <% end %>
   )
+
+<% resource.resource_attributes.reject(&:primitive_type).sort_by { |a| a.is_array ? 0 : 1 }.each do |attribute| %>
+  <%= attribute.is_array ? 'has_many' : 'belongs_to' %> :<%= attribute.snake_variable_name %>, serializer: <%= attribute.resource.pascal_name %>Serializer
+<% end %>
 end
