@@ -10,7 +10,6 @@ defmodule PericlesProxy.Runner do
   @spec retrieve(Conn.t, ProxyConfiguration.t, String.t) :: Conn.t
   def retrieve(conn, proxy_conf, path) do
     {method, url, body, headers, options} = prepare_request(conn, proxy_conf, path)
-    IEx.pry
 
     case HTTPoison.request(method, url, body, headers, options) do
       {:error, error} -> Conn.send_resp(conn, 400, "Proxy error: #{inspect(error)}")

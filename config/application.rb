@@ -22,6 +22,8 @@ module Pericles_GWGw
 
     config.cache_store = :memory_store
 
+    config.active_job.queue_adapter = :delayed_job
+
     if ENV['S3_BUCKET_NAME'].present?
       config.paperclip_defaults = {
         :storage => :s3,

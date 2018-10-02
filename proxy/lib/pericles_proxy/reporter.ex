@@ -3,6 +3,7 @@ defmodule PericlesProxy.Reporter do
   alias Plug.Conn
   alias PericlesProxy.Report
   alias PericlesProxy.Repo
+  alias PericlesProxy.DelayedJob
 
   @spec save(Conn.t, Map.t, Integer.t, String.t, String.t) :: Conn.t
   def save(conn, response, project_id, request_body, path) do
@@ -19,8 +20,11 @@ defmodule PericlesProxy.Reporter do
       })
 
       case Repo.insert(changeset) do
-        {:ok, report}       -> Logger.info("Inserted report #{report.id}")
-        {:error, changeset} -> Logger.error("Failed to insert report #{inspect(changeset)}")
+        {:ok, report} ->
+          Logger.info("Inserted report #{report.id}")
+          Repo.insert(%DelayedJob{handler: "--- !ruby/struct:ReportValidatorJob\nreport_id: #{report.id}\n", run_at: DateTime.utc_now})
+        {:error, changeset} ->
+          Logger.error("Failed to insert report #{inspect(changeset)}")
       end
     end
 

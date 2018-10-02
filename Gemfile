@@ -94,3 +94,5 @@ gem 'ransack', github: 'activerecord-hackery/ransack'
 gem 'jquery-ui-rails'
 
 gem 'dry-transaction'
+
+gem 'delayed_job_active_record'
