@@ -20,4 +20,8 @@ class RoutePolicy < ProjectRelatedPolicy
     return true unless record.is_a? Route
     project.resources.where(id: record.resource_id).exists?
   end
+
+  def rest?
+    create?
+  end
 end

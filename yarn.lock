@@ -1819,10 +1819,6 @@ deep-equal@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/deep-equal/-/deep-equal-1.0.1.tgz#f5d260292b660e084eff4cdbc9f08ad3247448b5"
 
-deep-extend@^0.5.0:
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/deep-extend/-/deep-extend-0.5.0.tgz#6ef4a09b05f98b0e358d6d93d4ca3caec6672803"
-
 deep-extend@~0.4.0:
   version "0.4.2"
   resolved "https://registry.yarnpkg.com/deep-extend/-/deep-extend-0.4.2.tgz#48b699c27e334bf89f10892be432f6e4c7d34a7f"
@@ -1881,12 +1877,6 @@ depd@~1.1.1:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/depd/-/depd-1.1.2.tgz#9bcd52e14c097763e749b274c4346ed2e560b5a9"
 
-deref@^0.7.1:
-  version "0.7.3"
-  resolved "https://registry.yarnpkg.com/deref/-/deref-0.7.3.tgz#3ef3fc3cbc149b2f999b6bc051451c08c13c8bc2"
-  dependencies:
-    deep-extend "^0.5.0"
-
 des.js@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/des.js/-/des.js-1.0.0.tgz#c074d2e2aa6a8a9a07dbd61f9a15c2cd83ec8ecc"
@@ -1919,10 +1909,6 @@ diffie-hellman@^5.0.0:
     bn.js "^4.1.0"
     miller-rabin "^4.0.0"
     randombytes "^2.0.0"
-
-discontinuous-range@1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/discontinuous-range/-/discontinuous-range-1.0.0.tgz#e38331f0844bba49b9a9cb71c771585aab1bc65a"
 
 dns-equal@^1.0.0:
   version "1.0.0"
@@ -1970,6 +1956,10 @@ domutils@1.5.1:
   dependencies:
     dom-serializer "0"
     domelementtype "1"
+
+drange@^1.0.2:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/drange/-/drange-1.1.1.tgz#b2aecec2aab82fcef11dbbd7b9e32b83f8f6c0b8"
 
 duplexify@^3.4.2, duplexify@^3.5.3:
   version "3.5.3"
@@ -3384,15 +3374,13 @@ json-loader@^0.5.4:
   version "0.5.7"
   resolved "https://registry.yarnpkg.com/json-loader/-/json-loader-0.5.7.tgz#dca14a70235ff82f0ac9a3abeb60d337a365185d"
 
-"json-schema-faker@git+https://github.com/MrChoclate/json-schema-faker.git#8fe8cced8159c9e89c5e46b2ea873f2a9a980398":
-  version "0.5.0-rc15"
-  resolved "git+https://github.com/MrChoclate/json-schema-faker.git#8fe8cced8159c9e89c5e46b2ea873f2a9a980398"
+"json-schema-faker@git+https://github.com/json-schema-faker/json-schema-faker.git#b3268192a7e6a0b38a98a5b9243046be58320648":
+  version "0.5.0-rc16"
+  resolved "git+https://github.com/json-schema-faker/json-schema-faker.git#b3268192a7e6a0b38a98a5b9243046be58320648"
   dependencies:
-    deref "^0.7.1"
     json-schema-ref-parser "^5.0.0"
     jsonpath "^1.0.0"
-    randexp "^0.4.5"
-    tslib "^1.7.1"
+    randexp "^0.5.3"
 
 json-schema-ref-parser@^5.0.0:
   version "5.0.3"
@@ -5156,12 +5144,12 @@ querystringify@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/querystringify/-/querystringify-1.0.0.tgz#6286242112c5b712fa654e526652bf6a13ff05cb"
 
-randexp@^0.4.5:
-  version "0.4.6"
-  resolved "https://registry.yarnpkg.com/randexp/-/randexp-0.4.6.tgz#e986ad5e5e31dae13ddd6f7b3019aa7c87f60ca3"
+randexp@^0.5.3:
+  version "0.5.3"
+  resolved "https://registry.yarnpkg.com/randexp/-/randexp-0.5.3.tgz#f31c2de3148b30bdeb84b7c3f59b0ebb9fec3738"
   dependencies:
-    discontinuous-range "1.0.0"
-    ret "~0.1.10"
+    drange "^1.0.2"
+    ret "^0.2.0"
 
 randomatic@^1.1.3:
   version "1.1.7"
@@ -5481,9 +5469,9 @@ resolve@^1.1.6, resolve@^1.1.7, resolve@^1.4.0:
   dependencies:
     path-parse "^1.0.5"
 
-ret@~0.1.10:
-  version "0.1.15"
-  resolved "https://registry.yarnpkg.com/ret/-/ret-0.1.15.tgz#b8a4825d5bdb1fc3f6f53c2bc33f81388681c7bc"
+ret@^0.2.0:
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/ret/-/ret-0.2.2.tgz#b6861782a1f4762dce43402a71eb7a283f44573c"
 
 rgb-hex@^2.1.0:
   version "2.1.0"
@@ -6169,10 +6157,6 @@ trim-right@^1.0.1:
   resolved "https://registry.yarnpkg.com/true-case-path/-/true-case-path-1.0.2.tgz#7ec91130924766c7f573be3020c34f8fdfd00d62"
   dependencies:
     glob "^6.0.4"
-
-tslib@^1.7.1:
-  version "1.8.0"
-  resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.8.0.tgz#dc604ebad64bcbf696d613da6c954aa0e7ea1eb6"
 
 tty-browserify@0.0.0:
   version "0.0.0"

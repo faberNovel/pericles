@@ -252,4 +252,18 @@ class ProxyControllerTest < ActionDispatch::IntegrationTest
     end
     assert_equal 200, response.status
   end
+
+  test 'proxy server using cors and secure credentials should not have Origin *' do
+    @project.proxy_configuration.update(target_base_url: 'https://faberhub-develop.herokuapp.com')
+    VCR.use_cassette('faberhub cors') do
+      code = 'blabla'
+      process :options, "/projects/#{@project.id}/proxy/users/auth/google_oauth2/callback?code=#{code}", headers: {
+        'Access-Control-Request-Method': 'GET',
+        'Origin': 'http://localhost:3000',
+        'Access-Control-Request-Headers': 'x-requested-with',
+        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36'
+      }
+    end
+    assert_equal'http://localhost:3000', response.headers['Access-Control-Allow-Origin']
+  end
 end

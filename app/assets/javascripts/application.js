@@ -19,3 +19,12 @@
 //= require setup
 //= require regex_field
 //= require jsoneditor
+
+
+jQuery.fn.sortDomElements = (function() {
+  return function(comparator) {
+    return Array.prototype.sort.call(this, comparator).each(function(i) {
+      this.parentNode.appendChild(this);
+    });
+  };
+})();

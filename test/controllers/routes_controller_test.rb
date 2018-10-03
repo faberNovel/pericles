@@ -1,6 +1,15 @@
 require 'test_helper'
 
 class RoutesControllerTest < ControllerWithAuthenticationTest
+  def post_rest_route(resource)
+    post rest_project_routes_path(resource.project), params: {
+      url: '/test',
+      resource_id: resource.id,
+      request_representation_id: create(:resource_representation, resource: resource).id,
+      response_representation_id: create(:resource_representation, resource: resource).id
+    }
+  end
+
   test 'should show index' do
     project = create(:project)
     get project_routes_path(project)
@@ -139,6 +148,14 @@ class RoutesControllerTest < ControllerWithAuthenticationTest
     assert_redirected_to new_user_session_path(redirect_to: request.path)
   end
 
+  test 'should create rest routes' do
+    resource = create(:resource)
+    assert_difference'Route.count', 5 do
+      post_rest_route(resource)
+    end
+    assert_redirected_to project_resource_path(resource.project, resource)
+  end
+
   test 'non member external user should not access project routes' do
     external_user = create(:user, :external)
     sign_in external_user
@@ -153,6 +170,9 @@ class RoutesControllerTest < ControllerWithAuthenticationTest
     assert_response :forbidden
 
     post project_routes_path(route.project), params: { route: build(:route, resource: route.resource).attributes }
+    assert_response :forbidden
+
+    post_rest_route(create(:resource))
     assert_response :forbidden
 
     get project_route_path(project, route)
@@ -186,6 +206,10 @@ class RoutesControllerTest < ControllerWithAuthenticationTest
     created = Route.order(:created_at).last
     assert_redirected_to project_route_path(route.project, created)
 
+    resource = create(:resource, project: project)
+    post_rest_route(resource)
+    assert_redirected_to project_resource_path(project, resource)
+
     get project_route_path(project, route)
     assert_response :success
 
@@ -216,6 +240,10 @@ class RoutesControllerTest < ControllerWithAuthenticationTest
     post project_routes_path(route.project), params: { route: build(:route, resource: route.resource).attributes }
     assert_response :forbidden
 
+    resource = create(:resource, project: project)
+    post_rest_route(resource)
+    assert_response :forbidden
+
     get project_route_path(project, route)
     assert_response :success
 
@@ -243,6 +271,10 @@ class RoutesControllerTest < ControllerWithAuthenticationTest
     assert_redirected_to new_user_session_path(redirect_to: request.path)
 
     post project_routes_path(route.project), params: { route: build(:route, resource: route.resource).attributes }
+    assert_redirected_to new_user_session_path(redirect_to: request.path)
+
+    resource = create(:resource, project: project)
+    post_rest_route(resource)
     assert_redirected_to new_user_session_path(redirect_to: request.path)
 
     get project_route_path(project, route)

@@ -20,7 +20,7 @@
     %p= project.proxy_configuration.target_base_url
 
     %h4 Proxy url
-    %p= project_proxy_url(project)
+    %p= project.proxy_url
 
   %h4 Mock Url
   = link_to project_mocks_root_url(project), project_mocks_root_url(project)

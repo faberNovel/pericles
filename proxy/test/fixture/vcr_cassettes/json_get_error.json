@@ -1,0 +1,37 @@
+[
+  {
+    "request": {
+      "body": "",
+      "headers": {
+        "x-forwarded-for": "127.0.0.1",
+        "accept-encoding": ""
+      },
+      "method": "get",
+      "options": {
+        "follow_redirect": "true",
+        "connect_timeout": 30000
+      },
+      "request_body": "",
+      "url": "https://pokeapi.co/api/v2/pokemon/0?"
+    },
+    "response": {
+      "binary": false,
+      "body": "{\"detail\":\"Not found.\"}",
+      "headers": {
+        "Date": "Wed, 22 Aug 2018 15:12:07 GMT",
+        "Content-Type": "application/json",
+        "Transfer-Encoding": "chunked",
+        "Connection": "keep-alive",
+        "Set-Cookie": "__cfduid=d08a0f535f667c785f85f8d2b1920eaee1534950727; expires=Thu, 22-Aug-19 15:12:07 GMT; path=/; domain=.pokeapi.co; HttpOnly; Secure",
+        "Vary": "Accept-Encoding",
+        "X-Frame-Options": "SAMEORIGIN",
+        "Allow": "GET, HEAD, OPTIONS",
+        "Expect-CT": "max-age=604800, report-uri=\"https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct\"",
+        "Server": "cloudflare",
+        "CF-RAY": "44e6469e2d5369a6-CDG"
+      },
+      "status_code": 404,
+      "type": "ok"
+    }
+  }
+]

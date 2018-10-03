@@ -33,8 +33,8 @@ module Code
 
     def typescript_type
       type = base_typescript_type
-      type = "#{type}[]" if is_array
-      type = "#{type} | null | undefined" if code_nullable
+      type = "ReadonlyArray<#{type}>" if is_array
+      type = "#{type} | undefined" if code_nullable && !boolean?
       type
     end
 
@@ -100,6 +100,37 @@ module Code
         'any'
       when nil
         resource.rest_name
+      end
+    end
+
+    def typescript_assignment
+      json_value = "json.#{key_name}"
+      output = typescript_output(json_value)
+      output = typescript_nullable_output(output, json_value) if code_nullable
+
+      "this.#{camel_variable_name} = #{output};\n"
+    end
+
+    private
+
+    def typescript_nullable_output(output, json_value)
+      if !is_array && boolean?
+        "#{output} !== undefined && #{output} !== null && #{output}"
+      else
+        "(#{json_value} !== null && #{json_value} !== undefined) ? #{output} : undefined"
+      end
+    end
+
+    def typescript_output(json_value)
+      if primitive_type
+        json_value
+      else
+        type = base_typescript_type.sub(/^Rest/, '')
+        if is_array
+          "#{json_value}.map((o) => new #{type}(o))"
+        else
+          "new #{type}(#{json_value})"
+        end
       end
     end
   end

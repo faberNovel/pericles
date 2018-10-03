@@ -25,6 +25,72 @@ class GenerateJsonInstanceServiceTest < ActiveSupport::TestCase
     assert_equal '', GenerateJsonInstanceService.new(nil).execute
   end
 
+  test 'should generate multiplier_for_durations array of object' do
+    schema = {
+      "additionalProperties": false,
+      "definitions": {
+        "CompanyCoupon_1030": {
+          "additionalProperties": false,
+          "description": 'Automatically generated (please edit me)',
+          "properties": {
+            "offer": {
+              "$ref": '#/definitions/DefaultOffer_1025',
+              "description": 'CompanyCoupon offer',
+              "type": 'object'
+            }
+          },
+          "required": [
+            'offer',
+          ],
+          "title": 'Coupon - CompanyCoupon',
+          "type": 'object'
+        },
+        "DefaultOffer_1025": {
+          "additionalProperties": false,
+          "description": 'Automatically generated (please edit me)',
+          "properties": {
+            "multiplier_for_durations": {
+              "description": "\tList of offer’s possible durations localized string along with the corresponding multiplier",
+              "items": {
+                "type": 'object'
+              },
+              "type": 'array'
+            }
+          },
+          "required": [
+            'multiplier_for_durations',
+          ],
+          "title": 'Offer - DefaultOffer',
+          "type": 'object'
+        }
+      },
+      "description": 'Automatically generated (please edit me)',
+      "properties": {
+        "subscription": {
+          "additionalProperties": false,
+          "properties": {
+            "resume_coupon": {
+              "$ref": '#/definitions/CompanyCoupon_1030',
+              "description": 'Subscription resume coupon',
+              "type": 'object'
+            },
+          },
+          "required": [
+            'resume_coupon',
+          ],
+          "type": 'object'
+        }
+      },
+      "required": [
+        'subscription'
+      ],
+      "title": 'Subscription - DefaultSubscription',
+      "type": 'object'
+    }
+    json = GenerateJsonInstanceService.new(schema).execute
+    assert_not_nil json.dig('subscription', 'resume_coupon', 'offer', 'multiplier_for_durations')
+  end
+
   test 'should not loop' do
     schema = {
       "title": 'InternationalProduct - DefaultInternationalProduct',

@@ -28,7 +28,6 @@ class ProxyController < ApplicationController
     headers.each_pair do |key, value|
       response.set_header(key, value) unless FORBIDDEN_HEADERS.include? key
     end
-    response.set_header('Access-Control-Allow-Origin', '*')
   end
 
   def add_validation_header(report)

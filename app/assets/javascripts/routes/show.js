@@ -1,3 +1,11 @@
+function jsonEditorOptionsFromContainer(container) {
+  if (container.hasAttribute('read-only')) {
+    return { mode: 'view', modes: ['view', 'text'] };
+  } else {
+    return { mode: 'code' };
+  }
+}
+
 $(document).ready(function() {
   let editors = {};
 
@@ -30,8 +38,9 @@ $(document).ready(function() {
   });
 
   $('.jsoneditor-container').each(function() {
-    container = this;
-    options = {mode: container.hasAttribute('read-only') ? 'view' : 'code'};
+    let container = this;
+
+    let options = jsonEditorOptionsFromContainer(container);
     var editor = new JSONEditor(container, options);
     editor.set(JSON.parse(container.getAttribute('json')));
     editor.expandAll && editor.expandAll();

@@ -11,9 +11,8 @@
       = f.submit 'Update', class: 'btn btn-primary'
 
   .attributes
-    = f.fields_for :resource_attributes, resource.resource_attributes_by_name do |attribute_fields|
+    = f.fields_for :resource_attributes, resource.resource_attributes do |attribute_fields|
       = render 'resource_attribute_fields', f: attribute_fields
     .add-attribute.fields
       = link_to_add_association "+ Add an Attribute", f, :resource_attributes,
         { 'data-association-insertion-node' => "form .add-attribute", 'data-association-insertion-method' => 'before' }
-

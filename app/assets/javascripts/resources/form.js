@@ -35,7 +35,8 @@ function onSelectChanged(option) {
   }
 
   if (option.value === 'string') {
-    scheme.find('select').chosen({allow_single_deselect: true, search_contains: true, width: '15vw'})
+    scheme_enum.find('.chosen-container').css('width', '150px');
+    scheme.find('select').chosen({allow_single_deselect: true, search_contains: true, width: '150px'});
     scheme_enum.show();
   } else {
     scheme.find('select option').removeAttr('selected');
@@ -96,8 +97,42 @@ function init() {
   });
 }
 
+function sortAttributesFromDom(dom) {
+  return {
+    id: dom.nextSibling.value,
+    displayedType: $(dom).find('.chosen-container a.chosen-single span')[0].innerText,
+    name: $(dom).find('[placeholder="name"]').val()
+  }
+}
 $(document).ready(init);
+
+function sortFromMode(sortMode) {
+  $('.attributes > .nested-fields').sortDomElements((a, b) => {
+    a = sortAttributesFromDom(a);
+    b = sortAttributesFromDom(b);
+
+    if (sortMode === 'alphabetical') {
+      return a.name.toLowerCase().localeCompare(b.name.toLowerCase())
+    } else if (sortMode === 'type') {
+      let typeCompare = a.displayedType.toLowerCase().localeCompare(b.displayedType.toLowerCase());
+      if (typeCompare === 0) {
+        return a.name.toLowerCase().localeCompare(b.name.toLowerCase())
+      } else {
+        return typeCompare;
+      }
+    } else {
+      return a.id - b.id;
+    }
+  });
+
+  // Move add attribute section to the end of container
+  $('.add-attribute.fields').sortDomElements();
+}
+
 $(document).ready(function () {
+  let sortMode = localStorage.getItem('sortMode');
+  sortFromMode(sortMode);
+
   $('form').on('cocoon:after-insert', function(event, addedElement) {
     init();
 
