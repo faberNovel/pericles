@@ -2,6 +2,20 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.7.0 - 2018-10-02
+
+* Add has_many and belongs_to to ruby serializer code generation
+* Reports no longer need 10 minutes to be analyzed
+* Fix bug with mock generation
+* Add form to create REST (CRUD) routes from resource
+* Use same order in edit_attributes page
+* Fix issue with scheme container width
+* Fix issues with proxy
+* Remove default Authorization header
+* Better typescript generator 
+* Allow to copy json schema via text mode
+* Display query parameters first instead of headers
+
 ## 0.6.7 - 2018-09-11
 
 * Fix infinite loop
