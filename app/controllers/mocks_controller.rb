@@ -36,8 +36,9 @@ class MocksController < ApplicationController
   def find_matching_mock_picker(route)
     mock_profile = find_mock_profile
     mock_pickers_of_route = mock_profile&.inherited_and_self_mock_pickers_of(route)
+    body = request.body.read
     mock_pickers_of_route.detect do |picker|
-      picker.match(request_url, request.body.read)
+      picker.match(request_url, body)
     end
   end
 
