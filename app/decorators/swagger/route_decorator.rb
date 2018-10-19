@@ -8,7 +8,7 @@ class Swagger::RouteDecorator < Draper::Decorator
       parameters: parameters,
       responses: responses,
       requestBody: request_body
-    }.reject { |_, v| v.present? }
+    }.select { |_, v| v.present? }
   end
 
   def responses
@@ -17,11 +17,11 @@ class Swagger::RouteDecorator < Draper::Decorator
       # Swagger 3.0.0 does not allow us to use more than one Response
       # object per status code so we take the first one
       response = resps.first
-      swager_response = Swagger::ResponseDecorator.new(
+      swagger_response = Swagger::ResponseDecorator.new(
         response, context: context
       ).to_swagger
 
-      hash.merge!({ status.to_s => swager_response })
+      hash.merge!({ status.to_s => swagger_response })
     end
   end
 

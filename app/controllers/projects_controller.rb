@@ -17,10 +17,7 @@ class ProjectsController < ApplicationController
         )
       end
       format.swagger do
-        send_data(
-          Swagger::ProjectDecorator.new(project).to_swagger,
-          filename: "#{project.title}.json"
-        )
+        render json: Swagger::ProjectDecorator.new(project).to_swagger, content_type: 'application/json'
       end
       %i[swift java kotlin ruby typescript].each do |language|
         format.send(language) do
