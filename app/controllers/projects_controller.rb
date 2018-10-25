@@ -70,11 +70,12 @@ class ProjectsController < ApplicationController
   private
 
   def set_proxy_to_be_destroyed_if_blank(params)
-    if params.dig(:proxy_configuration_attributes, :target_base_url).blank?
-      params[:proxy_configuration_attributes] = {
-        id: project.proxy_configuration&.id,
-        _destroy: true
-      }
-    end
+    proxy_config = params.dig(:proxy_configuration_attributes)
+    return if proxy_config.nil? || proxy_config.dig(:target_base_url).present?
+
+    params[:proxy_configuration_attributes] = {
+      id: project.proxy_configuration&.id,
+      _destroy: true
+    }
   end
 end
