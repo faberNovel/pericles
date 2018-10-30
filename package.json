@@ -2,7 +2,7 @@
   "name": "pericles",
   "version": "1.0.0",
   "engines": {
-    "node": "7.10.1",
+    "node": "10.13.0",
     "npm": "4.2.0"
   },
   "description": "== README",
@@ -23,7 +23,7 @@
   "dependencies": {
     "@rails/webpacker": "3.5",
     "core-js": "^2.5.3",
-    "json-schema-faker": "git+https://github.com/json-schema-faker/json-schema-faker.git#b3268192a7e6a0b38a98a5b9243046be58320648",
+    "json-schema-faker": "git+https://github.com/json-schema-faker/json-schema-faker.git",
     "pug": "^2.0.0-rc.4",
     "underscore": "^1.8.3",
     "vue": "^2.5.13",
