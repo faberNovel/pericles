@@ -316,6 +316,43 @@ class ResourceRepresentationsControllerTest < ControllerWithAuthenticationTest
     assert_redirected_to new_user_session_path(redirect_to: request.path)
   end
 
+
+  test 'get typescript resource representation' do
+    resource = create(:pokemon)
+    representation = resource.resource_representations.first
+    create(:attributes_resource_representation, attribute_id: resource.resource_attributes.find(&:boolean?).id, parent_resource_representation: representation)
+
+    file = %(export interface RestDefaultPokemon {
+      readonly date: string;
+      readonly date_time: string | undefined;
+      readonly id: number;
+      readonly niceBoolean: boolean;
+      readonly weakness_list: ReadonlyArray<RestDefaultNature>;
+      readonly weight: number | undefined;
+    }
+
+    export class DefaultPokemon {
+      public readonly date: string;
+      public readonly dateTime: string | undefined;
+      public readonly id: number;
+      public readonly niceBoolean: boolean;
+      public readonly weaknessList: ReadonlyArray<DefaultNature>;
+      public readonly weight: number | undefined;
+
+      public constructor(json: RestDefaultPokemon) {
+        this.date = json.date;
+        this.dateTime = (json.date_time !== null && json.date_time !== undefined) ? json.date_time : undefined;
+        this.id = json.id;
+        this.niceBoolean = json.niceBoolean !== undefined && json.niceBoolean !== null && json.niceBoolean;
+        this.weaknessList = json.weakness_list.map((o) => new DefaultNature(o));
+        this.weight = (json.weight !== null && json.weight !== undefined) ? json.weight : undefined;
+      }
+    }
+    ).gsub(/^    /, '')
+    get resource_resource_representation_path(resource, representation, format: :typescript)
+    assert_equal(response.body, file)
+  end
+
   private
 
   def res_rep_params_hash

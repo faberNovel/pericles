@@ -10,4 +10,8 @@ class Code::AttributesResourceRepresentationDecorator < Draper::Decorator
   def code_nullable
     !object.is_required || object.resource_attribute.nullable
   end
+
+  def boolean?
+    object.resource_attribute.boolean?
+  end
 end
