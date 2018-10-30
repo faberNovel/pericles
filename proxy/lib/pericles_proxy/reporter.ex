@@ -7,7 +7,7 @@ defmodule PericlesProxy.Reporter do
 
   @spec save(Conn.t, Map.t, Integer.t, String.t, String.t) :: Conn.t
   def save(conn, response, project_id, request_body, path) do
-    if response |> json? do
+    if response |> response_json? && conn |> request_json? do
       changeset = Report.changeset(%Report{}, %{
         project_id: project_id,
         response_status_code: response.status_code,
@@ -40,19 +40,24 @@ defmodule PericlesProxy.Reporter do
     end
   end
 
-  @spec json?(Map.t) :: Boolean.t
-  defp json?(response) do
-    response |> has_header?("content-type", ~r/^application\/json/)
+  @spec response_json?(Map.t) :: Boolean.t
+  defp response_json?(response) do
+    response.headers |> has_header?("content-type", ~r/^application\/json/)
+  end
+
+  @spec request_json?(Map.t) :: Boolean.t
+  defp request_json?(request) do
+    request.req_headers |> has_header?("content-type", ~r/^application\/json/)
   end
 
   @spec has_header?(Map.t, String.t, (String.t | Regex.t)) :: Boolean.t
-  defp has_header?(response, key, value) when is_binary(value) do
-    Enum.any?(response.headers, fn ({k, v}) ->
+  defp has_header?(headers, key, value) when is_binary(value) do
+    Enum.any?(headers, fn ({k, v}) ->
       key == String.downcase(k) && value == v
     end)
   end
-  defp has_header?(response, key, regex) do
-    Enum.any?(response.headers, fn ({k, v}) ->
+  defp has_header?(headers, key, regex) do
+    Enum.any?(headers, fn ({k, v}) ->
       key == String.downcase(k) && Regex.match?(regex, v)
     end)
   end
