@@ -17,10 +17,7 @@ class ProjectsController < ApplicationController
         )
       end
       format.swagger do
-        send_data(
-          Swagger::ProjectDecorator.new(project).to_swagger,
-          filename: "#{project.title}.json"
-        )
+        render json: Swagger::ProjectDecorator.new(project).to_swagger, content_type: 'application/json'
       end
       %i[swift java kotlin ruby typescript].each do |language|
         format.send(language) do
@@ -73,11 +70,12 @@ class ProjectsController < ApplicationController
   private
 
   def set_proxy_to_be_destroyed_if_blank(params)
-    if params.dig(:proxy_configuration_attributes, :target_base_url).blank?
-      params[:proxy_configuration_attributes] = {
-        id: project.proxy_configuration&.id,
-        _destroy: true
-      }
-    end
+    proxy_config = params.dig(:proxy_configuration_attributes)
+    return if proxy_config.nil? || proxy_config.dig(:target_base_url).present?
+
+    params[:proxy_configuration_attributes] = {
+      id: project.proxy_configuration&.id,
+      _destroy: true
+    }
   end
 end
