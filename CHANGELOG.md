@@ -2,6 +2,13 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.7.1 - 2018-10-31
+
+* Fix swagger export
+* Fix issue with file in proxy
+* Fix unwanted proxy config deletion
+* Fix issue with boolean in ts generation of resource representation
+
 ## 0.7.0 - 2018-10-02
 
 * Add has_many and belongs_to to ruby serializer code generation
