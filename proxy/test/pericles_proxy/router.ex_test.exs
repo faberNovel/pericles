@@ -42,7 +42,7 @@ defmodule PericlesProxy.RouterTest do
     assert conn.resp_body == "Project not found"
   end
 
-  test "get without report", state do
+  test "get without report (non json response)", state do
     Repo.insert(%ProxyConfiguration{project_id: state[:project_id], target_base_url: "https://example.com"})
 
     use_cassette "non_json_get" do
@@ -66,11 +66,24 @@ defmodule PericlesProxy.RouterTest do
     assert Repo.aggregate(Report, :count, :id) == 0
   end
 
+  test "get without report (non json request)", state do
+    Repo.insert(%ProxyConfiguration{project_id: state[:project_id], target_base_url: "https://jsonplaceholder.typicode.com"})
+
+    use_cassette "json_get" do
+      conn = conn(:get, "/projects/#{state[:project_id]}/proxy/posts/3")
+      conn = PericlesProxy.Router.call(conn, [])
+      assert conn.status == 200
+    end
+
+    assert Repo.aggregate(Report, :count, :id) == 0
+  end
+
   test "get with report", state do
     Repo.insert(%ProxyConfiguration{project_id: state[:project_id], target_base_url: "https://jsonplaceholder.typicode.com"})
 
     use_cassette "json_get" do
       conn = conn(:get, "/projects/#{state[:project_id]}/proxy/posts/3")
+      |> put_req_header("content-type", "application/json")
       conn = PericlesProxy.Router.call(conn, [])
       assert conn.status == 200
     end
@@ -108,6 +121,7 @@ defmodule PericlesProxy.RouterTest do
       assert Repo.aggregate(Report, :count, :id) == 0
 
       conn = conn(:get, "/projects/#{state[:project_id]}/proxy/pokemon/0")
+      |> put_req_header("content-type", "application/json")
       conn = PericlesProxy.Router.call(conn, [])
       assert conn.status == 404
     end
