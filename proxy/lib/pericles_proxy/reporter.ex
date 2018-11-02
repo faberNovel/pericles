@@ -33,7 +33,7 @@ defmodule PericlesProxy.Reporter do
 
   @spec decode_body(Map.t) :: String.t
   defp decode_body(response) do
-    if byte_size(response.body) > 0 && response |> has_header?("content-encoding", "gzip") do
+    if byte_size(response.body) > 0 && response.headers |> has_header?("content-encoding", "gzip") do
       :zlib.gunzip(response.body)
     else
       response.body
