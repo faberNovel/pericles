@@ -2,7 +2,11 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## 0.7.1 - 2018-11-02
+## 0.7.3 - 2019-01-14
+* Reports are destroyed when project is destroyed
+* Add a 30 seconds cache on json schema
+
+## 0.7.2 - 2018-11-02
 * Fix Elixir proxy error
 
 ## 0.7.1 - 2018-10-31

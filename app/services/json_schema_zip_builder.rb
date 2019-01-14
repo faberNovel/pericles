@@ -6,7 +6,7 @@ class JSONSchemaZipBuilder < AbstractZipBuilder
   end
 
   def collection
-    @project.resources.map(&:responses).flatten.select(&:resource_representation)
+    @project.responses.where.not(resource_representation_id: nil).includes(:metadata, route: :resource, resource_representation: :attributes_resource_representations)
   end
 
   def filename(response)

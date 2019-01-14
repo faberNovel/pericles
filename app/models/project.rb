@@ -7,7 +7,7 @@ class Project < ApplicationRecord
   has_many :resource_representations, through: :resources
   has_many :routes, through: :resources
   has_many :responses, through: :routes
-  has_many :reports
+  has_many :reports, dependent: :destroy
   has_many :mock_profiles
   has_many :api_errors
   has_many :members

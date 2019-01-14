@@ -37,4 +37,10 @@ class ProjectTest < ActiveSupport::TestCase
 
     assert_equal [his_project], Project.of_user(user)
   end
+
+  test 'should correctly delete project with associated reports' do
+    project = create(:project)
+    create(:report, project: project)
+    assert project.destroy
+  end
 end

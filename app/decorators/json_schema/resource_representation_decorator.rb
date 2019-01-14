@@ -7,9 +7,12 @@ module JSONSchema
     end
 
     def json_schema_without_definitions
-      # TODO: Clement Villain 28/05/2018
-      # Build a cache system
-      build_json_schema_without_definitions
+      # Clement Villain 2018-12-24
+      # Cache can be stale for 30 seconds but it greatly improve performance (~30%)
+      # for /projects/:id.json_schema
+      Rails.cache.fetch(cache_key, expires_in: 30.seconds) do
+        build_json_schema_without_definitions.deep_dup
+      end
     end
 
     def build_json_schema_without_definitions
