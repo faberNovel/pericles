@@ -14,7 +14,7 @@ module JSONSchema
         json_schema_source,
         is_collection: is_collection,
         root_key: root_key,
-        metadata: metadata
+        metadata_responses: metadata_responses
       ).execute
     end
   end

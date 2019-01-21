@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181002092956) do
+ActiveRecord::Schema.define(version: 20190121145846) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -145,6 +145,7 @@ ActiveRecord::Schema.define(version: 20181002092956) do
     t.integer "response_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "key", default: "", null: false
     t.index ["metadatum_id"], name: "index_metadata_responses_on_metadatum_id"
     t.index ["response_id"], name: "index_metadata_responses_on_response_id"
   end
