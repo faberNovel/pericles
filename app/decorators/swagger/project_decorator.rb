@@ -120,7 +120,7 @@ module Swagger
       return if properties.nil?
 
       objects = properties.values + properties.values.map { |v| v.dig(:items) }.compact
-      objects = (objects + objects.map { |v| v.dig(:anyOf) }).compact
+      objects = (objects + objects.map { |v| v.dig(:anyOf) }).compact.flatten
       objects.select { |o| o[:$ref] }.each do |object|
         (object.keys - [:$ref]).each { |key| object.delete(key) }
       end
