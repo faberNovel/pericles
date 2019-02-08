@@ -8,4 +8,12 @@ class AttributeTest < ActiveSupport::TestCase
 
     assert build(:api_error, json_schema: '{}').valid?
   end
+
+  test 'destroy should delete instances' do
+    api_error_instance = create(:api_error_instance)
+
+    assert_difference 'ApiErrorInstance.count', -1 do
+      api_error_instance.api_error.destroy
+    end
+  end
 end

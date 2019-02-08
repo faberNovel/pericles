@@ -99,5 +99,9 @@ module JSONSchema
           }
         ).map(&:resource_representation).compact
     end
+
+    def cache_key
+      Digest::MD5.new << super << context.to_s
+    end
   end
 end

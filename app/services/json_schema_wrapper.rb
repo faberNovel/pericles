@@ -1,10 +1,10 @@
 class JSONSchemaWrapper
-  def initialize(json_schema, root_key, is_collection, metadata)
+  def initialize(json_schema, root_key, is_collection, metadata_responses)
     @json_schema = json_schema.is_a?(String) ? JSON.parse(json_schema) : json_schema
     @json_schema.deep_symbolize_keys!
     @root_key = root_key
     @is_collection = is_collection
-    @metadata = metadata
+    @metadata_responses = metadata_responses
   end
 
   def execute
@@ -33,15 +33,21 @@ class JSONSchemaWrapper
 
   def should_add_metadata
     json_is_array = @is_collection && @root_key.blank?
-    !@metadata.empty? && !json_is_array
+    !@metadata_responses.empty? && !json_is_array
   end
 
   def add_metadata
-    metadata_properties = {}
-    @metadata.each do |md|
-      metadata_properties[md.name.to_sym] = { type: md.primitive_type }
+    @metadata_responses.group_by(&:key).each do |key, metadata_responses|
+      metadata_responses.map(&:metadatum).each do |metadatum|
+        schema = { type: metadatum.primitive_type }
+        if key.blank?
+          properties = @json_schema[:properties]
+        else
+          @json_schema[:properties][key.to_sym] ||= { type: 'object', properties: {} }
+          properties = @json_schema[:properties][key.to_sym][:properties]
+        end
+        properties[metadatum.name.to_sym] = schema
+      end
     end
-
-    @json_schema[:properties].merge!(metadata_properties)
   end
 end

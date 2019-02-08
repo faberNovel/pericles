@@ -3,14 +3,14 @@ class JSONSchemaBuilder
     @object = object
     @is_collection = options[:is_collection]
     @root_key = options[:root_key]
-    @metadata = options[:metadata] || []
+    @metadata_responses = options[:metadata_responses] || []
   end
 
   def execute
     return if @object.nil?
 
     JSONSchemaWrapper.new(
-      @object.json_schema, @root_key, @is_collection, @metadata
+      @object.json_schema, @root_key, @is_collection, @metadata_responses
     ).execute
   end
 end

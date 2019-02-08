@@ -2,6 +2,11 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.7.4 - 2019-02-08
+* Fix swagger export
+* Fix issue in route description where {{}} was used
+* Can now add key to metadata_responses
+
 ## 0.7.3 - 2019-01-14
 * Reports are destroyed when project is destroyed
 * Add a 30 seconds cache on json schema

@@ -13,7 +13,7 @@
       .col-xs-3
         %dl
           %dt Description
-          %dd= simple_format(route.description)
+          %dd{'v-pre': true}= simple_format(route.description)
       .col-xs-3
         - if should_display_representations && !route.resource_representations.empty?
           %dl
