@@ -14,6 +14,7 @@
 //= require jquery_ujs
 //= require cocoon
 //= require jquery-ui/widgets/autocomplete
+//= require jquery-ui/widgets/datepicker
 //= require bootstrap-sprockets
 //= require chosen-jquery
 //= require setup

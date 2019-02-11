@@ -1,5 +1,56 @@
+.filters {
+  margin: 32px 0;
+  display: flex;
+  justify-content: space-between;
+  background-color: white;
+  box-shadow: 0 0 8px 0 rgba(184, 195, 220, 0.3);
+
+  .filter {
+    display: flex;
+    padding: 16px;
+    flex-direction: column;
+
+    &:not(:first-of-type) {
+      border-left: 1px #e3e7ee solid;
+      padding-left: 16px;
+    }
+
+    &:last-child {
+      display: flex;
+      justify-content: center;
+    }
+
+    button {
+      border: none;
+      background: none;
+      outline: none;
+    }
+  }
+
+  input::-webkit-inner-spin-button,
+  input::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+}
+
+#reports {
+  margin: 32px 0;
+  padding: 16px;
+  background-color: white;
+  box-shadow: 0 0 8px 0 rgba(184, 195, 220, 0.3);
+
+  .table-striped > tbody > tr:nth-of-type(odd) {
+    background-color: white;
+  }
+
+  [data-href] {
+    cursor: pointer;
+  }
+}
+
 .invalid {
-  background-color: rgba(217, 83, 79, .3) !important;
+  background-color: rgba(235, 56, 78, 0.1) !important;
 }
 
 .valid {
@@ -7,7 +58,7 @@
 }
 
 .missing {
-  background-color: rgba(240, 173, 78, .3) !important;
+  background-color: rgba(255, 181, 19, 0.1) !important;
 }
 
 .in_validation {
