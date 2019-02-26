@@ -2,31 +2,48 @@
 
 %h1 Reports
 
+= search_form_for @q, url: project_reports_path(project), class: 'filters' do |f|
+  .filter{style: 'flex: 1;'}
+    = f.label 'Method'
+    = f.select :request_method_eq, [nil] + Route.http_methods.keys
+  .filter{style: 'flex: 2;'}
+    = f.label 'Url'
+    = f.search_field :url_cont
+  .filter{style: 'flex: 1;'}
+    = f.label 'Response status'
+    = f.number_field :response_status_code_eq
+  .filter{style: 'flex: 1;'}
+    = f.label 'Validation status'
+    = f.select :validation_errors_id_null, [[nil, nil], ['Valid', true], ['Invalid', false]]
+  .filter{style: 'flex: 2;'}
+    = f.label 'Date'
+    .input-group.input-daterange{'data-provide' => 'datepicker'}
+      = f.date_field :created_at_gteq
+      = f.date_field :created_at_lteq
+  .filter
+    %button{type: :submit}
+      = image_tag 'reset.svg'
+
 - if @reports.any?
-  %table#reports{class: "table table-striped"}
-    %thead
-      %tr
-        %th Method
-        %th Url
-        %th Status
-        %th Date
-        %th
-        %th
-    %tbody
-      - reports.each do |report|
-        %tr{class: report.tr_class}
-          %td
-            .request-method
-              %span{ class: label_class_for_http_method(report.request_method) }= report.request_method
-          %td= report.url
-          %td= report.response_status_code
-          %td.date= report.created_at
-          %td= report.status
-          - if report.validated?
-            %td= link_to 'Detail', project_report_path(project, report)
+  #reports
+    %table{class: "table table-striped"}
+      %thead
+        %tr
+          %th Method
+          %th Url
+          %th Status
+          %th Date
+      %tbody
+        - reports.each do |report|
+          %tr{class: report.tr_class, 'data-href' => report.validated? ? project_report_path(project, report) : nil}
+            %td
+              .request-method
+                %span{ class: label_class_for_http_method(report.request_method) }= report.request_method
+            %td= report.url
+            %td= report.response_status_code
+            %td.date= report.created_at
 
-  = paginate @reports
-
+    = paginate @reports
 - else
   %p= t('.no_reports')
 
@@ -34,3 +51,7 @@
   $('td.date').each(function() {
     $(this).text(new Date($(this).text()).toLocaleString());
   })
+  $('*[data-href]').click(function() {
+    window.location = $(this).data("href");
+  });
+

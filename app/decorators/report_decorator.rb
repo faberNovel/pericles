@@ -15,12 +15,6 @@ class ReportDecorator < Draper::Decorator
   def tr_class
     return 'in_validation' unless object.validated?
     return 'missing' if object.route.blank? || object.response.blank?
-    object.correct? ? 'valid' : 'invalid'
-  end
-
-  def status
-    return I18n.t('reports.index.in_validation') unless object.validated?
-    return I18n.t('reports.index.unknown') if object.response.blank?
-    object.correct? ? '☑' : '☐'
+    object.correct? ? '' : 'invalid'
   end
 end

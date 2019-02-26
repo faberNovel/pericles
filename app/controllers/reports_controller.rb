@@ -5,7 +5,8 @@ class ReportsController < ApplicationController
   decorates_assigned :report
 
   def index
-    @reports = project.reports.order(created_at: :desc).page params[:page]
+    @q = project.reports.ransack(params[:q])
+    @reports = @q.result.order(created_at: :desc).page(params[:page]).preload(:route, :response)
   end
 
   def show

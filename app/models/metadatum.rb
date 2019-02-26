@@ -16,6 +16,11 @@ class Metadatum < ApplicationRecord
     else
       non_nullable = { type: primitive_type }
     end
-    { oneOf: [non_nullable, { type: 'null' }] }
+
+    if nullable
+      { oneOf: [non_nullable, { type: 'null' }] }
+    else
+      non_nullable
+    end
   end
 end

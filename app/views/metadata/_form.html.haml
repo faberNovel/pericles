@@ -6,3 +6,4 @@
     = f.text_field :name
 
     = f.select :primitive_type, available_types, required: true, selected: f.object.primitive_type || :string
+    = f.check_box :nullable

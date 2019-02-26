@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.8.0 - 2019-02-08
+* Report page is now filterable
+* Add nullable to metadata
+
 ## 0.7.4 - 2019-02-08
 * Fix swagger export
 * Fix issue in route description where {{}} was used

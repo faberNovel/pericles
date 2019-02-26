@@ -39,7 +39,7 @@ class JSONSchemaWrapper
   def add_metadata
     @metadata_responses.group_by(&:key).each do |key, metadata_responses|
       metadata_responses.map(&:metadatum).each do |metadatum|
-        schema = { type: metadatum.primitive_type }
+        schema = metadatum.json_schema
         if key.blank?
           properties = @json_schema[:properties]
         else
