@@ -1,0 +1,12 @@
+= content_for :title, "News"
+
+%h1 News
+
+- @audits.each do |audit|
+  = audit.html_safe
+  %br
+
+:javascript
+  $('span.date').each(function() {
+    $(this).text(new Date($(this).text()).toLocaleString());
+  })

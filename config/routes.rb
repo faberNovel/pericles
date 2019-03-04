@@ -55,6 +55,7 @@ Rails.application.routes.draw do
   resources :headers, only: [:index]
   resources :users, only: [:show]
   resources :schemes
+  resources :audits, only: [:index]
   root "projects#index"
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
