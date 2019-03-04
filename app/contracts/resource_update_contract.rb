@@ -26,20 +26,34 @@ class ResourceUpdateContract
   end
 
   def release_attribute_name_unique_constraint(&block)
+    time = DateTime.current
     @resource.transaction do
-      add_collision_placeholder && block.call && remove_collision_placeholder
+      add_collision_placeholder && block.call && fix_audit(time) && remove_collision_placeholder
     end
   end
 
   def remove_collision_placeholder
     attributes_with_dirty_names.all? do |a|
-      a.destroyed? || a.update(name: a.name.gsub(/^AVOID_COLLISION/, ''))
+      a.destroyed? || a.update_columns(name: a.name.gsub(/^AVOID_COLLISION/, ''))
     end
   end
 
   def add_collision_placeholder
     attributes_with_dirty_names.all? do |a|
-      a.update(name: "AVOID_COLLISION#{a.name}")
+      a.update_columns(name: "AVOID_COLLISION#{a.name}")
+    end
+  end
+
+  def fix_audit(time)
+    audits = Audited::Audit.where(
+      action: 'update',
+      auditable_id: attributes_with_dirty_names.map(&:id),
+      auditable_type: 'Attribute'
+    ).where('created_at >= ?', time)
+    audits.each do |audit|
+      next unless audit.audited_changes['name']
+      audit.audited_changes['name'][0] = audit.audited_changes['name'][0].gsub(/AVOID_COLLISION/, '')
+      audit.save
     end
   end
 
