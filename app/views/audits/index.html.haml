@@ -2,11 +2,19 @@
 
 %h1 News
 
-- @audits.each do |audit|
-  = audit.html_safe
-  %br
+#news
+  - @audits.group_by(&:request_uuid).each do |(_, audits)|
+    .card
+      .right
+        .author= audits.first.user&.name
+        .created_at= audits.first.created_at
+      .content
+        - audits.reverse.each do |audit|
+          %div= audit.to_s.html_safe
+
+
 
 :javascript
-  $('span.date').each(function() {
+  $('.created_at').each(function() {
     $(this).text(new Date($(this).text()).toLocaleString());
   })

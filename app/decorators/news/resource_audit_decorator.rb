@@ -1,7 +1,11 @@
 module News
   class ResourceAuditDecorator < AuditDecorator
     def name
-      audit.audited_changes['name']
+      "<b>#{audit.audited_changes['name']}</b>"
+    end
+
+    def created_text
+      "A new Resource #{url} has been created"
     end
 
     def url

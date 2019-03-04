@@ -4,6 +4,10 @@ module News
       audit.audited_changes['name']
     end
 
+    def created_text
+      "A new ResourceRepresentation #{url} has been created"
+    end
+
     def url
       resource_representation = audit.auditable
       resource = resource_representation&.resource

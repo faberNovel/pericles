@@ -1,7 +1,20 @@
 module News
   class AttributeAuditDecorator < AuditDecorator
     def name
-      audit.audited_changes['name']
+      "<b>#{audit.audited_changes['name']}</b>"
+    end
+
+    def created_text
+      "#{url} has a new attribute #{name} (#{type})"
+    end
+
+    def update_text
+      "#{audit.auditable_type} #{audit.auditable&.name} of #{url} has been updated: #{changes}"
+    end
+
+    def type
+      resource = audit.auditable or return
+      resource.type
     end
 
     def url

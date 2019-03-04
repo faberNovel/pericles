@@ -9,11 +9,11 @@ module News
     end
 
     def created_text
-      "#{name} has been added to #{url}"
+      "#{url} is now using #{name}"
     end
 
     def name
-      attribute&.name
+      "<b>#{attribute&.name}</b>"
     end
 
     def attribute

@@ -4,6 +4,10 @@ module News
       audit.audited_changes['url']
     end
 
+    def created_text
+      "A new Route #{url} has been created"
+    end
+
     def url
       route = audit.auditable
       if route

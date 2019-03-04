@@ -1,0 +1,7 @@
+%ul
+  - audited_changes.each do |key, value|
+    %li
+      = "#{key} went from"
+      %span.stroke= value.first.inspect
+      to
+      %span.bold= value.last.inspect

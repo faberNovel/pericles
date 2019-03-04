@@ -1,0 +1,28 @@
+#news {
+  .card {
+    min-height: 88px;
+    margin: 24px;
+    padding: 24px;
+    background-color: white;
+
+    box-shadow: 0 2px 4px 0 #f1f2f4;
+  }
+
+  .right {
+    float: right;
+    color: $grey;
+
+    text-align: right;
+    font-style: italic;
+  }
+
+  li {
+    span {
+      margin: 0 0.5em;
+    }
+  }
+
+  .stroke {
+    text-decoration: line-through;
+  }
+}

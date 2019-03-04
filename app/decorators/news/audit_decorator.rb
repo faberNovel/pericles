@@ -5,7 +5,7 @@ module News
     alias_method :audit, :object
 
     def to_s
-      date + ' ' + author + ' ' + text
+      text
     end
 
     def name
@@ -13,7 +13,7 @@ module News
     end
 
     def changes
-      audit.audited_changes
+      h.render('changes', audited_changes: audit.audited_changes)
     end
 
     def url
@@ -37,7 +37,7 @@ module News
     end
 
     def update_text
-      "#{audit.auditable_type} has been updated #{changes}: #{url}"
+      "#{audit.auditable_type} #{url} has been updated: #{changes}"
     end
 
     def created_text
