@@ -1,7 +1,7 @@
 %ul
-  - audited_changes.each do |key, value|
+  - audited_changes.each do |change|
     %li
-      = "#{key} went from"
-      %span.stroke= value.first.inspect
+      = "#{change.key} went from"
+      %span.stroke= change.old
       to
-      %span.bold= value.last.inspect
+      %span.bold= change.new

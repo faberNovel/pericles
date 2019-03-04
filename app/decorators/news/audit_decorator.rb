@@ -13,7 +13,7 @@ module News
     end
 
     def changes
-      h.render('changes', audited_changes: audit.audited_changes)
+      h.render('changes', audited_changes: map_changes)
     end
 
     def url
@@ -21,6 +21,24 @@ module News
     end
 
     private
+
+    def map_changes
+      audit.audited_changes.map do |key, value|
+        if key.ends_with?('_id')
+          begin
+            klass = audit.auditable_type.constantize
+            attribute_class = klass.reflections.values.find { |reflection| reflection.foreign_key == key }.klass
+            old = attribute_class.find(value.first).name
+            new = attribute_class.find(value.last).name
+            Change.new(key: key.sub(/_id$/, ''), old: old, new: new)
+          rescue NameError, ActiveRecord::RecordNotFound
+            Change.new(key: key, old: value.first.inspect, new: value.last.inspect)
+          end
+        else
+          Change.new(key: key, old: value.first.inspect, new: value.last.inspect)
+        end
+      end
+    end
 
     def text
       if audit.action == 'create'
