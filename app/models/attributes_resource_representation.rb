@@ -13,6 +13,8 @@ class AttributesResourceRepresentation < ApplicationRecord
 
   audited associated_with: :parent_resource_representation
 
+  delegate :project, to: :parent_resource_representation
+
   def key_name
     custom_key_name.presence || resource_attribute.default_key_name
   end

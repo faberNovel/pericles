@@ -7,5 +7,7 @@ class QueryParameter < ApplicationRecord
   validates :primitive_type, presence: true
   validates :route, presence: true
 
+  delegate :project, to: :route
+
   audited associated_with: :route
 end

@@ -25,6 +25,8 @@ class Attribute < ApplicationRecord
 
   scope :sorted_by_name, -> { order(:name) }
 
+  delegate :project, to: :parent_resource
+
   audited associated_with: :parent_resource
 
   def type
