@@ -61,13 +61,5 @@ module News
     def created_text
       "A new #{audit.auditable_type} #{name} has been created: #{url}"
     end
-
-    def date
-      "<span class=\"date\">#{h.l(audit.created_at)}</span>"
-    end
-
-    def author
-      "<span class=\"author\">#{audit.user&.name}</span>"
-    end
   end
 end
