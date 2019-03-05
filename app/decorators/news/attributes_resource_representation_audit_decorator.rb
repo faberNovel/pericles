@@ -5,7 +5,7 @@ module News
     end
 
     def update_text
-      "#{name} has been updated #{changes} for representation #{url}"
+      "In representation #{url}, #{name} has been updated #{changes}"
     end
 
     def created_text
