@@ -26,6 +26,7 @@ Rails.application.routes.draw do
       match 'mocks/*path', to: "mock_profiles#compute_mock", via: :all, as: 'mocks'
     end
     match 'search', to: 'projects#search', via: [:get]
+    resources :audits, only: [:index]
   end
   resources :resources, only: [] do
     resources :resource_representations, except: [:index] do
@@ -55,7 +56,6 @@ Rails.application.routes.draw do
   resources :headers, only: [:index]
   resources :users, only: [:show]
   resources :schemes
-  resources :audits, only: [:index]
   root "projects#index"
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
