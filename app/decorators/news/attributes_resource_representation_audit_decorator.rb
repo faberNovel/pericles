@@ -16,6 +16,10 @@ module News
       "<b>#{attribute&.name}</b>"
     end
 
+    def action_css_class
+      'update'
+    end
+
     def attribute
       attribute_id = audit.auditable&.attribute_id || audit.audited_changes['attribute_id']
       Attribute.find_by(id: attribute_id)

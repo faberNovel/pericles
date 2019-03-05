@@ -20,6 +20,16 @@ module News
       ''
     end
 
+    def action_css_class
+      if audit.action == 'create'
+        'create'
+      elsif audit.action == 'update'
+        'update'
+      elsif audit.action == 'destroy'
+        'destroy'
+      end
+    end
+
     private
 
     def map_changes

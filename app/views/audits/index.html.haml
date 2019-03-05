@@ -4,7 +4,7 @@
 
 #news
   - @audits.group_by(&:request_uuid).each do |(_, audits)|
-    .card
+    .card{class: audits.first.action_css_class}
       .right
         .author= audits.first.user&.name
         .created_at= audits.first.created_at
