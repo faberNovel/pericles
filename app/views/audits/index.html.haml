@@ -12,6 +12,7 @@
         - audits.reverse.each do |audit|
           %div= audit.to_s.html_safe
 
+  = paginate @audits_collection
 
 
 :javascript

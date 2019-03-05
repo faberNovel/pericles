@@ -3,12 +3,13 @@ class AuditsController < ApplicationController
   include ProjectRelated
 
   def index
-    audits = Audited::Audit
+    @audits_collection = Audited::Audit
                .of_project(project)
                .where.not(auditable_type: ['Header', 'QueryParameter'])
                .preload(:auditable, :associated)
-               .order(:created_at).last(200).reverse
-    @audits = audits.map { |audit| map_audit(audit) }
+               .page(params[:page]).per(200)
+               .order(created_at: :desc)
+    @audits = @audits_collection.map { |audit| map_audit(audit) }
   end
 
   private
