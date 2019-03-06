@@ -19,7 +19,7 @@ class ProjectsController < ApplicationController
       format.swagger do
         render json: Swagger::ProjectDecorator.new(project).to_swagger, content_type: 'application/json'
       end
-      %i[swift java kotlin ruby typescript].each do |language|
+      %i[swift kotlin ruby typescript].each do |language|
         format.send(language) do
           send_data(
             CodeZipBuilder.new(project, language).zip_data,

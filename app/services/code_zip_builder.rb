@@ -15,8 +15,6 @@ class CodeZipBuilder < AbstractZipBuilder
     case @language
     when :kotlin
       decorated_representation.kotlin_filename
-    when :java
-      decorated_representation.java_filename
     when :swift
       decorated_representation.swift_filename
     when :ruby

@@ -390,32 +390,6 @@ class ResourcesControllerTest < ControllerWithAuthenticationTest
     assert_equal(response.body, file)
   end
 
-  test 'should get java code' do
-    resource = create(:pokemon)
-
-    file = %{package #{android_company_domain_name}.pokeapi.android.data.net.retrofit.model
-
-    import android.support.annotation.Nullable;
-
-    import java.util.List;
-
-    import io.norberg.automatter.AutoMatter;
-
-    @AutoMatter
-    public interface RestPokemon {
-        String date();
-        @Nullable String dateTime();
-        Integer id();
-        @Nullable Boolean niceBoolean();
-        List<RestNature> weaknessList();
-        @Nullable Double weight();
-    }
-    }.gsub(/^    /, '')
-
-    get project_resource_path(resource.project, resource, format: 'java')
-    assert_equal(response.body, file)
-  end
-
   test 'should get swift code' do
     resource = create(:pokemon)
 

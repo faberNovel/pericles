@@ -157,13 +157,6 @@ class ProjectsControllerTest < ControllerWithAuthenticationTest
     assert_equal response.headers['Content-Type'], 'application/zip'
   end
 
-  test 'should get all java files' do
-    project = create(:full_project)
-    get project_path(project, format: 'java')
-    assert_response :success
-    assert_equal response.headers['Content-Type'], 'application/zip'
-  end
-
   test 'should get all kotlin files' do
     project = create(:full_project)
     get project_path(project, format: 'kotlin')

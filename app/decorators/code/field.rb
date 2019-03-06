@@ -17,13 +17,6 @@ module Code
       type
     end
 
-    def java_type
-      type = base_java_type
-      type = "List<#{type}>" if is_array
-      type = "@Nullable #{type}" if code_nullable
-      type
-    end
-
     def swift_type
       type = base_swift_type
       type = "[#{type}]" if is_array
@@ -55,10 +48,6 @@ module Code
       when nil
         resource.rest_name
       end
-    end
-
-    def base_java_type
-      base_kotlin_type.gsub(/^Int$/, 'Integer')
     end
 
     def base_swift_type

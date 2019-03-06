@@ -4,7 +4,6 @@
 # Mime::Type.register "text/richtext", :rtf
 Mime::Type.register "text/markdown", :md
 Mime::Type.register "application/schema+json", :json_schema
-Mime::Type.register "text/plain", :java
 Mime::Type.register "text/plain", :kotlin
 Mime::Type.register "text/plain", :swift
 Mime::Type.register "text/plain", :ruby
