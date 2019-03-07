@@ -2,7 +2,12 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## 0.8.0 - 2019-02-08
+## 0.8.1 - 2019-03-7
+* Add news page
+* Remove java code generation
+* Migrate from Google+ Sign-In to Google Sign-in
+
+## 0.8.0 - 2019-02-26
 * Report page is now filterable
 * Add nullable to metadata
 
