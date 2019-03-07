@@ -1,0 +1,21 @@
+= content_for :title, "News"
+
+%h1 News
+
+#news
+  - @audits.group_by(&:request_uuid).each do |(_, audits)|
+    .card{class: audits.first.action_css_class}
+      .right
+        .author= audits.first.user&.name
+        .created_at= audits.first.created_at
+      .content
+        - audits.reverse.each do |audit|
+          %div= audit.to_s.html_safe
+
+  = paginate @audits_collection
+
+
+:javascript
+  $('.created_at').each(function() {
+    $(this).text(new Date($(this).text()).toLocaleString());
+  })

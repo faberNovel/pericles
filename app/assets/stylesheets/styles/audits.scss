@@ -1,0 +1,42 @@
+#news {
+  .card {
+    min-height: 88px;
+    margin: 24px;
+    padding: 24px;
+    background-color: white;
+
+    box-shadow: 0 2px 4px 0 #f1f2f4;
+
+    border-left-style: solid;
+
+    &.create {
+      border-color: rgb(0, 181, 147);
+    }
+
+    &.update {
+      border-color: rgb(255, 172, 20);
+    }
+
+    &.destroy {
+      border-color: rgb(193, 19, 37);
+    }
+  }
+
+  .right {
+    float: right;
+    color: $grey;
+
+    text-align: right;
+    font-style: italic;
+  }
+
+  li {
+    span {
+      margin: 0 0.5em;
+    }
+  }
+
+  .stroke {
+    text-decoration: line-through;
+  }
+}

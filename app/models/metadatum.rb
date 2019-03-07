@@ -10,6 +10,8 @@ class Metadatum < ApplicationRecord
   validates :name, presence: true, uniqueness: { scope: :project, case_sensitive: true }
   validates :primitive_type, presence: true
 
+  audited
+
   def json_schema
     if datetime? || date?
       non_nullable = { type: :string, format: primitive_type }

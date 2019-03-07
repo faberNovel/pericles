@@ -29,7 +29,7 @@ class ResourcesController < ApplicationController
   def show
     respond_to do |format|
       format.html {}
-      %i[swift java kotlin ruby typescript].each do |language|
+      %i[swift kotlin ruby typescript].each do |language|
         format.send(language) do
           render body: CodeGenerator.new(language).from_resource(resource).generate
         end

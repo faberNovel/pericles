@@ -3,4 +3,8 @@ class MetadataResponse < ApplicationRecord
   belongs_to :response, required: true
 
   validates_uniqueness_of :metadatum_id, scope: :response_id
+
+  audited
+
+  delegate :project, to: :response
 end

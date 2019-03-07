@@ -79,7 +79,7 @@ Name | Description | Example
 `MAIL_SMTP_DOMAIN` | Domain of the from field in your email | `pericles.fabernovel.com`
 `MAIL_SMTP_PASSWORD` | Password to connect to your SMTP server | n/a
 `MAIL_SMTP_USERNAME` | Username to connect to your SMTP server | n/a
-`ANDROID_COMPANY_DOMAIN_NAME` | Pericles allows to generate code in Java and Kotlin. The environment variable corresponds to what you would enter under 'Company Domain' when creating a project in Android Studio. It is then used to generate package names. Defaults to `com.example`. | `com.applidium`
+`ANDROID_COMPANY_DOMAIN_NAME` | Pericles allows to generate code in Kotlin. The environment variable corresponds to what you would enter under 'Company Domain' when creating a project in Android Studio. It is then used to generate package names. Defaults to `com.example`. | `com.applidium`
 `RAILS_ENV` | Rails environment. Defauls to `development`.  | `production`
 `PORT` | Port on which the web server will listen. Defaults to 3000. | `8080`
 `DATABASE_URL` | The URL of your PostgreSQL database. Defaults to [database.yml](config/database.yml). | `postgres://username:password@host/database`

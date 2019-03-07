@@ -7,4 +7,6 @@ class Header < ApplicationRecord
   validates :http_message, presence: true
 
   audited associated_with: :http_message
+
+  delegate :project, to: :http_message
 end
