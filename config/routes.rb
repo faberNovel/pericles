@@ -14,7 +14,11 @@ Rails.application.routes.draw do
       end
     end
     resources :api_errors
-    resources :reports, only: [:index, :show]
+    resources :reports, only: [:index, :show] do
+      member do
+        post 'revalidate'
+      end
+    end
     resources :mock_profiles, only: [:index, :new, :create]
     resources :metadata, only: [:show, :index, :new, :create]
     match 'mocks', to: "mocks#compute_mock", via: :all, as: 'mocks_root'

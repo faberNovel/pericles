@@ -16,6 +16,11 @@ class ReportsControllerTest < ControllerWithAuthenticationTest
     assert_response :success
   end
 
+  test 'should revalidate report' do
+    post revalidate_project_report_path(@project, @report)
+    assert_redirected_to project_report_path(@project, @report)
+  end
+
   test 'member external user should access project reports' do
     external_user = create(:user, :external)
     create(:member, project: @project, user: external_user)
