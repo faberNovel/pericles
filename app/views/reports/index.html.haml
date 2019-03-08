@@ -41,7 +41,7 @@
                 %span{ class: label_class_for_http_method(report.request_method) }= report.request_method
             %td= report.url
             %td= report.response_status_code
-            %td.date= report.created_at
+            %td.date= report.created_at.iso8601
 
     = paginate @reports
 - else
