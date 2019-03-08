@@ -46,6 +46,13 @@ class Resource < ApplicationRecord
 
   def try_create_attributes_from_json(json_instance)
     AttributesImporter.new(self).import_from_json_instance(json_instance)
+    resource_attributes.each do |attribute|
+      default_representation.attributes_resource_representations.create(
+        resource_attribute: attribute,
+        is_required: true,
+        resource_representation: attribute.resource&.default_representation
+      )
+    end
   end
 
   private
