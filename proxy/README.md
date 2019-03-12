@@ -2,7 +2,7 @@
 
 Performant proxy based on proxy configurations of Pericles database. It records raw reports requiring further inspection.
 
-Pericles comes with its own proxy, integrated in the Rails application. However this stack is not suited for handling concurrent slow clients. That's why we wrote a specific proxy written in Elixir.
+Pericles came with its own proxy, integrated in the Rails application. However this stack is not suited for handling concurrent slow clients. That's why we wrote a specific proxy written in Elixir.
 
 ## Installation
 
