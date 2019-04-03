@@ -1,6 +1,6 @@
 defmodule PericlesProxy.Router do
   use Plug.Router
-  use Plug.ErrorHandler
+  use NewRelic.Transaction
 
   require Logger
   alias PericlesProxy.ProxyConfigurationRepo
@@ -26,7 +26,8 @@ defmodule PericlesProxy.Router do
   end
   match(_, do: send_resp(conn, 404, "Oops !"))
 
-  defp handle_errors(conn, %{kind: kind, reason: reason, stack: stacktrace}) do
+  use Plug.ErrorHandler
+  def handle_errors(conn, %{kind: kind, reason: reason, stack: stacktrace}) do
     conn =
       conn
       |> Plug.Conn.fetch_cookies()
