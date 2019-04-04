@@ -2,6 +2,16 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.8.2 - 2019-04-4
+
+* Remove Rails proxy source code
+* Add created attributes from json in default resource representation
+* Add button to revalidate report
+* Limit resources tree to not seen nested resources
+* Add NewRelic to proxy
+* Fix date parsing on Safari and Firefox
+* Add missing nodejs buildpack to Heroku config file
+
 ## 0.8.1 - 2019-03-7
 * Add news page
 * Remove java code generation
