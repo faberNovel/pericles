@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.8.3 - 2019-04-4
+
+* Fix call to removed Rails proxy route helper
+
 ## 0.8.2 - 2019-04-4
 
 * Remove Rails proxy source code
