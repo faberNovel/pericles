@@ -14,13 +14,15 @@ Rails.application.routes.draw do
       end
     end
     resources :api_errors
-    resources :reports, only: [:index, :show]
+    resources :reports, only: [:index, :show] do
+      member do
+        post 'revalidate'
+      end
+    end
     resources :mock_profiles, only: [:index, :new, :create]
     resources :metadata, only: [:show, :index, :new, :create]
     match 'mocks', to: "mocks#compute_mock", via: :all, as: 'mocks_root'
     match 'mocks/*path', to: "mocks#compute_mock", via: :all, as: 'mocks'
-    match 'proxy', to: "proxy#compute_request", via: :all, format: false
-    match 'proxy/*path', to: "proxy#compute_request", via: :all, format: false
     resources :mock_profiles do
       match 'mocks', to: "mock_profiles#compute_mock", via: :all, as: 'mocks_root'
       match 'mocks/*path', to: "mock_profiles#compute_mock", via: :all, as: 'mocks'

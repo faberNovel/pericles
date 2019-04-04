@@ -7,7 +7,7 @@
     .card{class: audits.first.action_css_class}
       .right
         .author= audits.first.user&.name
-        .created_at= audits.first.created_at
+        .created_at= audits.first.created_at.iso8601
       .content
         - audits.reverse.each do |audit|
           %div= audit.to_s.html_safe

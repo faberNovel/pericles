@@ -23,6 +23,7 @@
       :tree-mode='treeMode'
       :depth='0'
       :query='query'
+      :visited-resources='[resource]'
     )
 </template>
 

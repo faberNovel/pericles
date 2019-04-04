@@ -1,6 +1,10 @@
 = content_for :title, "Report #{@report.id}"
 
-%h1 Report
+.flexspace-and-center
+  %h1 Report
+  = bootstrap_form_for(@report, url: revalidate_project_report_path(project, @report), method: :post) do |f|
+    .flexcontainer-justify-end= f.submit 'Revalidate', class: 'btn btn-primary'
+
 
 - if report.route.blank?
   You forgot to register this route :O

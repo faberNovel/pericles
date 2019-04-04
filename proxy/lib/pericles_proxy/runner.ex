@@ -4,6 +4,7 @@ defmodule PericlesProxy.Runner do
   alias Plug.Conn
   alias PericlesProxy.ProxyConfiguration
   alias PericlesProxy.Reporter
+  alias NewRelic.Instrumented.HTTPoison
 
   @default_options [timeout: 30_000, recv_timeout: 30_000, follow_redirect: true]
 

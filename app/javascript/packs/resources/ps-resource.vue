@@ -20,6 +20,7 @@ div(style='margin-top: -1px;')
     :tree-mode='treeMode',
     :depth='depth + 1'
     :query='query'
+    :visited-resources='visitedAndUsedResources'
   )
 </template>
 
@@ -27,7 +28,7 @@ div(style='margin-top: -1px;')
 import Store from './store.js';
 
 export default {
-  props: ['resource', 'treeMode', 'depth', 'query'],
+  props: ['resource', 'treeMode', 'depth', 'query', 'visitedResources'],
   methods: {
   },
   computed: {
@@ -47,11 +48,17 @@ export default {
         return resourceMatchingQuery || hasNestedChildrenMatchingQuery;
       });
     },
+    visitedAndUsedResources: function() {
+      return [...this.visitedResources, ...this.usedResources];
+    },
     displayedChildren: function() {
-      if(!this.shouldFilterChildren) {
-        return this.usedResources;
+      let children = this.shouldFilterChildren ? this.filteredResources : this.usedResources;
+
+      if (this.visitedResources) {
+        const visitedResourceIds = this.visitedResources.map((r) => r.id);
+        children = children.filter((r) => !visitedResourceIds.includes(r.id));
       }
-      return this.filteredResources;
+      return children;
     },
     displayedResourceName: function() {
       let indentation = '      '.repeat(this.depth) + ((this.depth == 0) ? '' : '↳ ');

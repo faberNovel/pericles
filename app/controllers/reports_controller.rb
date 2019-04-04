@@ -12,4 +12,10 @@ class ReportsController < ApplicationController
   def show
     @report = project.reports.find(params[:id])
   end
+
+  def revalidate
+    report = project.reports.find(params[:id])
+    ReportValidator.new(report).validate
+    redirect_to project_report_path(project, report)
+  end
 end

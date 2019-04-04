@@ -29,6 +29,7 @@ defmodule PericlesProxy.MixProject do
       {:postgrex, "~> 0.13.5"},
       {:poison, "~> 3.1"},
       {:rollbax, "~> 0.9.2"},
+      {:new_relic_agent, "~> 1.0"},
       {:exvcr, "~> 0.10", only: :test}
     ]
   end
