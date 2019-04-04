@@ -6,7 +6,7 @@ class ProjectDecorator < Draper::Decorator
   end
 
   def proxy_url
-    proxy_options = ENV['PROXY_HOST'] ? { host: ENV['PROXY_HOST'] } : {}
-    h.project_proxy_url(self, proxy_options)
+    return 'Please defined PROXY_HOST env variable' unless ENV['PROXY_HOST']
+    h.project_url(self, { host: ENV['PROXY_HOST'] }) + '/proxy'
   end
 end
