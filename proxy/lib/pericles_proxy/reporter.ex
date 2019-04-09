@@ -7,7 +7,7 @@ defmodule PericlesProxy.Reporter do
 
   @spec save(Conn.t, Map.t, Integer.t, String.t, String.t) :: Conn.t
   def save(conn, response, project_id, request_body, path) do
-    if response |> response_json? && conn |> request_json? do
+    if (byte_size(response.body) == 0 || response |> response_json?) && (byte_size(request_body) == 0 || conn |> request_json?) do
       changeset = Report.changeset(%Report{}, %{
         project_id: project_id,
         response_status_code: response.status_code,
