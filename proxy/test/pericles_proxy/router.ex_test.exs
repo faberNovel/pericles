@@ -2,7 +2,7 @@ defmodule PericlesProxy.RouterTest do
   alias PericlesProxy.{Repo, Project, ProxyConfiguration, Report}
 
   use ExUnit.Case, async: true
-  use ExVCR.Mock, adapter: ExVCR.Adapter.Hackney
+  use ExVCR.Mock
   use Plug.Test
 
   import Ecto.Query
@@ -92,16 +92,6 @@ defmodule PericlesProxy.RouterTest do
     end
   end
 
-  test "get with nx error", state do
-    Repo.insert(%ProxyConfiguration{project_id: state[:project_id], target_base_url: "https://domain.fake"})
-
-    use_cassette "nx_error" do
-      conn = conn(:get, "/projects/#{state[:project_id]}/proxy/")
-      conn = PericlesProxy.Router.call(conn, [])
-      assert conn.status == 400
-    end
-  end
-
   test "get with error report", state do
     Repo.insert(%ProxyConfiguration{project_id: state[:project_id], target_base_url: "https://pokeapi.co/api/v2"})
 
@@ -115,6 +105,7 @@ defmodule PericlesProxy.RouterTest do
     end
 
     report = Repo.one(from r in Report, order_by: [desc: r.id], limit: 1)
+    assert report
     assert report.project_id == state[:project_id]
     assert report.request_method == "GET"
     assert report.response_status_code == 404

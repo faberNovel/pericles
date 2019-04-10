@@ -24,7 +24,7 @@ defmodule PericlesProxy.MixProject do
     [
       {:cowboy, "~> 2.4"},
       {:plug, "~> 1.6"},
-      {:httpoison, "~> 1.2"},
+      {:httpotion, "~> 3.1.0"},
       {:ecto, "~> 2.2"},
       {:postgrex, "~> 0.13.5"},
       {:poison, "~> 3.1"},
