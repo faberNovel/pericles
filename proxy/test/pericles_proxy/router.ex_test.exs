@@ -66,18 +66,6 @@ defmodule PericlesProxy.RouterTest do
     assert Repo.aggregate(Report, :count, :id) == 0
   end
 
-  test "get without report (non json request)", state do
-    Repo.insert(%ProxyConfiguration{project_id: state[:project_id], target_base_url: "https://jsonplaceholder.typicode.com"})
-
-    use_cassette "json_get" do
-      conn = conn(:get, "/projects/#{state[:project_id]}/proxy/posts/3")
-      conn = PericlesProxy.Router.call(conn, [])
-      assert conn.status == 200
-    end
-
-    assert Repo.aggregate(Report, :count, :id) == 0
-  end
-
   test "get with report", state do
     Repo.insert(%ProxyConfiguration{project_id: state[:project_id], target_base_url: "https://jsonplaceholder.typicode.com"})
 
