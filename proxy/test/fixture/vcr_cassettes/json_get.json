@@ -3,13 +3,44 @@
     "request": {
       "body": "",
       "headers": {
+        "content-type": "application/json",
         "x-forwarded-for": "127.0.0.1",
         "accept-encoding": ""
       },
       "method": "get",
       "options": {
-        "follow_redirect": "true",
-        "connect_timeout": 30000
+        "ssl_options": {
+          "server_name_indication": [
+            106,
+            115,
+            111,
+            110,
+            112,
+            108,
+            97,
+            99,
+            101,
+            104,
+            111,
+            108,
+            100,
+            101,
+            114,
+            46,
+            116,
+            121,
+            112,
+            105,
+            99,
+            111,
+            100,
+            101,
+            46,
+            99,
+            111,
+            109
+          ]
+        }
       },
       "request_body": "",
       "url": "https://jsonplaceholder.typicode.com/posts/3?"
@@ -18,24 +49,25 @@
       "binary": false,
       "body": "{\n  \"userId\": 1,\n  \"id\": 3,\n  \"title\": \"ea molestias quasi exercitationem repellat qui ipsa sit aut\",\n  \"body\": \"et iusto sed quo iure\\nvoluptatem occaecati omnis eligendi aut ad\\nvoluptatem doloribus vel accusantium quis pariatur\\nmolestiae porro eius odio et labore et velit aut\"\n}",
       "headers": {
-        "Date": "Wed, 22 Aug 2018 15:30:38 GMT",
+        "Date": "Wed, 10 Apr 2019 16:11:18 GMT",
         "Content-Type": "application/json; charset=utf-8",
         "Content-Length": "283",
         "Connection": "keep-alive",
-        "Set-Cookie": "__cfduid=d5b7398220719f29127b4a47bfd0d77e81534951838; expires=Thu, 22-Aug-19 15:30:38 GMT; path=/; domain=.typicode.com; HttpOnly",
+        "Set-Cookie": "__cfduid=d914d18768714b677ae823013136bc7741554912678; expires=Thu, 09-Apr-20 16:11:18 GMT; path=/; domain=.typicode.com; HttpOnly",
         "X-Powered-By": "Express",
         "Vary": "Origin, Accept-Encoding",
         "Access-Control-Allow-Credentials": "true",
         "Cache-Control": "public, max-age=14400",
         "Pragma": "no-cache",
-        "Expires": "Wed, 22 Aug 2018 19:30:38 GMT",
+        "Expires": "Wed, 10 Apr 2019 20:11:18 GMT",
         "X-Content-Type-Options": "nosniff",
         "Etag": "W/\"11b-USacuIw5a/iXAGdNKBvqr/TbMTc\"",
         "Via": "1.1 vegur",
         "CF-Cache-Status": "HIT",
+        "Accept-Ranges": "bytes",
         "Expect-CT": "max-age=604800, report-uri=\"https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct\"",
         "Server": "cloudflare",
-        "CF-RAY": "44e661c10f77b75f-CDG"
+        "CF-RAY": "4c55feef2b09cda1-CDG"
       },
       "status_code": 200,
       "type": "ok"

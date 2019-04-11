@@ -7,11 +7,11 @@ defmodule PericlesProxy.Reporter do
 
   @spec save(Conn.t, Map.t, Integer.t, String.t, String.t) :: Conn.t
   def save(conn, response, project_id, request_body, path) do
-    if response |> response_json? && conn |> request_json? do
+    if (byte_size(response.body) == 0 || response |> response_json?) && (byte_size(request_body) == 0 || conn |> request_json?) do
       changeset = Report.changeset(%Report{}, %{
         project_id: project_id,
         response_status_code: response.status_code,
-        response_headers: response.headers |> Map.new,
+        response_headers: response.headers.hdrs,
         request_headers: conn.req_headers |> Map.new,
         request_method: conn.method,
         url: path,
@@ -33,7 +33,7 @@ defmodule PericlesProxy.Reporter do
 
   @spec decode_body(Map.t) :: String.t
   defp decode_body(response) do
-    if byte_size(response.body) > 0 && response.headers |> has_header?("content-encoding", "gzip") do
+    if byte_size(response.body) > 0 && response.headers.hdrs |> has_header?("content-encoding", "gzip") do
       :zlib.gunzip(response.body)
     else
       response.body
@@ -42,7 +42,7 @@ defmodule PericlesProxy.Reporter do
 
   @spec response_json?(Map.t) :: Boolean.t
   defp response_json?(response) do
-    response.headers |> has_header?("content-type", ~r/^application\/json/)
+    response.headers.hdrs |> has_header?("content-type", ~r/^application\/json/)
   end
 
   @spec request_json?(Map.t) :: Boolean.t

@@ -8,8 +8,21 @@
       },
       "method": "post",
       "options": {
-        "follow_redirect": "true",
-        "connect_timeout": 30000
+        "ssl_options": {
+          "server_name_indication": [
+            101,
+            120,
+            97,
+            109,
+            112,
+            108,
+            101,
+            46,
+            99,
+            111,
+            109
+          ]
+        }
       },
       "request_body": "",
       "url": "https://example.com/?"
@@ -20,12 +33,12 @@
       "headers": {
         "Accept-Ranges": "bytes",
         "Cache-Control": "max-age=604800",
-        "Content-Type": "text/html",
-        "Date": "Wed, 22 Aug 2018 15:30:38 GMT",
+        "Content-Type": "text/html; charset=UTF-8",
+        "Date": "Wed, 10 Apr 2019 16:11:18 GMT",
         "Etag": "\"1541025663\"",
-        "Expires": "Wed, 29 Aug 2018 15:30:38 GMT",
+        "Expires": "Wed, 17 Apr 2019 16:11:18 GMT",
         "Last-Modified": "Fri, 09 Aug 2013 23:54:35 GMT",
-        "Server": "EOS (vny006/0454)",
+        "Server": "EOS (vny006/0451)",
         "Content-Length": "1270"
       },
       "status_code": 200,

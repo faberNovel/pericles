@@ -8,12 +8,29 @@
       },
       "method": "get",
       "options": {
-        "follow_redirect": "true",
         "ssl_options": {
-          "verify": "verify_none",
-          "server_name_indication": "disable"
-        },
-        "connect_timeout": 30000
+          "server_name_indication": [
+            101,
+            120,
+            112,
+            105,
+            114,
+            101,
+            100,
+            46,
+            98,
+            97,
+            100,
+            115,
+            115,
+            108,
+            46,
+            99,
+            111,
+            109
+          ],
+          "verify": "verify_none"
+        }
       },
       "request_body": "",
       "url": "https://expired.badssl.com/?"
@@ -23,7 +40,7 @@
       "body": "<!DOCTYPE html>\n<html>\n<head>\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n  <link rel=\"shortcut icon\" href=\"/icons/favicon-red.ico\"/>\n  <link rel=\"apple-touch-icon\" href=\"/icons/icon-red.png\"/>\n  <title>expired.badssl.com</title>\n  <link rel=\"stylesheet\" href=\"/style.css\">\n  <style>body { background: red; }</style>\n</head>\n<body>\n<div id=\"content\">\n  <h1 style=\"font-size: 12vw;\">\n    expired.<br>badssl.com\n  </h1>\n</div>\n\n</body>\n</html>\n",
       "headers": {
         "Server": "nginx/1.10.3 (Ubuntu)",
-        "Date": "Thu, 23 Aug 2018 08:13:05 GMT",
+        "Date": "Wed, 10 Apr 2019 16:11:17 GMT",
         "Content-Type": "text/html",
         "Content-Length": "469",
         "Last-Modified": "Wed, 15 Aug 2018 15:22:02 GMT",

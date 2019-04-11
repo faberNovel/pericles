@@ -4,17 +4,16 @@ defmodule PericlesProxy.Runner do
   alias Plug.Conn
   alias PericlesProxy.ProxyConfiguration
   alias PericlesProxy.Reporter
-  alias NewRelic.Instrumented.HTTPoison
 
-  @default_options [timeout: 30_000, recv_timeout: 30_000, follow_redirect: true]
+  @default_options [timeout: 30_000, follow_redirects: true]
 
   @spec retrieve(Conn.t, ProxyConfiguration.t, String.t) :: Conn.t
   def retrieve(conn, proxy_conf, path) do
     {method, url, body, headers, options} = prepare_request(conn, proxy_conf, path)
 
-    case HTTPoison.request(method, url, body, headers, options) do
-      {:error, error} -> Conn.send_resp(conn, 400, "Proxy error: #{inspect(error)}")
-      {:ok, response} ->
+    case HTTPotion.request(method, url, Keyword.merge(@default_options, [body: body, headers: headers, ibrowse: options])) do
+      %HTTPotion.ErrorResponse{message: message} -> Conn.send_resp(conn, 400, "Proxy error: #{inspect(message)}")
+      response ->
         conn
         |> Reporter.save(response, proxy_conf.project_id, body, path)
         |> process_response(response)
@@ -32,7 +31,7 @@ defmodule PericlesProxy.Runner do
     url = prepare_url(conn, proxy_conf.target_base_url, path)
     body = read_body(conn)
     headers = prepare_headers(conn)
-    options = @default_options |> set_ssl(proxy_conf) |> set_proxy(proxy_conf)
+    options = [] |> set_ssl(proxy_conf) |> set_proxy(proxy_conf)
 
     {method, url, body, headers, options}
   end
@@ -101,13 +100,14 @@ defmodule PericlesProxy.Runner do
 
   defp set_ssl(options, %ProxyConfiguration{ignore_ssl: nil}), do: options
   defp set_ssl(options, %ProxyConfiguration{ignore_ssl: false}), do: options
-  defp set_ssl(options, _), do: Keyword.put(options, :ssl, [{:verify, :verify_none}, {:server_name_indication, :disable}])
+  defp set_ssl(options, _), do: Keyword.put(options, :ssl_options, [{:verify, :verify_none}, {:server_name_indication, :disable}])
 
   defp set_proxy(options, %ProxyConfiguration{proxy_hostname: nil}), do: options
   defp set_proxy(options, %ProxyConfiguration{proxy_hostname: ""}), do: options
   defp set_proxy(options, proxy_conf) do
     options
-    |> Keyword.put(:proxy, {proxy_conf.proxy_hostname, proxy_conf.proxy_port})
+    |> Keyword.put(:proxy_host, proxy_conf.proxy_hostname |> String.to_charlist)
+    |> Keyword.put(:proxy_port, proxy_conf.proxy_port)
     |> set_proxy_auth(proxy_conf)
   end
 
@@ -115,22 +115,29 @@ defmodule PericlesProxy.Runner do
   defp set_proxy_auth(options, %ProxyConfiguration{proxy_username: ""}), do: options
   defp set_proxy_auth(options, proxy_conf) do
     options
-    |> Keyword.put(:proxy_auth, {proxy_conf.proxy_username, proxy_conf.proxy_password})
+    |> Keyword.put(:proxy_user, proxy_conf.proxy_username |> String.to_charlist)
+    |> Keyword.put(:proxy_password, proxy_conf.proxy_password |> String.to_charlist )
   end
 
   @spec process_response(Conn.t, Map.t) :: Conn.t
   defp process_response(conn, response) do
     conn
-      |> put_resp_headers(response.headers)
+      |> put_resp_headers(response.headers.hdrs)
       |> Conn.delete_resp_header("transfer-encoding")
       |> Conn.send_resp(response.status_code, response.body)
   end
 
-  @spec put_resp_headers(Conn.t, [{String.t, String.t}]) :: Conn.t
-  defp put_resp_headers(conn, []), do: conn
-  defp put_resp_headers(conn, [{header, value} | rest]) do
-    conn
-      |> Conn.put_resp_header(header |> String.downcase, value)
-      |> put_resp_headers(rest)
+  @spec put_resp_headers(Conn.t, Map.t) :: Conn.t
+  defp put_resp_headers(conn, headers) do
+    Enum.reduce(headers, conn, fn ({k, v}, c) ->
+      if (k |> String.downcase == "set-cookie" && is_list(v)) do
+        %{conn | resp_headers: c.resp_headers ++ Enum.map(v, fn cookie ->
+          {"set-cookie", cookie}
+        end)}
+      else
+        Conn.put_resp_header(c, k |> String.downcase, v)
+      end
+    end)
   end
 end
+
