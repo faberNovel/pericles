@@ -24,7 +24,7 @@ defmodule PericlesProxy.MixProject do
     [
       {:cowboy, "~> 2.4"},
       {:plug, "~> 1.6"},
-      {:httpotion, "~> 3.1.0"},
+      {:httpotion, git: "https://github.com/Hugo-Hache/httpotion", branch: "fix_304_crash", override: true},
       {:ecto, "~> 2.2"},
       {:postgrex, "~> 0.13.5"},
       {:poison, "~> 3.1"},
