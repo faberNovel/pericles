@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.8.4 - 2019-04-12
+
+* Fix Elixir proxy HTTP client to handle 304
+
 ## 0.8.4 - 2019-04-11
 
 * Replace Elixir proxy HTTP client to fix crash with redirection when using HTTP proxy
