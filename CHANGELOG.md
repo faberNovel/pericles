@@ -2,7 +2,11 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## 0.8.4 - 2019-04-12
+## 0.8.6 - 2019-05-07
+
+* Bump Rails and Ruby version to fix security issues
+
+## 0.8.5 - 2019-04-12
 
 * Fix Elixir proxy HTTP client to handle 304
 

@@ -34,7 +34,11 @@ defmodule PericlesProxy.Reporter do
   @spec decode_body(Map.t) :: String.t
   defp decode_body(response) do
     if byte_size(response.body) > 0 && response.headers.hdrs |> has_header?("content-encoding", "gzip") do
-      :zlib.gunzip(response.body)
+      try do
+        :zlib.gunzip(response.body)
+      rescue
+        ErlangError -> 'Error while unzipping response body'
+      end
     else
       response.body
     end
