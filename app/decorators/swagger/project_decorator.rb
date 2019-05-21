@@ -105,7 +105,8 @@ module Swagger
     def context
       {
         base_href: '#/components/schemas/',
-        use_nullable: true
+        use_nullable: true,
+        use_resource_representation_name_as_uid: resource_representations.group(:name).having('COUNT(*) > 1').empty?
       }.merge(super)
     end
 

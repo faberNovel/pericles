@@ -49,4 +49,8 @@ class Response < ApplicationRecord
   def representation
     api_error || resource_representation
   end
+
+  def plain_resource_representation?
+    !(api_error || is_collection || root_key.present? || metadata_responses.any?)
+  end
 end

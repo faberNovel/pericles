@@ -31,5 +31,6 @@ fr:
         ** Définir la logique d’expiration des tokens
     show:
       internal_members: Membres internes
+      resource_representation_name_as_swagger_uid: Pour profiter des noms de représentations de ressource comme UID Swagger, vous devez différencier les noms de représentations suivants
     index:
       visitor_see_only_public: En tant que visiteur vous n'avez accès qu'aux projets publics. %{href} permet de bénéficier de l'expérience dans son intégralité.
