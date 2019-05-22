@@ -20,7 +20,7 @@ class Swagger::ResponseDecorator < Draper::Decorator
 
   def uid
     if context[:use_resource_representation_name_as_uid] && plain_resource_representation?
-      resource_representation.name
+      resource_representation.name.tr(' ', '_')
     else
       "Response_#{object.id}"
     end

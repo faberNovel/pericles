@@ -57,6 +57,8 @@ module JSONSchema
 
     def uid
       name = object.name.tr(' ', '_')
+      return name if context[:use_resource_representation_name_as_uid]
+
       id = object.id || object.hash.abs
       "#{name}_#{id}"
     end
