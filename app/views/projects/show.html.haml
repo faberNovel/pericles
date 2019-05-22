@@ -28,7 +28,10 @@
   %h4 Documentation
   .buttons
     = link_to 'JSON Schemas', project_path(project, format: 'json_schema'), class: 'btn btn-primary'
-    = link_to 'Swagger', project_path(project, format: 'swagger'), class: 'btn btn-primary'
+    = link_to 'Swagger',
+      project_path(project, format: 'swagger'),
+      class: 'btn btn-primary',
+      data: { confirm: project.resource_representation_name_as_swagger_uid }
 
 
   %p

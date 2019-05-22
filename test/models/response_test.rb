@@ -43,11 +43,19 @@ class ResponseTest < ActiveSupport::TestCase
     assert r.destroy
   end
 
-
   test 'report does not prevent destroy' do
     r = create(:response)
     create(:report, response: r)
 
     assert r.destroy
+  end
+
+  test 'plain resource representation' do
+    assert build(:response).plain_resource_representation?
+
+    refute build(:response, status_code: 400, api_error: create(:api_error)).plain_resource_representation?
+    refute build(:response, is_collection: true).plain_resource_representation?
+    refute build(:response, root_key: 'root').plain_resource_representation?
+    refute build(:response, metadata_responses: [create(:metadata_response)]).plain_resource_representation?
   end
 end

@@ -31,5 +31,6 @@ en:
         ** Define the expiration logic of tokens
     show:
       internal_members: Internal members
+      resource_representation_name_as_swagger_uid: To enjoy resource representation names as Swagger UID, you need to differentiate the following representation names %{duplicated_names}
     index:
       visitor_see_only_public: As a visitor, you only have access to public projects. %{href} to enjoy the full experience.
