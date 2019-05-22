@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.8.7 - 2019-05-22
+
+* Use resource representation name as UID in Swagger
+
 ## 0.8.6 - 2019-05-07
 
 * Bump Rails and Ruby version to fix security issues
