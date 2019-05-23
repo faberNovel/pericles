@@ -2,6 +2,11 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.8.9 - 2019-05-23
+
+* Bump rubyzip version to fix security issues
+* Handle invalid JSON in report validation
+
 ## 0.8.8 - 2019-05-22
 
 * Bump bootstrap-sass version to fix security issues
