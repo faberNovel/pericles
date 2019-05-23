@@ -39,11 +39,16 @@ module Proxy
 
       return [ValidationError.new(category: :body, description: 'Body must not be empty')] if body_is_empty
 
-      errors = JSON::Validator.fully_validate(
-        json_schema, body_to_check, json: true
-      )
+      begin
+        errors = JSON::Validator.fully_validate(
+          json_schema, body_to_check, json: true
+        )
+      rescue JSON::Schema::JsonParseError
+        return [ValidationError.new(category: :body, description: 'Body is not a valid JSON')]
+      end
 
-      errors.empty? ? [] :
+      return [] if errors.empty?
+
       [
         ValidationError.new(
           category: :body,
