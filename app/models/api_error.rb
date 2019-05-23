@@ -3,7 +3,7 @@ class ApiError < ApplicationRecord
 
   has_many :api_error_instances, dependent: :destroy
 
-  validates :name, presence: true
+  validates :name, presence: true, uniqueness: { scope: [:project], case_sensitive: false }
   validates :json_schema, json_schema: true
 
   def has_invalid_mocks?
