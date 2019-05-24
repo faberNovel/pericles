@@ -20,8 +20,9 @@ module Proxy
     end
 
     def errors_for_headers(headers_to_check)
+      headers_names = headers_to_check.each_key.map { |h| h.to_s.downcase }
       headers.map do |h|
-        next if headers_to_check.key? h.name
+        next if headers_names.include? h.name.to_s.downcase
         ValidationError.new(
           category: :header,
           description: "#{h.name} is missing from the response headers"
