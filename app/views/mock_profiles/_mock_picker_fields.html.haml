@@ -1,4 +1,5 @@
 .fields.nested-fields
+  = f.number_field :priority, label: 'Priority (lowest rules)'
   - if response.is_collection
     = f.number_field :instances_number, label: 'Instances number (limit or add random instances)'
   - if response.can_have_resource_representation
