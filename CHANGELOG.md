@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.8.11 - 2019-05-29
+
+* Add priority on mock pickers
+
 ## 0.8.10 - 2019-05-23
 
 * Use API error name as UID in Swagger
