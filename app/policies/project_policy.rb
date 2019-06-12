@@ -26,6 +26,10 @@ class ProjectPolicy < ApplicationPolicy
     show?
   end
 
+  def slack_oauth2?
+    show?
+  end
+
   def permitted_attributes
     [
       :title,

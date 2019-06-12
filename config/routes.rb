@@ -29,6 +29,9 @@ Rails.application.routes.draw do
     end
     match 'search', to: 'projects#search', via: [:get]
     resources :audits, only: [:index]
+    member do
+      get 'slack_oauth2'
+    end
   end
   resources :resources, only: [] do
     resources :resource_representations, except: [:index] do

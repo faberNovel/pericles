@@ -67,6 +67,19 @@ class ProjectsController < ApplicationController
     @results = SearchService.new(project).search(params[:query])
   end
 
+  def slack_oauth2
+    form = {
+      client_id: Rails.application.secrets.slack[:client_id],
+      client_secret: Rails.application.secrets.slack[:client_secret],
+      code: params[:code],
+      redirect_uri: slack_project_url(project)
+    }
+    resp = HTTP.post('https://slack.com/api/oauth.access', form: form)
+    hash = JSON.parse(resp.body) # TODO Deal with hash
+
+    redirect_to project
+  end
+
   private
 
   def set_proxy_to_be_destroyed_if_blank(params)
