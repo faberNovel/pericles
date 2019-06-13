@@ -13,7 +13,7 @@ module News
     end
 
     def changes
-      h.render('changes', audited_changes: map_changes)
+      h.render('audits/changes', audited_changes: map_changes)
     end
 
     def url

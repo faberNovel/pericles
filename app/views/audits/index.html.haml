@@ -3,7 +3,7 @@
 %h1 News
 
 #news
-  - @audits.group_by(&:request_uuid).each do |(_, audits)|
+  - @audits.map(&:decorate).group_by(&:request_uuid).each do |(_, audits)|
     .card{class: audits.first.action_css_class}
       .right
         .author= audits.first.user&.name
@@ -12,7 +12,7 @@
         - audits.reverse.each do |audit|
           %div= audit.to_s.html_safe
 
-  = paginate @audits_collection
+  = paginate @audits
 
 
 :javascript
