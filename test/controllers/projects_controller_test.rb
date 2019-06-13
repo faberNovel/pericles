@@ -208,4 +208,21 @@ class ProjectsControllerTest < ControllerWithAuthenticationTest
     get slack_oauth2_project_path(@project), params: { code: 'FAKE' }
     assert_redirected_to project_path(@project)
   end
+
+  test 'should nullify slack' do
+    @project.update!(
+      slack_channel: 'FAKE',
+      slack_incoming_webhook_url: 'https://example.com'
+    )
+
+    params = {
+      project: {
+        slack_channel: nil,
+        slack_incoming_webhook_url: nil
+      }
+    }
+    put project_path(@project), params: params
+
+    assert_nil @project.reload.slack_channel
+  end
 end
