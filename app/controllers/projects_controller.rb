@@ -68,16 +68,11 @@ class ProjectsController < ApplicationController
   end
 
   def slack_oauth2
-    form = {
-      client_id: Rails.application.secrets.slack[:client_id],
-      client_secret: Rails.application.secrets.slack[:client_secret],
-      code: params[:code],
-      redirect_uri: slack_project_url(project)
-    }
-    resp = HTTP.post('https://slack.com/api/oauth.access', form: form)
-    hash = JSON.parse(resp.body) # TODO Deal with hash
-
-    redirect_to project
+    if SetSlackWebhook.new(project).execute(params[:code], slack_oauth2_project_url(project))
+      redirect_to project
+    else
+      redirect_to project, alert: 'Slack integration failed'
+    end
   end
 
   private

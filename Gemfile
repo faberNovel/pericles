@@ -57,8 +57,7 @@ group :test do
   gem 'minitest-reporters'
   gem 'factory_bot_rails'
   gem 'simplecov', require: false
-  gem 'vcr'
-  gem 'webmock'
+  gem 'spy', '~> 1.0'
 end
 
 group :development do

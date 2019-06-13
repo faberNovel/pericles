@@ -202,4 +202,10 @@ class ProjectsControllerTest < ControllerWithAuthenticationTest
     get project_path(@project)
     assert_response :success
   end
+
+  test 'should redirect oauth2 to show' do
+    Spy.on_instance_method(SetSlackWebhook, :execute).and_return(true)
+    get slack_oauth2_project_path(@project), params: { code: 'FAKE' }
+    assert_redirected_to project_path(@project)
+  end
 end

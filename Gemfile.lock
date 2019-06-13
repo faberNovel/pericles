@@ -93,8 +93,6 @@ GEM
       execjs
     coffee-script-source (1.12.2)
     concurrent-ruby (1.1.5)
-    crack (0.4.3)
-      safe_yaml (~> 1.0.0)
     crass (1.0.4)
     delayed_job (4.1.5)
       activesupport (>= 3.0, < 5.3)
@@ -166,7 +164,6 @@ GEM
       haml (>= 4.0.6, < 6.0)
       html2haml (>= 1.0.1)
       railties (>= 4.0.1)
-    hashdiff (0.3.7)
     hashie (3.6.0)
     html2haml (2.2.0)
       erubis (~> 2.7.0)
@@ -341,7 +338,6 @@ GEM
     ruby_parser (3.11.0)
       sexp_processor (~> 4.9)
     rubyzip (1.2.2)
-    safe_yaml (1.0.4)
     sass (3.7.4)
       sass-listen (~> 4.0.0)
     sass-listen (4.0.0)
@@ -371,6 +367,7 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
+    spy (1.0.0)
     stackprof (0.2.11)
     temple (0.8.0)
     terrapin (0.6.0)
@@ -387,13 +384,8 @@ GEM
       unf_ext
     unf_ext (0.0.7.5)
     unicode-display_width (1.5.0)
-    vcr (4.0.0)
     warden (1.2.8)
       rack (>= 2.0.6)
-    webmock (3.3.0)
-      addressable (>= 2.3.6)
-      crack (>= 0.3.2)
-      hashdiff
     webpacker (3.5.3)
       activesupport (>= 4.2)
       rack-proxy (>= 0.6.1)
@@ -454,11 +446,10 @@ DEPENDENCIES
   rubyzip (~> 1.2.2)
   simplecov
   spring
+  spy (~> 1.0)
   stackprof
   terrapin
   uglifier
-  vcr
-  webmock
   webpacker (~> 3.5, >= 3.5.3)
 
 RUBY VERSION
