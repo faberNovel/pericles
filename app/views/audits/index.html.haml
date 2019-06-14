@@ -10,7 +10,10 @@
         .created_at= audits.first.created_at.iso8601
       .content
         - audits.reverse.each do |audit|
-          %div= audit.to_s.html_safe
+          - if audit.partial_name
+            = render audit.partial_name, audit: audit
+          - else
+            %div= audit.to_s.html_safe
 
   = paginate @audits
 

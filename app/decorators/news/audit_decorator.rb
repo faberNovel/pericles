@@ -4,6 +4,10 @@ module News
 
     alias_method :audit, :object
 
+    def partial_name
+      nil
+    end
+
     def to_s
       text
     end
@@ -30,8 +34,6 @@ module News
       end
     end
 
-    private
-
     def map_changes
       audit.audited_changes.map do |key, value|
         if key.ends_with?('_id')
@@ -45,10 +47,12 @@ module News
             Change.new(key: key, old: value.first.inspect, new: value.last.inspect)
           end
         else
-          Change.new(key: key, old: value.first.inspect, new: value.last.inspect)
+          Change.new(key: key, old: value.first, new: value.last)
         end
       end
     end
+
+    private
 
     def text
       if audit.action == 'create'

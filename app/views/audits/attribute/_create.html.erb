@@ -1,0 +1,8 @@
+<div>
+  <% if audit.url %>
+    <%= link_to audit.link_name, audit.url %>
+  <% else %>
+    Associated resource which no longer exists
+  <% end %>
+  has a new attribute <b><%= audit.name %></b> (<%= audit.type %>)
+</div>
