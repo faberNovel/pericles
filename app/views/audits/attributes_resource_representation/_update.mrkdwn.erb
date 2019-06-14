@@ -1,0 +1,3 @@
+<% if audit.url %><<%= audit.url %>|<%= audit.link_name %>><% else %>A representation which no longer exists<% end %> *<%= audit.name %>* has been updated:
+<%= render 'audits/changes', audited_changes: audit.map_changes %>
+

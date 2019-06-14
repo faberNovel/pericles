@@ -1,19 +1,17 @@
 module News
   class AttributesResourceRepresentationAuditDecorator < AuditDecorator
-    def destroy_text
-      "#{name} has been removed from representation #{url}"
-    end
-
-    def update_text
-      "In representation #{url}, #{name} has been updated #{changes}"
-    end
-
-    def created_text
-      "#{url} is now using #{name}"
+    def partial_name
+      if audit.action == 'create'
+        'audits/attributes_resource_representation/create'
+      elsif audit.action == 'update'
+        'audits/attributes_resource_representation/update'
+      elsif audit.action == 'destroy'
+        'audits/attributes_resource_representation/destroy'
+      end
     end
 
     def name
-      "<b>#{attribute&.name}</b>"
+      attribute&.name
     end
 
     def action_css_class
@@ -25,15 +23,17 @@ module News
       Attribute.find_by(id: attribute_id)
     end
 
+    def link_name
+      resource_representation = audit.associated
+      resource_representation&.name
+    end
+
     def url
       resource_representation = audit.associated
       resource = resource_representation&.resource
 
       if resource_representation
-        path = h.project_resource_path(resource.project, resource, anchor: "rep-#{resource_representation.id}")
-        h.link_to(resource_representation.name, path)
-      else
-        'Representation no longer exists'
+        h.project_resource_url(resource.project, resource, anchor: "rep-#{resource_representation.id}")
       end
     end
   end
