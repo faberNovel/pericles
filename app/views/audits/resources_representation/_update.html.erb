@@ -1,9 +1,8 @@
 <div>
-  <%= audit.auditable_type %> <%= audit.auditable&.name %> of
   <% if audit.url %>
     <%= link_to audit.link_name, audit.url %>
   <% else %>
-    an associated resource which no longer exists
+    A ResourceRepresentation which no longer exists
   <% end %>
   has been updated:
   <%= render 'audits/changes', audited_changes: audit.map_changes %>

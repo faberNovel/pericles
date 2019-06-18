@@ -29,12 +29,10 @@ module News
     end
 
     def url
-      resource_representation = audit.associated
+      resource_representation = audit.associated or return
       resource = resource_representation&.resource
 
-      if resource_representation
-        h.project_resource_url(resource.project, resource, anchor: "rep-#{resource_representation.id}")
-      end
+      h.project_resource_url(resource.project, resource, anchor: "rep-#{resource_representation.id}")
     end
   end
 end

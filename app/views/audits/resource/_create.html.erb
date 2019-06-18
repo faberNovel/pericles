@@ -1,0 +1,9 @@
+<div>
+  A new Resource
+  <% if audit.url %>
+    <%= link_to audit.link_name, audit.url %>
+  <% else %>
+    which no longer exists
+  <% end %>
+  has been created
+</div>

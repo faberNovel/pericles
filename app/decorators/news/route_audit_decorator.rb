@@ -1,24 +1,27 @@
 module News
   class RouteAuditDecorator < AuditDecorator
+    def partial_name
+      if audit.action == 'create'
+        'audits/route/create'
+      elsif audit.action == 'update'
+        'audits/route/update'
+      elsif audit.action == 'destroy'
+        'audits/route/destroy'
+      end
+    end
+
     def name
       audit.audited_changes['url']
     end
 
-    def created_text
-      "A new Route #{url} has been created"
-    end
-
-    def destroy_text
-      "Route #{name} has been deleted"
-    end
-
     def url
-      route = audit.auditable
-      if route
-        h.link_to(route.url, h.project_route_path(route.project, route))
-      else
-        name
-      end
+      route = audit.auditable or return
+      h.project_resource_url(route.project, route)
+    end
+
+    def link_name
+      route = audit.auditable or return
+      route.url
     end
   end
 end

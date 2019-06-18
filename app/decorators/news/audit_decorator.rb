@@ -8,8 +8,8 @@ module News
       nil
     end
 
-    def to_s
-      text
+    def link_name
+      ''
     end
 
     def name
@@ -50,30 +50,6 @@ module News
           Change.new(key: key, old: value.first, new: value.last)
         end
       end
-    end
-
-    private
-
-    def text
-      if audit.action == 'create'
-        created_text
-      elsif audit.action == 'update'
-        update_text
-      elsif audit.action == 'destroy'
-        destroy_text
-      end
-    end
-
-    def destroy_text
-      "#{audit.auditable_type} #{name} has been deleted: #{url}"
-    end
-
-    def update_text
-      "#{audit.auditable_type} #{url} has been updated: #{changes}"
-    end
-
-    def created_text
-      "A new #{audit.auditable_type} #{name} has been created: #{url}"
     end
   end
 end

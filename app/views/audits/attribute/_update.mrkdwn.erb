@@ -1,2 +1,2 @@
-<%= audit.auditable_type %> <%= audit.auditable&.name %> of <% if audit.url %><<%= audit.url %>|<%= audit.link_name %>><% else %>associated resource no longer exists<% end %> has been updated:
+<%= audit.auditable_type %> <%= audit.auditable&.name %> of <% if audit.url %><<%= audit.url %>|<%= audit.link_name %>><% else %>an associated resource which no longer exists<% end %> has been updated:
 <%= render 'audits/changes', audited_changes: audit.map_changes %>

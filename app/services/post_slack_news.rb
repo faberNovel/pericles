@@ -6,12 +6,12 @@ class PostSlackNews
 
   def execute(since = 1.day.ago)
     audits = Audited::Audit
-      .of_project(@project)
-      .where('created_at > ?', since)
-      .where.not(auditable_type: ['Header', 'QueryParameter'])
-      .preload(:auditable, :associated)
-      .order(created_at: :desc)
-      .map(&:decorate)
+    .of_project(@project)
+    .where('created_at > ?', since)
+    .where.not(auditable_type: ['Header', 'QueryParameter'])
+    .preload(:auditable, :associated)
+    .order(created_at: :desc)
+    .map(&:decorate)
 
     attachments = audits.map do |audit|
       {
@@ -44,14 +44,10 @@ class PostSlackNews
   end
 
   def text(audit)
-    if audit.partial_name
-      @renderer.render(
-        partial: audit.partial_name,
-        locals: { audit: audit },
-        formats: :mrkdwn
+    @renderer.render(
+      partial: audit.partial_name,
+      locals: { audit: audit },
+      formats: :mrkdwn
       )
-    else
-      audit.to_s
-    end
   end
 end
