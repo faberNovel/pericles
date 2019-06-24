@@ -1,20 +1,27 @@
 module News
   class ResourceAuditDecorator < AuditDecorator
-    def name
-      "<b>#{audit.audited_changes['name']}</b>"
+    def partial_name
+      if audit.action == 'create'
+        'audits/resource/create'
+      elsif audit.action == 'update'
+        'audits/resource/update'
+      elsif audit.action == 'destroy'
+        'audits/resource/destroy'
+      end
     end
 
-    def created_text
-      "A new Resource #{url} has been created"
+    def name
+      audit.audited_changes['name']
     end
 
     def url
-      resource = audit.auditable
-      if resource
-        h.link_to(resource.name, h.project_resource_path(resource.project, resource))
-      else
-        "Resource #{audit.audited_changes['name']} no longer exists"
-      end
+      resource = audit.auditable or return
+      h.project_resource_url(resource.project, resource)
+    end
+
+    def link_name
+      resource = audit.auditable or return
+      resource.name
     end
   end
 end

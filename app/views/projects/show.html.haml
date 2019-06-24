@@ -47,3 +47,14 @@
     = link_to 'Ruby', project_path(project, format: 'ruby'), class: 'btn btn-primary'
     = link_to 'Typescript', project_path(project, format: 'typescript'), class: 'btn btn-primary'
 
+  - if Rails.application.secrets.slack[:client_id]
+    %h4 Slack
+    - if project.slack_channel.present?
+      %span= "Notifications sent on #{project.slack_channel}"
+      = bootstrap_form_for project do |f|
+        = f.hidden_field :slack_channel, value: nil
+        = f.hidden_field :slack_incoming_webhook_url, value: nil
+        = f.submit class: 'btn btn-danger', value: 'Disable notifications'
+    - else
+      %a{href: "https://slack.com/oauth/authorize?scope=incoming-webhook&client_id=#{Rails.application.secrets.slack[:client_id]}&redirect_uri=#{slack_oauth2_project_url(project)}"}
+        %img{alt:'"Add to Slack"', height: 40, width: 139, src: 'https://platform.slack-edge.com/img/add_to_slack.png', srcset: 'https://platform.slack-edge.com/img/add_to_slack.png 1x, https://platform.slack-edge.com/img/add_to_slack@2x.png 2x'}

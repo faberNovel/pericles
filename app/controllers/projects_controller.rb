@@ -67,6 +67,14 @@ class ProjectsController < ApplicationController
     @results = SearchService.new(project).search(params[:query])
   end
 
+  def slack_oauth2
+    if SetSlackWebhook.new(project).execute(params[:code], slack_oauth2_project_url(project))
+      redirect_to project
+    else
+      redirect_to project, alert: 'Slack integration failed'
+    end
+  end
+
   private
 
   def set_proxy_to_be_destroyed_if_blank(params)

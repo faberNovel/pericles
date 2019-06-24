@@ -26,11 +26,17 @@ class ProjectPolicy < ApplicationPolicy
     show?
   end
 
+  def slack_oauth2?
+    show?
+  end
+
   def permitted_attributes
     [
       :title,
       :description,
       :mock_profile_id,
+      :slack_channel,
+      :slack_incoming_webhook_url,
       proxy_configuration_attributes: [
         :id,
         :target_base_url,

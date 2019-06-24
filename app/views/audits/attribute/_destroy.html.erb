@@ -1,0 +1,8 @@
+<div>
+  Attribute <b><%= audit.name %></b> has been deleted from
+  <% if audit.url %>
+    <%= link_to audit.link_name, audit.url %>
+  <% else %>
+    an associated resource which no longer exists
+  <% end %>
+</div>
