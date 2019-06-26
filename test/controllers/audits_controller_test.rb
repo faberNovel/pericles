@@ -19,4 +19,10 @@ class AuditsControllerTest < ControllerWithAuthenticationTest
 
     assert_response :success
   end
+
+  test 'should redirect slack post to index' do
+    Spy.on_instance_method(PostSlackNews, :execute).and_return(42)
+    post slack_post_project_audits_path(@project)
+    assert_redirected_to project_audits_path(@project)
+  end
 end

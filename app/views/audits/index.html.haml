@@ -4,7 +4,7 @@
 
 - if project.slack_channel.present?
   .flexcontainer.flexcontainer-justify-end
-    = link_to '💌 Slack recent news!', slack_post_project_path(project), method: :post, class: 'btn btn-primary h-margin'
+    = link_to '💌 Slack recent news!', slack_post_project_audits_path(project), method: :post, class: 'btn btn-primary h-margin'
 
 #news
   - @audits.map(&:decorate).group_by(&:request_uuid).each do |(_, audits)|
@@ -14,6 +14,8 @@
         .created_at= audits.first.created_at.iso8601
       .content
         - audits.reverse.each do |audit|
+          - unless audit.partial_name
+            - raise "#{audit.id} has no partial"
           = render audit.partial_name, audit: audit
 
   = paginate @audits

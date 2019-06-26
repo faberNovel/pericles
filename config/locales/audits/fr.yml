@@ -1,0 +1,4 @@
+fr:
+  audits:
+    slack_post:
+      news_posted_on: "%{news_posted_count} news postées sur %{slack_channel}"

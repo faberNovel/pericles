@@ -28,10 +28,13 @@ Rails.application.routes.draw do
       match 'mocks/*path', to: "mock_profiles#compute_mock", via: :all, as: 'mocks'
     end
     match 'search', to: 'projects#search', via: [:get]
-    resources :audits, only: [:index]
+    resources :audits, only: [:index] do
+      collection do
+        post 'slack_post'
+      end
+    end
     member do
       get 'slack_oauth2'
-      post 'slack_post'
     end
   end
   resources :resources, only: [] do
