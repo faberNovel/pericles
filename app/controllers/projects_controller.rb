@@ -75,6 +75,11 @@ class ProjectsController < ApplicationController
     end
   end
 
+  def slack_post
+    news_posted_count = PostSlackNews.new(project).execute
+    redirect_to project_audits_path(project), notice: "#{news_posted_count} news posted on #{@project.slack_channel}"
+  end
+
   private
 
   def set_proxy_to_be_destroyed_if_blank(params)

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190613080952) do
+ActiveRecord::Schema.define(version: 20190626123920) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -204,6 +204,7 @@ ActiveRecord::Schema.define(version: 20190613080952) do
     t.boolean "is_public", default: false, null: false
     t.string "slack_incoming_webhook_url"
     t.string "slack_channel"
+    t.datetime "slack_updated_at"
     t.index ["mock_profile_id"], name: "index_projects_on_mock_profile_id"
   end
 

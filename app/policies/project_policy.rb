@@ -30,6 +30,10 @@ class ProjectPolicy < ApplicationPolicy
     show?
   end
 
+  def slack_post?
+    show?
+  end
+
   def permitted_attributes
     [
       :title,

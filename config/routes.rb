@@ -31,6 +31,7 @@ Rails.application.routes.draw do
     resources :audits, only: [:index]
     member do
       get 'slack_oauth2'
+      post 'slack_post'
     end
   end
   resources :resources, only: [] do

@@ -225,4 +225,10 @@ class ProjectsControllerTest < ControllerWithAuthenticationTest
 
     assert_nil @project.reload.slack_channel
   end
+
+  test 'should redirect slack update to show' do
+    Spy.on_instance_method(PostSlackNews, :execute).and_return(42)
+    post slack_post_project_path(@project)
+    assert_redirected_to project_audits_path(@project)
+  end
 end
