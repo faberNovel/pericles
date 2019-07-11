@@ -48,7 +48,15 @@ export default {
       if (event) {
         event.stopPropagation();
       }
-      Store.markRepresentationToBeDeleted(this.representation.id);
+      if (this.representation.used_in_resource_representations.length > 0) {
+        alert(
+          'Used in ' +
+          this.representation.used_in_resource_representations.join(', ') +
+          ' resource representation(s)'
+        );
+      } else {
+        Store.markRepresentationToBeDeleted(this.representation.id);
+      }
     },
     onCloneClick: function(event) {
       if (event) {

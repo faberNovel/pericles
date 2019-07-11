@@ -49,7 +49,8 @@ export default {
           id: r.id,
           name: r.name,
           colorClass: 'color-' + i,
-          isSelected: false
+          isSelected: false,
+          used_in_resource_representations: r.used_in_resource_representations
         })
       )
     };
