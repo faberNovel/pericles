@@ -5,7 +5,7 @@ module News
     alias_method :audit, :object
 
     def partial_name
-      nil
+      'audits/missing_partial'
     end
 
     def link_name

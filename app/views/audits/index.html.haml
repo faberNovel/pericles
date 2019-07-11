@@ -14,8 +14,6 @@
         .created_at= audits.first.created_at.iso8601
       .content
         - audits.reverse.each do |audit|
-          - unless audit.partial_name
-            - raise "#{audit.id} has no partial"
           = render audit.partial_name, audit: audit
 
   = paginate @audits
