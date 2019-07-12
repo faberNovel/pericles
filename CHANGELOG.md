@@ -2,6 +2,12 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.9.0 - 2019-07-12
+
+* Add Slack integration
+* Disable resource/representation deletion when used by other resources/representatins
+* Cap the proxy:clean_reports memory footprint
+
 ## 0.8.11 - 2019-05-29
 
 * Add priority on mock pickers
