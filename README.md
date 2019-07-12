@@ -86,6 +86,8 @@ Name | Description | Example
 `RAILS_SERVE_STATIC_FILES` | In case your reverse proxy do not serve static files. Defaults to false. | `enabled`
 `RAILS_DISABLE_FORCE_SSL` | In case your reverse proxy do not handle SSL. Defaults to false. | `enabled`
 `PROXY_HOST` | The host of your [Elixir proxy](proxy)
+`SLACK_CLIENT_ID` | Client ID of your Slack app. Check [Slack integration](#slack-integration). | `1234567890.1234567890`
+`SLACK_CLIENT_SECRET` | Client secret of your Slack app. Check [Slack integration](#slack-integration). | `abcdef123456789`
 
 ### Google OAuth2
 
@@ -105,6 +107,16 @@ Pericles uses [Devise](https://github.com/plataformatec/devise) to manage authen
 * The value for `GOOGLE_APP_ID` should be your OAuth client ID's "Client ID", and the value for `GOOGLE_APP_SECRET` should be your OAuth
  client ID's "Client secret".
 * Pericles will use INTERNAL_EMAIL_DOMAIN environment variable for authentication purposes. The only users that will be able to log in through OAuth2 are the users from the email domain you provided.
+
+### Slack integration
+
+If you want to post recent news on Slack, you can [create a Slack app](https://api.slack.com/apps). Then:
+
+1. Enable the `Incoming webhooks` feature.
+2. Enable OAuth and whitelist the redirect URL which should looks like `https://YOUR_HOST/projects`
+3. Set the SLACK_CLIENT_ID and SLACK_CLIENT_SECRET env variables
+
+To automate this posting, use the `audits:slack_post` rake task in a cron/scheduler.
 
 ## Deployment
 
