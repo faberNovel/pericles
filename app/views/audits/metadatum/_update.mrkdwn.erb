@@ -1,0 +1,2 @@
+<% if audit.url %>Metadatum <<%= audit.url %>|<%= audit.link_name %>><% else %>A Metadatum which no longer exists<% end %> has been updated:
+<%= render 'audits/changes', audited_changes: audit.map_changes %>

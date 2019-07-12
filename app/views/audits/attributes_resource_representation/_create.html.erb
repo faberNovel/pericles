@@ -1,0 +1,6 @@
+<% if audit.url %>
+  <%= link_to audit.link_name, audit.url %>
+<% else %>
+  A representation which no longer exists
+<% end %>
+is now using <b><%= audit.name %></b>

@@ -26,8 +26,10 @@
     .flexcontainer-justify-end
       - if user.can_delete? resource
         %transition{name: "w-slide-fade"}
-          = link_to("Delete", project_resource_path(project, resource),
+          = button_to("Delete", project_resource_path(project, resource),
               method: :delete,
+              disabled: resource.used_in_resources.any?,
+              title: resource.used_in_resources.any? ? "Used in #{resource.used_in_resources.pluck(:name).to_sentence}" : '',
               data: { confirm: 'Are you sure ?' },
               class: "btn btn-default",
               'v-if': '!manageMode')

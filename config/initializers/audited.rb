@@ -6,6 +6,12 @@ module Audited
 
     before_create :set_project_id
 
+    def decorator_class
+      "News::#{auditable_type}AuditDecorator".constantize
+    rescue NameError
+      News::AuditDecorator
+    end
+
     private
 
     def set_project_id

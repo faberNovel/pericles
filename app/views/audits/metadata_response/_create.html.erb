@@ -1,0 +1,9 @@
+<div>
+  Metadatum <b><%= audit.name %></b> has been added to
+  <% if audit.url %>
+    <%= link_to audit.link_name, audit.url %>
+  <% else %>
+    a response which no longer exists
+  <% end %>
+</div>
+

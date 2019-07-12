@@ -1,0 +1,11 @@
+<div>
+  Metadatum <b><%= audit.name %></b> on
+  <% if audit.url %>
+    <%= link_to audit.link_name, audit.url %>
+  <% else %>
+    a response which no longer exists
+  <% end %>
+  has been updated:
+  <%= render 'audits/changes', audited_changes: audit.map_changes %>
+</div>
+

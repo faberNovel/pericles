@@ -4,8 +4,12 @@ module News
 
     alias_method :audit, :object
 
-    def to_s
-      text
+    def partial_name
+      'audits/missing_partial'
+    end
+
+    def link_name
+      ''
     end
 
     def name
@@ -13,7 +17,7 @@ module News
     end
 
     def changes
-      h.render('changes', audited_changes: map_changes)
+      h.render('audits/changes', audited_changes: map_changes)
     end
 
     def url
@@ -30,8 +34,6 @@ module News
       end
     end
 
-    private
-
     def map_changes
       audit.audited_changes.map do |key, value|
         if key.ends_with?('_id')
@@ -45,31 +47,9 @@ module News
             Change.new(key: key, old: value.first.inspect, new: value.last.inspect)
           end
         else
-          Change.new(key: key, old: value.first.inspect, new: value.last.inspect)
+          Change.new(key: key, old: value.first, new: value.last)
         end
       end
-    end
-
-    def text
-      if audit.action == 'create'
-        created_text
-      elsif audit.action == 'update'
-        update_text
-      elsif audit.action == 'destroy'
-        destroy_text
-      end
-    end
-
-    def destroy_text
-      "#{audit.auditable_type} #{name} has been deleted: #{url}"
-    end
-
-    def update_text
-      "#{audit.auditable_type} #{url} has been updated: #{changes}"
-    end
-
-    def created_text
-      "A new #{audit.auditable_type} #{name} has been created: #{url}"
     end
   end
 end
