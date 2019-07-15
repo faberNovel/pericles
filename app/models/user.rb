@@ -1,7 +1,7 @@
 class User < ApplicationRecord
   INTERNAL_EMAIL_DOMAIN = ENV['INTERNAL_EMAIL_DOMAIN']
 
-  devise :database_authenticatable, :omniauthable, :trackable, :validatable, :registerable, :recoverable, omniauth_providers: [:google_oauth2]
+  devise :database_authenticatable, :omniauthable, :trackable, :validatable, :registerable, :recoverable, omniauth_providers: Devise.omniauth_configs.keys
 
   validates :email, presence: true
 
