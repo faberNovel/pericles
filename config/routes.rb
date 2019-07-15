@@ -63,7 +63,7 @@ Rails.application.routes.draw do
   resources :validations, only: [:create, :new, :index]
   resources :instances, only: [:create]
   resources :headers, only: [:index]
-  resources :users, only: [:show]
+  resources :users, only: [:index, :show]
   resources :schemes
   root "projects#index"
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html

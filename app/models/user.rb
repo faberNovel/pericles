@@ -3,6 +3,9 @@ class User < ApplicationRecord
 
   devise :database_authenticatable, :omniauthable, :trackable, :validatable, :registerable, :recoverable, omniauth_providers: Devise.omniauth_configs.keys
 
+  has_many :members
+  has_many :projects, through: :members
+
   validates :email, presence: true
 
   scope :external, -> { INTERNAL_EMAIL_DOMAIN.blank? ? all : where.not('email LIKE ?', "%#{INTERNAL_EMAIL_DOMAIN}") }
