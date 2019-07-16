@@ -3,7 +3,7 @@ class User < ApplicationRecord
 
   devise :database_authenticatable, :omniauthable, :trackable, :validatable, :registerable, :recoverable, omniauth_providers: Devise.omniauth_configs.keys
 
-  has_many :members
+  has_many :members, dependent: :destroy
   has_many :projects, through: :members
 
   validates :email, presence: true

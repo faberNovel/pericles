@@ -8,6 +8,7 @@
       %th Email
       %th Internal
       %th Projects
+      %th
   %tbody
     - @users.each do |user|
       %tr
@@ -17,4 +18,6 @@
             = f.check_box :internal, onchange: '$(this.form).trigger("submit.rails");'
 
         %td= user.projects.map { |p| link_to(p.title, project_path(p)) }.to_sentence.html_safe
+        %td= link_to 'Delete', user_path(user), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-default'
+
 

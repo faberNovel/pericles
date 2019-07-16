@@ -36,4 +36,17 @@ class UsersControllerTest < ControllerWithAuthenticationTest
     patch user_path(@user, format: :json), params: { user: { internal: false } }
     assert_response :forbidden
   end
+
+  test 'should destroy user' do
+    delete user_path(@user)
+    assert_redirected_to users_path
+    assert_not User.exists?(@user.id)
+  end
+
+  test 'should not destroy user when external' do
+    @user.update(internal: false)
+    delete user_path(@user)
+    assert_response :forbidden
+    assert User.exists?(@user.id)
+  end
 end

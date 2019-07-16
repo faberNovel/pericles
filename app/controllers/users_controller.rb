@@ -20,5 +20,13 @@ class UsersController < ApplicationController
     end
   end
 
+  def destroy
+    if user.destroy
+      redirect_to users_path, notice: "#{user.email} has been deleted."
+    else
+      redirect_to users_path, alert: users_path.errors.full_messages
+    end
+  end
+
   def show; end
 end

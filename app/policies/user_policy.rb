@@ -13,6 +13,10 @@ class UserPolicy < ApplicationPolicy
     index?
   end
 
+  def destroy?
+    index?
+  end
+
   def show?
     index?
   end
