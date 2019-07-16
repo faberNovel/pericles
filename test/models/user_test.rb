@@ -6,24 +6,7 @@ class UserTest < ActiveSupport::TestCase
     assert_not user.valid?
   end
 
-  test "from_omniauth should return nil if user's email does not end with INTERNAL_EMAIL_DOMAIN" do
-    access_token = OmniAuth::AuthHash.new
-
-    access_token.info = { email: 'test@example.com' }
-    assert_nil User.from_omniauth(access_token)
-  end
-
-  test "from_omniauth should not create user if user's email does not end with INTERNAL_EMAIL_DOMAIN" do
-    access_token = OmniAuth::AuthHash.new
-
-    access_token.info = { email: 'test@example.com' }
-    assert_no_difference('User.count') do
-      User.from_omniauth(access_token)
-    end
-  end
-
-  test "from_omniauth should return initialized user if user's email ends with INTERNAL_EMAIL_DOMAIN (and user with same email
-   does not already exist)" do
+  test 'from_omniauth should return initialized user if user with same email does not already exist' do
     access_token = OmniAuth::AuthHash.new
 
     access_token.info = {
@@ -41,8 +24,7 @@ class UserTest < ActiveSupport::TestCase
     assert_equal 'http://example.com/img.jpg', user.avatar_url
   end
 
-  test "from_omniauth should create user if user's email ends with INTERNAL_EMAIL_DOMAIN (and user with same email
-   does not already exist)" do
+  test 'from_omniauth should create user if user with same email does not already exist' do
     access_token = OmniAuth::AuthHash.new
 
     access_token.info = { email: "test#{User::INTERNAL_EMAIL_DOMAIN}" }
@@ -51,8 +33,7 @@ class UserTest < ActiveSupport::TestCase
     end
   end
 
-  test "from_omniauth should not create user if user's email ends with INTERNAL_EMAIL_DOMAIN and user with same email already
-   exists" do
+  test 'from_omniauth should not create user if user with same email already exists' do
     access_token = OmniAuth::AuthHash.new
     create(:user, email: "test#{User::INTERNAL_EMAIL_DOMAIN}")
 
@@ -62,8 +43,7 @@ class UserTest < ActiveSupport::TestCase
     end
   end
 
-  test "from_omniauth should return existing user if user's email ends with INTERNAL_EMAIL_DOMAIN and user
-   with same email already exists" do
+  test 'from_omniauth should return existing user if user with same email already exists' do
     access_token = OmniAuth::AuthHash.new
     create(:user, email: "test#{User::INTERNAL_EMAIL_DOMAIN}")
 
@@ -85,5 +65,13 @@ class UserTest < ActiveSupport::TestCase
     access_token.info = {}
     user = User.from_omniauth(access_token)
     assert_nil user
+  end
+
+  test 'set internal when email domain is INTERNAL_EMAIL_DOMAIN' do
+    assert create(:user, email: "test#{User::INTERNAL_EMAIL_DOMAIN}").internal
+  end
+
+  test 'does not set internal when email domain is not INTERNAL_EMAIL_DOMAIN' do
+    refute create(:user, email: 'test@external.com').internal
   end
 end

@@ -8,11 +8,13 @@ class User < ApplicationRecord
 
   validates :email, presence: true
 
-  scope :external, -> { INTERNAL_EMAIL_DOMAIN.blank? ? all : where.not('email LIKE ?', "%#{INTERNAL_EMAIL_DOMAIN}") }
+  scope :external, -> { where(internal: false) }
+
+  before_create :set_internal
 
   def self.from_omniauth(access_token)
     data = access_token.info
-    return unless INTERNAL_EMAIL_DOMAIN.blank? || /.+#{Regexp.quote(INTERNAL_EMAIL_DOMAIN)}/ =~ data['email']
+    return unless data['email'].present?
 
     User.find_or_create_by(email: data['email']) do |user|
       user.first_name = data['first_name']
@@ -22,11 +24,12 @@ class User < ApplicationRecord
     end
   end
 
-  def name
-    "#{first_name} #{last_name}"
+  def set_internal
+    return unless INTERNAL_EMAIL_DOMAIN
+    self.internal = email.ends_with? INTERNAL_EMAIL_DOMAIN
   end
 
-  def internal?
-    INTERNAL_EMAIL_DOMAIN.blank? ? false : email.ends_with?(INTERNAL_EMAIL_DOMAIN)
+  def name
+    "#{first_name} #{last_name}"
   end
 end

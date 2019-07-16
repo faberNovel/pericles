@@ -7,7 +7,7 @@ class UsersControllerTest < ControllerWithAuthenticationTest
   end
 
   test 'should not get index when external' do
-    @user.update(email: 'user@external.com')
+    @user.update(internal: false)
 
     get users_path
     assert_response :forbidden
@@ -18,7 +18,7 @@ class UsersControllerTest < ControllerWithAuthenticationTest
     assert_response :success
   end
 
-  test "shouldn't show user (not authenticated)" do
+  test 'should not show user (not authenticated)' do
     sign_out :user
     get user_path(@user)
     assert_redirected_to new_user_session_path
