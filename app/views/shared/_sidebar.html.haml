@@ -23,4 +23,7 @@
     = link_to 'JSON Validation', new_validation_path, class: "dark-block #{push_class('JSON Validation')}"
     .logout{class: push_class('Logout')}
       - if current_user
+        - if Pundit.policy(current_user, User).index?
+          %a{href: users_path}
+            %span.glyphicon.glyphicon-user
         = link_to "Log out", destroy_user_session_path, method: :delete
