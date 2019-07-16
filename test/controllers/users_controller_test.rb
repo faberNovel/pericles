@@ -23,4 +23,17 @@ class UsersControllerTest < ControllerWithAuthenticationTest
     get user_path(@user)
     assert_redirected_to new_user_session_path
   end
+
+  test 'should update user' do
+    assert @user.internal
+    patch user_path(@user, format: :json), params: { user: { internal: false } }
+    assert_response :success
+    assert_not @user.reload.internal
+  end
+
+  test 'should not update user when external' do
+    @user.update(internal: false)
+    patch user_path(@user, format: :json), params: { user: { internal: false } }
+    assert_response :forbidden
+  end
 end

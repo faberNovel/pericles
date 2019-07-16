@@ -9,7 +9,15 @@ class UserPolicy < ApplicationPolicy
     user&.internal?
   end
 
+  def update?
+    index?
+  end
+
   def show?
     index?
+  end
+
+  def permitted_attributes
+    [:internal]
   end
 end
