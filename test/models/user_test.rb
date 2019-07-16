@@ -68,10 +68,17 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test 'set internal when email domain is INTERNAL_EMAIL_DOMAIN' do
-    assert create(:user, email: "test#{User::INTERNAL_EMAIL_DOMAIN}").internal
+    assert build(:user, email: "test#{User::INTERNAL_EMAIL_DOMAIN}").set_internal_from_domain
   end
 
   test 'does not set internal when email domain is not INTERNAL_EMAIL_DOMAIN' do
-    refute create(:user, email: 'test@external.com').internal
+    refute build(:user, email: 'test@external.com').set_internal_from_domain
+  end
+
+  test 'set internal when first user' do
+    assert build(:user, email: 'test@external.com').set_internal_when_first
+
+    create(:user)
+    refute build(:user, email: 'test@external.com').set_internal_when_first
   end
 end

@@ -10,7 +10,8 @@ class User < ApplicationRecord
 
   scope :external, -> { where(internal: false) }
 
-  before_create :set_internal
+  before_create :set_internal_when_first
+  before_create :set_internal_from_domain
 
   def self.from_omniauth(access_token)
     data = access_token.info
@@ -24,7 +25,11 @@ class User < ApplicationRecord
     end
   end
 
-  def set_internal
+  def set_internal_when_first
+    return self.internal = true if User.none?
+  end
+
+  def set_internal_from_domain
     return unless INTERNAL_EMAIL_DOMAIN
     self.internal = email.ends_with? INTERNAL_EMAIL_DOMAIN
   end
