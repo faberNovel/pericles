@@ -22,7 +22,7 @@
           .panel-title
             %h4.url
               %span{ class: label_class_for_http_method(route.http_method) }= route.http_method
-              = link_to route.url, project_mock_profile_mocks_path(mock_profile.project, mock_profile, path: route.mock_path), method: route.http_method == "GET" ? nil : route.http_method.downcase.to_sym, target: '_blank'
+              = link_to route.url, mocks_project_mock_profile_path(mock_profile.project, mock_profile, path: route.mock_path), method: route.http_method == "GET" ? nil : route.http_method.downcase.to_sym, target: '_blank'
         .responses.panel-body
           - route.responses.each do |response|
             .response{'data-response-id': response.id, class: response.can_have_resource_representation ? "resource-response" : "error-response"}
