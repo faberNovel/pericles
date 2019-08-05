@@ -2,6 +2,12 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.10.0 - 2019-08-05
+
+* Add users management page
+* Fix issue with mocks when query string contains id parameter
+* Bump lodash and js-yaml to fix security issues
+
 ## 0.9.0 - 2019-07-12
 
 * Add Slack integration
