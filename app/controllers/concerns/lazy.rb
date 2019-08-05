@@ -26,8 +26,8 @@ module Lazy
         end
 
         def find_#{model_name}
-          model = #{class_name}.find(params[:id]) if params.has_key? :id
-          model ||= #{class_name}.find(params[:#{model_name}_id]) if params.has_key? :#{model_name}_id
+          model = #{class_name}.find(params[:#{model_name}_id]) if params.has_key? :#{model_name}_id
+          model ||= #{class_name}.find(params[:id]) if params.has_key? :id
           model
         end
 

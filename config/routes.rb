@@ -23,9 +23,9 @@ Rails.application.routes.draw do
     resources :metadata, only: [:show, :index, :new, :create]
     match 'mocks', to: "mocks#compute_mock", via: :all, as: 'mocks_root'
     match 'mocks/*path', to: "mocks#compute_mock", via: :all, as: 'mocks'
-    resources :mock_profiles do
-      match 'mocks', to: "mock_profiles#compute_mock", via: :all, as: 'mocks_root'
-      match 'mocks/*path', to: "mock_profiles#compute_mock", via: :all, as: 'mocks'
+    resources :mock_profiles, param: :mock_profile_id do
+      match 'mocks', to: "mock_profiles#compute_mock", via: :all, as: 'mocks_root', on: :member
+      match 'mocks/*path', to: "mock_profiles#compute_mock", via: :all, as: 'mocks', on: :member
     end
     match 'search', to: 'projects#search', via: [:get]
     resources :audits, only: [:index] do
@@ -63,7 +63,7 @@ Rails.application.routes.draw do
   resources :validations, only: [:create, :new, :index]
   resources :instances, only: [:create]
   resources :headers, only: [:index]
-  resources :users, only: [:show]
+  resources :users, only: [:index, :show, :update, :destroy]
   resources :schemes
   root "projects#index"
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html

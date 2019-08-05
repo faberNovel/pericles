@@ -1,15 +1,21 @@
 class User < ApplicationRecord
   INTERNAL_EMAIL_DOMAIN = ENV['INTERNAL_EMAIL_DOMAIN']
 
-  devise :database_authenticatable, :omniauthable, :trackable, :validatable, :registerable, :recoverable, omniauth_providers: [:google_oauth2]
+  devise :database_authenticatable, :omniauthable, :trackable, :validatable, :registerable, :recoverable, omniauth_providers: Devise.omniauth_configs.keys
+
+  has_many :members, dependent: :destroy
+  has_many :projects, through: :members
 
   validates :email, presence: true
 
-  scope :external, -> { INTERNAL_EMAIL_DOMAIN.blank? ? all : where.not('email LIKE ?', "%#{INTERNAL_EMAIL_DOMAIN}") }
+  scope :external, -> { where(internal: false) }
+
+  before_create :set_internal_when_first
+  before_create :set_internal_from_domain
 
   def self.from_omniauth(access_token)
     data = access_token.info
-    return unless INTERNAL_EMAIL_DOMAIN.blank? || /.+#{Regexp.quote(INTERNAL_EMAIL_DOMAIN)}/ =~ data['email']
+    return unless data['email'].present?
 
     User.find_or_create_by(email: data['email']) do |user|
       user.first_name = data['first_name']
@@ -19,11 +25,16 @@ class User < ApplicationRecord
     end
   end
 
-  def name
-    "#{first_name} #{last_name}"
+  def set_internal_when_first
+    return self.internal = true if User.none?
   end
 
-  def internal?
-    INTERNAL_EMAIL_DOMAIN.blank? ? false : email.ends_with?(INTERNAL_EMAIL_DOMAIN)
+  def set_internal_from_domain
+    return unless INTERNAL_EMAIL_DOMAIN
+    self.internal = email.ends_with? INTERNAL_EMAIL_DOMAIN
+  end
+
+  def name
+    "#{first_name} #{last_name}"
   end
 end

@@ -15,7 +15,7 @@
           %a{href: edit_mock_profile_path(mock_profile), class: 'name'}
             = mock_profile.name
           .url
-            = project_mock_profile_mocks_root_url(project, mock_profile)
+            = mocks_root_project_mock_profile_url(project, mock_profile)
           %label.active
             = radio_button_tag 'selected', true, mock_profile.id == project.active_mock_profile&.id, { label: 'Active', 'data-remote': true, 'data-url': project_path(project), 'data-params': "project[mock_profile_id]=#{mock_profile.id}", 'data-method': 'patch', 'data-no-turboboost-redirect': true }
             Active

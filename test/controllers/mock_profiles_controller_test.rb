@@ -130,6 +130,16 @@ class MockProfilesControllerTest < ControllerWithAuthenticationTest
     assert_response :success
   end
 
+  test 'mock profile mocks even when query string has id parameter' do
+    r = create(:response, route: @route, resource_representation: @resource.default_representation)
+    mock_picker = create(:mock_picker, response: r)
+    @mock_profile.mock_pickers << mock_picker
+    mock_picker.resource_instances << @resource_instance
+    get "/projects/#{@project.id}/mock_profiles/#{@mock_profile.id}/mocks#{@route.url}?id=toto"
+    assert_equal response.body, @resource_instance.body
+    assert_response :success
+  end
+
   test 'member external user should access project mock_profile' do
     external_user = create(:user, :external)
     sign_in external_user
