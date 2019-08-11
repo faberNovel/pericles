@@ -37,8 +37,7 @@
         .btn.btn-default.h-margin{'@click': 'onCancelClick', 'v-if': 'manageMode'} Cancel
       %transition{name: "w-slide-fade"}
         .btn.btn-primary{'@click': 'onUpdateClick', 'v-if': 'manageMode'} Update
-  %p
-    = simple_format(resource.description)
+  %vue-markdown{class: 'markdown'}= resource.description
   - unless resource.used_in_resources.empty?
     %p
       Used in:&nbsp

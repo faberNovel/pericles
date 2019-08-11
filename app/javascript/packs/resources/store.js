@@ -26,6 +26,7 @@ export default {
       return {
         id: r.id,
         name: r.name,
+        description: r.description,
         usedResources: r.used_resources,
         hasInvalidMocks: r['has_invalid_mocks?'],
         requestRouteIds: r.request_route_ids,

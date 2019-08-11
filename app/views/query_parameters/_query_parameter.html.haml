@@ -19,4 +19,5 @@
         .col-xs-4
           %dl
             %dt Description
-            %dd= simple_format(query_parameter.description)
+            %dd{class: 'markdown'}
+              %vue-markdown= query_parameter.description

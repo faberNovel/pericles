@@ -1,6 +1,7 @@
 import 'core-js/fn/promise/finally';
 
 import Vue from 'vue/dist/vue.esm'
+import VueMarkdown from 'vue-markdown'
 
 import Store from './store.js';
 import FilterAttributesComponent from './ps-filter-attributes.vue';
@@ -16,6 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
       'ps-filter-attributes': FilterAttributesComponent,
       'ps-attributes': AttributesComponent,
       'ps-code-buttons': CodeButtonsComponent,
+      'vue-markdown': VueMarkdown,
     },
     methods: {
       onCancelClick: function() {

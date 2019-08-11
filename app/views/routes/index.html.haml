@@ -1,4 +1,6 @@
 = content_for :title, "Routes"
+- content_for :page_scripts do
+  = javascript_pack_tag("common/markdown.js")
 
 .flexspace-and-center
   %h1 Routes
@@ -13,13 +15,16 @@
     .routes-sub-container
       - @routes_by_resource[resource].sort_by { |route| [route.url, route.http_method_order] }.each do |route|
         %a{class: 'route-row', href: project_route_path(project, route)}
-          %div{style: 'width: 10%'}
+          %div{style: 'flex-basis: 100px'}
             %span{ class: label_class_for_http_method(route.http_method) }= route.http_method
-          %div{style: 'flex: 1'}= route.url
-          %div{style: 'width: 25%'}= route.resource_representations.uniq.map(&:name).join(", ")
+          %div{style: 'flex-basis: 250px'}= route.url
+          %vue-markdown{class: 'markdown short-description', style: 'flex: 1'}= route.description
+          %div{style: 'flex-basis: 250px'}= route.resource_representations.uniq.map(&:name).join(", ")
           - if route.responses.empty?
-            %div.tool-tip{style: 'width: 25%', 'data-toggle' => "tooltip", 'data-placement' => "top", title: "No responses"}
+            %div.tool-tip{style: 'flex-basis: 50px', 'data-toggle' => "tooltip", 'data-placement' => "top", title: "No responses"}
               \/!\
+          - else
+            %div{style: 'flex-basis: 50px'}
 
 - else
   %p

@@ -13,7 +13,8 @@
       .col-xs-3
         %dl
           %dt Description
-          %dd{'v-pre': true}= simple_format(route.description)
+          %dd{class: 'markdown'}
+            %vue-markdown= route.description
       .col-xs-3
         - if should_display_representations && !route.resource_representations.empty?
           %dl
