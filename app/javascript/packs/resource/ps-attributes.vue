@@ -30,6 +30,7 @@
     :attribute='a'
     :manage-mode='manageMode'
     :active-representation='activeRepresentation'
+    :representations='representations'
   )
   .no-attributes(v-if='attributes.length === 0').
     There is no attributes in this resource, you can add some
@@ -44,7 +45,7 @@ import Store from './store.js';
 import AttributeComponent from './ps-attribute.vue';
 
 export default {
-  props: ['attributes', 'manageMode', 'activeRepresentation', 'sortMode', 'searchQuery'],
+  props: ['attributes', 'manageMode', 'activeRepresentation', 'sortMode', 'searchQuery', 'representations'],
   methods: {
     onClickExpandAll: function() {
       $('.contraints-row').collapse('show');
