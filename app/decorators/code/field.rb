@@ -80,7 +80,7 @@ module Code
         if resource_attribute.enum.blank?
           'string'
         else
-          resource_attribute.enum.split(',').map { |x| '"' + x.strip + '"' }.join(' | ')
+          resource_attribute.enum.split(',').map { |x| "\"#{x.strip}\"" }.join(' | ')
         end
       when :date
         'string'

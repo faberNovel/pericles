@@ -1,6 +1,6 @@
-<% resource.resource_attributes.each do |attribute| %>
+<% resource.resource_attributes.uniq { |a| a.base_typescript_type }.each do |attribute| %>
   <% if attribute.primitive_type == nil %>
-import { <%= attribute.base_typescript_type =%>, <%= attribute.base_typescript_type.sub(/^Rest/, '') =%> } from "./<%= attribute.resource.name.underscore =%>"
+import { <%= attribute.base_typescript_type =%>, <%= attribute.base_typescript_type.sub(/^Rest/, '') =%> } from "./<%= attribute.resource.name.underscore =%>";
   <% end %>
 <% end %>
 

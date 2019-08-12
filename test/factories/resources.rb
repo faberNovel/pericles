@@ -19,9 +19,11 @@ FactoryBot.define do
       project { create(:project, title: 'PokeApi') }
 
       after(:create) do |resource, _|
+        nature = create(:resource, name: 'nature', project: resource.project)
         resource.resource_attributes << create(:attribute, name: 'id', primitive_type: :integer)
         resource.resource_attributes << create(:attribute, name: 'weight', primitive_type: :number, nullable: true)
-        resource.resource_attributes << create(:attribute_with_resource, name: 'weakness_list', resource: create(:resource, name: 'nature', project: resource.project), is_array: true)
+        resource.resource_attributes << create(:attribute_with_resource, name: 'nature', resource: nature)
+        resource.resource_attributes << create(:attribute_with_resource, name: 'weakness_list', resource: nature, is_array: true)
         resource.resource_attributes << create(:attribute, name: 'date', primitive_type: :date, nullable: false)
         resource.resource_attributes << create(:attribute, name: 'date_time', primitive_type: :datetime, nullable: true)
 
