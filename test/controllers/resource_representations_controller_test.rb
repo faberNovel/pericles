@@ -322,27 +322,32 @@ class ResourceRepresentationsControllerTest < ControllerWithAuthenticationTest
     representation = resource.resource_representations.first
     create(:attributes_resource_representation, attribute_id: resource.resource_attributes.find(&:boolean?).id, parent_resource_representation: representation)
 
-    file = %(export interface RestDefaultPokemon {
+    file = %(import { RestDefaultNature, DefaultNature } from "./default_nature";
+
+    export interface RestDefaultPokemon {
       readonly date: string;
-      readonly date_time: string | undefined;
+      readonly date_time?: string;
       readonly id: number;
-      readonly niceBoolean: boolean;
+      readonly nature: RestDefaultNature;
+      readonly niceBoolean?: boolean;
       readonly weakness_list: ReadonlyArray<RestDefaultNature>;
-      readonly weight: number | undefined;
+      readonly weight?: number;
     }
 
     export class DefaultPokemon {
       public readonly date: string;
-      public readonly dateTime: string | undefined;
+      public readonly dateTime?: string;
       public readonly id: number;
-      public readonly niceBoolean: boolean;
+      public readonly nature: DefaultNature;
+      public readonly niceBoolean?: boolean;
       public readonly weaknessList: ReadonlyArray<DefaultNature>;
-      public readonly weight: number | undefined;
+      public readonly weight?: number;
 
       public constructor(json: RestDefaultPokemon) {
         this.date = json.date;
         this.dateTime = (json.date_time !== null && json.date_time !== undefined) ? json.date_time : undefined;
         this.id = json.id;
+        this.nature = new DefaultNature(json.nature);
         this.niceBoolean = json.niceBoolean !== undefined && json.niceBoolean !== null && json.niceBoolean;
         this.weaknessList = json.weakness_list.map((o) => new DefaultNature(o));
         this.weight = (json.weight !== null && json.weight !== undefined) ? json.weight : undefined;

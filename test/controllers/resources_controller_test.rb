@@ -380,6 +380,7 @@ class ResourcesControllerTest < ControllerWithAuthenticationTest
         val date: String,
         val dateTime: String?,
         val id: Int,
+        val nature: RestNature,
         val niceBoolean: Boolean?,
         val weaknessList: List<RestNature>,
         val weight: Double?
@@ -406,6 +407,7 @@ class ResourcesControllerTest < ControllerWithAuthenticationTest
         let date: Date
         let dateTime: Date?
         let id: Int
+        let nature: RestNature
         let niceBoolean: Bool?
         let weaknessList: [RestNature]
         let weight: Double?
@@ -414,6 +416,7 @@ class ResourcesControllerTest < ControllerWithAuthenticationTest
             case date
             case dateTime = \"date_time\"
             case id
+            case nature
             case niceBoolean
             case weaknessList = \"weakness_list\"
             case weight
@@ -439,6 +442,7 @@ class ResourcesControllerTest < ControllerWithAuthenticationTest
       )
 
       has_many :weakness_list, serializer: NatureSerializer
+      belongs_to :nature, serializer: NatureSerializer
     end
     ).gsub(/^    /, '')
     get project_resource_path(resource.project, resource, format: 'ruby')
@@ -448,27 +452,32 @@ class ResourcesControllerTest < ControllerWithAuthenticationTest
   test 'should get typescript code' do
     resource = create(:pokemon)
 
-    file = %(export interface RestPokemon {
+    file = %(import { RestNature, Nature } from "./nature";
+
+    export interface RestPokemon {
       readonly date: string;
-      readonly date_time: string | undefined;
+      readonly date_time?: string;
       readonly id: number;
-      readonly niceBoolean: boolean;
+      readonly nature: RestNature;
+      readonly niceBoolean?: boolean;
       readonly weakness_list: ReadonlyArray<RestNature>;
-      readonly weight: number | undefined;
+      readonly weight?: number;
     }
 
     export class Pokemon {
       public readonly date: string;
-      public readonly dateTime: string | undefined;
+      public readonly dateTime?: string;
       public readonly id: number;
-      public readonly niceBoolean: boolean;
+      public readonly nature: Nature;
+      public readonly niceBoolean?: boolean;
       public readonly weaknessList: ReadonlyArray<Nature>;
-      public readonly weight: number | undefined;
+      public readonly weight?: number;
 
       public constructor(json: RestPokemon) {
         this.date = json.date;
         this.dateTime = (json.date_time !== null && json.date_time !== undefined) ? json.date_time : undefined;
         this.id = json.id;
+        this.nature = new Nature(json.nature);
         this.niceBoolean = json.niceBoolean !== undefined && json.niceBoolean !== null && json.niceBoolean;
         this.weaknessList = json.weakness_list.map((o) => new Nature(o));
         this.weight = (json.weight !== null && json.weight !== undefined) ? json.weight : undefined;
