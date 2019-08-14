@@ -6,7 +6,8 @@ div(style='margin-top: -1px;')
   )
     .flexcontainer-space-between
       .name(v-html='displayedResourceName')
-      .error(v-if='resource.hasInvalidMocks')
+      vue-markdown(class='markdown short-description', style='flex: 1; margin-left: 20px', :source='displayedResourceDescription')
+      .error(style='flex-basis: 50px', v-if='resource.hasInvalidMocks')
         .tool-tip(
           data-toggle="tooltip"
           data-placement="top"
@@ -25,6 +26,7 @@ div(style='margin-top: -1px;')
 </template>
 
 <script>
+import VueMarkdown from 'vue-markdown'
 import Store from './store.js';
 
 export default {
@@ -65,6 +67,9 @@ export default {
 
       return indentation + this.highlightedName;
     },
+    displayedResourceDescription: function() {
+      return this.resource.description;
+    },
     shouldDisplayChildren: function() {
       if (this.treeMode) {
         return this.depth < 10
@@ -101,7 +106,8 @@ export default {
       return newName;
     }
   },
-  name: 'ps-resource'
+  name: 'ps-resource',
+  components: {'vue-markdown': VueMarkdown}
 }
 </script>
 

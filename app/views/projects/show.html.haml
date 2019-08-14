@@ -1,4 +1,6 @@
 = content_for :title, "Project #{project.title}"
+- content_for :page_scripts do
+  = javascript_pack_tag("common/markdown.js")
 
 #project-show
   %h1= project.title
@@ -11,8 +13,7 @@
   %p= project.member_list
 
   %h4 Description
-  %p
-    = simple_format(project.description)
+  %vue-markdown{class: 'markdown'}= project.description
 
   - unless project.proxy_configuration&.target_base_url.blank?
 

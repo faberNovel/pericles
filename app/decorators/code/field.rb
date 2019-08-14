@@ -27,7 +27,6 @@ module Code
     def typescript_type
       type = base_typescript_type
       type = "ReadonlyArray<#{type}>" if is_array
-      type = "#{type} | undefined" if code_nullable && !boolean?
       type
     end
 
@@ -78,7 +77,11 @@ module Code
       when :boolean
         'boolean'
       when :string
-        'string'
+        if resource_attribute.enum.blank?
+          'string'
+        else
+          resource_attribute.enum.split(',').map { |x| "\"#{x.strip}\"" }.join(' | ')
+        end
       when :date
         'string'
       when :datetime

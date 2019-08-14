@@ -1,12 +1,18 @@
+<% resource.resource_attributes.uniq { |a| a.base_typescript_type }.each do |attribute| %>
+  <% if attribute.primitive_type == nil %>
+import { <%= attribute.base_typescript_type =%>, <%= attribute.base_typescript_type.sub(/^Rest/, '') =%> } from "./<%= attribute.resource.name.underscore =%>";
+  <% end %>
+<% end %>
+
 export interface <%= resource.rest_name =%> {
 <% resource.resource_attributes.each do |attribute| %>
-  readonly <%= attribute.key_name =%>: <%= attribute.typescript_type =%>;
+  readonly <%= attribute.key_name =%><% if attribute.code_nullable %>?<% end %>: <%= attribute.typescript_type =%>;
 <% end %>
 }
 
 export class <%= resource.pascal_name =%> {
 <% resource.resource_attributes.each do |attribute| %>
-  public readonly <%= attribute.camel_variable_name =%>: <%= attribute.typescript_type.sub(/^Rest/, '').sub(/<Rest/, '<') =%>;
+  public readonly <%= attribute.camel_variable_name =%><% if attribute.code_nullable %>?<% end %>: <%= attribute.typescript_type.sub(/^Rest/, '').sub(/<Rest/, '<') =%>;
 <% end %>
 
   public constructor(json: <%= resource.rest_name =%>) {

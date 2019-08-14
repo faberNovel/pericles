@@ -22,6 +22,7 @@
         v-if='r.hasAttribute || manageMode'
         :class="[{selected: r.hasAttribute, hoverable: manageMode}, r.colorClass]"
         @click='toggleBelongingAttribute(attribute.id, r.id)'
+        :title='representationName(r.id)'
       )
     .cell
       a(
@@ -59,7 +60,8 @@
       dd {{attribute.maxItems}}
     .constraint-cell.description(v-if='attribute.description')
       dt Description
-      dd {{attribute.description}}
+      dd
+        vue-markdown(class='markdown', :source='attribute.description')
   .contraints-row.collapse(:id="'collapse-representation-' + attribute.id"
     v-if='manageMode && activeAttributeRepresentation'
   )
@@ -81,10 +83,11 @@
 
 <script>
 import vSelect from 'vue-select';
+import VueMarkdown from 'vue-markdown'
 import Store from './store.js';
 
 export default {
-  props: ['attribute', 'manageMode', 'activeRepresentation'],
+  props: ['attribute', 'manageMode', 'activeRepresentation', 'representations'],
   methods: {
     toggleBelongingAttribute: function(attributeId, representationId) {
         if(!this.manageMode)
@@ -99,6 +102,10 @@ export default {
         url += '#rep-' + this.activeAttributeRepresentation.selectedRepresentationId
       }
       return url;
+    },
+    representationName: function(representationId) {
+      let representation = this.representations.find(r => r.id === representationId)
+      return representation !== undefined ? representation.name : ''
     }
   },
   computed: {
@@ -163,7 +170,7 @@ export default {
       return name;
     }
   },
-  components: {'v-select': vSelect}
+  components: {'v-select': vSelect, 'vue-markdown': VueMarkdown}
 }
 </script>
 

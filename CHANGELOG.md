@@ -2,6 +2,14 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.10.1 - 2019-08-14
+
+* Fix typescript generation (thanks @grizio)
+* Support Markdown in description (thanks @grizio)
+* Add title on representation color dot (thanks @grizio)
+* Upgrade to webpacker 4
+* Bump fstream to fix security issues
+
 ## 0.10.0 - 2019-08-05
 
 * Add users management page
