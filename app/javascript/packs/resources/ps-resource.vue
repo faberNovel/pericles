@@ -5,11 +5,10 @@ div(style='margin-top: -1px;')
     :href='resourcePath'
   )
     .flexcontainer-space-between
-      .name(style='flex-basis: 200px', v-html='displayedResourceName')
-      vue-markdown(class='markdown short-description', style='flex: 1', :source='displayedResourceDescription')
-      .error(style='flex-basis: 50px')
+      .name(v-html='displayedResourceName')
+      vue-markdown(class='markdown short-description', style='flex: 1; margin-left: 20px', :source='displayedResourceDescription')
+      .error(style='flex-basis: 50px', v-if='resource.hasInvalidMocks')
         .tool-tip(
-          v-if='resource.hasInvalidMocks'
           data-toggle="tooltip"
           data-placement="top"
           title="Invalid mocks !"
