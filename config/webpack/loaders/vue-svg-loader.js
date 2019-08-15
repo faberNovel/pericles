@@ -1,6 +1,4 @@
 module.exports = {
   test: /\.svg$/,
-  use: [{
-    loader: 'vue-svg-loader'
-  }]
+  loader: 'vue-svg-loader'
 }

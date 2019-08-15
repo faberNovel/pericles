@@ -1,3 +1,7 @@
 = content_for :title, "Edit Resource Mock #{model_instance.name}"
 
-= render 'form'
+- content_for :page_scripts do
+  = javascript_pack_tag("resource_instances/index.js")
+
+#resource-instance-editor
+  %ps-resource-instance-editor
