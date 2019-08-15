@@ -4397,7 +4397,7 @@ mkdirp@0.5.x, "mkdirp@>=0.5 0", mkdirp@^0.5, mkdirp@^0.5.0, mkdirp@^0.5.1, mkdir
   dependencies:
     minimist "0.0.8"
 
-monaco-editor@^0.17.1:
+monaco-editor@^0.17.0, monaco-editor@^0.17.1:
   version "0.17.1"
   resolved "https://registry.yarnpkg.com/monaco-editor/-/monaco-editor-0.17.1.tgz#8fbe96ca54bfa75262706e044f8f780e904aa45c"
   integrity sha512-JAc0mtW7NeO+0SwPRcdkfDbWLgkqL9WfP1NbpP9wNASsW6oWqgZqNIWt4teymGjZIXTElx3dnQmUYHmVrJ7HxA==
@@ -4446,6 +4446,11 @@ nan@^2.12.1, nan@^2.13.2:
 nan@^2.9.2:
   version "2.11.1"
   resolved "https://registry.yarnpkg.com/nan/-/nan-2.11.1.tgz#90e22bccb8ca57ea4cd37cc83d3819b52eea6766"
+
+nano-assign@^1.0.0:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/nano-assign/-/nano-assign-1.0.1.tgz#abb1c50d0416b865fb37bbd155c5368bb54378e5"
+  integrity sha512-1K8ncUoAYFPYcCZqrB+K2XQaFCmA35rryJCtPkGrG3zYkwm+iIUZRIHyaAfuy6zxaK9siPdjeJq7+Inijm6xhw==
 
 nanomatch@^1.2.9:
   version "1.2.13"
@@ -7278,6 +7283,14 @@ vue-markdown@^2.2.4:
     markdown-it-sup "^1.0.0"
     markdown-it-task-lists "^2.0.1"
     markdown-it-toc-and-anchor "^4.1.2"
+
+vue-monaco@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/vue-monaco/-/vue-monaco-1.1.0.tgz#045df2621dfe82d01e0568f1f1f84155726b33fe"
+  integrity sha512-K2nWM4eMFlf5I+EBSNvRt6nJXKv4bTE2K1fKs4jnSj0ict1D6J60HOtc0K+lHiCeGSiYVSzfR1pAkzDlY63MjA==
+  dependencies:
+    monaco-editor "^0.17.0"
+    nano-assign "^1.0.0"
 
 vue-select@^2.4.0:
   version "2.5.1"

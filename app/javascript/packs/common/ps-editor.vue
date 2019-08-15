@@ -1,10 +1,11 @@
 <script>
 
   import * as monaco from 'monaco-editor';
-  import "./ps-editor.scss"
+  import MonacoEditor from 'vue-monaco';
+  import './ps-editor.scss';
 
   self.MonacoEnvironment = {
-    getWorkerUrl: function (moduleId, label) {
+    getWorkerUrl: function(moduleId, label) {
       if (label === 'json') {
         return '/packs/json.worker.chunk.js';
       }
@@ -18,96 +19,73 @@
         return '/packs/ts.worker.chunk.js';
       }
       return '/packs/editor.worker.chunk.js';
-    }
-  }
+    },
+  };
 
   export default {
-    name: 'Monaco-Editor',
+    name: 'ps-monaco-editor',
+    components: {
+      'monaco-editor': MonacoEditor,
+    },
 
     props: {
+      originalValue: String,
       value: {
         type: String,
-        required: true
+        required: true,
       },
       theme: {
         type: String,
-        default: 'vs'
+        default: 'vs',
       },
       language: String,
       options: {
         type: Object,
-        default: () => ({})
+        default: () => ({}),
+      },
+      diffEditor: {
+        type: Boolean,
+        default: false,
       },
     },
 
-    model: {
-      event: 'change'
-    },
-
-    mounted() {
-      this.initEditor();
-    },
-
-    watch: {
-      options: {
-        deep: true,
-        handler(options) {
-          if (this.editor) {
-            this.editor.updateOptions(options)
-          }
-        }
-      },
-
-      value(val) {
-        if (this.editor) {
-          if (val !== this.editor.getValue()) {
-            this.editor.setValue(val)
-          }
-        }
-      },
-
-      language(lang) {
-        if (this.editor) {
-          this.editor.setModelLanguage(this.editor.getModel(), lang)
-        }
-      },
-
-      theme(theme) {
-        if (this.editor) {
-          this.editor.setTheme(theme)
-        }
+    computed: {
+      editorOptions: function() {
+        return {
+          automaticLayout: true,
+          fontSize: 14,
+          minimap: {enabled: false},
+          scrollBeyondLastLine: false,
+          ...this.options,
+        };
       },
     },
 
     methods: {
-      initEditor() {
-        const options = {
-          language: this.language,
-          theme: this.theme,
-          automaticLayout: true,
-          fontSize: 14,
-          minimap: { enabled: false },
-          scrollBeyondLastLine: false,
-
-          ...this.options,
-          value: this.value,
-        }
-
-        this.editor = monaco.editor.create(this.$el, options)
-
-        this.editor.onDidChangeModelContent(event => {
-          const value = this.editor.getValue()
-          if (this.value !== value) {
-            this.$emit('change', value, event)
-          }
-        })
-
-        this.$emit('editorDidMount', this.editor)
+      handleChange(value, event) {
+        this.$emit("change", value, event)
       },
-    },
+      handleWillMount(monaco) {
+        this.$emit("editorWillMount", monaco)
+      },
+      handleDidMount(editor) {
+        this.$emit("editorDidMount", editor)
+      }
+    }
   };
 </script>
 
 <template>
-<div id="monaco-editor"></div>
+    <monaco-editor
+            id="monaco-editor"
+            :value="value"
+            :original="originalValue"
+            :language="language"
+            :theme="theme"
+            :options="editorOptions"
+            :diff-editor="diffEditor"
+            @change="handleChange"
+            @editorWillMount="handleWillMount"
+            @editorDidMount="handleDidMount"
+    />
 </template>

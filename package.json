@@ -31,6 +31,7 @@
     "vue": "^2.6.10",
     "vue-loader": "^15.7.1",
     "vue-markdown": "^2.2.4",
+    "vue-monaco": "^1.1.0",
     "vue-select": "^2.4.0",
     "vue-svg-loader": "^0.12.0",
     "vue-template-compiler": "^2.6.10"
