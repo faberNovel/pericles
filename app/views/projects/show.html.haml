@@ -13,7 +13,7 @@
   %p= project.member_list
 
   %h4 Description
-  %vue-markdown{class: 'markdown'}= project.description
+  %vue-markdown{class: 'markdown', source: project.description}
 
   - unless project.proxy_configuration&.target_base_url.blank?
 
