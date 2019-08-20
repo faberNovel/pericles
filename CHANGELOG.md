@@ -2,6 +2,13 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.10.2 - 2019-08-20
+
+* Escape description in vue-markdown
+* Fix broken svg images in vue components
+* Do not load validation errors into memory when cleaning old reports
+* Add default internal email domain in test env
+
 ## 0.10.1 - 2019-08-14
 
 * Fix typescript generation (thanks @grizio)
