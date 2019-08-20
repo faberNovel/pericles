@@ -18,7 +18,7 @@
           %div{style: 'flex-basis: 100px'}
             %span{ class: label_class_for_http_method(route.http_method) }= route.http_method
           %div{style: 'flex-basis: 250px'}= route.url
-          %vue-markdown{class: 'markdown short-description', style: 'flex: 1'}= route.description
+          %vue-markdown{class: 'markdown short-description', style: 'flex: 1', source: route.description}
           %div{style: 'flex-basis: 250px'}= route.resource_representations.uniq.map(&:name).join(", ")
           - if route.responses.empty?
             %div.tool-tip{style: 'flex-basis: 50px', 'data-toggle' => "tooltip", 'data-placement' => "top", title: "No responses"}

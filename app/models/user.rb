@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-  INTERNAL_EMAIL_DOMAIN = ENV['INTERNAL_EMAIL_DOMAIN']
+  INTERNAL_EMAIL_DOMAIN = Rails.configuration.internal_email_domain
 
   devise :database_authenticatable, :omniauthable, :trackable, :validatable, :registerable, :recoverable, omniauth_providers: Devise.omniauth_configs.keys
 

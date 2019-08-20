@@ -14,7 +14,7 @@
         %dl
           %dt Description
           %dd{class: 'markdown'}
-            %vue-markdown= route.description
+            %vue-markdown{source: route.description}
       .col-xs-3
         - if should_display_representations && !route.resource_representations.empty?
           %dl
