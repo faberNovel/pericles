@@ -1,0 +1,4 @@
+en:
+  security_schemes:
+    index:
+      no_security_scheme: "There are no security schemes, create one !"

@@ -1,0 +1,25 @@
+.flexspace-and-center
+  %dl.flex-150
+    %dt Key
+    %dd
+      %strong= security_scheme.key
+  %dl.flex-150
+    %dt Type
+    %dd
+      %strong= security_scheme.security_scheme_type
+  %dl.flex-150
+    %dt Name
+    %dd
+      %strong= security_scheme.name
+  %dl.flex-150
+    %dt In
+    %dd
+      %strong= security_scheme.in
+  %dl.flex
+    %dt Parameters
+    %dd
+      %pre
+        %code= security_scheme.parameters
+  .btn-group{ role: "group" }
+    = link_to 'Edit', edit_project_security_scheme_path(project, security_scheme), class: 'btn btn-primary' if user.can_edit? security_scheme
+    = link_to 'Delete', project_security_scheme_path(project, security_scheme), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-primary' if user.can_delete? security_scheme

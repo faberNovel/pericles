@@ -8,3 +8,4 @@
       = f.text_field :url, placeholder: "/my_resources"
       = f.select :http_method, Route.http_methods.keys.to_a
       = f.text_area :description, placeholder: t('.description_placeholder')
+      = f.select :security_scheme_id, project.security_schemes.collect { |ss| [ ss.key, ss.id ] }, include_blank: true

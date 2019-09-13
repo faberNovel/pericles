@@ -19,7 +19,8 @@ module Swagger
 
     def components
       {
-        schemas: resource_representation_definitions.merge(response_definitions)
+        schemas: resource_representation_definitions.merge(response_definitions),
+        securitySchemes: security_schemes_representations
       }
     end
 
@@ -91,7 +92,9 @@ module Swagger
             {
               r.http_method.to_s.downcase => r.to_swagger
             }
-          )
+          ).merge({
+            security: route_security_representation(r)
+          })
         end
 
         hash.merge!(
@@ -124,6 +127,30 @@ module Swagger
       objects = (objects + objects.map { |v| v.dig(:anyOf) }).compact.flatten
       objects.select { |o| o[:$ref] }.each do |object|
         (object.keys - [:$ref]).each { |key| object.delete(key) }
+      end
+    end
+
+    def security_schemes_representations
+      security_schemes_json = {}
+
+      security_schemes.each do |security_scheme|
+        security_schemes_json[security_scheme.key] = {
+          type: security_scheme.security_scheme_type,
+          name: security_scheme.name,
+          in: security_scheme.in
+        }.merge(JSON.parse(security_scheme.parameters))
+      end
+
+      security_schemes_json
+    end
+
+    def route_security_representation(route)
+      if route.security_scheme
+        route_security = {}
+        route_security[route.security_scheme.key] = []
+        [route_security]
+      else
+        []
       end
     end
   end
