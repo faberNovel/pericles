@@ -4,7 +4,7 @@ class CreateSecuritySchemes < ActiveRecord::Migration[5.1]
       t.string :key
       t.string :security_scheme_type
       t.string :name
-      t.string :in
+      t.string :security_scheme_in
       t.text :parameters
       t.references :project, foreign_key: true
     end

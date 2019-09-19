@@ -92,9 +92,7 @@ module Swagger
             {
               r.http_method.to_s.downcase => r.to_swagger
             }
-          ).merge({
-            security: route_security_representation(r)
-          })
+          )
         end
 
         hash.merge!(
@@ -137,19 +135,11 @@ module Swagger
         security_schemes_json[security_scheme.key] = {
           type: security_scheme.security_scheme_type,
           name: security_scheme.name,
-          in: security_scheme.in
+          in: security_scheme.security_scheme_in
         }.merge(JSON.parse(security_scheme.parameters))
       end
 
       security_schemes_json
-    end
-
-    def route_security_representation(route)
-      if route.security_scheme
-        [{route.security_scheme.key => []}]
-      else
-        []
-      end
     end
   end
 end

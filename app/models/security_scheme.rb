@@ -4,7 +4,7 @@ class SecurityScheme < ApplicationRecord
   validates :key, presence: true
   validates :security_scheme_type, presence: true
   validates :name, presence: true
-  validates :in, presence: true
+  validates :security_scheme_in, presence: true
   validates :parameters, presence: true
   validates :project, presence: true
 

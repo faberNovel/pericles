@@ -4,12 +4,8 @@ class SecuritySchemePolicy < ProjectRelatedPolicy
       :key,
       :security_scheme_type,
       :name,
-      :in,
+      :security_scheme_in,
       :parameters
     ]
-  end
-
-  def create?
-    return true
   end
 end

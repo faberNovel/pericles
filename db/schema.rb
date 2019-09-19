@@ -317,7 +317,7 @@ ActiveRecord::Schema.define(version: 20190912182400) do
     t.string "key"
     t.string "security_scheme_type"
     t.string "name"
-    t.string "in"
+    t.string "security_scheme_in"
     t.text "parameters"
     t.bigint "project_id"
     t.index ["project_id"], name: "index_security_schemes_on_project_id"
