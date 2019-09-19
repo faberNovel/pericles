@@ -12,8 +12,4 @@ class SecuritySchemePolicy < ProjectRelatedPolicy
   def create?
     return true
   end
-
-  def rest?
-    create?
-  end
 end

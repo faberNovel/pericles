@@ -146,9 +146,7 @@ module Swagger
 
     def route_security_representation(route)
       if route.security_scheme
-        route_security = {}
-        route_security[route.security_scheme.key] = []
-        [route_security]
+        [{route.security_scheme.key => []}]
       else
         []
       end
