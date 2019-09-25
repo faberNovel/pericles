@@ -9,6 +9,7 @@ class Route < ApplicationRecord
 
   belongs_to :resource, inverse_of: :routes
   belongs_to :request_resource_representation, class_name: 'ResourceRepresentation'
+  belongs_to :security_scheme
 
   delegate :project, to: :resource
 
@@ -19,6 +20,7 @@ class Route < ApplicationRecord
   validates :url, presence: true
   validates :resource, presence: true, uniqueness: { scope: [:http_method, :url] }
   validate :request_resource_representation_must_belongs_to_project
+  validate :security_scheme_must_belongs_to_project
 
   audited
   has_associated_audits
@@ -66,5 +68,11 @@ class Route < ApplicationRecord
     return unless request_resource_representation
     return if request_resource_representation.project == project
     errors.add(:request_resource_representation, :request_resource_representation_must_belongs_to_project)
+  end
+
+  def security_scheme_must_belongs_to_project
+    return unless security_scheme
+    return if security_scheme.project == project
+    errors.add(:security_scheme, :security_scheme_must_belongs_to_project)
   end
 end

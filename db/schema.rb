@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190715164030) do
+ActiveRecord::Schema.define(version: 20190912182400) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -300,8 +300,10 @@ ActiveRecord::Schema.define(version: 20190715164030) do
     t.integer "request_resource_representation_id"
     t.boolean "request_is_collection", default: false, null: false
     t.string "request_root_key"
+    t.bigint "security_scheme_id"
     t.index ["request_resource_representation_id"], name: "index_routes_on_request_resource_representation_id"
     t.index ["resource_id"], name: "index_routes_on_resource_id"
+    t.index ["security_scheme_id"], name: "index_routes_on_security_scheme_id"
   end
 
   create_table "schemes", id: :serial, force: :cascade do |t|
@@ -309,6 +311,16 @@ ActiveRecord::Schema.define(version: 20190715164030) do
     t.string "regexp"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "security_schemes", force: :cascade do |t|
+    t.string "key"
+    t.string "security_scheme_type"
+    t.string "name"
+    t.string "security_scheme_in"
+    t.text "parameters"
+    t.bigint "project_id"
+    t.index ["project_id"], name: "index_security_schemes_on_project_id"
   end
 
   create_table "users", id: :serial, force: :cascade do |t|
@@ -376,5 +388,6 @@ ActiveRecord::Schema.define(version: 20190715164030) do
   add_foreign_key "responses", "routes"
   add_foreign_key "routes", "resource_representations", column: "request_resource_representation_id"
   add_foreign_key "routes", "resources"
+  add_foreign_key "security_schemes", "projects"
   add_foreign_key "validation_errors", "reports"
 end
