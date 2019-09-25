@@ -13,11 +13,7 @@ Rails.application.routes.draw do
         post 'rest'
       end
     end
-    resources :security_schemes do
-      collection do
-        post 'rest'
-      end
-    end
+    resources :security_schemes
     resources :api_errors
     resources :reports, only: [:index, :show] do
       member do
