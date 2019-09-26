@@ -2,6 +2,12 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.11.0 - 2019-09-26
+
+* Add security schemes (thanks @grizio)
+* Fix a bug in typescript export when resource has a string attribute
+* Bump devise, mixin-deep and set-value to fix security issues
+
 ## 0.10.2 - 2019-08-20
 
 * Escape description in vue-markdown
