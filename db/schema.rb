@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190912182400) do
+ActiveRecord::Schema.define(version: 20190926081509) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -318,8 +318,8 @@ ActiveRecord::Schema.define(version: 20190912182400) do
     t.string "security_scheme_type"
     t.string "name"
     t.string "security_scheme_in"
-    t.text "parameters"
     t.bigint "project_id"
+    t.jsonb "parameters", default: {}
     t.index ["project_id"], name: "index_security_schemes_on_project_id"
   end
 

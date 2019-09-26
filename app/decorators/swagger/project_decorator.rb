@@ -136,7 +136,7 @@ module Swagger
           type: security_scheme.security_scheme_type,
           name: security_scheme.name,
           in: security_scheme.security_scheme_in
-        }.merge(JSON.parse(security_scheme.parameters))
+        }.merge(security_scheme.parameters)
       end
 
       security_schemes_json
