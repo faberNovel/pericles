@@ -1,7 +1,7 @@
 class SecurityScheme < ApplicationRecord
   belongs_to :project, inverse_of: :security_schemes
 
-  validates :key, presence: true
+  validates :key, presence: true, uniqueness: { scope: :project }
   validates :security_scheme_type, presence: true
   validates :name, presence: true
   validates :security_scheme_in, presence: true
