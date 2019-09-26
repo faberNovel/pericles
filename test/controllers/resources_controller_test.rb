@@ -380,6 +380,7 @@ class ResourcesControllerTest < ControllerWithAuthenticationTest
         val date: String,
         val dateTime: String?,
         val id: Int,
+        val mindset: String?,
         val nature: RestNature,
         val niceBoolean: Boolean?,
         val weaknessList: List<RestNature>,
@@ -407,6 +408,7 @@ class ResourcesControllerTest < ControllerWithAuthenticationTest
         let date: Date
         let dateTime: Date?
         let id: Int
+        let mindset: String?
         let nature: RestNature
         let niceBoolean: Bool?
         let weaknessList: [RestNature]
@@ -416,6 +418,7 @@ class ResourcesControllerTest < ControllerWithAuthenticationTest
             case date
             case dateTime = \"date_time\"
             case id
+            case mindset
             case nature
             case niceBoolean
             case weaknessList = \"weakness_list\"
@@ -437,6 +440,7 @@ class ResourcesControllerTest < ControllerWithAuthenticationTest
         :date,
         :date_time,
         :id,
+        :mindset,
         :nice_boolean,
         :weight,
       )
@@ -458,6 +462,7 @@ class ResourcesControllerTest < ControllerWithAuthenticationTest
       readonly date: string;
       readonly date_time?: string;
       readonly id: number;
+      readonly mindset?: "calm" | "angry";
       readonly nature: RestNature;
       readonly niceBoolean?: boolean;
       readonly weakness_list: ReadonlyArray<RestNature>;
@@ -468,6 +473,7 @@ class ResourcesControllerTest < ControllerWithAuthenticationTest
       public readonly date: string;
       public readonly dateTime?: string;
       public readonly id: number;
+      public readonly mindset?: "calm" | "angry";
       public readonly nature: Nature;
       public readonly niceBoolean?: boolean;
       public readonly weaknessList: ReadonlyArray<Nature>;
@@ -477,6 +483,7 @@ class ResourcesControllerTest < ControllerWithAuthenticationTest
         this.date = json.date;
         this.dateTime = (json.date_time !== null && json.date_time !== undefined) ? json.date_time : undefined;
         this.id = json.id;
+        this.mindset = (json.mindset !== null && json.mindset !== undefined) ? json.mindset : undefined;
         this.nature = new Nature(json.nature);
         this.niceBoolean = json.niceBoolean !== undefined && json.niceBoolean !== null && json.niceBoolean;
         this.weaknessList = json.weakness_list.map((o) => new Nature(o));

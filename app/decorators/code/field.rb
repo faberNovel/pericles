@@ -77,10 +77,10 @@ module Code
       when :boolean
         'boolean'
       when :string
-        if resource_attribute.enum.blank?
+        if enum.blank?
           'string'
         else
-          resource_attribute.enum.split(',').map { |x| "\"#{x.strip}\"" }.join(' | ')
+          enum.split(',').map { |x| "\"#{x.strip}\"" }.join(' | ')
         end
       when :date
         'string'

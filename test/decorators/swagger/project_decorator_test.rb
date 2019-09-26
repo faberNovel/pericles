@@ -4,9 +4,10 @@ module Swagger
   class ProjectDecoratorTest < ActiveSupport::TestCase
     setup do
       @project = create(:project)
+      @security_scheme = create(:security_scheme, project: @project)
       @resource = create(:pokemon, project: @project)
       @representation = @resource.resource_representations.first
-      @route = create(:route, resource: @resource, request_resource_representation: @representation)
+      @route = create(:route, resource: @resource, request_resource_representation: @representation, security_scheme: @security_scheme)
       @response = create(:response, route: @route, resource_representation: @representation)
       @decorator = Swagger::ProjectDecorator.new(@project.reload)
     end
@@ -25,6 +26,19 @@ module Swagger
       other_resource.resource_representations.first.update(name: @representation.name)
       refute @decorator.context[:use_resource_representation_name_as_uid]
       refute @decorator.to_swagger.include? '#/components/schemas/DefaultPokemon'
+    end
+
+    test 'generated json contains valid security schemes' do
+      generated_security_schemes = JSON.parse(@decorator.to_swagger)["components"]["securitySchemes"]
+      expected_security_schemes = {
+          "theUltimateSecurity" => {
+              "type" => "apiKey",
+              "name" => "Authorization",
+              "in" => "header",
+              "x-amazon-apigateway-authtype" => "cognito_user_pools"
+          }
+      }
+      assert_equal generated_security_schemes, expected_security_schemes
     end
   end
 end

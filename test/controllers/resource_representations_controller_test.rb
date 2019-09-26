@@ -328,6 +328,7 @@ class ResourceRepresentationsControllerTest < ControllerWithAuthenticationTest
       readonly date: string;
       readonly date_time?: string;
       readonly id: number;
+      readonly mindset?: "calm" | "angry";
       readonly nature: RestDefaultNature;
       readonly niceBoolean?: boolean;
       readonly weakness_list: ReadonlyArray<RestDefaultNature>;
@@ -338,6 +339,7 @@ class ResourceRepresentationsControllerTest < ControllerWithAuthenticationTest
       public readonly date: string;
       public readonly dateTime?: string;
       public readonly id: number;
+      public readonly mindset?: "calm" | "angry";
       public readonly nature: DefaultNature;
       public readonly niceBoolean?: boolean;
       public readonly weaknessList: ReadonlyArray<DefaultNature>;
@@ -347,6 +349,7 @@ class ResourceRepresentationsControllerTest < ControllerWithAuthenticationTest
         this.date = json.date;
         this.dateTime = (json.date_time !== null && json.date_time !== undefined) ? json.date_time : undefined;
         this.id = json.id;
+        this.mindset = (json.mindset !== null && json.mindset !== undefined) ? json.mindset : undefined;
         this.nature = new DefaultNature(json.nature);
         this.niceBoolean = json.niceBoolean !== undefined && json.niceBoolean !== null && json.niceBoolean;
         this.weaknessList = json.weakness_list.map((o) => new DefaultNature(o));

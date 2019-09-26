@@ -7,7 +7,8 @@ class Swagger::RouteDecorator < Draper::Decorator
       description: description,
       parameters: parameters,
       responses: responses,
-      requestBody: request_body
+      requestBody: request_body,
+      security: security
     }.select { |_, v| v.present? }
   end
 
@@ -59,5 +60,11 @@ class Swagger::RouteDecorator < Draper::Decorator
         }
       }
     end
+  end
+
+  def security
+    return unless security_scheme
+
+    [{security_scheme.key => []}]
   end
 end

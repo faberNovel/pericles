@@ -1,0 +1,13 @@
+= content_for :title, "Security Schemes"
+- content_for :page_scripts do
+  = javascript_pack_tag("common/markdown.js")
+
+.flexspace-and-center
+  %h1 Security Schemes
+  = link_to 'New Security Scheme', new_project_security_scheme_path(project), class: "btn btn-primary btn-lg" if user.can_create? Route, project: project
+
+.margin-top-element
+  - if @project.security_schemes.empty?
+    %p= t('.no_security_scheme')
+  - @project.security_schemes.each do |security_scheme|
+    = render security_scheme

@@ -26,6 +26,7 @@ FactoryBot.define do
         resource.resource_attributes << create(:attribute_with_resource, name: 'weakness_list', resource: nature, is_array: true)
         resource.resource_attributes << create(:attribute, name: 'date', primitive_type: :date, nullable: false)
         resource.resource_attributes << create(:attribute, name: 'date_time', primitive_type: :datetime, nullable: true)
+        resource.resource_attributes << create(:attribute, name: 'mindset', primitive_type: :string, enum: 'calm, angry', nullable: true)
 
         resource.resource_attributes.each do |a|
           create(:attributes_resource_representation,

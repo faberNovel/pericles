@@ -13,6 +13,7 @@ class Project < ApplicationRecord
   has_many :members
   has_many :users, through: :members
   has_many :metadata, inverse_of: :project, dependent: :destroy
+  has_many :security_schemes, inverse_of: :project, dependent: :destroy
 
   accepts_nested_attributes_for :proxy_configuration, allow_destroy: true
 

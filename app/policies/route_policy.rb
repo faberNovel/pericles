@@ -5,6 +5,7 @@ class RoutePolicy < ProjectRelatedPolicy
       :http_method,
       :url,
       :resource_id,
+      :security_scheme_id,
       :request_resource_representation_id,
       :request_is_collection,
       :request_root_key,

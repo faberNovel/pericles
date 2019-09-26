@@ -14,4 +14,8 @@ class Code::AttributesResourceRepresentationDecorator < Draper::Decorator
   def boolean?
     object.resource_attribute.boolean?
   end
+
+  def enum
+    object.resource_attribute.enum
+  end
 end

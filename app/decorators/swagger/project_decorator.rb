@@ -19,7 +19,8 @@ module Swagger
 
     def components
       {
-        schemas: resource_representation_definitions.merge(response_definitions)
+        schemas: resource_representation_definitions.merge(response_definitions),
+        securitySchemes: security_schemes_representations
       }
     end
 
@@ -125,6 +126,20 @@ module Swagger
       objects.select { |o| o[:$ref] }.each do |object|
         (object.keys - [:$ref]).each { |key| object.delete(key) }
       end
+    end
+
+    def security_schemes_representations
+      security_schemes_json = {}
+
+      security_schemes.each do |security_scheme|
+        security_schemes_json[security_scheme.key] = {
+          type: security_scheme.security_scheme_type,
+          name: security_scheme.name,
+          in: security_scheme.security_scheme_in
+        }.merge(security_scheme.parameters)
+      end
+
+      security_schemes_json
     end
   end
 end
