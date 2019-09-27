@@ -1,14 +1,15 @@
 class Swagger::RouteDecorator < Draper::Decorator
   delegate_all
 
-  def to_swagger
+  def to_swagger(api_gateway_integration)
     {
       tags: [resource.name],
       description: description,
       parameters: parameters,
       responses: responses,
       requestBody: request_body,
-      security: security
+      security: security,
+      'x-amazon-apigateway-integration' => x_amazon_apigateway_integration(api_gateway_integration)
     }.select { |_, v| v.present? }
   end
 
@@ -66,5 +67,40 @@ class Swagger::RouteDecorator < Draper::Decorator
     return unless security_scheme
 
     [{security_scheme.key => []}]
+  end
+
+  def x_amazon_apigateway_integration(api_gateway_integration)
+    return unless api_gateway_integration
+
+    parameters = path_parameters
+
+    cache_key_parameters = parameters.map do |parameter|
+      'integration.request.path.' + parameter
+    end
+
+    request_parameters = {}
+    parameters.each do |parameter|
+      request_parameters['integration.request.path.' + parameter] = 'method.request.path.' + parameter
+    end
+
+    {
+      cacheKeyParameters: cache_key_parameters,
+      httpMethod: http_method,
+      passthroughBehavior: 'when_no_match',
+      requestParameters: request_parameters,
+      timeoutInMillis: api_gateway_integration.timeout_in_millis,
+      type: 'http_proxy',
+      uri: api_gateway_integration.uri_prefix + url
+    }
+  end
+
+  def path_parameters
+    parts = url.split('/')
+    parameter_parts = parts.select do |part|
+      part.starts_with?(':')
+    end
+    parameter_parts.map do |part|
+      part[1..-1]
+    end
   end
 end

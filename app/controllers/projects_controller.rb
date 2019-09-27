@@ -19,6 +19,9 @@ class ProjectsController < ApplicationController
       format.swagger do
         render json: Swagger::ProjectDecorator.new(project).to_swagger, content_type: 'application/json'
       end
+      format.api_gateway_integration do
+        render json: Swagger::ProjectDecorator.new(project).to_swagger(true), content_type: 'application/json'
+      end
       %i[swift kotlin ruby typescript].each do |language|
         format.send(language) do
           send_data(
@@ -35,6 +38,7 @@ class ProjectsController < ApplicationController
 
   def edit
     project.build_proxy_configuration unless project.proxy_configuration
+    project.build_api_gateway_integration unless project.api_gateway_integration
   end
 
   def create

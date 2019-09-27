@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190926081509) do
+ActiveRecord::Schema.define(version: 20190928112108) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -38,6 +38,14 @@ ActiveRecord::Schema.define(version: 20190926081509) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["project_id"], name: "index_api_errors_on_project_id"
+  end
+
+  create_table "api_gateway_integrations", force: :cascade do |t|
+    t.string "title"
+    t.string "uri_prefix"
+    t.integer "timeout_in_millis"
+    t.bigint "project_id"
+    t.index ["project_id"], name: "index_api_gateway_integrations_on_project_id"
   end
 
   create_table "attributes", id: :serial, force: :cascade do |t|
@@ -163,8 +171,8 @@ ActiveRecord::Schema.define(version: 20190926081509) do
   end
 
   create_table "metadatum_instances_mock_pickers", id: false, force: :cascade do |t|
-    t.bigint "metadatum_instance_id", null: false
-    t.bigint "mock_picker_id", null: false
+    t.integer "metadatum_instance_id", null: false
+    t.integer "mock_picker_id", null: false
   end
 
   create_table "mock_pickers", id: :serial, force: :cascade do |t|
@@ -205,6 +213,7 @@ ActiveRecord::Schema.define(version: 20190926081509) do
     t.string "slack_incoming_webhook_url"
     t.string "slack_channel"
     t.datetime "slack_updated_at"
+    t.boolean "amazon_apigateway_integration", default: false, null: false
     t.index ["mock_profile_id"], name: "index_projects_on_mock_profile_id"
   end
 
@@ -359,6 +368,7 @@ ActiveRecord::Schema.define(version: 20190926081509) do
   end
 
   add_foreign_key "api_error_instances", "api_errors"
+  add_foreign_key "api_gateway_integrations", "projects"
   add_foreign_key "attributes", "resources"
   add_foreign_key "attributes", "resources", column: "parent_resource_id"
   add_foreign_key "attributes", "schemes"

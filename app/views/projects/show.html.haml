@@ -48,6 +48,13 @@
     = link_to 'Ruby', project_path(project, format: 'ruby'), class: 'btn btn-primary'
     = link_to 'Typescript', project_path(project, format: 'typescript'), class: 'btn btn-primary'
 
+  %h4 API Gateway Integration
+  .buttons
+    = link_to 'Swagger format',
+      project_path(project, format: 'api_gateway_integration'),
+      class: 'btn btn-primary',
+      data: { confirm: project.resource_representation_name_as_swagger_uid }
+
   - if Rails.application.secrets.slack[:client_id]
     %h4 Slack
     - if project.slack_channel.present?

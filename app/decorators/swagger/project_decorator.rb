@@ -2,19 +2,27 @@ module Swagger
   class ProjectDecorator < Draper::Decorator
     delegate_all
 
-    def to_swagger
+    def to_swagger(with_api_gateway_integration = false)
       {
         openapi: '3.0.0',
         info: {
           description: description,
-          title: title,
+          title: info_title(with_api_gateway_integration),
           version: '1.0.0'
         },
         servers: servers,
         tags: tags,
-        paths: paths,
+        paths: paths(with_api_gateway_integration),
         components: components
       }.deep_stringify_keys.to_json
+    end
+
+    def info_title(with_api_gateway_integration)
+      if with_api_gateway_integration && !api_gateway_integration.title.to_s.strip.empty?
+        api_gateway_integration.title
+      else
+        title
+      end
     end
 
     def components
@@ -79,7 +87,7 @@ module Swagger
       end
     end
 
-    def paths
+    def paths(with_api_gateway_integration)
       routes_by_url = routes.group_by do |r|
         r.url.starts_with?('/') ? r.url : "/#{r.url}"
       end
@@ -90,7 +98,7 @@ module Swagger
 
           h.merge!(
             {
-              r.http_method.to_s.downcase => r.to_swagger
+              r.http_method.to_s.downcase => r.to_swagger(with_api_gateway_integration ? api_gateway_integration : nil)
             }
           )
         end
