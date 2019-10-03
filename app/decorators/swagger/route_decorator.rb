@@ -72,19 +72,13 @@ class Swagger::RouteDecorator < Draper::Decorator
   def x_amazon_apigateway_integration(api_gateway_integration)
     return unless api_gateway_integration
 
-    parameters = path_parameters
-
-    cache_key_parameters = parameters.map do |parameter|
-      'integration.request.path.' + parameter
-    end
-
     request_parameters = {}
-    parameters.each do |parameter|
+    path_parameters.each do |parameter|
       request_parameters['integration.request.path.' + parameter] = 'method.request.path.' + parameter
     end
 
     {
-      cacheKeyParameters: cache_key_parameters,
+      cacheKeyParameters: request_parameters.keys,
       httpMethod: http_method,
       passthroughBehavior: 'when_no_match',
       requestParameters: request_parameters,

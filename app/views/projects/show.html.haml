@@ -33,6 +33,10 @@
       project_path(project, format: 'swagger'),
       class: 'btn btn-primary',
       data: { confirm: project.resource_representation_name_as_swagger_uid }
+    = link_to 'Swagger with API Gateway integration',
+      project_path(project, format: 'swagger', with_api_gateway_integration: true),
+      class: 'btn btn-primary',
+      data: { confirm: project.resource_representation_name_as_swagger_uid }
 
 
   %p
@@ -47,13 +51,6 @@
     = link_to 'Kotlin', project_path(project, format: 'kotlin'), class: 'btn btn-primary'
     = link_to 'Ruby', project_path(project, format: 'ruby'), class: 'btn btn-primary'
     = link_to 'Typescript', project_path(project, format: 'typescript'), class: 'btn btn-primary'
-
-  %h4 API Gateway Integration
-  .buttons
-    = link_to 'Swagger format',
-      project_path(project, format: 'api_gateway_integration'),
-      class: 'btn btn-primary',
-      data: { confirm: project.resource_representation_name_as_swagger_uid }
 
   - if Rails.application.secrets.slack[:client_id]
     %h4 Slack

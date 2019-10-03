@@ -17,10 +17,8 @@ class ProjectsController < ApplicationController
         )
       end
       format.swagger do
-        render json: Swagger::ProjectDecorator.new(project).to_swagger, content_type: 'application/json'
-      end
-      format.api_gateway_integration do
-        render json: Swagger::ProjectDecorator.new(project).to_swagger(true), content_type: 'application/json'
+        swagger = Swagger::ProjectDecorator.new(project).to_swagger(with_api_gateway_integration: params[:with_api_gateway_integration])
+        render json: swagger, content_type: 'application/json'
       end
       %i[swift kotlin ruby typescript].each do |language|
         format.send(language) do

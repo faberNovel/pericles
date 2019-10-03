@@ -2,7 +2,7 @@ module Swagger
   class ProjectDecorator < Draper::Decorator
     delegate_all
 
-    def to_swagger(with_api_gateway_integration = false)
+    def to_swagger(with_api_gateway_integration: false)
       {
         openapi: '3.0.0',
         info: {
@@ -18,11 +18,8 @@ module Swagger
     end
 
     def info_title(with_api_gateway_integration)
-      if with_api_gateway_integration && !api_gateway_integration.title.to_s.strip.empty?
-        api_gateway_integration.title
-      else
-        title
-      end
+      return title unless with_api_gateway_integration && api_gateway_integration.title.present?
+      api_gateway_integration.title
     end
 
     def components

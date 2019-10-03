@@ -9,4 +9,3 @@ Mime::Type.register "text/plain", :swift
 Mime::Type.register "text/plain", :ruby
 Mime::Type.register "text/plain", :typescript
 Mime::Type.register "application/x-yaml", :swagger
-Mime::Type.register "application/json", :api_gateway_integration
