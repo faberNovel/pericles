@@ -18,7 +18,7 @@ module Swagger
     end
 
     def info_title(with_api_gateway_integration)
-      return title unless with_api_gateway_integration && api_gateway_integration.title.present?
+      return title unless with_api_gateway_integration && api_gateway_integration&.title.present?
       api_gateway_integration.title
     end
 
