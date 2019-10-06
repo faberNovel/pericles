@@ -9,6 +9,7 @@ class RoutePolicy < ProjectRelatedPolicy
       :request_resource_representation_id,
       :request_is_collection,
       :request_root_key,
+      :deprecated,
       request_query_parameters_attributes: [
         :id, :name, :description, :primitive_type, :is_optional, :_destroy
       ],

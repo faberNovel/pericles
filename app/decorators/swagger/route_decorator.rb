@@ -8,6 +8,7 @@ class Swagger::RouteDecorator < Draper::Decorator
       parameters: parameters,
       responses: responses,
       requestBody: request_body,
+      deprecated: deprecated?,
       security: security,
       'x-amazon-apigateway-integration' => x_amazon_apigateway_integration(api_gateway_integration)
     }.select { |_, v| v.present? }

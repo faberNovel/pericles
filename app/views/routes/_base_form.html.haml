@@ -9,3 +9,4 @@
       = f.select :http_method, Route.http_methods.keys.to_a
       = f.text_area :description, placeholder: t('.description_placeholder')
       = f.select :security_scheme_id, project.security_schemes.collect { |ss| [ ss.key, ss.id ] }, include_blank: true
+      = f.text_field :deprecated, placeholder: "If deprecated, please tell why. Empty field means not deprecated"

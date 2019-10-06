@@ -310,6 +310,7 @@ ActiveRecord::Schema.define(version: 20190928112108) do
     t.boolean "request_is_collection", default: false, null: false
     t.string "request_root_key"
     t.bigint "security_scheme_id"
+    t.string "deprecated"
     t.index ["request_resource_representation_id"], name: "index_routes_on_request_resource_representation_id"
     t.index ["resource_id"], name: "index_routes_on_resource_id"
     t.index ["security_scheme_id"], name: "index_routes_on_security_scheme_id"
