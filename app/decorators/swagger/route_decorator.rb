@@ -28,7 +28,7 @@ class Swagger::RouteDecorator < Draper::Decorator
   end
 
   def parameters
-    query_parameters
+    query_parameters + path_parameters
   end
 
   def request_body
@@ -63,6 +63,19 @@ class Swagger::RouteDecorator < Draper::Decorator
     end
   end
 
+  def path_parameters
+    path_parameters_names.map do |parameter|
+      {
+          name: parameter,
+          in: 'path',
+          required: true,
+          schema: {
+              type: "string"
+          }
+      }
+    end
+  end
+
   def security
     return unless security_scheme
 
@@ -73,7 +86,7 @@ class Swagger::RouteDecorator < Draper::Decorator
     return unless api_gateway_integration
 
     request_parameters = {}
-    path_parameters.each do |parameter|
+    path_parameters_names.each do |parameter|
       request_parameters['integration.request.path.' + parameter] = 'method.request.path.' + parameter
     end
 
@@ -84,11 +97,11 @@ class Swagger::RouteDecorator < Draper::Decorator
       requestParameters: request_parameters,
       timeoutInMillis: api_gateway_integration.timeout_in_millis,
       type: 'http_proxy',
-      uri: api_gateway_integration.uri_prefix + url
+      uri: api_gateway_integration.uri_prefix + normalized_url
     }
   end
 
-  def path_parameters
+  def path_parameters_names
     parts = url.split('/')
     parameter_parts = parts.select do |part|
       part.starts_with?(':')
@@ -96,5 +109,17 @@ class Swagger::RouteDecorator < Draper::Decorator
     parameter_parts.map do |part|
       part[1..-1]
     end
+  end
+
+  def normalized_url
+    parts = url.split('/')
+    normalized_parts = parts.map do |part|
+      if part.starts_with?(':')
+        '{' + part[1..-1] + '}'
+      else
+        part
+      end
+    end
+    normalized_parts.join('/')
   end
 end

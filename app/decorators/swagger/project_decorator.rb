@@ -85,14 +85,15 @@ module Swagger
     end
 
     def paths(with_api_gateway_integration)
-      routes_by_url = routes.group_by do |r|
-        r.url.starts_with?('/') ? r.url : "/#{r.url}"
+      decorated_routes = routes.map do |r|
+        Swagger::RouteDecorator.new(r, context: context)
+      end
+      routes_by_url = decorated_routes.group_by do |r|
+        r.normalized_url.starts_with?('/') ? r.normalized_url : "/#{r.normalized_url}"
       end
 
       routes_by_url.reduce({}) do |hash, (url, routes)|
         routes_by_method = routes.reduce({}) do |h, r|
-          r = Swagger::RouteDecorator.new(r, context: context)
-
           h.merge!(
             {
               r.http_method.to_s.downcase => r.to_swagger(with_api_gateway_integration ? api_gateway_integration : nil)
