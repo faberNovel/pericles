@@ -97,7 +97,7 @@ class Swagger::RouteDecorator < Draper::Decorator
       requestParameters: request_parameters,
       timeoutInMillis: api_gateway_integration.timeout_in_millis,
       type: 'http_proxy',
-      uri: api_gateway_integration.uri_prefix + normalized_url
+      uri: api_gateway_integration.uri_prefix + normalized_url(remove_plus_signs: true)
     }
   end
 
@@ -107,15 +107,23 @@ class Swagger::RouteDecorator < Draper::Decorator
       part.starts_with?(':')
     end
     parameter_parts.map do |part|
-      part[1..-1]
+      if part.ends_with?('+')
+        part[1..-2]
+      else
+        part[1..-1]
+      end
     end
   end
 
-  def normalized_url
+  def normalized_url(remove_plus_signs: false)
     parts = url.split('/')
     normalized_parts = parts.map do |part|
       if part.starts_with?(':')
-        '{' + part[1..-1] + '}'
+        if remove_plus_signs && part.ends_with?('+')
+          '{' + part[1..-2] + '}'
+        else
+          '{' + part[1..-1] + '}'
+        end
       else
         part
       end
