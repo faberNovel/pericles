@@ -116,18 +116,10 @@ class Swagger::RouteDecorator < Draper::Decorator
   end
 
   def normalized_url(remove_plus_signs: false)
-    parts = url.split('/')
-    normalized_parts = parts.map do |part|
-      if part.starts_with?(':')
-        if remove_plus_signs && part.ends_with?('+')
-          '{' + part[1..-2] + '}'
-        else
-          '{' + part[1..-1] + '}'
-        end
-      else
-        part
-      end
+    path_parameters_names.inject(url) do |url, parameter_name|
+      pattern = /:(#{parameter_name}\+?)/
+      replacement = remove_plus_signs ? "{#{parameter_name}}" : '{\1}'
+      url.gsub(pattern, replacement)
     end
-    normalized_parts.join('/')
   end
 end
