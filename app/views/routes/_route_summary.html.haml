@@ -14,7 +14,12 @@
         %dl
           %dt Description
           %dd{class: 'markdown'}
-            %vue-markdown{source: route.description}
+            -if route.deprecated?
+              %p [DEPRECATED]
+              %vue-markdown{source: route.deprecated}
+              %vue-markdown{source: route.description, class: 'deprecated'}
+            - else
+              %vue-markdown{source: route.description}
       .col-xs-3
         - if should_display_representations && !route.resource_representations.empty?
           %dl
