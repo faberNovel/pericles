@@ -33,6 +33,10 @@
       project_path(project, format: 'swagger'),
       class: 'btn btn-primary',
       data: { confirm: project.resource_representation_name_as_swagger_uid }
+    = link_to 'Swagger with API Gateway integration',
+      project_path(project, format: 'swagger', with_api_gateway_integration: true),
+      class: 'btn btn-primary',
+      data: { confirm: project.resource_representation_name_as_swagger_uid }
 
 
   %p
