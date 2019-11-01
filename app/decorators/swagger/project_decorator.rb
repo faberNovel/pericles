@@ -140,12 +140,36 @@ module Swagger
       security_schemes.each do |security_scheme|
         security_schemes_json[security_scheme.key] = {
           type: security_scheme.security_scheme_type,
-          name: security_scheme.name,
-          in: security_scheme.security_scheme_in
-        }.merge(security_scheme.parameters)
+          description: security_scheme.description
+        }
+          .merge(security_scheme_detail(security_scheme))
+          .merge(security_scheme.specification_extensions)
+          .select { |_, v| v.present? }
       end
 
       security_schemes_json
+    end
+
+    def security_scheme_detail(security_scheme)
+      if security_scheme.security_scheme_type == 'apiKey'
+        {
+          in: security_scheme.security_scheme_in,
+          name: security_scheme.name
+        }
+      elsif security_scheme.security_scheme_type == 'http'
+        {
+          scheme: security_scheme.scheme,
+          bearerFormat: security_scheme.bearer_format
+        }
+      elsif security_scheme.security_scheme_type == 'oauth2'
+        {
+          flows: security_scheme.flows
+        }
+      elsif security_scheme.security_scheme_type == 'openIdConnect'
+        {
+          openIdConnectUrl: security_scheme.open_id_connect_url
+        }
+      end
     end
   end
 end
