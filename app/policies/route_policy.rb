@@ -4,6 +4,7 @@ class RoutePolicy < ProjectRelatedPolicy
       :description,
       :http_method,
       :url,
+      :operation_id,
       :resource_id,
       :security_scheme_id,
       :request_resource_representation_id,
