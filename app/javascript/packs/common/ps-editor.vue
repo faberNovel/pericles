@@ -1,8 +1,5 @@
 <script>
-
-  import * as monaco from 'monaco-editor';
-  import MonacoEditor from 'vue-monaco';
-  import './ps-editor.scss';
+  import MonacoEditorComponent from 'vue-monaco';
 
   self.MonacoEnvironment = {
     getWorkerUrl: function(moduleId, label) {
@@ -22,70 +19,23 @@
     },
   };
 
+  export const DefaultEditorOptions = {
+    fontSize: 14,
+    minimap: {enabled: false},
+    scrollBeyondLastLine: false,
+    automaticLayout: true,
+  };
+
   export default {
     name: 'ps-monaco-editor',
-    components: {
-      'monaco-editor': MonacoEditor,
-    },
-
+    extends: MonacoEditorComponent,
     props: {
-      originalValue: String,
-      value: {
-        type: String,
-        required: true,
-      },
-      theme: {
-        type: String,
-        default: 'vs',
-      },
-      language: String,
       options: {
         type: Object,
-        default: () => ({}),
-      },
-      diffEditor: {
-        type: Boolean,
-        default: false,
+        default: function() {
+          return DefaultEditorOptions;
+        },
       },
     },
-
-    computed: {
-      editorOptions: function() {
-        return {
-          automaticLayout: true,
-          fontSize: 14,
-          minimap: {enabled: false},
-          scrollBeyondLastLine: false,
-          ...this.options,
-        };
-      },
-    },
-
-    methods: {
-      handleChange(value, event) {
-        this.$emit("change", value, event)
-      },
-      handleWillMount(monaco) {
-        this.$emit("editorWillMount", monaco)
-      },
-      handleDidMount(editor) {
-        this.$emit("editorDidMount", editor)
-      }
-    }
   };
 </script>
-
-<template>
-    <monaco-editor
-            id="monaco-editor"
-            :value="value"
-            :original="originalValue"
-            :language="language"
-            :theme="theme"
-            :options="editorOptions"
-            :diff-editor="diffEditor"
-            @change="handleChange"
-            @editorWillMount="handleWillMount"
-            @editorDidMount="handleDidMount"
-    />
-</template>
