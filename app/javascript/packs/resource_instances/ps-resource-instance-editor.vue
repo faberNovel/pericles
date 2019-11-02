@@ -2,6 +2,43 @@
   import Editor, {DefaultEditorOptions} from '../common/ps-editor';
   import './styles.scss';
 
+  function camelize(str) {
+    return str.replace(/(?:^\w|[A-Z]|\b\w)/g, function(word, index) {
+      return index == 0 ? word.toLowerCase() : word.toUpperCase();
+    }).replace(/\s+/g, '');
+  }
+
+  const testSchema = (name, uri) => ({
+    uri: `http://localhost:3000/${name}-schema.json`,
+    fileMatch: [uri.toString()],
+    // schema: Provide schema here
+    schema: {
+      type: 'object',
+      required: [
+        'first_name',
+        'last_name',
+      ],
+      properties: {
+        first_name: {
+          type: 'string',
+        },
+        last_name: {
+          type: 'string',
+        },
+        age: {
+          type: 'integer',
+        },
+        division: {
+          type: 'string',
+          enum: [
+            'technologies',
+            'customer',
+            'transformation',
+          ],
+        },
+      },
+    },
+  });
   export default {
     name: 'ps-resource-instance-editor',
     components: {
@@ -25,11 +62,12 @@
       },
     },
     data: function() {
+      const normalizedName = camelize(this.name);
       return {
+        normalizedName,
         resourceName: this.name,
         value: this.initialvalue,
         uri: undefined,
-        editor: undefined,
         monaco: undefined,
         options: DefaultEditorOptions,
       };
@@ -45,15 +83,6 @@
         }
       },
     },
-    watch: {
-      editor: function(newEditor, oldEditor) {
-        if (oldEditor === undefined && newEditor !== undefined) {
-          // Editor just got instanciated. Create model
-          this.options.model = this.monaco.editor.createModel(this.value, 'json', this.uri);
-          // FYI, there is a weird bug where when model is declared as undefined in COMPONENT.data.options, Vue exceeds it's call stack.
-        }
-      },
-    },
     methods: {
       updateValue(value) {
         this.value = value;
@@ -61,22 +90,45 @@
       setMonaco(monaco) {
         if (!this.monaco) {
           this.monaco = monaco;
-          this.uri = this.monaco.Uri.parse('file://test.json');
-          this.monaco.languages.json.jsonDefaults.setDiagnosticsOptions({
+          const uri = monaco.Uri.parse(`a://test.json`);
+          this.uri = uri;
+          this.options.model = monaco.editor.createModel(this.value, 'json', uri);
+          monaco.languages.json.jsonDefaults.setDiagnosticsOptions({
             validate: true,
             schemas: [
               {
                 uri: 'http://localhost:3000/test-schema.json',
-                fileMatch: this.uri.toString(),
-                // schema: Provide schema here
+                fileMatch: [uri.toString()],
+                schema: {
+                  type: 'object',
+                  required: [
+                    'first_name',
+                    'last_name',
+                  ],
+                  additionalProperties: false,
+                  properties: {
+                    first_name: {
+                      type: 'string',
+                    },
+                    last_name: {
+                      type: 'string',
+                    },
+                    age: {
+                      type: 'integer',
+                    },
+                    division: {
+                      type: 'string',
+                      enum: [
+                        'technologies',
+                        'customer',
+                        'transformation',
+                      ],
+                    },
+                  },
+                },
               },
             ],
           });
-        }
-      },
-      setEditor(editor) {
-        if (!this.editor) {
-          this.editor = editor;
         }
       },
     },
@@ -98,7 +150,7 @@
         </div>
         <div class="editor">
             <ps-monaco-editor language="json" :value="value" :options="options" @change="updateValue"
-                              @editorWillMount="setMonaco" @editorDidMount="setEditor"/>
+                              @editorWillMount="setMonaco"/>
         </div>
     </div>
 </template>
