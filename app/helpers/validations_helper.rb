@@ -9,4 +9,16 @@ module ValidationsHelper
   rescue JSON::ParserError
     text
   end
+
+  def self.parse_json_text(text)
+    if text.is_a? String
+      begin
+        JSON.parse(text)
+      rescue JSON::ParserError
+        text
+      end
+    else
+      text
+    end
+  end
 end

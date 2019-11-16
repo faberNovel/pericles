@@ -151,21 +151,22 @@ module Swagger
     end
 
     def security_scheme_detail(security_scheme)
-      if security_scheme.security_scheme_type == 'apiKey'
+      case security_scheme.security_scheme_type
+      when 'apiKey'
         {
           in: security_scheme.security_scheme_in,
           name: security_scheme.name
         }
-      elsif security_scheme.security_scheme_type == 'http'
+      when 'http'
         {
           scheme: security_scheme.scheme,
           bearerFormat: security_scheme.bearer_format
         }
-      elsif security_scheme.security_scheme_type == 'oauth2'
+      when 'oauth2'
         {
           flows: security_scheme.flows
         }
-      elsif security_scheme.security_scheme_type == 'openIdConnect'
+      when 'openIdConnect'
         {
           openIdConnectUrl: security_scheme.open_id_connect_url
         }
