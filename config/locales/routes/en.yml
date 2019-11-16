@@ -23,3 +23,11 @@ en:
     header_fields:
       name_placeholder: Content-Type
       value_placeholder: application/json
+
+  activerecord:
+    errors:
+      models:
+        route:
+          attributes:
+            operation_id:
+              operation_id_must_be_unique_in_project: The name is already used by another route

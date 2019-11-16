@@ -1,4 +1,4 @@
-= bootstrap_form_for([project, route]) do |f|
+= bootstrap_form_for([project, route], url: if route.new_record? then nil else "/projects/#{project.id}/routes/#{route.id}?section=base" end) do |f|
   .flexcontainer-justify-end= f.submit class: 'btn btn-primary'
   = render 'shared/errors', object: route
 
