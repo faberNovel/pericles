@@ -2,11 +2,3 @@ en:
   security_schemes:
     index:
       no_security_scheme: "There are no security schemes, create one !"
-  activerecord:
-    errors:
-      models:
-        security_scheme:
-          attributes:
-            specification_extensions:
-              schema_must_be_valid_json: Must be a valid JSON object
-              value_must_be_hash: Must be a valid JSON object
