@@ -10,3 +10,8 @@ en:
           instance_parse_error: "The input JSON instance is not a valid JSON text (RFC 7159)."
           schema_validation_error: "The input JSON schema does not conform to JSON Schema Draft 4. Errors:"
           instance_validation_error: "The input JSON schema does not validate the input JSON instance (JSON Schema Draft 4). Errors:"
+
+    errors:
+      messages:
+        value_must_be_valid_json: Must be a valid JSON object
+        value_must_be_hash: Must be a valid Hash

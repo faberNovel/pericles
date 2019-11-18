@@ -1,11 +1,40 @@
+- content_for :page_scripts do
+  = javascript_include_tag("security_schemes/form.js")
+
+
 = bootstrap_form_for([project, security_scheme]) do |f|
   .flexcontainer-justify-end= f.submit class: 'btn btn-primary'
   = render 'shared/errors', object: security_scheme
 
   .row
     .col-xs-6
-      = f.text_field :key, placeholder: "theUltimateSecurity"
-      = f.text_field :security_scheme_type, placeholder: "apiKey"
-      = f.text_field :name, placeholder: "Authorization"
-      = f.text_field :security_scheme_in, placeholder: "header"
-      = f.text_area :parameters, placeholder: "{}"
+      = f.text_field :key, placeholder: "The code name of the security scheme (ex: theUltimateSecurity)."
+      = f.text_area :description, placeholder: "A short description for security scheme. CommonMark syntax may be used for rich text representation."
+      = f.select :security_scheme_type, SecurityScheme.security_scheme_type_options.keys.to_a
+
+      %div{ id: "security-scheme-detail-apiKey", class: "security-scheme-detail" }
+        = f.select :security_scheme_in, SecurityScheme.security_scheme_in_options.keys.to_a
+        = f.text_field :name, placeholder: "The name of the header, query or cookie parameter to be used (ex: Authorization)."
+
+      %div{ id: "security-scheme-detail-http", class: "security-scheme-detail" }
+        = f.text_field :scheme, placeholder: "basic, bearer or any other HTTP schemes as defined by RFC 7235"
+        = f.text_field :bearer_format, placeholder: "(if scheme bearer) A hint to identify how the bearer token is formatted."
+
+      %div{ id: "security-scheme-detail-oauth2", class: "security-scheme-detail" }
+        = f.text_area :flows, value: format_json(security_scheme.flows), class: 'json', placeholder: "An object containing configuration information for the flow types supported. See Open API specification for more information"
+
+      %div{ id: "security-scheme-detail-openIdConnect", class: "security-scheme-detail" }
+        = f.text_field  :open_id_connect_url, placeholder: "OpenId Connect URL to discover OAuth2 configuration values."
+
+      = f.text_area :specification_extensions, value: format_json(security_scheme.specification_extensions), class: 'json', placeholder: "{}"
+
+  %p
+    For more information, see:
+
+  %ul
+    %li
+      %a{ href: "https://swagger.io/specification/#securitySchemeObject", target: "_blank" }
+        Open API specification
+    %li
+      %a{ href: "https://swagger.io/docs/specification/authentication", target: "_blank" }
+        Authentication documentation
