@@ -1,6 +1,6 @@
 module RoutesHelper
   def format_json(json)
-    return if json.blank?
+    return if json.nil? || json.is_a?(String) && json.blank?
 
     if json.is_a?(String)
       begin

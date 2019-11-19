@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190926081509) do
+ActiveRecord::Schema.define(version: 20191101142812) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -38,6 +38,14 @@ ActiveRecord::Schema.define(version: 20190926081509) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["project_id"], name: "index_api_errors_on_project_id"
+  end
+
+  create_table "api_gateway_integrations", force: :cascade do |t|
+    t.string "title"
+    t.string "uri_prefix"
+    t.integer "timeout_in_millis"
+    t.bigint "project_id"
+    t.index ["project_id"], name: "index_api_gateway_integrations_on_project_id"
   end
 
   create_table "attributes", id: :serial, force: :cascade do |t|
@@ -163,8 +171,8 @@ ActiveRecord::Schema.define(version: 20190926081509) do
   end
 
   create_table "metadatum_instances_mock_pickers", id: false, force: :cascade do |t|
-    t.bigint "metadatum_instance_id", null: false
-    t.bigint "mock_picker_id", null: false
+    t.integer "metadatum_instance_id", null: false
+    t.integer "mock_picker_id", null: false
   end
 
   create_table "mock_pickers", id: :serial, force: :cascade do |t|
@@ -205,6 +213,7 @@ ActiveRecord::Schema.define(version: 20190926081509) do
     t.string "slack_incoming_webhook_url"
     t.string "slack_channel"
     t.datetime "slack_updated_at"
+    t.boolean "amazon_apigateway_integration", default: false, null: false
     t.index ["mock_profile_id"], name: "index_projects_on_mock_profile_id"
   end
 
@@ -300,7 +309,9 @@ ActiveRecord::Schema.define(version: 20190926081509) do
     t.integer "request_resource_representation_id"
     t.boolean "request_is_collection", default: false, null: false
     t.string "request_root_key"
+    t.string "deprecated"
     t.bigint "security_scheme_id"
+    t.string "operation_id"
     t.index ["request_resource_representation_id"], name: "index_routes_on_request_resource_representation_id"
     t.index ["resource_id"], name: "index_routes_on_resource_id"
     t.index ["security_scheme_id"], name: "index_routes_on_security_scheme_id"
@@ -319,7 +330,12 @@ ActiveRecord::Schema.define(version: 20190926081509) do
     t.string "name"
     t.string "security_scheme_in"
     t.bigint "project_id"
-    t.jsonb "parameters", default: {}
+    t.jsonb "specification_extensions", default: {}
+    t.string "description"
+    t.string "scheme"
+    t.string "bearer_format"
+    t.jsonb "flows", default: {}
+    t.string "open_id_connect_url"
     t.index ["project_id"], name: "index_security_schemes_on_project_id"
   end
 
@@ -359,6 +375,7 @@ ActiveRecord::Schema.define(version: 20190926081509) do
   end
 
   add_foreign_key "api_error_instances", "api_errors"
+  add_foreign_key "api_gateway_integrations", "projects"
   add_foreign_key "attributes", "resources"
   add_foreign_key "attributes", "resources", column: "parent_resource_id"
   add_foreign_key "attributes", "schemes"

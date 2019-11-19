@@ -4,11 +4,13 @@ class RoutePolicy < ProjectRelatedPolicy
       :description,
       :http_method,
       :url,
+      :operation_id,
       :resource_id,
       :security_scheme_id,
       :request_resource_representation_id,
       :request_is_collection,
       :request_root_key,
+      :deprecated,
       request_query_parameters_attributes: [
         :id, :name, :description, :primitive_type, :is_optional, :_destroy
       ],

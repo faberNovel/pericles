@@ -1,0 +1,8 @@
+%h3 API Gateway Integration
+
+%p If you do not use API Gateway Integration, keep following fields blank.
+
+.fields.nested-fields
+  = f.text_field :title, placeholder: 'Title replacement or configurable title (eg: "${PROJECT_TITLE}")'
+  = f.text_field :uri_prefix, placeholder: 'Prefix to add to each uri (ex: "http://example.com/context/" or "${PROJECT_URI}")'
+  = f.number_field :timeout_in_millis, placeholder: 29000

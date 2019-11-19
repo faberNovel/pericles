@@ -21,6 +21,7 @@ class Route < ApplicationRecord
   validates :resource, presence: true, uniqueness: { scope: [:http_method, :url] }
   validate :request_resource_representation_must_belongs_to_project
   validate :security_scheme_must_belongs_to_project
+  validate :operation_id_unique_in_project
 
   audited
   has_associated_audits
@@ -74,5 +75,10 @@ class Route < ApplicationRecord
     return unless security_scheme
     return if security_scheme.project == project
     errors.add(:security_scheme, :security_scheme_must_belongs_to_project)
+  end
+
+  def operation_id_unique_in_project
+    return if operation_id.blank?
+    errors.add(:operation_id, :operation_id_must_be_unique_in_project) if project.routes.where.not(id: id).where(operation_id: operation_id).any?
   end
 end

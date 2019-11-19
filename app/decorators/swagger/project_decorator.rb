@@ -2,19 +2,24 @@ module Swagger
   class ProjectDecorator < Draper::Decorator
     delegate_all
 
-    def to_swagger
+    def to_swagger(with_api_gateway_integration: false)
       {
         openapi: '3.0.0',
         info: {
           description: description,
-          title: title,
+          title: info_title(with_api_gateway_integration),
           version: '1.0.0'
         },
         servers: servers,
         tags: tags,
-        paths: paths,
+        paths: paths(with_api_gateway_integration),
         components: components
       }.deep_stringify_keys.to_json
+    end
+
+    def info_title(with_api_gateway_integration)
+      return title unless with_api_gateway_integration && api_gateway_integration&.title.present?
+      api_gateway_integration.title
     end
 
     def components
@@ -79,18 +84,19 @@ module Swagger
       end
     end
 
-    def paths
-      routes_by_url = routes.group_by do |r|
-        r.url.starts_with?('/') ? r.url : "/#{r.url}"
+    def paths(with_api_gateway_integration)
+      decorated_routes = routes.map do |r|
+        Swagger::RouteDecorator.new(r, context: context)
+      end
+      routes_by_url = decorated_routes.group_by do |r|
+        r.normalized_url.starts_with?('/') ? r.normalized_url : "/#{r.normalized_url}"
       end
 
       routes_by_url.reduce({}) do |hash, (url, routes)|
         routes_by_method = routes.reduce({}) do |h, r|
-          r = Swagger::RouteDecorator.new(r, context: context)
-
           h.merge!(
             {
-              r.http_method.to_s.downcase => r.to_swagger
+              r.http_method.to_s.downcase => r.to_swagger(with_api_gateway_integration ? api_gateway_integration : nil)
             }
           )
         end
@@ -134,12 +140,37 @@ module Swagger
       security_schemes.each do |security_scheme|
         security_schemes_json[security_scheme.key] = {
           type: security_scheme.security_scheme_type,
-          name: security_scheme.name,
-          in: security_scheme.security_scheme_in
-        }.merge(security_scheme.parameters)
+          description: security_scheme.description
+        }
+          .merge(security_scheme_detail(security_scheme))
+          .merge(security_scheme.specification_extensions)
+          .select { |_, v| v.present? }
       end
 
       security_schemes_json
+    end
+
+    def security_scheme_detail(security_scheme)
+      case security_scheme.security_scheme_type
+      when 'apiKey'
+        {
+          in: security_scheme.security_scheme_in,
+          name: security_scheme.name
+        }
+      when 'http'
+        {
+          scheme: security_scheme.scheme,
+          bearerFormat: security_scheme.bearer_format
+        }
+      when 'oauth2'
+        {
+          flows: security_scheme.flows
+        }
+      when 'openIdConnect'
+        {
+          openIdConnectUrl: security_scheme.open_id_connect_url
+        }
+      end
     end
   end
 end

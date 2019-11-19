@@ -51,6 +51,13 @@ class ProjectPolicy < ApplicationPolicy
         :ignore_ssl,
         :_destroy
       ],
+      api_gateway_integration_attributes: [
+        :id,
+        :title,
+        :uri_prefix,
+        :timeout_in_millis,
+        :_destroy
+      ],
       user_ids: []
     ]
   end
