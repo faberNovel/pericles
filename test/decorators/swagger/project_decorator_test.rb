@@ -32,25 +32,25 @@ module Swagger
     end
 
     test 'generated json contains valid security schemes' do
-      generated_security_schemes = JSON.parse(@decorator.to_swagger)["components"]["securitySchemes"]
-      expected_security_schemes = {
-          "theUltimateSecurity" => {
-              "type" => "apiKey",
-              "name" => "Authorization",
-              "in" => "header",
-              "x-amazon-apigateway-authtype" => "cognito_user_pools"
-          }
+      generated_security_schemes = JSON.parse(@decorator.to_swagger)['components']['securitySchemes']
+      expected_security_scheme = {
+        'type' => 'apiKey',
+        'name' => 'Authorization',
+        'in' => 'header',
+        'x-amazon-apigateway-authtype' => 'cognito_user_pools'
       }
-      assert_equal generated_security_schemes, expected_security_schemes
+      assert_equal 1, generated_security_schemes.keys.count
+      assert_equal expected_security_scheme, generated_security_schemes.values.first
     end
 
     test 'generated json with api gateway integration contains configured title' do
-      generated_swagger = JSON.parse(@decorator.to_swagger(true))
+      generated_swagger = JSON.parse(@decorator.to_swagger(with_api_gateway_integration: true))
       assert_equal generated_swagger['info']['title'], 'api title'
     end
 
     test 'generated route json contains valid API Gateway Integration structure' do
-      generated_x_amazon_apigateway_integration = JSON.parse(@decorator.to_swagger(true))['paths']['/users/:id']['get']['x-amazon-apigateway-integration']
+      generated_swagger = JSON.parse(@decorator.to_swagger(with_api_gateway_integration: true))
+      generated_x_amazon_apigateway_integration = generated_swagger.dig('paths', '/users/{id}', 'get', 'x-amazon-apigateway-integration')
       expected_x_amazon_apigateway_integration = {
         'cacheKeyParameters' => ['integration.request.path.id'],
         'httpMethod' => 'GET',
@@ -58,11 +58,11 @@ module Swagger
         'requestParameters' => {
           'integration.request.path.id' => 'method.request.path.id'
         },
-        'timeoutInMillis' => '29000',
+        'timeoutInMillis' => 29000,
         'type' => 'http_proxy',
-        'uri' => 'prefix/users/:id'
+        'uri' => 'prefix/users/{id}'
       }
-      assert_equal generated_x_amazon_apigateway_integration, expected_x_amazon_apigateway_integration
+      assert_equal expected_x_amazon_apigateway_integration, generated_x_amazon_apigateway_integration
     end
   end
 end
