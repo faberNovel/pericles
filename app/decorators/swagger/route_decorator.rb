@@ -5,6 +5,7 @@ class Swagger::RouteDecorator < Draper::Decorator
     {
       tags: [resource.name],
       description: description,
+      operationId: swagger_operation_id,
       parameters: parameters,
       responses: responses,
       requestBody: request_body,
@@ -12,6 +13,20 @@ class Swagger::RouteDecorator < Draper::Decorator
       security: security,
       'x-amazon-apigateway-integration' => x_amazon_apigateway_integration(api_gateway_integration)
     }.select { |_, v| v.present? }
+  end
+
+  def swagger_operation_id
+    return operation_id if operation_id.present?
+
+    result = http_method.downcase
+    url.split('/').map do |part|
+      if part.starts_with?(':')
+        result += "By#{part[1..-1].capitalize}"
+      else
+        result += part.capitalize
+      end
+    end
+    result.delete("^a-zA-Z0-9")
   end
 
   def responses

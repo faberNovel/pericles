@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20191101093918) do
+ActiveRecord::Schema.define(version: 20191101142812) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -309,8 +309,9 @@ ActiveRecord::Schema.define(version: 20191101093918) do
     t.integer "request_resource_representation_id"
     t.boolean "request_is_collection", default: false, null: false
     t.string "request_root_key"
-    t.bigint "security_scheme_id"
     t.string "deprecated"
+    t.bigint "security_scheme_id"
+    t.string "operation_id"
     t.index ["request_resource_representation_id"], name: "index_routes_on_request_resource_representation_id"
     t.index ["resource_id"], name: "index_routes_on_resource_id"
     t.index ["security_scheme_id"], name: "index_routes_on_security_scheme_id"
