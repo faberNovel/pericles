@@ -2,6 +2,15 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.11.1 - 2019-11-19
+
+* Add API Gateway integration (thanks @grizio)
+* Improve security schemes (thanks @grizio)
+* Add operation id to route (thanks @grizio)
+* Add test action on Github PR
+* Bump loofah to fix security issues
+* Bump to latest Ruby version
+
 ## 0.11.0 - 2019-09-26
 
 * Add security schemes (thanks @grizio)
