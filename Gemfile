@@ -84,7 +84,7 @@ gem 'rails-erd', '~> 1.5'
 
 gem 'active_model_serializers', '~> 0.10.0'
 
-gem 'rubyzip', '~> 1.2.2'
+gem 'rubyzip', '~> 2.0.0'
 
 gem 'ransack', github: 'activerecord-hackery/ransack'
 
