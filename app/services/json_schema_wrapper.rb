@@ -38,16 +38,22 @@ class JSONSchemaWrapper
 
   def add_metadata
     @metadata_responses.group_by(&:key).each do |key, metadata_responses|
-      metadata_responses.map(&:metadatum).each do |metadatum|
-        schema = metadatum.json_schema
+      metadata_responses.each do |metadata_response|
+        metadatum = metadata_response.metadatum
         if key.blank?
           properties = @json_schema[:properties]
+          required = @json_schema[:required]
         else
-          @json_schema[:properties][key.to_sym] ||= { type: 'object', properties: {} }
+          @json_schema[:properties][key.to_sym] ||= { type: 'object', properties: {}, required: [] }
           properties = @json_schema[:properties][key.to_sym][:properties]
+          required = @json_schema[:properties][key.to_sym][:required]
         end
-        properties[metadatum.name.to_sym] = schema
+
+        properties[metadatum.name.to_sym] = metadatum.json_schema
+        required << metadatum.name.to_sym if metadata_response.required
       end
+
+      @json_schema[:required] << key.to_sym if key.present? && metadata_responses.any?(&:required)
     end
   end
 end

@@ -3,7 +3,7 @@ require 'test_helper'
 class JSONSchemaBuilderTest < ActiveSupport::TestCase
   attr_accessor :attributes_resource_rep
 
-  def generate_schema(is_collection, root_key)
+  def generate_schema(is_collection, root_key, metadata_responses = [])
     self.attributes_resource_rep = build(:attributes_resource_representation)
     representation = build(:resource_representation,
       attributes_resource_representations: [attributes_resource_rep, build(:attributes_resource_representation)]
@@ -11,7 +11,8 @@ class JSONSchemaBuilderTest < ActiveSupport::TestCase
     JSONSchemaBuilder.new(
       representation,
       is_collection: is_collection,
-      root_key: root_key
+      root_key: root_key,
+      metadata_responses: metadata_responses
     ).execute
   end
 
@@ -134,6 +135,43 @@ class JSONSchemaBuilderTest < ActiveSupport::TestCase
       root_key: ''
     ).execute
     assert_equal 'null', schema[:properties][attributes_resource_representation.resource_attribute.default_key_name.to_sym][:type]
+  end
+
+  test 'should include metadata' do
+    metadatum = build(:metadatum, name: 'meta_name')
+    metadata_response = build(:metadata_response, metadatum: metadatum)
+
+    schema = generate_schema(false, 'root', [metadata_response])
+    assert_not_nil schema[:properties][:meta_name]
+    refute_includes schema[:required], :meta_name
+
+    metadata_response = build(:metadata_response, metadatum: metadatum, required: true)
+    schema = generate_schema(false, 'root', [metadata_response])
+    assert_includes schema[:required], :meta_name
+  end
+
+  test 'should include metadata under key' do
+    metadatum = build(:metadatum, name: 'meta_name')
+    metadata_responses = [build(:metadata_response, metadatum: metadatum, key: 'meta_key', required: true)]
+
+    schema = generate_schema(false, 'root', metadata_responses)
+    assert_not_nil schema[:properties][:meta_key][:properties][:meta_name]
+    assert_includes schema[:required], :meta_key
+    assert_includes schema[:properties][:meta_key][:required], :meta_name
+  end
+
+  test 'should include several metadata under same key' do
+    first_metadatum = build(:metadatum, name: 'first_meta_name')
+    second_metadatum = build(:metadatum, name: 'second_meta_name')
+    metadata_responses = [
+      build(:metadata_response, metadatum: first_metadatum, key: 'meta_key', required: true),
+      build(:metadata_response, metadatum: second_metadatum, key: 'meta_key', required: true)
+    ]
+
+    schema = generate_schema(false, 'root', metadata_responses)
+    assert_not_nil schema[:properties][:meta_key][:properties][:first_meta_name]
+    assert_not_nil schema[:properties][:meta_key][:properties][:second_meta_name]
+    assert_equal ['root', :meta_key], schema[:required]
   end
 
   test 'schema with nested resources is correct' do
