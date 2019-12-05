@@ -54,7 +54,7 @@ module JSONSchema
     def primitive_property
       {
         type: resource_attribute.primitive_type,
-        format: if format == "datetime" then "date-time" else format end,
+        format: format == "datetime" ? "date-time" : format,
         pattern: pattern,
         enum: enum
       }.merge(min_max_constraints)
