@@ -7,7 +7,7 @@ class ResponsePolicy < ProjectRelatedPolicy
       :is_collection,
       :root_key,
       headers_attributes: [:id, :name, :value, :_destroy],
-      metadata_responses_attributes: [:id, :metadatum_id, :key, :_destroy]
+      metadata_responses_attributes: [:id, :metadatum_id, :key, :required, :_destroy]
     ]
   end
 end

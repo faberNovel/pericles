@@ -337,7 +337,7 @@ GEM
     ruby-progressbar (1.9.0)
     ruby_parser (3.11.0)
       sexp_processor (~> 4.9)
-    rubyzip (1.2.2)
+    rubyzip (2.0.0)
     sass (3.7.4)
       sass-listen (~> 4.0.0)
     sass-listen (4.0.0)
@@ -443,7 +443,7 @@ DEPENDENCIES
   regex_field (~> 0.1.0)
   rollbar (~> 2.15, >= 2.15.4)
   rubocop
-  rubyzip (~> 1.2.2)
+  rubyzip (~> 2.0.0)
   simplecov
   spring
   spy (~> 1.0)
