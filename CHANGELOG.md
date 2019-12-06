@@ -2,6 +2,11 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.11.2 - 2019-12-06
+
+* Fix the datetime format for json schema (thanks @grizio)
+* Bump rubyzip to fix security issue
+
 ## 0.11.1 - 2019-11-19
 
 * Add API Gateway integration (thanks @grizio)
