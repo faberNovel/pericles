@@ -30,6 +30,12 @@ module Code
       type
     end
 
+    def graphql_type
+      type = base_graphql_type
+      type = "[#{type}]" if is_array
+      type
+    end
+
     def base_kotlin_type
       case primitive_type&.to_sym
       when :number
@@ -92,6 +98,29 @@ module Code
         'any'
       when nil
         resource.rest_name
+      end
+    end
+
+    def base_graphql_type
+      case primitive_type&.to_sym
+      when :number
+        'Float'
+      when :integer
+        'Int'
+      when :boolean
+        'Boolean'
+      when :string
+        'String'
+      when :date
+        'GraphQL::Types::ISO8601Date'
+      when :datetime
+        'GraphQL::Types::ISO8601DateTime'
+      when :object
+        'GraphQL::Types::JSON'
+      when :any
+        'GraphQL::Types::JSON'
+      when nil
+        resource.graphql_name
       end
     end
 

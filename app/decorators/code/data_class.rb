@@ -6,6 +6,10 @@ module Code
       "Rest#{pascal_name}"
     end
 
+    def graphql_name
+      "#{pascal_name}Type"
+    end
+
     def pascal_name
       name.parameterize(separator: '_', preserve_case: true).camelcase
     end

@@ -361,6 +361,26 @@ class ResourceRepresentationsControllerTest < ControllerWithAuthenticationTest
     assert_equal(response.body, file)
   end
 
+  test 'get graphql resource representation' do
+    resource = create(:pokemon)
+    representation = resource.resource_representations.first
+    create(:attributes_resource_representation, attribute_id: resource.resource_attributes.find(&:boolean?).id, parent_resource_representation: representation)
+
+    file = %(class DefaultPokemonType < Types::BaseObject
+      field :date, GraphQL::Types::ISO8601Date, null: false
+      field :date_time, GraphQL::Types::ISO8601DateTime, null: true
+      field :id, Int, null: false
+      field :mindset, String, null: true
+      field :nature, DefaultNatureType, null: false
+      field :nice_boolean, Boolean, null: false
+      field :weakness_list, [DefaultNatureType], null: false
+      field :weight, Float, null: true
+    end
+    ).gsub(/^    /, '')
+    get resource_resource_representation_path(resource, representation, format: :graphql)
+    assert_equal(response.body, file)
+  end
+
   private
 
   def res_rep_params_hash
