@@ -130,9 +130,9 @@ defmodule PericlesProxy.Runner do
   @spec put_resp_headers(Conn.t, Map.t) :: Conn.t
   defp put_resp_headers(conn, headers) do
     Enum.reduce(headers, conn, fn ({k, v}, c) ->
-      if (k |> String.downcase == "set-cookie" && is_list(v)) do
+      if is_list(v) do
         %{conn | resp_headers: c.resp_headers ++ Enum.map(v, fn cookie ->
-          {"set-cookie", cookie}
+          {k |> String.downcase, cookie}
         end)}
       else
         Conn.put_resp_header(c, k |> String.downcase, v)
