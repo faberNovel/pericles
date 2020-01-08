@@ -86,7 +86,7 @@ gem 'active_model_serializers', '~> 0.10.0'
 
 gem 'rubyzip', '~> 2.0.0'
 
-gem 'ransack', github: 'activerecord-hackery/ransack'
+gem 'ransack', '~> 2.3.0'
 
 gem 'jquery-ui-rails'
 
