@@ -42,7 +42,10 @@
   )
     .constraint-cell(v-if='attribute.enum')
       dt Enum
-      dd {{attribute.enum}}
+      dd
+        span(v-for='(e, index) in attribute.enum.split(",")')
+          span(v-if='index != 0') ,
+          code {{e}}
     .constraint-cell(v-if='!(attribute.scheme == undefined)')
       dt Scheme
       dd {{attribute.scheme.name}}
