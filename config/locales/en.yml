@@ -28,6 +28,10 @@ en:
     download: Download
     delete: Delete
     sign_in: Sign in
+  mailer:
+    confirmation_grettings: "Welcome %{email}!"
+    confirmation_instructions: 'You can confirm your account email through the link below:'
+    confirmation_action: Confirm my account
   errors:
     messages:
       taken: "%{value} has already been taken"

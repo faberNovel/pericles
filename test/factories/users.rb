@@ -17,5 +17,7 @@ FactoryBot.define do
     trait :external do
       email { generate(:external_email) }
     end
+
+    after(:create) { |user| user.confirm }
   end
 end

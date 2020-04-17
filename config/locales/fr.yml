@@ -6,6 +6,10 @@ fr:
     download: Télécharger
     delete: Supprimer
     sign_in: S'identifier
+  mailer:
+    confirmation_grettings: "Bienvenue %{email} !"
+    confirmation_instructions: 'Vous pouvez confirmer votre compte en cliquant sur le lien ci-dessous:'
+    confirmation_action: Confirmer mon compte
   errors:
     messages:
       taken: "%{value} n'est pas disponible"
