@@ -2,6 +2,14 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.11.3 - 2020-04-17
+
+* Confirm email at signup (thanks @ThibaultTourailles)
+* Display attr enum as comma separated code tags
+* Add requests in exported json schema (thanks @MrChoclate)
+* Handle headers that have list values (like Strict-Transport-Security)
+* Add graphql format for resource and resource representation (thanks @MrChoclate)
+
 ## 0.11.2 - 2019-12-06
 
 * Fix the datetime format for json schema (thanks @grizio)
