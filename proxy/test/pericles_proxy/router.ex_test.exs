@@ -120,4 +120,14 @@ defmodule PericlesProxy.RouterTest do
       assert conn.status == 200
     end
   end
+
+  test "get with array in headers", state do
+    Repo.insert(%ProxyConfiguration{project_id: state[:project_id], target_base_url: "https://jesuismachiniste-develop.herokuapp.com/"})
+
+    use_cassette "get_with_array_in_headers" do
+      conn = conn(:get, "/projects/#{state[:project_id]}/proxy/login")
+      conn = PericlesProxy.Router.call(conn, [])
+      assert conn.status == 200
+    end
+  end
 end

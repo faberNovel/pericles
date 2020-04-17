@@ -11,6 +11,10 @@ class Code::AttributesResourceRepresentationDecorator < Draper::Decorator
     !object.is_required || object.resource_attribute.nullable
   end
 
+  def graphql_nullable
+    object.resource_attribute.nullable
+  end
+
   def boolean?
     object.resource_attribute.boolean?
   end

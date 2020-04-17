@@ -1,0 +1,5 @@
+class <%= resource.graphql_name %> < Types::BaseObject
+<% resource.resource_attributes.each do |attribute| %>
+  field :<%= attribute.snake_variable_name %>, <%= attribute.graphql_type%>, null: <%= attribute.graphql_nullable %>
+<% end %>
+end

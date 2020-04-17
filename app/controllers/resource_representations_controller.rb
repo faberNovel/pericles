@@ -14,7 +14,7 @@ class ResourceRepresentationsController < ApplicationController
         ).execute
         render json: schema
       end
-      %i[swift kotlin ruby typescript].each do |language|
+      %i[swift kotlin ruby typescript graphql].each do |language|
         format.send(language) do
           body = CodeGenerator.new(language)
             .from_resource_representation(resource_representation)

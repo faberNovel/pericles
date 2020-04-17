@@ -25,8 +25,11 @@ class CodeGenerator
   private
 
   def template
-    if @language.to_sym == :ruby
+    case @language.to_sym
+    when :ruby
       "code/serializer.#{@language}"
+    when :graphql
+      'code/graphql.ruby'
     else
       "code/rest.#{@language}"
     end

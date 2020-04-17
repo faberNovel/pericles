@@ -495,6 +495,25 @@ class ResourcesControllerTest < ControllerWithAuthenticationTest
     assert_equal(response.body, file)
   end
 
+  test 'should get graphql resource' do
+    resource = create(:pokemon)
+
+    file = %(class PokemonType < Types::BaseObject
+      field :date, GraphQL::Types::ISO8601Date, null: false
+      field :date_time, GraphQL::Types::ISO8601DateTime, null: true
+      field :id, Int, null: false
+      field :mindset, String, null: true
+      field :nature, NatureType, null: false
+      field :nice_boolean, Boolean, null: false
+      field :weakness_list, [NatureType], null: false
+      field :weight, Float, null: true
+    end
+    ).gsub(/^    /, '')
+    get project_resource_path(resource.project, resource, format: 'graphql')
+    assert_equal(response.body, file)
+  end
+
+
   test 'non member external user should not access project resources' do
     external_user = create(:user, :external)
     sign_in external_user

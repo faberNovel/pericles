@@ -1,0 +1,204 @@
+[
+  {
+    "request": {
+      "body": "",
+      "headers": {
+        "x-forwarded-for": "127.0.0.1",
+        "accept-encoding": ""
+      },
+      "method": "get",
+      "options": {
+        "ssl_options": {
+          "server_name_indication": [
+            106,
+            101,
+            115,
+            117,
+            105,
+            115,
+            109,
+            97,
+            99,
+            104,
+            105,
+            110,
+            105,
+            115,
+            116,
+            101,
+            45,
+            100,
+            101,
+            118,
+            101,
+            108,
+            111,
+            112,
+            46,
+            104,
+            101,
+            114,
+            111,
+            107,
+            117,
+            97,
+            112,
+            112,
+            46,
+            99,
+            111,
+            109
+          ]
+        }
+      },
+      "request_body": "",
+      "url": "https://jesuismachiniste-develop.herokuapp.com/login?"
+    },
+    "response": {
+      "binary": false,
+      "body": "<html><body>You are being <a href=\"https://heimdallprepro.ratp.net/idp/profile/SAML2/Redirect/SSO?SAMLRequest=lVhZj6PIsv4rJfVDPaBqFhuMS90tsdqsNqsxL0csyb6ZHX79oVwzfbvn3nvOjGRbZGRG5BcRH5kR%2FtZ5ZdG8U0OfVDp4DKDrX6iuA22f1hVTV91QgtYA7ZgGwNLl769J3zfdOwxnoBvSrvSCJK3SrgdvIRhBUTdfE9DW%2BeA1zdegLuEP83DX1a8v7GY6rbwPu%2F9jJQFpGXpF0bSgaeuvrdc3XyvQw2nYwJsgSgsAG5QiY7AOwrQFQQ8bxuX1RWC%2Fv%2F4riFDCJ5Djm%2B8H2NseBOSbj4bBm4fgIYiA56MIsi3tugEIVdd7Vf%2F9FUMw5A1B3xDSRPF3dPeOk%2B7riw3a7okL%2B7ppzGVRde8fyL%2B%2FDm31Xntd2r1XXgm69z54%2F8Dzvi189%2F6M068qzX%2FW2Zzq66AuXn98%2B1j9%2FkTX%2FvhnUf0G%2F6r7LezejTTeQju04A8kYfcZ483kNE1fp93Xuo1hDEEQGDnC25qwS%2BMvrz91QShUUf0cMl5VV2ngFen6TJYC%2BqQOX6girtu0T8r%2FxzAKo8iH4TcwB28Buq%2B%2BvMK%2FQ%2FvbhpD9nwjfyroFX9rOe%2BsSD8OJP0zqW3ZbUAXgxdKF769f%2Fh4Tnqpm61VdVLdl9%2Fvwv8L6LXCgemYFhG%2Fdn979Ae3vG%2Fw%2FAvbjGwjehSoohi4dgfpBnsYLQPdybUGUzvLGiM3bzSNvKPqXJ9uevy9h9zJ%2FfNKXMvyTjCD4R5mCfwX%2Fl%2BFnrNg03l7hf5jFLUtffsvdpxXbKwbww5FrdIf1YXNuEOp6Tk72DpJR0QT2bFNZdr7KXNphhMKmyPcnol%2BVn4KfTPgc%2FoXKP6n3qVENvcQdQA6j4RICCeCjUK09xhCcbecACRo50i296kpSHqcFutH7HTQcRSaAtyCQlbTErE1o3SzkepS5iyIdR2RGYXi97L1UUgsOC9W%2BbPeZ%2BUgfBUOaTXHPp%2F3u6mMsb%2BKCqT0Op87rgYirsr8vH6Pa5mGfu6nTw8S1IzDpVKXUqYnunnePZIeDbGnm%2BlEWIbPKXePApwY7%2B71%2BxVImP8XIWM%2BCMg7mhHWOMJIc3Cy2S4oqvXM5GTcrY83xG3KxOfN4uZOWJOoTU%2FYUSwEeng8PaKaUzjcDuDTtgJ1vUpSHSz3Y6iGDzR1q7CWF4MmLOoZW6N%2BpRbiYCa%2BYc52we7TF8umEd3Ju7XHZeihF5N7XlrsJe8mxVWcnHsdDLKLDTVUzcnSa7H5FIxxJpkjmrnUFYsyxj9AIjBAo2c04pt4j0OvDUcbsfiqAVsYRMaKk9wBLLtYgsJi2QB%2FOYslWm1ssS4Q3mua1RnaL%2FVJq1zTwMcQGSlG2U1Vii5HgyWU3IiUBIcjoaDNz36uaxxpHeOIKCHFrKVj8jplUqKpuBR8N%2FhLSrRVkB9fwCsSg%2FQsDZSO72LgAw8SCcxwVzrPL32OovYJh3WGUHOgkfWpq8ZQdthMzUb0m4Uw3S8s727CxsWOxJBkRzUaoHOamyH88KGd1vR28dyX5XF4vqI8WIibHB7E5SVUukfXFiYLvP%2Bn8C38%2FKC2B5Se9HRw5sl7v%2FRwwH9dRtJ3dPfihCAIPswxDQRrDaMyaMOraOHOZmJRKx%2FkjydPTcUJoSut4imXoceVkhcpPFGpxdKIweiHMfEZZdKzaNBUrrFV0roFuLERPQckPd8ya2YxSPucDhbbpJCiLVdGVidPurK1pEks1p%2FtNLIISH8PS7hTdmrjpOSez1Gy5N7X2y2PnY2HjOsqsrhT6aU9R5DJBwjO9XlJy9Ep7DW%2FF6t%2F4zDsVg%2BeoyBOL4xb%2B5sW2dtvj2IY3fgoYPNuIMAsrlfzqJ6NxN%2F7E5%2F6tGLSTm9xLe9n2xtzbtPly7BV677Amhysmt6gmt1OyGFHsepMJ01PG%2FpRNsU%2FOzEqJn1jvJrVFRdHvE089fRNYChX9k9W721evxMQv1ULR9hP7OX9mKVu7O2ITrJyp0Nwz5kw8SXrJp64jDv5u84vlbIVWPuemSbFP9uY7Pm7%2BVt7NXhUzmNTPOLMsg9fhWZ%2BCtR5lrCmCnd0EGJrcsaTxt5yETyz25us8bvGptz1Gb2cnwZn69N1QJkG7i1LtCskYqJSW03yiJ%2B4JbfycLn%2FNoVyqo29uvEqFif1Nh6NpjWLjWLhSH7yLa2Z7pinJz3ZnICbGtdRznvPJskRtKPTME1a2i3ebAr0iZ2NeiNsSYBg9tWI36WvhOXHphe6%2BUlZdGx1jh9%2FL7UL0Z3%2BeMrM6WGU01TxXLDIJAZS1BbfhrpBWnk7GPoTNrhROdTik6MkjjihxKTWf5IILOFJX8i4kxjm6T6Y2xDjCxFedP0FBjfeJaPHxyKtlQhi1Vk2lcXfxkCA19JEcBNrGEcnquD4U6z4bEzuc9o9o9s%2BVxmyFsiSa6kNhIL6hS1HtdyY93ylrpiNcy5kLJF31ph2P1GnysfGi2%2Bd7xUPOeoatQ67XPGFg17U6%2BHlx8tlcHaaFqH17rEElWi3UBOcrC9jMYcwcp%2Ba591qyP0bXFjW66TC3pkrzuNfClMhtdxJ7Lm71HjZt5SzQNJtaXmiRzIUOfSzBvYBabgtHMywlFU14ZAo2Guxl7jvGj7q9YnDH9vCIUiHtm1i7iqvUEcR2PEdEVqllvBI3uTtv7%2Brp5NrBnTzjUXA5e2t%2FUogiiizTW%2BJZMUR5B6G8rtlGdVJwvpVNYYShq6Sd6SnN7WsVhmwvZdmeVw5ZKDwwpyOZqGcWF8H0nNbTzfmST5wMc7RyB130ghug5dGpJOJfRbEPpYBxcDaVNb8WKTSC7sR5WkMum%2FWM8HXF3y2lEEtkuOiVbToaE%2FYK6iz4YOhAHhGTis43GQ3ZS8QDOvNbnJeFZjvmaIri%2Fspr%2BQ9e0xTz0JKoEPfhEoRopPDQfKHrZTwmqxP3tdqQe2N3G7bbQD5AGuIxO6I9n5w4mhZXVpLDbWY43To4xxs1DJLiT9OJsjhhrXuz3guJ4iLirdsjyliQqNaVC4rNyP0Owhg6ljqkxX26xpY2R9tZE%2Fh4oUiWQkoHtdRgDW6tcgh8BnDLI%2BlqlhnN7eWdCKLGQnF%2F7pNEP7gTH5vLcjcKKeEIyUFhApsGhp04G%2B5ICz3j7JkTTwUrHKzoJMpnOLa2nhDIh4QlspnAmPEIfPzcC53IwEhONpFz6XDrWjLnMCfNgKd3iWuwSF2IxgMqvT1TG4OUgnlASN6zKkK5B1CqWA98EcyW07NeItCbNQwqAPq2gZDLhIrMPWGuYcXgPHxbuShFOWQpDbjNocaX8dyzy60QGvtlMA8FdbBcGhMWs2qYSHFyTxwc5xLQKWdbnHMW8osFGuqYQCJ3FW%2FXqrPlvSn0j4FYva1qa7FdQWSixPsxlF5xsimPsfmwHlSm79CHb633lUHI8WTYBXUDi7PclR6GprT1eca411W4DGRzPNqKEmP45AaPR4Gw3urMkb8cnTgQ5jMxHyLMsAXb7So1Ux0pP%2Fgezh68hvNyQQ55nm9AYtPiQ4TR7VztD1wQHdWYGc%2FonCRrZpRmY7PzYau7xVzMHkLNb9zNL8c94aVa74ytoKrFAxucWg20y9mSlgfhFM8C4q9FwU%2FhZ9kA%2F1pQ%2FFZwfHanzftHDyKw17pIg2Wr%2BYt6YlqwWfr%2B2rcDeH3ht%2B7A6%2F9zy%2FshScO36Ln0vf9oKlJQ9c%2Bm43%2F%2F%2B%2FDj3w%3D%3D\">redirected</a>.</body></html>",
+      "headers": {
+        "Connection": "keep-alive",
+        "Content-Type": "text/html; charset=utf-8",
+        "Transfer-Encoding": "chunked",
+        "Status": "302 Found",
+        "Cache-Control": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Referrer-Policy": "strict-origin-when-cross-origin",
+        "X-Permitted-Cross-Domain-Policies": "none",
+        "X-Xss-Protection": "1; mode=block",
+        "X-Request-Id": "be552bb3-ff52-4aa2-9b4a-a2eb2c8f7193",
+        "Location": "https://heimdallprepro.ratp.net/idp/profile/SAML2/Redirect/SSO?SAMLRequest=lVhZj6PIsv4rJfVDPaBqFhuMS90tsdqsNqsxL0csyb6ZHX79oVwzfbvn3nvOjGRbZGRG5BcRH5kR%2FtZ5ZdG8U0OfVDp4DKDrX6iuA22f1hVTV91QgtYA7ZgGwNLl769J3zfdOwxnoBvSrvSCJK3SrgdvIRhBUTdfE9DW%2BeA1zdegLuEP83DX1a8v7GY6rbwPu%2F9jJQFpGXpF0bSgaeuvrdc3XyvQw2nYwJsgSgsAG5QiY7AOwrQFQQ8bxuX1RWC%2Fv%2F4riFDCJ5Djm%2B8H2NseBOSbj4bBm4fgIYiA56MIsi3tugEIVdd7Vf%2F9FUMw5A1B3xDSRPF3dPeOk%2B7riw3a7okL%2B7ppzGVRde8fyL%2B%2FDm31Xntd2r1XXgm69z54%2F8Dzvi189%2F6M068qzX%2FW2Zzq66AuXn98%2B1j9%2FkTX%2FvhnUf0G%2F6r7LezejTTeQju04A8kYfcZ483kNE1fp93Xuo1hDEEQGDnC25qwS%2BMvrz91QShUUf0cMl5VV2ngFen6TJYC%2BqQOX6girtu0T8r%2FxzAKo8iH4TcwB28Buq%2B%2BvMK%2FQ%2FvbhpD9nwjfyroFX9rOe%2BsSD8OJP0zqW3ZbUAXgxdKF769f%2Fh4Tnqpm61VdVLdl9%2Fvwv8L6LXCgemYFhG%2Fdn979Ae3vG%2Fw%2FAvbjGwjehSoohi4dgfpBnsYLQPdybUGUzvLGiM3bzSNvKPqXJ9uevy9h9zJ%2FfNKXMvyTjCD4R5mCfwX%2Fl%2BFnrNg03l7hf5jFLUtffsvdpxXbKwbww5FrdIf1YXNuEOp6Tk72DpJR0QT2bFNZdr7KXNphhMKmyPcnol%2BVn4KfTPgc%2FoXKP6n3qVENvcQdQA6j4RICCeCjUK09xhCcbecACRo50i296kpSHqcFutH7HTQcRSaAtyCQlbTErE1o3SzkepS5iyIdR2RGYXi97L1UUgsOC9W%2BbPeZ%2BUgfBUOaTXHPp%2F3u6mMsb%2BKCqT0Op87rgYirsr8vH6Pa5mGfu6nTw8S1IzDpVKXUqYnunnePZIeDbGnm%2BlEWIbPKXePApwY7%2B71%2BxVImP8XIWM%2BCMg7mhHWOMJIc3Cy2S4oqvXM5GTcrY83xG3KxOfN4uZOWJOoTU%2FYUSwEeng8PaKaUzjcDuDTtgJ1vUpSHSz3Y6iGDzR1q7CWF4MmLOoZW6N%2BpRbiYCa%2BYc52we7TF8umEd3Ju7XHZeihF5N7XlrsJe8mxVWcnHsdDLKLDTVUzcnSa7H5FIxxJpkjmrnUFYsyxj9AIjBAo2c04pt4j0OvDUcbsfiqAVsYRMaKk9wBLLtYgsJi2QB%2FOYslWm1ssS4Q3mua1RnaL%2FVJq1zTwMcQGSlG2U1Vii5HgyWU3IiUBIcjoaDNz36uaxxpHeOIKCHFrKVj8jplUqKpuBR8N%2FhLSrRVkB9fwCsSg%2FQsDZSO72LgAw8SCcxwVzrPL32OovYJh3WGUHOgkfWpq8ZQdthMzUb0m4Uw3S8s727CxsWOxJBkRzUaoHOamyH88KGd1vR28dyX5XF4vqI8WIibHB7E5SVUukfXFiYLvP%2Bn8C38%2FKC2B5Se9HRw5sl7v%2FRwwH9dRtJ3dPfihCAIPswxDQRrDaMyaMOraOHOZmJRKx%2FkjydPTcUJoSut4imXoceVkhcpPFGpxdKIweiHMfEZZdKzaNBUrrFV0roFuLERPQckPd8ya2YxSPucDhbbpJCiLVdGVidPurK1pEks1p%2FtNLIISH8PS7hTdmrjpOSez1Gy5N7X2y2PnY2HjOsqsrhT6aU9R5DJBwjO9XlJy9Ep7DW%2FF6t%2F4zDsVg%2BeoyBOL4xb%2B5sW2dtvj2IY3fgoYPNuIMAsrlfzqJ6NxN%2F7E5%2F6tGLSTm9xLe9n2xtzbtPly7BV677Amhysmt6gmt1OyGFHsepMJ01PG%2FpRNsU%2FOzEqJn1jvJrVFRdHvE089fRNYChX9k9W721evxMQv1ULR9hP7OX9mKVu7O2ITrJyp0Nwz5kw8SXrJp64jDv5u84vlbIVWPuemSbFP9uY7Pm7%2BVt7NXhUzmNTPOLMsg9fhWZ%2BCtR5lrCmCnd0EGJrcsaTxt5yETyz25us8bvGptz1Gb2cnwZn69N1QJkG7i1LtCskYqJSW03yiJ%2B4JbfycLn%2FNoVyqo29uvEqFif1Nh6NpjWLjWLhSH7yLa2Z7pinJz3ZnICbGtdRznvPJskRtKPTME1a2i3ebAr0iZ2NeiNsSYBg9tWI36WvhOXHphe6%2BUlZdGx1jh9%2FL7UL0Z3%2BeMrM6WGU01TxXLDIJAZS1BbfhrpBWnk7GPoTNrhROdTik6MkjjihxKTWf5IILOFJX8i4kxjm6T6Y2xDjCxFedP0FBjfeJaPHxyKtlQhi1Vk2lcXfxkCA19JEcBNrGEcnquD4U6z4bEzuc9o9o9s%2BVxmyFsiSa6kNhIL6hS1HtdyY93ylrpiNcy5kLJF31ph2P1GnysfGi2%2Bd7xUPOeoatQ67XPGFg17U6%2BHlx8tlcHaaFqH17rEElWi3UBOcrC9jMYcwcp%2Ba591qyP0bXFjW66TC3pkrzuNfClMhtdxJ7Lm71HjZt5SzQNJtaXmiRzIUOfSzBvYBabgtHMywlFU14ZAo2Guxl7jvGj7q9YnDH9vCIUiHtm1i7iqvUEcR2PEdEVqllvBI3uTtv7%2Brp5NrBnTzjUXA5e2t%2FUogiiizTW%2BJZMUR5B6G8rtlGdVJwvpVNYYShq6Sd6SnN7WsVhmwvZdmeVw5ZKDwwpyOZqGcWF8H0nNbTzfmST5wMc7RyB130ghug5dGpJOJfRbEPpYBxcDaVNb8WKTSC7sR5WkMum%2FWM8HXF3y2lEEtkuOiVbToaE%2FYK6iz4YOhAHhGTis43GQ3ZS8QDOvNbnJeFZjvmaIri%2Fspr%2BQ9e0xTz0JKoEPfhEoRopPDQfKHrZTwmqxP3tdqQe2N3G7bbQD5AGuIxO6I9n5w4mhZXVpLDbWY43To4xxs1DJLiT9OJsjhhrXuz3guJ4iLirdsjyliQqNaVC4rNyP0Owhg6ljqkxX26xpY2R9tZE%2Fh4oUiWQkoHtdRgDW6tcgh8BnDLI%2BlqlhnN7eWdCKLGQnF%2F7pNEP7gTH5vLcjcKKeEIyUFhApsGhp04G%2B5ICz3j7JkTTwUrHKzoJMpnOLa2nhDIh4QlspnAmPEIfPzcC53IwEhONpFz6XDrWjLnMCfNgKd3iWuwSF2IxgMqvT1TG4OUgnlASN6zKkK5B1CqWA98EcyW07NeItCbNQwqAPq2gZDLhIrMPWGuYcXgPHxbuShFOWQpDbjNocaX8dyzy60QGvtlMA8FdbBcGhMWs2qYSHFyTxwc5xLQKWdbnHMW8osFGuqYQCJ3FW%2FXqrPlvSn0j4FYva1qa7FdQWSixPsxlF5xsimPsfmwHlSm79CHb633lUHI8WTYBXUDi7PclR6GprT1eca411W4DGRzPNqKEmP45AaPR4Gw3urMkb8cnTgQ5jMxHyLMsAXb7So1Ux0pP%2Fgezh68hvNyQQ55nm9AYtPiQ4TR7VztD1wQHdWYGc%2FonCRrZpRmY7PzYau7xVzMHkLNb9zNL8c94aVa74ytoKrFAxucWg20y9mSlgfhFM8C4q9FwU%2FhZ9kA%2F1pQ%2FFZwfHanzftHDyKw17pIg2Wr%2BYt6YlqwWfr%2B2rcDeH3ht%2B7A6%2F9zy%2FshScO36Ln0vf9oKlJQ9c%2Bm43%2F%2F%2B%2FDj3w%3D%3D",
+        "X-Download-Options": "noopen",
+        "X-Runtime": "0.028410",
+        "X-Frame-Options": "SAMEORIGIN",
+        "X-Content-Type-Options": "nosniff",
+        "Date": "Wed, 08 Jan 2020 15:13:58 GMT",
+        "X-Powered-By": "Phusion Passenger 5.3.7",
+        "Server": "nginx/1.14.0 + Phusion Passenger 5.3.7",
+        "Via": "1.1 vegur"
+      },
+      "status_code": 302,
+      "type": "ok"
+    }
+  },
+  {
+    "request": {
+      "body": "",
+      "headers": {
+        "x-forwarded-for": "127.0.0.1",
+        "accept-encoding": ""
+      },
+      "method": "get",
+      "options": {
+        "ssl_options": {
+          "server_name_indication": [
+            104,
+            101,
+            105,
+            109,
+            100,
+            97,
+            108,
+            108,
+            112,
+            114,
+            101,
+            112,
+            114,
+            111,
+            46,
+            114,
+            97,
+            116,
+            112,
+            46,
+            110,
+            101,
+            116
+          ]
+        }
+      },
+      "request_body": "",
+      "url": "https://heimdallprepro.ratp.net/idp/profile/SAML2/Redirect/SSO?SAMLRequest=lVhZj6PIsv4rJfVDPaBqFhuMS90tsdqsNqsxL0csyb6ZHX79oVwzfbvn3nvOjGRbZGRG5BcRH5kR%2FtZ5ZdG8U0OfVDp4DKDrX6iuA22f1hVTV91QgtYA7ZgGwNLl769J3zfdOwxnoBvSrvSCJK3SrgdvIRhBUTdfE9DW%2BeA1zdegLuEP83DX1a8v7GY6rbwPu%2F9jJQFpGXpF0bSgaeuvrdc3XyvQw2nYwJsgSgsAG5QiY7AOwrQFQQ8bxuX1RWC%2Fv%2F4riFDCJ5Djm%2B8H2NseBOSbj4bBm4fgIYiA56MIsi3tugEIVdd7Vf%2F9FUMw5A1B3xDSRPF3dPeOk%2B7riw3a7okL%2B7ppzGVRde8fyL%2B%2FDm31Xntd2r1XXgm69z54%2F8Dzvi189%2F6M068qzX%2FW2Zzq66AuXn98%2B1j9%2FkTX%2FvhnUf0G%2F6r7LezejTTeQju04A8kYfcZ483kNE1fp93Xuo1hDEEQGDnC25qwS%2BMvrz91QShUUf0cMl5VV2ngFen6TJYC%2BqQOX6girtu0T8r%2FxzAKo8iH4TcwB28Buq%2B%2BvMK%2FQ%2FvbhpD9nwjfyroFX9rOe%2BsSD8OJP0zqW3ZbUAXgxdKF769f%2Fh4Tnqpm61VdVLdl9%2Fvwv8L6LXCgemYFhG%2Fdn979Ae3vG%2Fw%2FAvbjGwjehSoohi4dgfpBnsYLQPdybUGUzvLGiM3bzSNvKPqXJ9uevy9h9zJ%2FfNKXMvyTjCD4R5mCfwX%2Fl%2BFnrNg03l7hf5jFLUtffsvdpxXbKwbww5FrdIf1YXNuEOp6Tk72DpJR0QT2bFNZdr7KXNphhMKmyPcnol%2BVn4KfTPgc%2FoXKP6n3qVENvcQdQA6j4RICCeCjUK09xhCcbecACRo50i296kpSHqcFutH7HTQcRSaAtyCQlbTErE1o3SzkepS5iyIdR2RGYXi97L1UUgsOC9W%2BbPeZ%2BUgfBUOaTXHPp%2F3u6mMsb%2BKCqT0Op87rgYirsr8vH6Pa5mGfu6nTw8S1IzDpVKXUqYnunnePZIeDbGnm%2BlEWIbPKXePApwY7%2B71%2BxVImP8XIWM%2BCMg7mhHWOMJIc3Cy2S4oqvXM5GTcrY83xG3KxOfN4uZOWJOoTU%2FYUSwEeng8PaKaUzjcDuDTtgJ1vUpSHSz3Y6iGDzR1q7CWF4MmLOoZW6N%2BpRbiYCa%2BYc52we7TF8umEd3Ju7XHZeihF5N7XlrsJe8mxVWcnHsdDLKLDTVUzcnSa7H5FIxxJpkjmrnUFYsyxj9AIjBAo2c04pt4j0OvDUcbsfiqAVsYRMaKk9wBLLtYgsJi2QB%2FOYslWm1ssS4Q3mua1RnaL%2FVJq1zTwMcQGSlG2U1Vii5HgyWU3IiUBIcjoaDNz36uaxxpHeOIKCHFrKVj8jplUqKpuBR8N%2FhLSrRVkB9fwCsSg%2FQsDZSO72LgAw8SCcxwVzrPL32OovYJh3WGUHOgkfWpq8ZQdthMzUb0m4Uw3S8s727CxsWOxJBkRzUaoHOamyH88KGd1vR28dyX5XF4vqI8WIibHB7E5SVUukfXFiYLvP%2Bn8C38%2FKC2B5Se9HRw5sl7v%2FRwwH9dRtJ3dPfihCAIPswxDQRrDaMyaMOraOHOZmJRKx%2FkjydPTcUJoSut4imXoceVkhcpPFGpxdKIweiHMfEZZdKzaNBUrrFV0roFuLERPQckPd8ya2YxSPucDhbbpJCiLVdGVidPurK1pEks1p%2FtNLIISH8PS7hTdmrjpOSez1Gy5N7X2y2PnY2HjOsqsrhT6aU9R5DJBwjO9XlJy9Ep7DW%2FF6t%2F4zDsVg%2BeoyBOL4xb%2B5sW2dtvj2IY3fgoYPNuIMAsrlfzqJ6NxN%2F7E5%2F6tGLSTm9xLe9n2xtzbtPly7BV677Amhysmt6gmt1OyGFHsepMJ01PG%2FpRNsU%2FOzEqJn1jvJrVFRdHvE089fRNYChX9k9W721evxMQv1ULR9hP7OX9mKVu7O2ITrJyp0Nwz5kw8SXrJp64jDv5u84vlbIVWPuemSbFP9uY7Pm7%2BVt7NXhUzmNTPOLMsg9fhWZ%2BCtR5lrCmCnd0EGJrcsaTxt5yETyz25us8bvGptz1Gb2cnwZn69N1QJkG7i1LtCskYqJSW03yiJ%2B4JbfycLn%2FNoVyqo29uvEqFif1Nh6NpjWLjWLhSH7yLa2Z7pinJz3ZnICbGtdRznvPJskRtKPTME1a2i3ebAr0iZ2NeiNsSYBg9tWI36WvhOXHphe6%2BUlZdGx1jh9%2FL7UL0Z3%2BeMrM6WGU01TxXLDIJAZS1BbfhrpBWnk7GPoTNrhROdTik6MkjjihxKTWf5IILOFJX8i4kxjm6T6Y2xDjCxFedP0FBjfeJaPHxyKtlQhi1Vk2lcXfxkCA19JEcBNrGEcnquD4U6z4bEzuc9o9o9s%2BVxmyFsiSa6kNhIL6hS1HtdyY93ylrpiNcy5kLJF31ph2P1GnysfGi2%2Bd7xUPOeoatQ67XPGFg17U6%2BHlx8tlcHaaFqH17rEElWi3UBOcrC9jMYcwcp%2Ba591qyP0bXFjW66TC3pkrzuNfClMhtdxJ7Lm71HjZt5SzQNJtaXmiRzIUOfSzBvYBabgtHMywlFU14ZAo2Guxl7jvGj7q9YnDH9vCIUiHtm1i7iqvUEcR2PEdEVqllvBI3uTtv7%2Brp5NrBnTzjUXA5e2t%2FUogiiizTW%2BJZMUR5B6G8rtlGdVJwvpVNYYShq6Sd6SnN7WsVhmwvZdmeVw5ZKDwwpyOZqGcWF8H0nNbTzfmST5wMc7RyB130ghug5dGpJOJfRbEPpYBxcDaVNb8WKTSC7sR5WkMum%2FWM8HXF3y2lEEtkuOiVbToaE%2FYK6iz4YOhAHhGTis43GQ3ZS8QDOvNbnJeFZjvmaIri%2Fspr%2BQ9e0xTz0JKoEPfhEoRopPDQfKHrZTwmqxP3tdqQe2N3G7bbQD5AGuIxO6I9n5w4mhZXVpLDbWY43To4xxs1DJLiT9OJsjhhrXuz3guJ4iLirdsjyliQqNaVC4rNyP0Owhg6ljqkxX26xpY2R9tZE%2Fh4oUiWQkoHtdRgDW6tcgh8BnDLI%2BlqlhnN7eWdCKLGQnF%2F7pNEP7gTH5vLcjcKKeEIyUFhApsGhp04G%2B5ICz3j7JkTTwUrHKzoJMpnOLa2nhDIh4QlspnAmPEIfPzcC53IwEhONpFz6XDrWjLnMCfNgKd3iWuwSF2IxgMqvT1TG4OUgnlASN6zKkK5B1CqWA98EcyW07NeItCbNQwqAPq2gZDLhIrMPWGuYcXgPHxbuShFOWQpDbjNocaX8dyzy60QGvtlMA8FdbBcGhMWs2qYSHFyTxwc5xLQKWdbnHMW8osFGuqYQCJ3FW%2FXqrPlvSn0j4FYva1qa7FdQWSixPsxlF5xsimPsfmwHlSm79CHb633lUHI8WTYBXUDi7PclR6GprT1eca411W4DGRzPNqKEmP45AaPR4Gw3urMkb8cnTgQ5jMxHyLMsAXb7So1Ux0pP%2Fgezh68hvNyQQ55nm9AYtPiQ4TR7VztD1wQHdWYGc%2FonCRrZpRmY7PzYau7xVzMHkLNb9zNL8c94aVa74ytoKrFAxucWg20y9mSlgfhFM8C4q9FwU%2FhZ9kA%2F1pQ%2FFZwfHanzftHDyKw17pIg2Wr%2BYt6YlqwWfr%2B2rcDeH3ht%2B7A6%2F9zy%2FshScO36Ln0vf9oKlJQ9c%2Bm43%2F%2F%2B%2FDj3w%3D%3D"
+    },
+    "response": {
+      "binary": false,
+      "body": "",
+      "headers": {
+        "Date": "Wed, 08 Jan 2020 15:13:59 GMT",
+        "Server": "openresty",
+        "Strict-Transport-Security": "max-age=15768000; includeSubdomains; preload",
+        "Content-Length": "0",
+        "Cache-Control": "no-store",
+        "Location": "https://heimdallprepro.ratp.net/idp/profile/SAML2/Redirect/SSO;JSESSIONID1=F175416C2F0C9A6C4E129A71E05E7477?execution=e1s1",
+        "X-Frame-Options": "SAMEORIGIN",
+        "X-Content-Type-Options": "nosniff",
+        "Set-Cookie": "route=15d4d2fdf6b6c741b20fd2b8c3992fb5; Path=/; secure",
+        "X-XSS-Protection": "1 ; mode=block",
+        "Content-Type": "text/plain"
+      },
+      "status_code": 302,
+      "type": "ok"
+    }
+  },
+  {
+    "request": {
+      "body": "",
+      "headers": {
+        "x-forwarded-for": "127.0.0.1",
+        "accept-encoding": ""
+      },
+      "method": "get",
+      "options": {
+        "ssl_options": {
+          "server_name_indication": [
+            104,
+            101,
+            105,
+            109,
+            100,
+            97,
+            108,
+            108,
+            112,
+            114,
+            101,
+            112,
+            114,
+            111,
+            46,
+            114,
+            97,
+            116,
+            112,
+            46,
+            110,
+            101,
+            116
+          ]
+        }
+      },
+      "request_body": "",
+      "url": "https://heimdallprepro.ratp.net/idp/profile/SAML2/Redirect/SSO;JSESSIONID1=F175416C2F0C9A6C4E129A71E05E7477?execution=e1s1"
+    },
+    "response": {
+      "binary": false,
+      "body": "\n\n\n<!DOCTYPE html>\n<html>\n  \t<head>\n    \t<meta charset=\"utf-8\">\n\t\t<meta name=\"viewport\" content=\"width=device-width,initial-scale=1\">\n    \t<title>Service d'authentification du Groupe RATP</title>\n    \t<link rel=\"stylesheet\" type=\"text/css\" href=\"/idp/css/main.css\">\n  \t</head>\n  \t<body>\n\t<div class=\"wrapper\">\n      <div class=\"container\">\n        <header>\n\t\t\t<img class=\"headerImg\" src=\"/idp/images/header.jpg\" alt=\"RATP\"/>\n\t\t\t\t\t\t<h1 class=\"titre_login\">\n\t\t\t\t<div>\n\t\t\t\t\t<img src=\"/idp/images/logo-groupe-ratp.png\" alt=\"Groupe RATP\" />\n\t\t\t\t\t\t\t\t\t\t\t<span id=\"sourceUrl\">JeSuisMachiniste</span>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t</h1>  \n        </header>\n\t\t<br/>\n        <div class=\"content\">\n          <div class=\"column one\">\n            \n            <form action=\"/idp/profile/SAML2/Redirect/SSO;JSESSIONID1=F175416C2F0C9A6C4E129A71E05E7477?execution=e1s1\" method=\"post\">\n\t\t\t\t\t\t\t\t  <legend>\n\t\t\t\t\tConnexion Ã  JeSuisMachiniste\n\t\t\t\t  </legend>\n\t\t\t\t\n            \t\t\t\t<div class=\"login\">\n\t\t\t\t\t<div id=\"shadow\"></div>\n\t\t\t\t\t<div class=\"champ\">\n\t\t\t\t\t\t<label id=\"labelUsername\" for=\"username\">Compte matriculaire</label>\n\t\t\t\t\t\t<!--label id=\"labelUsername\" for=\"username\">Compte matriculaire / Login</label-->\n\t\t\t\t\t\t<input class=\"form-element form-field\" id=\"username\" name=\"j_username\" type=\"text\"\n\t\t\t\t\t\t\tvalue=\"\" required>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"champ\">\n\t\t\t\t\t\t<label id=\"labelPassword\" for=\"password\">Mot de passe</label>\n\t\t\t\t\t\t<input class=\"form-element form-field\" id=\"password\" name=\"j_password\" type=\"password\" value=\"\" required>\n\t\t\t\t\t\t<button class=\"form-element form-button\" type=\"submit\" name=\"_eventId_proceed\"\n\t\t\t\t\t\t\tonClick=\"this.childNodes[0].nodeValue='Connexion en cours, veuillez patienter...'\">\n\t\t\t\t\t\t\tConnexion</button>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n                                                \n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n                        </form>\n\t\t\t\n                                    \t\t\t<div>\n\t\t\t\t<table>\n\t\t\t\t\t<tr>\n\t\t\t\t\t\t<td  style=\"color:#418bc8; text-align:center;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>\n\t\t\t\t\t\t\t\t\t\t\t\t<td  style=\"color:#418bc8; text-align:center;\">\n\t\t\t\t\t\t\t<a style=\"color:#418bc8; text-align:center;\" href=\"https://motdepasseprepro.ratp.net/moncompte/enterchallengelogin.do\">J'ai oubliÃ© mon mot de passe</a> &nbsp;&nbsp;&nbsp;&nbsp;\n\t\t\t\t\t\t</td>\n\t\t\t\t\t\t\t\t\t\t\t\t<td style=\"color:#418bc8; text-align:center;\">\n\t\t\t\t\t\t\t<a style=\"color:#418bc8; text-align:center;\" href=\"https://motdepasseprepro.ratp.net\">Je gÃ¨re mon mot de passe</a>\n\t\t\t\t\t\t</td>\n\t\t\t\t\t\t<td style=\"color:#418bc8; text-align:center;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>\n\t\t\t\t\t</tr>\n\t\t\t\t</table>\n\t\t\t</div>\n\t\t  </div>\n\t\t</div>\n\t\t<footer>\n\t\t  <p id=\"footer\">Vous entrez dans le domaine du systÃ¨me d'information de la RATP. L'accÃ¨s Ã  ce systÃ¨me d'information est rÃ©servÃ© aux personnes dÃ»ment habilitÃ©es.\t\t\t<a id=\"enSavoirPlus\" onclick=\"getMore();\">En savoir plus</a>\n\t\t  </p>\n\t\t  <p id=\"plusTexte\" style=\"display:none;\">Vous entrez dans le domaine du systÃ¨me d'information de la RATP. L'accÃ¨s Ã  ce systÃ¨me d'information est rÃ©servÃ© aux personnes dÃ»ment habilitÃ©es. Des fichiers de journalisation des connexions et des actions sur ce systÃ¨me d'information permettant d'identifier le poste de travail ou l'utilisateur peuvent exister et Ãªtre exploitÃ©s par les administrateurs pour garantir une utilisation normale et la sÃ©curitÃ© du systÃ¨me. Tout accÃ¨s ou utilisation non autorisÃ©e pourra faire l'objet des poursuites disciplinaires ou judiciaires dÃ©crites dans la Charte du bon usage des technologies de l'information et des communications de la RATP. </p>\n\t\t</footer>\n\t  </div>\n\t</div>\n\t<script type=\"text/javascript\">\n\t\tfunction getMore(){\n\t\t\tdocument.getElementById(\"footer\").style.display=\"none\";\n\t\t\tdocument.getElementById(\"plusTexte\").style.display=\"block\";\n\t\t}\n\t</script>\n\t<script src=\"/idp/js/script.js\" type=\"text/javascript\"></script>\n\t</body>\n</html>\n",
+      "headers": {
+        "Date": "Wed, 08 Jan 2020 15:13:59 GMT",
+        "Server": "openresty",
+        "Strict-Transport-Security": "max-age=15768000; includeSubdomains; preload",
+        "Content-Type": "text/html;charset=utf-8",
+        "Content-Length": "3919",
+        "Cache-Control": "no-store",
+        "X-Frame-Options": "SAMEORIGIN",
+        "X-Content-Type-Options": "nosniff",
+        "Set-Cookie": "route=15d4d2fdf6b6c741b20fd2b8c3992fb5; Path=/; secure",
+        "X-XSS-Protection": "1 ; mode=block"
+      },
+      "status_code": 200,
+      "type": "ok"
+    }
+  }
+]
