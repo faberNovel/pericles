@@ -50,6 +50,23 @@ class ResourceRepresentationsControllerTest < ControllerWithAuthenticationTest
     assert_redirected_to project_resource_path(@project, @resource)
   end
 
+  test 'should create resource_representation with json format' do
+    @representation = build(:resource_representation)
+
+    assert_difference -> { ResourceRepresentation.count } do
+      post resource_resource_representations_path(@resource, format: :json), as: :json, params: {
+        resource_representation: {
+          name: 'name'
+        }
+      }
+      assert_response :created
+    end
+
+    validate_json_request_body '/resourcerepresentation/request_post_resources_resource_id_resource_representations_json_createresourcerepresentation'
+    validate_json_response_body '/resourcerepresentation/post_resources_resource_id_resource_representations_json_detailedresourcerepresentation_201'
+  end
+
+
   test 'should create resource_representation with attributes_resource_representations' do
     @representation = build(:resource_representation_with_attributes_resource_reps, resource: @resource)
     count = @representation.attributes_resource_representations.length
