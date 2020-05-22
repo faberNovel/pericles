@@ -78,6 +78,23 @@ class RoutesControllerTest < ControllerWithAuthenticationTest
     assert_redirected_to project_route_path(route.project, route)
   end
 
+  test 'should create route with json format' do
+    resource = create(:resource)
+    assert_difference -> { Route.count } do
+      post project_routes_path(resource.project), as: :json, params: {
+        route: {
+          url: '/routes',
+          http_method: 'GET',
+          resource_id: resource.id
+        }
+      }
+      assert_response :created, -> { response.body }
+    end
+
+    validate_json_request_body '/route/request_post_projects_project_id_routes_json_createroute'
+    validate_json_response_body '/route/post_projects_project_id_routes_json_detailedroute_201'
+  end
+
   test 'should not create route (not authenticated)' do
     sign_out :user
     route = build(:route)

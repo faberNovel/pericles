@@ -22,7 +22,10 @@ class RoutesController < ApplicationController
   def create
     route.request_headers.build(name: 'Content-Type', value: 'application/json')
     if route.save
-      redirect_to project_route_path(project, route)
+      respond_to do |format|
+        format.html { redirect_to project_route_path(project, route) }
+        format.json { render json: route, status: :created }
+      end
     else
       render 'new', status: :unprocessable_entity
     end
