@@ -1,0 +1,177 @@
+{
+  "additionalProperties": false,
+  "definitions": {
+    "AttributeResponse_2502": {
+      "additionalProperties": false,
+      "description": "Automatically generated (please edit me)",
+      "properties": {
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "enum": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "id": {
+          "type": "integer"
+        },
+        "is_array": {
+          "type": "boolean"
+        },
+        "max_items": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "maximum": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "min_items": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "minimum": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "name": {
+          "type": "string"
+        },
+        "nullable": {
+          "type": "boolean"
+        },
+        "primitive_type": {
+          "type": "string"
+        },
+        "readable_type": {
+          "type": "string"
+        },
+        "resource_id": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "scheme": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "description",
+        "enum",
+        "id",
+        "is_array",
+        "max_items",
+        "maximum",
+        "min_items",
+        "minimum",
+        "name",
+        "nullable",
+        "primitive_type",
+        "readable_type",
+        "resource_id",
+        "scheme"
+      ],
+      "title": "Attribute - AttributeResponse",
+      "type": "object"
+    }
+  },
+  "description": "Automatically generated (please edit me)",
+  "properties": {
+    "resource": {
+      "additionalProperties": false,
+      "properties": {
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "id": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "resource_attributes": {
+          "items": {
+            "$ref": "#/definitions/AttributeResponse_2502",
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "resource_representations": {
+          "items": {
+            "type": "object"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "description",
+        "id",
+        "name",
+        "resource_attributes",
+        "resource_representations"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "resource"
+  ],
+  "title": "Resource - DetailedResource",
+  "type": "object"
+}

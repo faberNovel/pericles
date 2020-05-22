@@ -93,13 +93,43 @@ class ResourcesControllerTest < ControllerWithAuthenticationTest
     assert_redirected_to project_resource_path(resource.project, resource)
   end
 
+  test 'should create resource with json format' do
+    resource = build(:resource)
+
+    assert_difference -> { Resource.count } do
+      post project_resources_path(resource.project, format: :json), as: :json, params: {
+        resource: {
+          name: resource.name
+        }
+      }
+      assert_response :created
+    end
+
+    validate_json_request_body '/resource/request_post_projects_project_id_resources_json_createresource'
+    validate_json_response_body '/resource/post_projects_project_id_resources_json_detailedresource_201'
+  end
+
   test 'should create resource from json' do
     assert_difference('Resource.count') do
       post project_resources_path(@project), params: {
-        resource: { name: 'Resource name' }, json_instance: '{"id": 1}'
+        resource: { name: 'Resource name' , json_instance: '{"id": 1}' }
       }
     end
+
     assert_redirected_to project_resource_path(@project, @project.resources.order(:created_at).last)
+  end
+
+  test 'should create resource from json with json format' do
+    assert_difference -> { Resource.count } do
+      post project_resources_path(@project, format: :json), as: :json, params: {
+        resource: { name: 'Resource name' , json_instance: '{"id": 1}' }
+      }
+      assert_response :created
+    end
+
+    puts response.body
+    validate_json_request_body '/resource/request_post_projects_project_id_resources_json_createresource'
+    validate_json_response_body '/resource/post_projects_project_id_resources_json_detailedresource_201'
   end
 
   test 'should not create resource from invalid json' do
