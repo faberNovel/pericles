@@ -406,17 +406,17 @@ class ResourcesControllerTest < ControllerWithAuthenticationTest
 
     file = %{package #{android_company_domain_name}.pokeapi.android.data.net.retrofit.model
 
+    @SuppressWarnings(\"ConstructorParameterNaming\")
     data class RestPokemon(
         val date: String,
-        val dateTime: String?,
+        val date_time: String?,
         val id: Int,
         val mindset: String?,
         val nature: RestNature,
-        val niceBoolean: Boolean?,
-        val weaknessList: List<RestNature>,
+        val nice_boolean: Boolean?,
+        val weakness_list: List<RestNature>,
         val weight: Double?
-    )
-    }.gsub(/^    /, '')
+    )}.gsub(/^    /, '')
 
     get project_resource_path(resource.project, resource, format: 'kotlin')
     assert_equal(response.body, file)
