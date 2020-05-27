@@ -1,0 +1,38 @@
+{
+  "additionalProperties": false,
+  "description": "Automatically generated (please edit me)",
+  "properties": {
+    "route": {
+      "additionalProperties": false,
+      "properties": {
+        "http_method": {
+          "enum": [
+            "GET",
+            "POST",
+            "PUT",
+            "PATCH",
+            "DELETE"
+          ],
+          "type": "string"
+        },
+        "resource_id": {
+          "type": "integer"
+        },
+        "url": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "http_method",
+        "resource_id",
+        "url"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "route"
+  ],
+  "title": "Route - CreateRoute",
+  "type": "object"
+}

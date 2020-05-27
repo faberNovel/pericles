@@ -1,8 +1,9 @@
 package <%= android_company_domain_name =%>.<%= project.title.parameterize(separator: '.') =%>.android.data.net.retrofit.model
 
+@SuppressWarnings("ConstructorParameterNaming")
 data class <%= resource.rest_name =%>(
 <% resource.resource_attributes.each do |attribute| %>
-    val <%= attribute.camel_variable_name =%>: <%= attribute.kotlin_type =%><%= (attribute ==  resource.resource_attributes.last) ? '' : ',' =%>
+    val <%= attribute.snake_variable_name =%>: <%= attribute.kotlin_type =%><%= (attribute ==  resource.resource_attributes.last) ? '' : ',' =%>
 
 <% end %>
 )

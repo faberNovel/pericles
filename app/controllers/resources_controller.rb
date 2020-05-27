@@ -60,7 +60,10 @@ class ResourcesController < ApplicationController
     )
 
     if @resource_creation_contract.save
-      redirect_to project_resource_path(project, resource)
+      respond_to do |format|
+        format.html { redirect_to project_resource_path(project, resource) }
+        format.json { render json: resource, status: :created }
+      end
     else
       render 'new', status: :unprocessable_entity
     end

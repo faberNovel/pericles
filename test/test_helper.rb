@@ -21,6 +21,18 @@ end
 
 class ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
+
+  def validate_json(json_schema_path, json)
+    assert_empty JSON::Validator.fully_validate("test/json_schemas#{json_schema_path}.json_schema", json, errors_as_objects: true)
+  end
+
+  def validate_json_response_body(json_schema_path)
+    validate_json(json_schema_path, response.body)
+  end
+
+  def validate_json_request_body(json_schema_path)
+    validate_json(json_schema_path, request.request_parameters)
+  end
 end
 
 require 'spy/integration'

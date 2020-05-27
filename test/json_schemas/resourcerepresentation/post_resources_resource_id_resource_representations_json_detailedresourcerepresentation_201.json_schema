@@ -1,0 +1,122 @@
+{
+  "additionalProperties": false,
+  "definitions": {
+    "DefaultAttributesResourceRepresentation_2506": {
+      "additionalProperties": false,
+      "description": "Automatically generated (please edit me)",
+      "properties": {
+        "attribute_id": {
+          "type": "integer"
+        },
+        "custom_key_name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "id": {
+          "type": "integer"
+        },
+        "is_null": {
+          "type": "boolean"
+        },
+        "is_required": {
+          "type": "boolean"
+        },
+        "parent_resource_representation_id": {
+          "type": "integer"
+        },
+        "resource_representation_id": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "resource_representation_name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "attribute_id",
+        "custom_key_name",
+        "id",
+        "is_null",
+        "is_required",
+        "parent_resource_representation_id",
+        "resource_representation_id",
+        "resource_representation_name"
+      ],
+      "title": "AttributesResourceRepresentation - DefaultAttributesResourceRepresentation",
+      "type": "object"
+    }
+  },
+  "description": "Automatically generated (please edit me)",
+  "properties": {
+    "resource_representation": {
+      "additionalProperties": false,
+      "properties": {
+        "attributes_resource_representations": {
+          "items": {
+            "$ref": "#/definitions/DefaultAttributesResourceRepresentation_2506",
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "id": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "resource_id": {
+          "type": "integer"
+        },
+        "used_in_resource_representations": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "attributes_resource_representations",
+        "description",
+        "id",
+        "name",
+        "resource_id",
+        "used_in_resource_representations"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "resource_representation"
+  ],
+  "title": "ResourceRepresentation - DetailedResourceRepresentation",
+  "type": "object"
+}

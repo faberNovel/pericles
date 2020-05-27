@@ -1,0 +1,69 @@
+{
+  "additionalProperties": false,
+  "definitions": {
+    "CreateAttributesResourceRepresentation_2508": {
+      "additionalProperties": false,
+      "properties": {
+        "attribute_id": {
+          "type": "integer"
+        },
+        "is_required": {
+          "type": "boolean"
+        },
+        "resource_representation_id": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "attribute_id",
+        "is_required",
+        "resource_representation_id"
+      ],
+      "title": "AttributesResourceRepresentation - CreateAttributesResourceRepresentation",
+      "type": "object"
+    }
+  },
+  "properties": {
+    "resource_representation": {
+      "additionalProperties": false,
+      "properties": {
+        "attributes_resource_representations_attributes": {
+          "items": {
+            "$ref": "#/definitions/CreateAttributesResourceRepresentation_2508",
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "resource_representation"
+  ],
+  "title": "ResourceRepresentation - CreateResourceRepresentation",
+  "type": "object"
+}

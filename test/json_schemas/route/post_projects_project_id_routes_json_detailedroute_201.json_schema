@@ -1,0 +1,41 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "route": {
+      "additionalProperties": false,
+      "properties": {
+        "http_method": {
+          "enum": [
+            "GET",
+            "POST",
+            "PUT",
+            "PATCH",
+            "DELETE"
+          ],
+          "type": "string"
+        },
+        "id": {
+          "type": "integer"
+        },
+        "resource_id": {
+          "type": "integer"
+        },
+        "url": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "http_method",
+        "id",
+        "resource_id",
+        "url"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "route"
+  ],
+  "title": "Route - DetailedRoute",
+  "type": "object"
+}

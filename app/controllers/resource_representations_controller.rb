@@ -37,7 +37,10 @@ class ResourceRepresentationsController < ApplicationController
 
   def create
     if resource_representation.save
-      redirect_to project_resource_path(project, resource)
+      respond_to do |format|
+        format.html { redirect_to project_resource_path(project, resource) }
+        format.json { render json: resource_representation, include: '**', serializer: ExtendedResourceRepresentationSerializer, status: :created }
+      end
     else
       build_missing_attributes_resource_representations
       render 'new', status: :unprocessable_entity

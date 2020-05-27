@@ -93,13 +93,43 @@ class ResourcesControllerTest < ControllerWithAuthenticationTest
     assert_redirected_to project_resource_path(resource.project, resource)
   end
 
+  test 'should create resource with json format' do
+    resource = build(:resource)
+
+    assert_difference -> { Resource.count } do
+      post project_resources_path(resource.project, format: :json), as: :json, params: {
+        resource: {
+          name: resource.name
+        }
+      }
+      assert_response :created
+    end
+
+    validate_json_request_body '/resource/request_post_projects_project_id_resources_json_createresource'
+    validate_json_response_body '/resource/post_projects_project_id_resources_json_detailedresource_201'
+  end
+
   test 'should create resource from json' do
     assert_difference('Resource.count') do
       post project_resources_path(@project), params: {
-        resource: { name: 'Resource name' }, json_instance: '{"id": 1}'
+        resource: { name: 'Resource name' , json_instance: '{"id": 1}' }
       }
     end
+
     assert_redirected_to project_resource_path(@project, @project.resources.order(:created_at).last)
+  end
+
+  test 'should create resource from json with json format' do
+    assert_difference -> { Resource.count } do
+      post project_resources_path(@project, format: :json), as: :json, params: {
+        resource: { name: 'Resource name' , json_instance: '{"id": 1}' }
+      }
+      assert_response :created
+    end
+
+    puts response.body
+    validate_json_request_body '/resource/request_post_projects_project_id_resources_json_createresource'
+    validate_json_response_body '/resource/post_projects_project_id_resources_json_detailedresource_201'
   end
 
   test 'should not create resource from invalid json' do
@@ -376,17 +406,17 @@ class ResourcesControllerTest < ControllerWithAuthenticationTest
 
     file = %{package #{android_company_domain_name}.pokeapi.android.data.net.retrofit.model
 
+    @SuppressWarnings(\"ConstructorParameterNaming\")
     data class RestPokemon(
         val date: String,
-        val dateTime: String?,
+        val date_time: String?,
         val id: Int,
         val mindset: String?,
         val nature: RestNature,
-        val niceBoolean: Boolean?,
-        val weaknessList: List<RestNature>,
+        val nice_boolean: Boolean?,
+        val weakness_list: List<RestNature>,
         val weight: Double?
-    )
-    }.gsub(/^    /, '')
+    )}.gsub(/^    /, '')
 
     get project_resource_path(resource.project, resource, format: 'kotlin')
     assert_equal(response.body, file)

@@ -1,0 +1,36 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "resource": {
+      "additionalProperties": false,
+      "properties": {
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "json_instance": {
+          "description": "JSON as string",
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "resource"
+  ],
+  "title": "Resource - CreateResource",
+  "type": "object"
+}

@@ -2,6 +2,11 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.11.4 - 2020-05-27
+
+* Add API to create Routes, Ressources and Representations (thanks @Mrchoclate)
+* Switch Kotlin code generation to snake case (thanks @flolom)
+
 ## 0.11.3 - 2020-04-17
 
 * Confirm email at signup (thanks @ThibaultTourailles)
