@@ -13,8 +13,10 @@
         .author= audits.first.user&.name
         .created_at= audits.first.created_at.iso8601
       .content
-        - audits.reverse.each do |audit|
-          = render audit.partial_name, audit: audit
+        %ul
+          - audits.reverse.each do |audit|
+            %li
+              = render audit.partial_name, audit: audit
 
   = paginate @audits
 
