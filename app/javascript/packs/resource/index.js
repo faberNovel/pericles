@@ -37,5 +37,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
   $(document).ready(function() {
     $("select").chosen({search_contains: true, width: '100%'});
+    activate_tab_if_anchor_present()
   });
+
+  function activate_tab_if_anchor_present(){
+    var url = window.location.href
+    var idx = url.indexOf("#");
+    if (idx !== -1) {
+      var tab = url.substring(idx + 1);
+      $('.nav.nav-pills a[href="#' + tab + '"]').tab('show');
+    };
+  };
 });
