@@ -29,6 +29,9 @@ class ResourcesController < ApplicationController
   def show
     respond_to do |format|
       format.html {}
+      format.json_schema do
+        render json: resource.json_schema
+      end
       %i[swift kotlin ruby typescript graphql].each do |language|
         format.send(language) do
           render body: CodeGenerator.new(language).from_resource(resource).generate
