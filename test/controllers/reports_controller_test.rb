@@ -21,6 +21,15 @@ class ReportsControllerTest < ControllerWithAuthenticationTest
     assert_redirected_to project_report_path(@project, @report)
   end
 
+  test 'should delete validation errors before saving new ones' do
+    assert_changes '@report.validation_errors.count' do
+      post revalidate_project_report_path(@project, @report)
+    end
+    assert_no_changes '@report.validation_errors.count' do
+      post revalidate_project_report_path(@project, @report)
+    end
+  end
+
   test 'member external user should access project reports' do
     external_user = create(:user, :external)
     create(:member, project: @project, user: external_user)

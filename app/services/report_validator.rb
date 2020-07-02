@@ -58,6 +58,7 @@ class ReportValidator
   end
 
   def save_errors_from_response(response)
+    @report.validation_errors.destroy_all
     return if response.nil?
 
     response.errors_from_report(@report).each do |e|
