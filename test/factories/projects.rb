@@ -20,5 +20,14 @@ FactoryBot.define do
         create(:proxy_configuration, target_base_url: 'http://api.xyz/', project: project)
       end
     end
+
+    factory :project_with_request do
+      after(:create) do |project, _|
+        resource = create(:resource, project: project)
+        attribute = create(:attribute, parent_resource: resource, name: 'user', primitive_type: :string)
+        resource.resource_attributes << attribute
+        create(:route, :with_request_and_required_attributes , url: '/users/:id', resource: resource)
+      end
+    end
   end
 end

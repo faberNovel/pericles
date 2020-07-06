@@ -19,7 +19,15 @@ FactoryBot.define do
       http_method { :POST }
 
       after(:build) do |route|
-        route.request_resource_representation ||= build(:resource_representation, resource: route.resource)
+        route.request_resource_representation ||= build(:resource_representation_with_attributes_resource_reps, resource: route.resource)
+      end
+    end
+
+    trait :with_request_and_required_attributes do
+      http_method { :POST }
+
+      after(:build) do |route|
+        route.request_resource_representation ||= build(:resource_representation_with_required_attributes_resource_reps, resource: route.resource)
       end
     end
   end

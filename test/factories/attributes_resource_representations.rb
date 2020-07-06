@@ -7,4 +7,8 @@ FactoryBot.define do
     association :resource_attribute, factory: :attribute
     custom_key_name nil
   end
+
+  trait :is_required do
+    is_required true
+  end
 end
