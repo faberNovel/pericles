@@ -8,7 +8,6 @@ class ReportDecorator < Draper::Decorator
     end.flatten.map do |description|
       factory.build(description)
     end
-
     BodyError::ViewModels.new(*body_error_view_models)
   end
 

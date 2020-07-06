@@ -49,10 +49,10 @@ module BodyError
     end
 
     def path
-      match = /The property '(#\/[^']*)'/.match(shorten_description)
+      match = /The property '(#\/[^']*)'/.match(shorten_description) || /Body .*/.match(shorten_description)
       return unless match
 
-      if match[1] == '#/'
+      if match[1] == '#/' || match[1].nil?
         'root'
       else
         match[1].gsub(/^#\//, '')

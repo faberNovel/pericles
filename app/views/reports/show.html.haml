@@ -11,7 +11,7 @@
 - else
   = render partial: 'routes/route_summary', locals: { route: report.route.decorate, real_url: report.url, should_display_representations: true }
 
-- if report.body_errors.any? || report.header_errors.any?
+- if report.body_errors.any? || report.header_errors.any? || report.status_error
   %h4 Errors
 
   %ul

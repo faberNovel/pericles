@@ -61,9 +61,9 @@ class ReportValidator
     @report.validation_errors.destroy_all
     return if response.nil?
 
-    response.errors_from_report(@report).each do |e|
-      e.report = @report
-      e.save
+    response.errors_from_report(@report).each do |validation_error|
+      validation_error.report = @report
+      validation_error.save
     end
   end
 end
