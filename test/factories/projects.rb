@@ -21,6 +21,17 @@ FactoryBot.define do
       end
     end
 
+    factory :project_with_response do
+      after(:create) do |project, _|
+        resource = create(:resource, project: project)
+        attribute = create(:attribute, parent_resource: resource, name: 'user', primitive_type: :string)
+        route = create(:route, url: '/users/:id', http_method: 'GET', resource: resource)
+        resource_representation = create(:resource_representation, resource: resource)
+        create(:attributes_resource_representation, parent_resource_representation: resource_representation, is_required: true, resource_attribute: attribute)
+        create(:response, route: route, root_key: '', is_collection: false, resource_representation: resource_representation)
+      end
+    end
+
     factory :project_with_request do
       after(:create) do |project, _|
         resource = create(:resource, project: project)
