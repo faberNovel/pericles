@@ -75,16 +75,16 @@ Name | Description | Example
 `GOOGLE_APP_ID` | Client ID of your OAuth client ID in the Google Developers Console. Check [Google OAuth2](#google-oauth2). | n/a
 `GOOGLE_APP_SECRET` | Client secret of your OAuth client ID in the Google Developers Console. [Google OAuth2](#google-oauth2). | n/a
 `INTERNAL_EMAIL_DOMAIN` | Email domain used for authentication purposes. [Google OAuth2](#google-oauth2). | `@fabernovel.com`
-`MAIL_DEFAULT_URL` | URL used to generate absolute links in emails | `pericles.fabernovel.com`
+`MAIL_DEFAULT_URL` | Public URL to Pericles instance used to generate absolute links in emails | `pericles.fabernovel.com`
 `MAIL_SMTP_DOMAIN` | Domain of the from field in your email | `pericles.fabernovel.com`
 `MAIL_SMTP_PASSWORD` | Password to connect to your SMTP server | n/a
 `MAIL_SMTP_USERNAME` | Username to connect to your SMTP server | n/a
 `ANDROID_COMPANY_DOMAIN_NAME` | Pericles allows to generate code in Kotlin. The environment variable corresponds to what you would enter under 'Company Domain' when creating a project in Android Studio. It is then used to generate package names. Defaults to `com.example`. | `com.applidium`
 `RAILS_ENV` | Rails environment. Defauls to `development`.  | `production`
-`PORT` | Port on which the web server will listen. Defaults to 3000. | `8080`
+`PORT` | Port on which the web server will listen. Defaults to `3000`. | `8080`
 `DATABASE_URL` | The URL of your PostgreSQL database. Defaults to [database.yml](config/database.yml). | `postgres://username:password@host/database`
-`RAILS_SERVE_STATIC_FILES` | In case your reverse proxy do not serve static files. Defaults to false. | `enabled`
-`RAILS_DISABLE_FORCE_SSL` | In case your reverse proxy do not handle SSL. Defaults to false. | `enabled`
+`RAILS_SERVE_STATIC_FILES` | In case your reverse proxy do not serve static files. Defaults to `false`. | `enabled`
+`RAILS_DISABLE_FORCE_SSL` | In case your reverse proxy do not handle SSL. Defaults to `false`. | `enabled`
 `PROXY_HOST` | The host of your [Elixir proxy](proxy)
 `SLACK_CLIENT_ID` | Client ID of your Slack app. Check [Slack integration](#slack-integration). | `1234567890.1234567890`
 `SLACK_CLIENT_SECRET` | Client secret of your Slack app. Check [Slack integration](#slack-integration). | `abcdef123456789`
@@ -112,9 +112,9 @@ Pericles uses [Devise](https://github.com/plataformatec/devise) to manage authen
 
 If you want to post recent news on Slack, you can [create a Slack app](https://api.slack.com/apps). Then:
 
-1. Enable the `Incoming webhooks` feature.
-2. Enable OAuth and whitelist the redirect URL which should looks like `https://YOUR_HOST/projects`
-3. Set the SLACK_CLIENT_ID and SLACK_CLIENT_SECRET env variables
+1. Enable the *Incoming webhooks* feature.
+2. Enable OAuth and whitelist the redirect URL which should looks like `https://YOUR_HOST/projects`.
+3. Set the `SLACK_CLIENT_ID` and `SLACK_CLIENT_SECRET` env variables.
 
 To automate this posting, use the `audits:slack_post` rake task in a cron/scheduler.
 
@@ -124,7 +124,7 @@ To make sure that your newly deployed instance of Pericles works correctly, you 
 
 ### Heroku
 
-Heroku automatically set RAILS_ENV, PORT, DATABASE_URL and RAILS_SERVE_STATIC_FILES for you.
+Heroku automatically set `RAILS_ENV`, `PORT`, `DATABASE_URL` (see [Heroku Postgres](https://elements.heroku.com/addons/heroku-postgresql)) and `RAILS_SERVE_STATIC_FILES` for you.
 
 [![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
 
@@ -135,6 +135,7 @@ The [Dockerfile](Dockerfile) defines a container with a web server listening on 
 ## Tests
 
 To run tests, simply run (in the project's directory):
+
 ```sh
 bundle exec rails test
 ```
