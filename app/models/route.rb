@@ -50,6 +50,10 @@ class Route < ApplicationRecord
     self.POST? || self.PUT? || self.PATCH?
   end
 
+  def plain_representation?
+    !(request_is_collection || request_root_key.present?)
+  end
+
   private
 
   def remove_obsolete_fields

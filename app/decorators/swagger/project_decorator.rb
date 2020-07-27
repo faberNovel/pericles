@@ -24,7 +24,7 @@ module Swagger
 
     def components
       {
-        schemas: resource_representation_definitions.merge(response_definitions),
+        schemas: resource_representation_definitions.merge(request_definitions).merge(response_definitions),
         securitySchemes: security_schemes_representations
       }
     end
@@ -40,6 +40,20 @@ module Swagger
         hash.merge!(
           {
             representation.uid => json_schema
+          }
+        )
+      end
+    end
+
+    def request_definitions
+      routes.select(&:request_json_schema).reject(&:plain_representation?).reduce({}) do |hash, route|
+        json_schema = route.request_json_schema
+        uid = Swagger::RouteDecorator.new(route, context: context).uid
+
+        delete_siblings_values_if_ref(json_schema)
+        hash.merge!(
+          {
+            uid => json_schema
           }
         )
       end
