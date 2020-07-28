@@ -76,7 +76,7 @@ gem 'haml-rails', '~> 1.0'
 gem 'rails-controller-testing'
 
 gem 'json-schema', '~> 2.8'
-gem 'json', '~> 2.0.2'
+gem 'json', '~> 2.3.0'
 
 gem 'cocoon', '~> 1.2'
 gem 'bootstrap_form'
