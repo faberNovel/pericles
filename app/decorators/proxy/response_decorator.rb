@@ -4,9 +4,10 @@ module Proxy
     decorates Response
 
     def errors_from_report(report)
-      errors_for_status(report.response_status_code) +
-        errors_for_headers(report.response_headers) +
-        errors_for_body(report.response_body)
+      status_errors = errors_for_status(report.response_status_code)
+      header_errors = errors_for_headers(report.response_headers)
+      body_errors = status_errors.empty? ? errors_for_body(report.response_body) : []
+      status_errors + header_errors + body_errors
     end
 
     def errors_for_status(status_code_to_check)
