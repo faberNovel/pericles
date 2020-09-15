@@ -27,6 +27,11 @@ body {
   align-items: center;
 }
 
+.flex-v-end {
+  display: flex;
+  align-items: flex-end;
+}
+
 .flexcontainer-justify-end {
   display: flex;
   justify-content: flex-end;

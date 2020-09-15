@@ -1,7 +1,7 @@
 = content_for :title, "New Resource Mock"
 
-%h1 New Mock
+- content_for :page_scripts do
+  = javascript_pack_tag("resource_instances/index.js")
 
-.row
-  .col-xs-12
-    = render 'form'
+#resource-instance-editor
+  %ps-resource-instance-editor{operation: "create", initialvalue: format_json(model_instance.body), name: model_instance.name}
