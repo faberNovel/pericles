@@ -127,7 +127,6 @@ class ResourcesControllerTest < ControllerWithAuthenticationTest
       assert_response :created
     end
 
-    puts response.body
     validate_json_request_body '/resource/request_post_projects_project_id_resources_json_createresource'
     validate_json_response_body '/resource/post_projects_project_id_resources_json_detailedresource_201'
   end

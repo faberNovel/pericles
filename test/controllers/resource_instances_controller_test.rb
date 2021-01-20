@@ -17,7 +17,7 @@ class ResourceInstancesControllerTest < ControllerWithAuthenticationTest
     assert_difference 'ResourceInstance.count' do
       post "/resources/#{@resource.id}/resource_instances", params: { resource_instance: { name: 'nice name', body: '{}' } }
     end
-    assert_redirected_to project_resource_path(@project, @resource)
+    assert_redirected_to project_resource_path(@project, @resource, anchor: 'pills-resource-instances')
   end
 
   test 'mock instance edition form' do
@@ -28,14 +28,14 @@ class ResourceInstancesControllerTest < ControllerWithAuthenticationTest
   test 'mock instance update' do
     patch "/resource_instances/#{@resource_instance.id}", params: { resource_instance: { name: 'nice name', body: '{}' } }
     assert_equal 'nice name', @resource_instance.reload.name
-    assert_redirected_to project_resource_path(@project, @resource)
+    assert_redirected_to project_resource_path(@project, @resource, :anchor => 'pills-resource-instances')
   end
 
   test 'mock instance delete' do
     assert_difference 'ResourceInstance.count', -1 do
       delete "/resource_instances/#{@resource_instance.id}", params: { resource_instance: { name: 'nice name', body: '{}' } }
     end
-    assert_redirected_to project_resource_path(@project, @resource)
+    assert_redirected_to project_resource_path(@project, @resource, :anchor => 'pills-resource-instances')
   end
 
   test 'member external user should access project resource instances' do
@@ -53,15 +53,15 @@ class ResourceInstancesControllerTest < ControllerWithAuthenticationTest
     patch resource_instance_path(@resource_instance), params: {
       resource_instance: { name: 'new name' }
     }
-    assert_redirected_to project_resource_path(@project, @resource)
+    assert_redirected_to project_resource_path(@project, @resource, :anchor => 'pills-resource-instances')
 
     post resource_resource_instances_path(@resource), params: {
       resource_instance: @resource_instance.attributes
     }
-    assert_redirected_to project_resource_path(@project, @resource)
+    assert_redirected_to project_resource_path(@project, @resource, :anchor => 'pills-resource-instances')
 
     delete resource_instance_path(@resource_instance)
-    assert_redirected_to project_resource_path(@project, @resource)
+    assert_redirected_to project_resource_path(@project, @resource, :anchor => 'pills-resource-instances')
   end
 
   test 'non member external user should not access project resource instances' do

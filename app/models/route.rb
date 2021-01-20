@@ -50,14 +50,13 @@ class Route < ApplicationRecord
     self.POST? || self.PUT? || self.PATCH?
   end
 
-  def can_have_query_params
-    self.GET?
+  def plain_representation?
+    !(request_is_collection || request_root_key.present?)
   end
 
   private
 
   def remove_obsolete_fields
-    request_query_parameters.destroy_all unless can_have_query_params
     unless request_can_have_body
       self.request_resource_representation_id = nil
       self.request_is_collection = false

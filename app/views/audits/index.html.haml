@@ -7,14 +7,16 @@
     = link_to '💌 Slack recent news!', slack_post_project_audits_path(project), method: :post, class: 'btn btn-primary h-margin'
 
 #news
-  - @audits.map(&:decorate).group_by(&:request_uuid).each do |(_, audits)|
+  - @audits.reverse.map(&:decorate).group_by(&:request_uuid).each do |(_, audits)|
     .card{class: audits.first.action_css_class}
       .right
         .author= audits.first.user&.name
         .created_at= audits.first.created_at.iso8601
       .content
-        - audits.reverse.each do |audit|
-          = render audit.partial_name, audit: audit
+        %ul
+          - audits.each do |audit|
+            %li
+              = render audit.partial_name, audit: audit
 
   = paginate @audits
 

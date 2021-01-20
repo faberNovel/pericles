@@ -1,6 +1,6 @@
 class ReportValidator
   def initialize(report)
-    @report = report
+    @report = Proxy::ReportDecorator.new(report)
   end
 
   def validate
@@ -13,6 +13,8 @@ class ReportValidator
     return if @report.nil?
     return @report.update(validated: true) if route.nil?
 
+    @report.validation_errors.destroy_all
+    save_errors_from_request
     response = find_response_with_lowest_errors
     @report.update(route: route, response: response)
 
@@ -39,6 +41,14 @@ class ReportValidator
     Route.find_by(id: main_route[:name])
   end
 
+  def save_errors_from_request
+    return if @report.request_body.nil?
+    @report.errors_from_request.each do |validation_error|
+      validation_error.report = @report
+      validation_error.save
+    end
+  end
+
   def find_response_with_lowest_errors
     find_response_with_no_errors ||
       find_response_with_no_status_errors ||
@@ -59,10 +69,9 @@ class ReportValidator
 
   def save_errors_from_response(response)
     return if response.nil?
-
-    response.errors_from_report(@report).each do |e|
-      e.report = @report
-      e.save
+    response.errors_from_report(@report).each do |validation_error|
+      validation_error.report = @report
+      validation_error.save
     end
   end
 end

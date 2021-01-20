@@ -29,11 +29,10 @@
           %li.active{ role: "presentation" }
             %a{ "aria-controls" => "request body", "data-toggle" => "tab", href: "#request-body", role: "tab" }
               = "Body"
-        - if route.can_have_query_params
-          %li{ role: "presentation", class: ('active' unless route.request_can_have_body) }
-            %a{ "aria-controls" => "query parameters", "data-toggle" => "tab", href: "#query-parameters", role: "tab" }
-              = "Query Parameters"
-        %li{ role: "presentation", class: ('active' unless route.request_can_have_body || route.can_have_query_params) }
+        %li{ role: "presentation", class: ('active' unless route.request_can_have_body) }
+          %a{ "aria-controls" => "query parameters", "data-toggle" => "tab", href: "#query-parameters", role: "tab" }
+            = "Query Parameters"
+        %li{ role: "presentation" }
           %a{ "aria-controls" => "request headers", "data-toggle" => "tab", href: "#request-headers", role: "tab" }
             = "Headers"
 
@@ -69,21 +68,20 @@
                 - else
                   %p
                     %i= t('.no_body_placeholder')
-        - if route.can_have_query_params
-          #query-parameters.tab-pane{ role: "tabpanel", class: ('active' unless route.request_can_have_body) }
-            .panel.panel-default
-              .panel-heading
-                .flexcontainer.flexcontainer-justify-end
-                  = link_to 'Edit', edit_project_route_path(project, route, section: "query_parameters"),
-                   class: "btn btn-primary" if user.can_edit? route
-              .panel-body
-                - if route.request_query_parameters.any?
-                  - route.request_query_parameters.each do |query_parameter|
-                    = render query_parameter
-                - else
-                  %p
-                    %i= t('.no_query_parameter_placeholder')
-        #request-headers.tab-pane{ role: "tabpanel", class: ('active' unless route.request_can_have_body || route.can_have_query_params) }
+        #query-parameters.tab-pane{ role: "tabpanel", class: ('active' unless route.request_can_have_body) }
+          .panel.panel-default
+            .panel-heading
+              .flexcontainer.flexcontainer-justify-end
+                = link_to 'Edit', edit_project_route_path(project, route, section: "query_parameters"),
+                 class: "btn btn-primary" if user.can_edit? route
+            .panel-body
+              - if route.request_query_parameters.any?
+                - route.request_query_parameters.each do |query_parameter|
+                  = render query_parameter
+              - else
+                %p
+                  %i= t('.no_query_parameter_placeholder')
+        #request-headers.tab-pane{ role: "tabpanel" }
           .panel.panel-default
             .panel-heading
               .flexcontainer.flexcontainer-justify-end

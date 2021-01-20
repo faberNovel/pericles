@@ -16,9 +16,30 @@ class ReportsControllerTest < ControllerWithAuthenticationTest
     assert_response :success
   end
 
+  test 'report should not display password in request body' do
+    @report.update(request_body: '{ "password" : "foobar" }')
+    get project_report_path(@project, @report)
+    assert_no_match JSON(@report.request_body)['password'], response.body
+  end
+
+  test 'report should not display password in response body' do
+    @report.update(response_body: '{ "password" : "foobar" }')
+    get project_report_path(@project, @report)
+    assert_no_match JSON(@report.response_body)['password'], response.body
+  end
+
   test 'should revalidate report' do
     post revalidate_project_report_path(@project, @report)
     assert_redirected_to project_report_path(@project, @report)
+  end
+
+  test 'should delete validation errors before saving new ones' do
+    assert_changes '@report.validation_errors.count' do
+      post revalidate_project_report_path(@project, @report)
+    end
+    assert_no_changes '@report.validation_errors.count' do
+      post revalidate_project_report_path(@project, @report)
+    end
   end
 
   test 'member external user should access project reports' do

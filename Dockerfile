@@ -1,4 +1,4 @@
-FROM ruby:2.6.5
+FROM ruby:2.7.2
 
 RUN apt-get update && apt-get install -y curl wget gnupg git build-essential patch ruby-dev zlib1g-dev liblzma-dev libpq-dev
 RUN curl -sL https://deb.nodesource.com/setup_10.x | bash && \

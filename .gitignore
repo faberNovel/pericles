@@ -39,3 +39,5 @@ yarn-error.log*
 
 docker-compose.yml
 .idea
+.rakeTasks
+.generators

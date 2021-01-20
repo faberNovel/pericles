@@ -50,9 +50,13 @@ class Swagger::RouteDecorator < Draper::Decorator
   def request_body
     return unless request_resource_representation
 
-    ref = JSONSchema::ResourceRepresentationDecorator.new(
-      request_resource_representation, context: context
-    ).ref
+    if plain_representation?
+      ref = JSONSchema::ResourceRepresentationDecorator.new(
+        request_resource_representation, context: context
+      ).ref
+    else
+      ref = "#{context[:base_href]}Request_#{object.id}"
+    end
 
     {
       content: {
@@ -136,6 +140,14 @@ class Swagger::RouteDecorator < Draper::Decorator
       pattern = /:(#{parameter_name}\+?)/
       replacement = remove_plus_signs ? "{#{parameter_name}}" : '{\1}'
       url.gsub(pattern, replacement)
+    end
+  end
+
+  def uid
+    if context[:use_resource_representation_name_as_uid] && plain_representation?
+      request_resource_representation.name.tr(' ', '_')
+    else
+      "Request_#{object.id}"
     end
   end
 end

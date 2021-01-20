@@ -25,7 +25,7 @@
         %tbody
           = f.fields_for :attributes_resource_representations, all_attributes_resource_representations do |fields|
             - attributes_resource_representation = fields.object
-            - attribute = attributes_resource_representation.resource_attribute
+            - attribute = attributes_resource_representation.resource_attribute.decorate
             - type_resource = attribute.resource
             %tr
               %td

@@ -36,6 +36,7 @@ class ResourceRepresentationsController < ApplicationController
   end
 
   def create
+    resource_representation.attributes_resource_representations = get_missing_attributes_resource_representations
     if resource_representation.save
       respond_to do |format|
         format.html { redirect_to project_resource_path(project, resource) }
@@ -95,6 +96,7 @@ class ResourceRepresentationsController < ApplicationController
   def resource
     @resource ||= Resource.find(params[:resource_id])
   end
+
   helper_method :resource
 
   def find_project
@@ -106,6 +108,15 @@ class ResourceRepresentationsController < ApplicationController
       resource_representation.attributes_resource_representations.detect do |arr|
         arr.attribute_id == attribute.id
       end || resource_representation.attributes_resource_representations.build(resource_attribute: attribute)
+    end
+  end
+
+  def get_missing_attributes_resource_representations
+    resource.resource_attributes.map do |attribute|
+      resource_representation.attributes_resource_representations.build(
+        resource_attribute: attribute,
+        resource_representation: attribute.resource&.default_representation
+      )
     end
   end
 end
