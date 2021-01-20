@@ -2,6 +2,24 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.11.5 - 2021-01-20
+
+* Bump Ruby, Rails, Kaminari and rails/webpacker
+* Use cache in Actions (thanks @Mrchoclate)
+* Update changelog (thanks @cchantep)
+* Add root key missing in swagger request bodies
+* Hide passwords in reports
+* Add validation on request body in report
+* Fix error section in a report not displayed if the only error was a status_error
+* Fix error not displayed if a body error description did not match
+* Delete past errors before saving new errors when validating a report
+* Add button to get a representation's JSON schema
+* Stay on the instance tab when a mock instance has been created
+* Add all attributes to representation by default
+* Fix order in daily slack posts
+* Fix wording in news
+* Add query parameters to every HTTP verbs
+
 ## 0.11.4 - 2020-05-27
 
 * Add API to create Routes, Ressources and Representations (thanks @Mrchoclate)
