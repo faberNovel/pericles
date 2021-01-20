@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '2.6.5'
+ruby '2.7.2'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.1'
@@ -76,7 +76,7 @@ gem 'haml-rails', '~> 1.0'
 gem 'rails-controller-testing'
 
 gem 'json-schema', '~> 2.8'
-gem 'json', '~> 2.0.2'
+gem 'json', '~> 2.3.0'
 
 gem 'cocoon', '~> 1.2'
 gem 'bootstrap_form'

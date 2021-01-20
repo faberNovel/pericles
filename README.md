@@ -21,7 +21,7 @@ To run the project locally, you have the choice between using containers or setu
 Create your own `docker-compose.yml` based on the [sample](docker-compose.yml.sample), then run:
 
 ```sh
-docker build -t pericles:ruby-2.6 .
+docker build -t pericles:ruby-2.7 .
 docker-compose up
 ```
 
