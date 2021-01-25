@@ -80,7 +80,7 @@ gem 'json', '~> 2.3.0'
 
 gem 'cocoon', '~> 1.2'
 gem 'bootstrap_form'
-gem 'rails-erd', '~> 1.5'
+gem 'rails-erd', '~> 1.6'
 
 gem 'active_model_serializers', '~> 0.10.0'
 
