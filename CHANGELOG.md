@@ -2,6 +2,11 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.11.6 - 2021-01-25
+
+* Fix news order
+* Fix crash in reports analysis
+
 ## 0.11.5 - 2021-01-20
 
 * Bump Ruby, Rails, Kaminari and rails/webpacker
