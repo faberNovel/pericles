@@ -4,6 +4,6 @@ class AuditsRepository
       .of_project(project)
       .where.not(auditable_type: ['Header', 'QueryParameter'])
       .preload(:auditable, :associated)
-      .order(created_at: :asc)
+      .order(created_at: :desc)
   end
 end
