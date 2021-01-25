@@ -14,11 +14,13 @@ class ReportValidator
     return @report.update(validated: true) if route.nil?
 
     @report.validation_errors.destroy_all
-    save_errors_from_request
+
     response = find_response_with_lowest_errors
     @report.update(route: route, response: response)
 
+    save_errors_from_request
     save_errors_from_response(response)
+
     @report.update(validated: true)
   end
 
