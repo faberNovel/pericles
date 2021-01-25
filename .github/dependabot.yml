@@ -1,6 +1,7 @@
-version: 1
-update_configs:
-  - package_manager: "ruby:bundler"
+version: 2
+updates:
+  - package-ecosystem: "bundler"
     directory: "/"
-    update_schedule: "live"
-    target_branch: "develop"
+    schedule:
+      interval: "daily"
+    target-branch: "develop"
