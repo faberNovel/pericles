@@ -46,8 +46,10 @@ module Swagger
     end
 
     def request_definitions
-      routes.select(&:request_json_schema).reject(&:plain_representation?).reduce({}) do |hash, route|
-        json_schema = route.request_json_schema
+      routes.reject(&:plain_representation?).reduce({}) do |hash, route|
+        json_schema = route.request_json_schema(context: context)
+        next unless json_schema
+
         uid = Swagger::RouteDecorator.new(route, context: context).uid
 
         delete_siblings_values_if_ref(json_schema)
@@ -60,13 +62,16 @@ module Swagger
     end
 
     def response_definitions
-      responses.select(&:json_schema).reduce({}) do |hash, r|
+      responses.reduce({}) do |hash, r|
         response = JSONSchema::ResponseDecorator.new(
           r, context: context
         )
         uid = Swagger::ResponseDecorator.new(r, context: context).uid
 
-        json_schema = response.json_schema.except(:definitions, :$schema)
+        json_schema = response.json_schema
+        next hash unless json_schema
+
+        json_schema = json_schema.except(:definitions, :$schema)
         delete_siblings_values_if_ref(json_schema)
         hash.merge!(
           {
@@ -184,6 +189,8 @@ module Swagger
         {
           openIdConnectUrl: security_scheme.open_id_connect_url
         }
+      else
+        {}
       end
     end
   end

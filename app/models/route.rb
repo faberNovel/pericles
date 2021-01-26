@@ -32,10 +32,10 @@ class Route < ApplicationRecord
     GenerateJsonInstanceService.new(request_json_schema).execute if request_json_schema
   end
 
-  def request_json_schema
+  def request_json_schema(context: {})
     if request_resource_representation
       JSONSchemaBuilder.new(
-        request_resource_representation,
+        JSONSchema::ResourceRepresentationDecorator.new(request_resource_representation, context: context),
         is_collection: request_is_collection,
         root_key: request_root_key
       ).execute

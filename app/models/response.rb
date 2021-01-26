@@ -27,11 +27,11 @@ class Response < ApplicationRecord
     GenerateJsonInstanceService.new(json_schema).execute if json_schema
   end
 
-  def json_schema
+  def json_schema(context: {})
     # TODO: Clément Villain 21/11/17:
     # refactor json schema to use a JSONSchema objet with at least .to_h and .to_json
     # (We could also add .validate(json) and .json_instance)
-    JSONSchema::ResponseDecorator.new(self).json_schema
+    JSONSchema::ResponseDecorator.new(self, context: context).json_schema
   end
 
   def can_have_api_error
