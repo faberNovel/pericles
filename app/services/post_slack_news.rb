@@ -9,6 +9,7 @@ class PostSlackNews
     audits = AuditsRepository.new
       .news_of_project(@project)
       .where('created_at > ?', since)
+      .order(:created_at)
       .map(&:decorate)
 
     return 0 if audits.empty?
