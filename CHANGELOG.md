@@ -2,6 +2,12 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.11.7 - 2021-01-26
+
+* Use nullable in Swagger export
+* Fix Swagger export when response has no representation
+* Fix slack news order
+
 ## 0.11.6 - 2021-01-25
 
 * Fix news order
