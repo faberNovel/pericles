@@ -19,8 +19,8 @@ class ResourceRepresentation < ApplicationRecord
   audited
   has_associated_audits
 
-  def json_schema
-    JSONSchema::ResourceRepresentationDecorator.new(self).json_schema
+  def json_schema(context: {})
+    JSONSchema::ResourceRepresentationDecorator.new(self, context: context).json_schema
   end
 
   def resource_instances

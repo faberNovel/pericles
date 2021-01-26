@@ -3,7 +3,7 @@ class Swagger::ResponseDecorator < Draper::Decorator
 
   def to_swagger
     h = { description: '' }
-    return h unless json_schema
+    return h unless json_schema(context: context)
 
     h.merge(
       {
