@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200417091346) do
+ActiveRecord::Schema.define(version: 2020_04_17_091346) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -172,8 +172,8 @@ ActiveRecord::Schema.define(version: 20200417091346) do
   end
 
   create_table "metadatum_instances_mock_pickers", id: false, force: :cascade do |t|
-    t.integer "metadatum_instance_id", null: false
-    t.integer "mock_picker_id", null: false
+    t.bigint "metadatum_instance_id", null: false
+    t.bigint "mock_picker_id", null: false
   end
 
   create_table "mock_pickers", id: :serial, force: :cascade do |t|
@@ -214,7 +214,6 @@ ActiveRecord::Schema.define(version: 20200417091346) do
     t.string "slack_incoming_webhook_url"
     t.string "slack_channel"
     t.datetime "slack_updated_at"
-    t.boolean "amazon_apigateway_integration", default: false, null: false
     t.index ["mock_profile_id"], name: "index_projects_on_mock_profile_id"
   end
 
@@ -310,8 +309,8 @@ ActiveRecord::Schema.define(version: 20200417091346) do
     t.integer "request_resource_representation_id"
     t.boolean "request_is_collection", default: false, null: false
     t.string "request_root_key"
-    t.string "deprecated"
     t.bigint "security_scheme_id"
+    t.string "deprecated"
     t.string "operation_id"
     t.index ["request_resource_representation_id"], name: "index_routes_on_request_resource_representation_id"
     t.index ["resource_id"], name: "index_routes_on_resource_id"

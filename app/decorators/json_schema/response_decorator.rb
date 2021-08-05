@@ -1,6 +1,7 @@
 module JSONSchema
   class ResponseDecorator < Draper::Decorator
     delegate_all
+    decorates_association :metadata_responses, with: JSONSchema::MetadataResponseDecorator
 
     def json_schema
       if resource_representation

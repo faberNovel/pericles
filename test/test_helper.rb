@@ -2,7 +2,7 @@ require 'simplecov'
 SimpleCov.start 'rails'
 
 require 'minitest/reporters'
-Minitest::Reporters.use!
+Minitest::Reporters.use! unless ENV['RM_INFO']
 require 'minitest/mock'
 
 ENV['RAILS_ENV'] ||= 'test'
