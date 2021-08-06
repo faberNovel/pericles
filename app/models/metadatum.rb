@@ -13,10 +13,6 @@ class Metadatum < ApplicationRecord
   audited
 
   def json_schema
-    if datetime? || date?
-      { type: :string, format: primitive_type, nullable: nullable }
-    else
-      { type: primitive_type, nullable: nullable }
-    end
+    JSONSchema::MetadatumDecorator.new(self).json_schema
   end
 end
