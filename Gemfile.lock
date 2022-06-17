@@ -257,7 +257,7 @@ GEM
     parallel (1.12.1)
     parser (2.5.0.5)
       ast (~> 2.4.0)
-    passenger (5.2.2)
+    passenger (5.3.2)
       rack
       rake (>= 0.8.1)
     pg (1.0.0)
@@ -269,7 +269,7 @@ GEM
       activesupport (>= 3.0.0)
     pxeger (0.1.0)
     racc (1.5.2)
-    rack (2.2.3)
+    rack (2.2.3.1)
     rack-mini-profiler (1.0.0)
       rack (>= 1.2.0)
     rack-proxy (0.6.5)
